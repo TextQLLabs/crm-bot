@@ -1,0 +1,31 @@
+{
+  "name": "crm-bot",
+  "version": "1.0.0",
+  "description": "Slack bot for GTM channel that updates Attio CRM",
+  "main": "src/index-react.js",
+  "scripts": {
+    "start": "node src/index-react.js",
+    "dev": "nodemon src/index-react.js",
+    "deploy": "wrangler deploy",
+    "deploy:staging": "wrangler deploy --env staging",
+    "deploy:production": "wrangler deploy --env production",
+    "logs": "wrangler tail",
+    "test": "jest"
+  },
+  "keywords": ["slack", "bot", "attio", "crm", "cloudflare-workers"],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@slack/bolt": "^3.17.1",
+    "@anthropic-ai/sdk": "^0.20.0",
+    "axios": "^1.6.7",
+    "mongodb": "^6.3.0",
+    "dotenv": "^16.4.1",
+    "@cloudflare/workers-types": "^4.20240208.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.3",
+    "jest": "^29.7.0",
+    "wrangler": "^3.28.2"
+  }
+}
