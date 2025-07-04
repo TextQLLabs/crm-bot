@@ -58,6 +58,8 @@ app.action('show_technical_details', handleButtonAction);
     // Connect to Mock DB (no MongoDB)
     await connectDB();
     
+    console.log('🚂 Starting CRM Bot on Railway...');
+    
     // Start Slack app
     await app.start();
     console.log('⚡️ CRM Bot with ReAct Agent is running!');
