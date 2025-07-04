@@ -23,6 +23,15 @@ const app = new App({
   port: process.env.PORT || 3000
 });
 
+// Add health check endpoint for Railway
+app.receiver.app.get('/health', (req, res) => {
+  res.status(200).json({ 
+    status: 'ok', 
+    timestamp: new Date().toISOString(),
+    service: 'crm-bot'
+  });
+});
+
 // Handle app mentions in any channel
 app.event('app_mention', handleMention);
 
