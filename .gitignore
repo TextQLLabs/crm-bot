@@ -45,3 +45,6 @@ temp/
 
 # MongoDB memory server
 globalConfig.json
+
+# Session files with secrets
+SESSION_SECRETS.md
