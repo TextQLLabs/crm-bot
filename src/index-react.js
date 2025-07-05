@@ -59,6 +59,7 @@ app.action('show_technical_details', handleButtonAction);
     await connectDB();
     
     console.log('🚂 Starting CRM Bot on Railway...');
+    console.log('🔍 Deployment:', process.env.RAILWAY_ENVIRONMENT ? `Railway (${process.env.RAILWAY_ENVIRONMENT})` : 'Local Development');
     
     // Start Slack app
     await app.start();
