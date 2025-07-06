@@ -282,6 +282,7 @@ async function handleMention({ event, message, say, client }) {
 }
 
 function formatSuccessMessage(result) {
+  const pkg = require('../../package.json');
   let message = '✅ ';
   
   if (result.answer) {
@@ -311,6 +312,9 @@ function formatSuccessMessage(result) {
     const uniqueActions = [...new Set(actions)];
     message += '\n\n📋 Actions taken: ' + uniqueActions.join(', ');
   }
+
+  // Add version and deployment info
+  message += `\n\n🚂 Railway v${pkg.version}`;
 
   return message;
 }
