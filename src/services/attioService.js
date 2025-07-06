@@ -20,6 +20,7 @@ function getAttioClient() {
 async function searchAttio(query) {
   try {
     console.log(`\n=== Searching Attio for: "${query}" ===`);
+    console.log('API Key status:', process.env.ATTIO_API_KEY ? `Present (length: ${process.env.ATTIO_API_KEY.length})` : 'MISSING');
     
     // Search across companies, deals, and people
     const [companies, deals, people] = await Promise.all([
@@ -37,10 +38,10 @@ async function searchAttio(query) {
       ...people.map(p => ({ ...p, type: 'person' }))
     ];
 
-    // Log what we found
+    // Log what we found with URLs
     if (allResults.length > 0) {
-      console.log('Search results:');
-      allResults.forEach(r => console.log(`  - ${r.name} (${r.type}) ${r.slug ? `[${r.slug}]` : ''}`));
+      console.log('Search results with links:');
+      allResults.forEach(r => console.log(`  - ${r.name} (${r.type}) ${r.url ? `-> ${r.url}` : 'NO URL'}`));
     } else {
       console.log('No results found');
     }
@@ -246,13 +247,19 @@ async function searchPeople(query) {
     }
     
     return response.data.data.map(person => {
-      const name = person.values?.name || 
-                   person.attributes?.name?.[0]?.value || 
-                   person.name ||
-                   'Unnamed Person';
-      const email = person.values?.email_addresses?.[0] || 
-                    person.attributes?.email_addresses?.[0]?.value || 
-                    'No email';
+      // Handle the complex name structure
+      let name = 'Unnamed Person';
+      if (person.values?.name?.[0]) {
+        const nameData = person.values.name[0];
+        name = nameData.full_name || nameData.value || `${nameData.first_name || ''} ${nameData.last_name || ''}`.trim();
+      }
+      
+      // Handle email addresses array
+      let email = 'No email';
+      if (person.values?.email_addresses?.[0]) {
+        const emailData = person.values.email_addresses[0];
+        email = emailData.email_address || emailData.value || emailData.original_email_address || 'No email';
+      }
                     
       const personId = person.id?.record_id || person.id || person.record_id;
       return {
