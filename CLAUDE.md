@@ -79,3 +79,59 @@ MONGODB_URI=mongodb+srv://...
 - Validate Slack signatures
 - Rate limit API calls
 - Sanitize user inputs
+
+## MCP Server Integration
+
+A Slack MCP (Model Context Protocol) server is configured on the Ethan Ding account, enabling you to:
+- Send messages directly to Slack channels
+- Test the bot without manual Slack interaction
+- Read channel messages and threads
+- Simulate user interactions programmatically
+
+### Testing with MCP
+
+You can test the bot directly using the MCP Slack server:
+```javascript
+// Example: Send a test message to the bot
+mcp.slack.sendMessage({
+  channel: "#general", 
+  text: "@crm-bot-ethan find deals related to Raine"
+});
+
+// Read bot responses
+mcp.slack.readChannel("#general");
+```
+
+This removes Ethan from the testing loop and allows autonomous bot development and testing.
+
+## Production Bot Details
+
+- **Bot Name**: @crm-bot-ethan
+- **App ID**: A094BJTADMG
+- **Workspace**: TextQL
+- **Deployment**: Railway (auto-deploys from main branch)
+- **Repository**: https://github.com/TextQLLabs/crm-bot
+
+## Development Notes
+
+- The bot is currently production-only (no dev instance)
+- All pushes to main auto-deploy to Railway
+- Use feature branches for safer development
+- Railway logs show deployment status and errors
+- Bot includes deployment info in responses ("🚂 Railway" indicator)
+
+## Testing Checklist
+
+When testing changes:
+1. Test API calls locally first (`node src/test-*.js`)
+2. Check Railway build logs after pushing
+3. Verify bot responds in Slack
+4. Test both new messages and thread replies
+5. Ensure preview mode works for write operations
+
+## Known Complexities
+
+1. **Thread Context**: Bot maintains conversation history including hidden function calls
+2. **Preview Mode**: All write operations show preview before executing
+3. **Fuzzy Matching**: Uses string similarity for entity matching
+4. **Error Recovery**: ReAct agent attempts multiple strategies on failure

@@ -2,8 +2,17 @@ const Anthropic = require('@anthropic-ai/sdk');
 
 class ReactAgent {
   constructor() {
+    // Debug: Check if API key is loaded
+    const apiKey = process.env.ANTHROPIC_API_KEY;
+    if (!apiKey) {
+      console.error('ERROR: ANTHROPIC_API_KEY is not set!');
+    } else {
+      console.log('Anthropic API key loaded, length:', apiKey.length);
+      console.log('First 20 chars:', apiKey.substring(0, 20) + '...');
+    }
+    
     this.anthropic = new Anthropic({
-      apiKey: process.env.ANTHROPIC_API_KEY,
+      apiKey: apiKey,
     });
     
     // Define available tools

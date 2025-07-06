@@ -1,107 +1,287 @@
-# CRM Bot - Intelligent Slack-to-Attio Integration
+# CRM Bot - Intelligent Slack to Attio CRM Integration
 
-An intelligent Slack bot that uses AI (Claude) with the ReAct pattern to automatically manage CRM data in Attio through natural language conversations.
+## Overview
 
-## Features
+CRM Bot is an intelligent Slack bot that monitors conversations and automatically creates/updates records in Attio CRM. Built by Ethan Ding for TextQL, this bot uses a ReAct (Reasoning + Acting) AI agent pattern to understand natural language requests and perform CRM operations.
 
-- 🤖 **ReAct AI Agent**: Uses reasoning and acting pattern for intelligent decisions
-- 🔍 **Fuzzy Search**: Smart matching across companies, people, and deals
-- 📝 **Natural Language**: Just talk naturally - "create a note on Raine about our meeting"
-- 💬 **Threaded Conversations**: Add context with follow-up messages
-- ✅ **Action Preview**: See what the bot will do before it executes
-- 🧠 **Context Awareness**: Remembers previous actions in the conversation
-- ☁️ **24/7 Availability**: Deployed on Cloudflare Workers
+## 🎯 Purpose & Vision
 
-## Quick Start
+Built to streamline GTM (Go-To-Market) operations by:
+- Automatically capturing important updates from Slack into the CRM
+- Enabling natural language CRM queries directly from Slack
+- Reducing manual data entry and keeping CRM records up-to-date
+- Creating a seamless bridge between team communications and CRM data
 
-1. Clone the repository:
-```bash
-git clone <your-repo-url>
-cd crm-bot
-```
-
-2. Install dependencies:
-```bash
-npm install
-```
-
-3. Set up credentials:
-- Follow `SETUP_INSTRUCTIONS.md` for detailed steps
-- Copy `.env.example` to `.env` and fill in values
-
-4. Run locally:
-```bash
-npm start
-```
-
-5. Deploy to Cloudflare:
-- Follow `CLOUDFLARE_SETUP.md` for deployment
-
-## Usage Examples
-
-**Creating Notes:**
-```
-@bot create a note on the Raine deal about our meeting discussing pricing
-```
-
-**Threaded Conversations:**
-```
-User: @bot create a note on Raine about the meeting
-Bot: [Shows preview: "Create note on: Raine..."]
-User: @bot actually, add that we discussed Q3 timeline and budget
-Bot: [Updates understanding with additional context]
-```
-
-**Searching Records:**
-```
-@bot find The Raine Group company
-```
-
-## Project Structure
+## 🏗️ Architecture
 
 ```
 crm-bot/
 ├── src/
-│   ├── handlers/       # Slack event handlers
-│   ├── services/       # Core services (AI, Attio, DB)
-│   ├── workers/        # Cloudflare Worker
-│   └── index.js        # Local development entry
-├── SETUP_INSTRUCTIONS.md
-├── CLOUDFLARE_SETUP.md
-├── CLAUDE.md          # AI assistant instructions
-└── SPEC.md            # Full specification
+│   ├── index-react.js              # Main entry point (Socket Mode)
+│   ├── handlers/
+│   │   └── slackHandlerReact.js    # Slack event handlers with preview mode
+│   ├── services/
+│   │   ├── reactAgent.js           # ReAct AI agent implementation
+│   │   ├── attioService.js         # Attio CRM API integration
+│   │   ├── database-mock.js        # In-memory DB fallback
+│   │   └── database.js             # MongoDB integration
+│   └── workers/                    # Cloudflare Workers (unused)
+├── .env                            # Environment variables (source of truth)
+├── railway.toml                    # Railway deployment config
+├── CLAUDE.md                       # AI assistant context
+└── SESSION_CONTEXT.md              # Session recovery info
 ```
 
-## Commands
+## 🚀 Current Functionality
 
-- `npm start` - Run locally
-- `npm run dev` - Run with auto-reload
-- `npm run deploy` - Deploy to Cloudflare
-- `npm test` - Run tests
+### Core Features
+- **Natural Language Processing**: Understands requests like "find all deals related to Raine Group"
+- **Fuzzy Search**: Intelligently matches partial names and typos
+- **Preview Mode**: Shows exactly what actions will be taken before executing
+- **Thread Support**: Maintains conversation context across thread replies
+- **Approval Workflow**: All write operations require user confirmation
 
-## Architecture
+### Supported CRM Operations
+1. **Search** - Find companies, deals, or people with fuzzy matching
+2. **Create Notes** - Add notes to any CRM record
+3. **View Details** - Get comprehensive information about entities
+4. **Create Entities** - Add new companies, deals, or people (coming soon)
+5. **Update Fields** - Modify existing records (coming soon)
 
-- **Slack Integration**: Bolt.js framework
-- **AI Processing**: Anthropic Claude API
+### AI Capabilities
+- Uses Claude 3 for intelligent reasoning
+- ReAct pattern for step-by-step problem solving
+- Shows thinking process transparently
+- Handles ambiguous requests gracefully
+
+## 🛠️ Technical Stack
+
+- **Framework**: Slack Bolt.js (Socket Mode)
+- **AI**: Anthropic Claude API
 - **CRM**: Attio API
-- **Database**: MongoDB Atlas
-- **Hosting**: Cloudflare Workers
-- **Caching**: Cloudflare KV
+- **Database**: MongoDB Atlas (with in-memory fallback)
+- **Hosting**: Railway (production deployment)
+- **Language**: Node.js 18+
 
-## Contributing
+## 📦 Setup & Installation
 
-1. Create feature branch
-2. Make changes
-3. Test thoroughly
-4. Submit PR
+### Prerequisites
+- Node.js 18+
+- Slack workspace admin access
+- Attio CRM account
+- Anthropic API key
+- MongoDB Atlas account (optional)
 
-## Support
+### Environment Variables
+Create a `.env` file with:
+```bash
+# Slack Configuration (App ID: A094BJTADMG)
+SLACK_BOT_TOKEN=xoxb-...
+SLACK_SIGNING_SECRET=...
+SLACK_APP_TOKEN=xapp-...
 
-- Check logs: `wrangler tail`
-- MongoDB issues: Verify IP whitelist
-- Slack issues: Check bot permissions
-- Create GitHub issue for bugs
+# APIs
+ANTHROPIC_API_KEY=sk-ant-api03-...
+ATTIO_API_KEY=...
 
-## License
+# MongoDB (optional)
+MONGODB_URI=mongodb+srv://...
+```
 
-[Your License]
+### Slack App Configuration
+
+1. Create a Slack app at https://api.slack.com/apps
+2. Enable Socket Mode
+3. Add Bot Token Scopes:
+   - `app_mentions:read`
+   - `chat:write`
+   - `channels:history`
+   - `channels:read`
+   - `groups:history`
+   - `groups:read`
+   - `im:history`
+   - `im:read`
+   - `im:write`
+   - `users:read`
+4. Install app to workspace
+5. Copy tokens to `.env`
+
+### Local Development
+
+**⚠️ Important**: The bot is currently only connected to the production Railway deployment. There is no separate development bot configured in Slack.
+
+#### Development Workflow Options
+
+1. **Direct Production Updates** (Current Setup)
+   ```bash
+   git push origin main  # Auto-deploys to Railway
+   ```
+   - ⚡ Fast iteration
+   - ⚠️ Risk of breaking production
+   - ✅ Good for small fixes
+
+2. **Create a Development Bot** (Recommended)
+   - Create a new Slack app for development
+   - Use different bot name (e.g., `@crm-bot-dev`)
+   - Run locally with dev credentials:
+   ```bash
+   npm install
+   npm run dev  # Runs with nodemon
+   ```
+
+3. **Fork & Test Strategy**
+   - Fork the repository for major changes
+   - Create a separate Railway project
+   - Test thoroughly before merging to main
+
+#### Best Practices
+
+1. **Test Commands Locally First**
+   - Use the test scripts in `/src/test-*.js`
+   - Verify API calls work before deploying
+
+2. **Use Feature Branches**
+   ```bash
+   git checkout -b feature/add-new-command
+   # Make changes
+   git push origin feature/add-new-command
+   # Create PR for review
+   ```
+
+3. **Monitor Deployments**
+   - Watch Railway logs during deployment
+   - Test immediately after deploy
+   - Have rollback plan ready
+
+## 🚂 Deployment
+
+### Railway (Production)
+
+- **Repository**: https://github.com/TextQLLabs/crm-bot
+- **Auto-deploy**: ✅ Enabled - pushes to `main` branch trigger automatic deployment
+- **Deploy Time**: ~2-3 minutes
+- **Environment**: Variables set in Railway dashboard (not from `.env`)
+
+### Deployment Process
+
+1. **Push to GitHub**
+   ```bash
+   git add .
+   git commit -m "Your changes"
+   git push origin main
+   ```
+
+2. **Railway Auto-Deploy**
+   - Detects push within seconds
+   - Builds new container
+   - Runs health checks
+   - Swaps to new version
+
+3. **Monitor Deployment**
+   - Go to Railway dashboard → Your project
+   - Click on deployment to see logs
+   - Look for: "⚡️ CRM Bot with ReAct Agent is running!"
+
+### Error Handling
+
+**Build Errors**:
+- Shown in Railway dashboard under failed deployment
+- Common: Missing dependencies, syntax errors
+- Fix locally first, then push
+
+**Runtime Errors**:
+- Visible in Railway logs (real-time)
+- Bot will show error messages in Slack
+- Railway auto-restarts on crashes
+
+**Rollback**:
+- Railway dashboard → Deployments → Click previous deployment → "Redeploy"
+- Or use git: `git revert HEAD && git push`
+
+### Monitoring
+- **Real-time Logs**: Railway dashboard → "View Logs"
+- **Deployment Status**: Green = running, Red = failed
+- **Debug Info**: Bot includes deployment info in thinking message
+- **Alerts**: Set up in Railway dashboard (optional)
+
+## 🧪 Testing
+
+### Basic Test Flow
+1. Mention the bot: `@crm-bot-ethan test`
+2. Search test: `@crm-bot-ethan find deals related to Raine`
+3. Note creation: `@crm-bot-ethan add a note to the Raine deal saying "Test note"`
+4. Thread test: Reply to the bot's message to test context retention
+
+### Testing with MCP Server
+An MCP (Model Context Protocol) server is configured for the Slack integration, allowing direct bot testing without manual Slack interaction. This is available on the Ethan Ding account.
+
+## 🗺️ Roadmap & Next Steps
+
+### Immediate Priorities
+- [ ] Add entity creation (companies, deals, people)
+- [ ] Implement field updates
+- [ ] Add bulk operations support
+- [ ] Create activity/task logging
+
+### Future Enhancements
+- [ ] Multi-workspace support
+- [ ] Custom field mapping
+- [ ] Scheduled reports
+- [ ] Webhook support for real-time CRM updates
+- [ ] Integration with other tools (email, calendar)
+- [ ] Advanced analytics and insights
+
+### Technical Improvements
+- [ ] Add comprehensive error handling
+- [ ] Implement rate limiting
+- [ ] Add request queuing
+- [ ] Create admin dashboard
+- [ ] Add performance monitoring
+- [ ] Implement caching strategy
+
+## 🐛 Troubleshooting
+
+### Common Issues
+
+1. **"invalid_auth" error**
+   - Check Slack tokens are correct in Railway
+   - Ensure tokens match the app (App ID: A094BJTADMG)
+
+2. **"missing_scope" error**
+   - Add missing OAuth scopes in Slack app
+   - Reinstall app to workspace
+   - Update tokens in Railway
+
+3. **"401 invalid x-api-key"**
+   - Verify Anthropic API key is correct
+   - Check for extra spaces or quotes
+
+4. **Bot not responding**
+   - Check Railway deployment status
+   - Verify bot is mentioned correctly
+   - Check logs for connection errors
+
+## 👥 Team
+
+- **Built by**: Ethan Ding
+- **Organization**: TextQL
+- **Slack Workspace**: TextQL
+
+## 📝 Notes
+
+- Always use `.env` file as source of truth for credentials
+- Socket Mode means no public URLs needed
+- Railway handles automatic restarts on crashes
+- MongoDB is optional - falls back to in-memory storage
+- Preview mode ensures safety for all write operations
+
+## 🔗 Important Links
+
+- **GitHub**: https://github.com/TextQLLabs/crm-bot
+- **Railway Dashboard**: [Check your Railway account]
+- **Slack App**: https://api.slack.com/apps/A094BJTADMG
+- **Attio CRM**: https://app.attio.com
+
+## 📚 Additional Documentation
+
+See `CLAUDE.md` for AI assistant context and technical implementation details.
