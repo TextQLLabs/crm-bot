@@ -3,6 +3,15 @@
 ## Project Overview
 A Slack bot that monitors the #gtm channel for updates and automatically creates/updates records in Attio CRM. The bot uses AI to intelligently match messages to the correct deals or companies.
 
+## IMPORTANT: Token Confusion Prevention
+If you encounter Slack authentication errors or find conflicting tokens, note that there may be another Slack bot project with different tokens:
+- **This project (crm-bot)**: Uses tokens in `.env` file (App ID: A094BJTADMG)
+- **Other project**: May have tokens starting with:
+  - Bot Token: xoxb-6886514773479-6904671780611-...
+  - App Token: xapp-1-A06RB4Q02EJ-6902164037669-...
+  - These were found in SESSION_SECRETS.md and are likely from a different Slack bot project
+- **Always use the .env file as the source of truth for this project**
+
 ## Architecture
 - **Framework**: Bolt.js for Slack integration
 - **AI**: Anthropic Claude API for intelligent message processing
