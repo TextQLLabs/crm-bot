@@ -9,8 +9,12 @@ echo "🚂 Updating Railway environment variables..."
 if [ -f .env ]; then
     export $(cat .env | grep -v '^#' | xargs)
     
-    # Set the Anthropic API key from the loaded environment variable
-    railway variables set ANTHROPIC_API_KEY="$ANTHROPIC_API_KEY"
+    # Set all environment variables from .env
+    echo "Setting ANTHROPIC_API_KEY..."
+    railway vars set ANTHROPIC_API_KEY="$ANTHROPIC_API_KEY"
+    
+    echo "Setting ATTIO_API_KEY..."
+    railway vars set ATTIO_API_KEY="$ATTIO_API_KEY"
     
     echo "✅ Updated ANTHROPIC_API_KEY"
     echo "🔄 Railway will automatically redeploy with the new variable"

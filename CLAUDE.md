@@ -135,3 +135,52 @@ When testing changes:
 2. **Preview Mode**: All write operations show preview before executing
 3. **Fuzzy Matching**: Uses string similarity for entity matching
 4. **Error Recovery**: ReAct agent attempts multiple strategies on failure
+
+## CLI Tools & API Knowledge
+
+### Railway CLI
+- **Version Note**: Current Railway CLI (as of July 2025) only supports **viewing** variables, not setting them
+- **Linking**: `railway link` - Interactive command to connect to a project
+- **Status**: `railway status` - Shows linked project info
+- **Variables**: `railway variables` - Lists all env vars (read-only)
+- **No Set Command**: Cannot set variables via CLI - must use Railway dashboard
+- **Project Name**: Current project is "invigorating-imagination"
+- **Service Name**: "crm-bot"
+
+### Attio API
+- **Note Creation Format** (Working as of July 2025):
+  ```json
+  {
+    "data": {
+      "parent_object": "deals", // or "companies", "people"
+      "parent_record_id": "uuid-here",
+      "title": "Note from Slack",
+      "content": "Note text here", // String, not object!
+      "format": "plaintext",
+      "created_by_actor": {
+        "type": "api-token"
+      }
+    }
+  }
+  ```
+- **Important**: Content must be a string, not nested object
+- **Auth**: Uses Bearer token in Authorization header
+- **Base URL**: https://api.attio.com/v2
+- **Search**: Supports fuzzy search via query parameter
+
+### Slack Bot Tokens
+- **Current App ID**: A094BJTADMG (CRM Bot)
+- **Other Project**: App ID A06RB4Q02EJ (different Slack bot, tokens start with xoxb-6886514773479...)
+- **Socket Mode**: Requires app token (xapp-...) with `connections:write` scope
+- **Required Scopes**: 
+  - `app_mentions:read`, `chat:write`
+  - `channels:history`, `channels:read` (for thread context)
+  - `groups:history`, `groups:read`
+  - `im:history`, `im:read`, `im:write`
+  - `users:read`
+
+### Environment Variable Management
+- **Source of Truth**: Always use `.env` file
+- **Railway**: Must update via dashboard, not CLI
+- **Token Confusion**: Check App ID in token to identify which project
+- **MongoDB**: Falls back to in-memory if connection fails
