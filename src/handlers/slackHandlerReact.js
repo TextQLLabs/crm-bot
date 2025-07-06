@@ -257,8 +257,9 @@ async function handleMention({ event, message, say, client }) {
         text: formatSuccessMessage(result)
       });
 
-      // If there were multiple steps, show the reasoning in thread
-      if (result.steps && result.steps.length > 1) {
+      // Only show reasoning steps if explicitly requested or if there was an error
+      // This keeps responses cleaner and less sprawling
+      if (false && result.steps && result.steps.length > 1) {
         await say({
           text: formatReasoningSteps(result.steps),
           thread_ts: msg.ts
@@ -283,12 +284,12 @@ async function handleMention({ event, message, say, client }) {
 
 function formatSuccessMessage(result) {
   const pkg = require('../../package.json');
-  let message = '✅ ';
+  let message = '';
   
   if (result.answer) {
-    message += result.answer;
+    message = result.answer;
   } else {
-    message += 'Task completed successfully!';
+    message = '✅ Task completed successfully!';
   }
 
   // Check if any steps have URLs (like note creation)
@@ -296,25 +297,25 @@ function formatSuccessMessage(result) {
     .filter(s => s.observation && s.observation.url)
     .map(s => s.observation.url);
   
-  if (urlSteps.length > 0) {
+  if (urlSteps.length > 0 && !message.includes('http')) {
     message += '\n\n🔗 Links:';
     urlSteps.forEach(url => {
       message += `\n• ${url}`;
     });
   }
 
-  // Add a summary of what was done
+  // Only show actions summary for complex operations
   const actions = result.steps
     .filter(s => s.action)
     .map(s => s.action);
   
-  if (actions.length > 0) {
+  if (actions.length > 2 && !actions.every(a => a === 'search_crm')) {
     const uniqueActions = [...new Set(actions)];
-    message += '\n\n📋 Actions taken: ' + uniqueActions.join(', ');
+    message += '\n\n📋 ' + uniqueActions.join(', ');
   }
 
-  // Add version and deployment info
-  message += `\n\n🚂 Railway v${pkg.version}`;
+  // Add version info
+  message += `\n\n🚂 v${pkg.version}`;
 
   return message;
 }
