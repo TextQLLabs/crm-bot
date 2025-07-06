@@ -12,18 +12,21 @@
 
 ## Environment Variables & Keys
 
+**IMPORTANT: All credentials are stored in the `.env` file in the project root.**
+**Do NOT create separate session secrets files - use .env as the single source of truth.**
+
 ### Slack Configuration
-- `SLACK_BOT_TOKEN`: [Stored in .env file - starts with xoxb-]
-- `SLACK_SIGNING_SECRET`: [Stored in .env file]
-- `SLACK_APP_TOKEN`: [Stored in .env file - starts with xapp-]
+- `SLACK_BOT_TOKEN`: See .env file (starts with xoxb-)
+- `SLACK_SIGNING_SECRET`: See .env file
+- `SLACK_APP_TOKEN`: See .env file (starts with xapp-)
 - `SLACK_BOT_ID`: (need to get from Slack app info)
 
 ### API Keys
-- `ANTHROPIC_API_KEY`: [Stored in .env file - starts with sk-ant-]
-- `ATTIO_API_KEY`: [Stored in .env file]
+- `ANTHROPIC_API_KEY`: See .env file (starts with sk-ant-api03-)
+- `ATTIO_API_KEY`: See .env file
 
 ### MongoDB
-- `MONGODB_URI`: [Stored in .env file - MongoDB Atlas cluster "ethan-test"]
+- `MONGODB_URI`: See .env file (MongoDB Atlas cluster)
 - Connection name: "ethan-test"
 
 ### Cloudflare
@@ -34,7 +37,8 @@
 - KV Preview ID: a02f44a3674b42b79d05a40e32c8e8f6
 
 ### Railway
-- API Token: [Configured in Railway MCP]
+- API Token: Configured in Railway MCP
+- **Deployment URL**: Check Railway dashboard for the deployment URL
 
 ## MCP Servers Configured
 
@@ -202,9 +206,9 @@ git push                          # Pushes to https://github.com/TheEthanDing/cr
 
 When you restart this session:
 1. Read this file first for full context
-2. Check current deployment status
-3. Continue from "Next Steps" section
-4. All environment variables are listed above
-5. All API keys and tokens are preserved here
+2. **Check the .env file for all current credentials** - this is the single source of truth
+3. Check current deployment status on Railway
+4. Continue from "Next Steps" section
+5. Do NOT create separate session secrets files
 
-Last action: Configured Railway MCP server and prepared for Railway deployment as a better alternative to Cloudflare Workers.
+Last action: Deployed to Railway successfully. Bot is running with Socket Mode.
