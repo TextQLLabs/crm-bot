@@ -185,7 +185,9 @@ IMPORTANT:
 - Continue until you have a Final Answer
 - If you need more information, use tools to get it
 - When the user provides additional context (marked with "Additional context:"), incorporate it into your understanding
-- Be aware that users may provide clarifications or additional details in follow-up messages`;
+- Be aware that users may provide clarifications or additional details in follow-up messages
+- CRITICAL: When presenting search results, ALWAYS include the Attio URL for each found entity. Format as: "Name - [View in Attio](url)"
+- Never claim to have found something without providing the direct link to verify it`;
   }
 
   buildUserPrompt(context) {
