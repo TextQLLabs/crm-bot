@@ -168,6 +168,20 @@ When testing changes:
 - **Base URL**: https://api.attio.com/v2
 - **Search**: Supports fuzzy search via query parameter
 
+### Attio URL Format (IMPORTANT - Updated Jan 2025)
+- **Correct URL structure**:
+  - Companies: `https://app.attio.com/textql-data/company/{id}/overview`
+  - Deals: `https://app.attio.com/textql-data/deal/{id}/overview`
+  - People: `https://app.attio.com/textql-data/person/{id}/overview`
+- **Key differences from API paths**:
+  - Use singular form (company, not companies)
+  - No `/record/` in the path
+  - Must include `/overview` at the end
+  - Without `/overview`, links just go to the index page
+- **Example**: 
+  - ✅ Correct: `https://app.attio.com/textql-data/company/a41e73b9-5dac-493f-bb2d-d38bb166c330/overview`
+  - ❌ Wrong: `https://app.attio.com/textql-data/companies/record/a41e73b9-5dac-493f-bb2d-d38bb166c330`
+
 ### Slack Bot Tokens
 - **Current App ID**: A094BJTADMG (CRM Bot)
 - **Other Project**: App ID A06RB4Q02EJ (different Slack bot, tokens start with xoxb-6886514773479...)

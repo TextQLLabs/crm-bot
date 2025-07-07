@@ -331,7 +331,7 @@ RESPONSE RULES:
       
       const noteId = response.data.data.id?.note_id || response.data.data.id;
       const workspace = 'textql-data';
-      const attioUrl = `https://app.attio.com/${workspace}/${entityType}s/record/${entityId}`;
+      const attioUrl = `https://app.attio.com/${workspace}/${entityType}/${entityId}/overview`;
       
       return { 
         success: true, 

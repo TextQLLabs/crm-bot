@@ -111,7 +111,7 @@ async function searchCompanies(query) {
         domains: domains,
         slug: domains[0] || '',
         score: score,
-        url: `https://app.attio.com/textql-data/companies/record/${company.id?.record_id}`
+        url: `https://app.attio.com/textql-data/company/${company.id?.record_id}/overview`
       };
     });
     
@@ -231,7 +231,7 @@ async function searchDeals(query) {
         id: deal.id?.record_id,
         name: name,
         description: `Value: ${value}`,
-        url: `https://app.attio.com/textql-data/deals/record/${deal.id?.record_id}`
+        url: `https://app.attio.com/textql-data/deal/${deal.id?.record_id}/overview`
       };
     });
   } catch (error) {
@@ -278,7 +278,7 @@ async function searchPeople(query) {
         id: personId,
         name: name,
         description: email,
-        url: `https://app.attio.com/textql-data/people/record/${personId}`
+        url: `https://app.attio.com/textql-data/person/${personId}/overview`
       };
     });
   } catch (error) {
