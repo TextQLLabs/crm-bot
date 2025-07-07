@@ -126,31 +126,41 @@ async function searchCompanies(query) {
 
 // Generate search variations for fuzzy matching
 function generateSearchVariations(query) {
-  const variations = new Set([query]);
+  const variations = [];
   
-  // Add original query
-  variations.add(query);
+  // PRIORITY 1: Exact match (most important)
+  variations.push(query);
   
-  // Add lowercase version
-  variations.add(query.toLowerCase());
+  // PRIORITY 2: Case insensitive exact match
+  if (query.toLowerCase() !== query) {
+    variations.push(query.toLowerCase());
+  }
   
-  // Add without common words
-  const withoutCommon = query.replace(/\b(the|inc|llc|ltd|corporation|corp|company|co|group)\b/gi, '').trim();
+  // PRIORITY 3: Without common corporate suffixes (but keep "The" at start)
+  const withoutCommon = query.replace(/\b(inc|llc|ltd|corporation|corp|company|co)\b/gi, '').trim();
   if (withoutCommon && withoutCommon !== query) {
-    variations.add(withoutCommon);
+    variations.push(withoutCommon);
   }
   
-  // Add individual words (for multi-word queries)
-  const words = query.split(/\s+/).filter(word => word.length > 2);
-  words.forEach(word => variations.add(word));
-  
-  // Add partial matches (first word, last word)
-  if (words.length > 1) {
-    variations.add(words[0]);
-    variations.add(words[words.length - 1]);
+  // PRIORITY 4: Core name (remove both "The" and corporate suffixes)
+  const coreName = query.replace(/^the\s+/i, '').replace(/\b(inc|llc|ltd|corporation|corp|company|co|group)\b/gi, '').trim();
+  if (coreName && coreName !== query && coreName !== withoutCommon) {
+    variations.push(coreName);
   }
   
-  return Array.from(variations);
+  // PRIORITY 5: Only add individual words if they're substantial (avoid common words)
+  const words = query.split(/\s+/).filter(word => 
+    word.length > 3 && 
+    !['the', 'and', 'for', 'inc', 'llc', 'ltd', 'corp', 'company'].includes(word.toLowerCase())
+  );
+  
+  // Only add the most significant word (usually company name) not all words
+  if (words.length > 0 && words[0] !== query) {
+    variations.push(words[0]); // Usually the main company name
+  }
+  
+  // Remove duplicates while preserving order
+  return [...new Set(variations)];
 }
 
 // Calculate relevance score for fuzzy matching
