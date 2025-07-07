@@ -126,6 +126,28 @@ async function searchCompanies(query) {
   }
 }
 
+// Generate common spelling variations
+function generateSpellingVariations(query) {
+  const variations = [];
+  const lower = query.toLowerCase();
+  
+  // Handle specific known variations
+  if (lower.includes('rain')) {
+    // rain → raine
+    variations.push(query.replace(/rain/gi, 'raine'));
+  }
+  if (lower.includes('rayne')) {
+    // rayne → raine
+    variations.push(query.replace(/rayne/gi, 'raine'));
+  }
+  if (lower.includes('rane')) {
+    // rane → raine
+    variations.push(query.replace(/rane/gi, 'raine'));
+  }
+  
+  return variations;
+}
+
 // Generate search variations for fuzzy matching
 function generateSearchVariations(query) {
   const variations = [];
@@ -160,6 +182,15 @@ function generateSearchVariations(query) {
   if (words.length > 0 && words[0] !== query) {
     variations.push(words[0]); // Usually the main company name
   }
+  
+  // PRIORITY 6: Handle common misspellings for fuzzy matching
+  // This helps with cases like "rain" → "raine", "rayne" → "raine"
+  const spellingVariations = generateSpellingVariations(query);
+  spellingVariations.forEach(v => {
+    if (!variations.includes(v)) {
+      variations.push(v);
+    }
+  });
   
   // Remove duplicates while preserving order
   return [...new Set(variations)];

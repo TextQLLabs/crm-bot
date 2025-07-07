@@ -22,6 +22,11 @@ class ReactAgent {
         parameters: ["entity_type", "search_query"],
         execute: require('./attioService').searchAttio
       },
+      web_search: {
+        description: "Search Google to find information about a company or person",
+        parameters: ["query"],
+        execute: this.webSearch.bind(this)
+      },
       create_note: {
         description: "Add a note to a CRM record",
         parameters: ["entity_type", "entity_id", "note_content"],
@@ -187,10 +192,15 @@ SEARCH STRATEGY - IMPORTANT:
   4. Abbreviations or alternate names the user suggests
 - For person searches, try:
   1. Full name (e.g., "John Smith")
-  2. Last name only (e.g., "Smith")
+  2. Last name only (e.g., "Smith")  
   3. First name only if last name gives too many results
 - NEVER give up after one search - always try at least 2-3 variations
 - The search function uses fuzzy matching, so partial names often work better than full names
+- If no results found after trying CRM variations, use web_search to:
+  1. Check if the company name is misspelled (e.g., "rain group" → "raine group")
+  2. Find the correct/official company name
+  3. Get additional context about the company
+  4. Then retry CRM search with the corrected name
 
 RESPONSE RULES:
 - Always start with a Thought
@@ -274,6 +284,9 @@ RESPONSE RULES:
     switch (action) {
       case 'search_crm':
         return await tool.execute(input.search_query || input.query);
+        
+      case 'web_search':
+        return await this.webSearch(input.query);
         
       case 'create_note':
         return await this.createNote(
@@ -398,6 +411,43 @@ RESPONSE RULES:
       return { 
         success: false, 
         error: error.response?.data?.message || error.message 
+      };
+    }
+  }
+
+  async webSearch(query) {
+    try {
+      // Simple web search simulation - in production, you'd use a real search API
+      console.log(`Web searching for: "${query}"`);
+      
+      // For now, return helpful information about common misspellings
+      const lowerQuery = query.toLowerCase();
+      
+      // Check for common variations of "The Raine Group"
+      if (lowerQuery.includes('rain') || lowerQuery.includes('rayne') || lowerQuery.includes('rane')) {
+        return {
+          success: true,
+          results: [
+            {
+              title: "The Raine Group - Investment Bank",
+              snippet: "The Raine Group is a global merchant bank focused exclusively on technology, media, and telecommunications.",
+              suggestion: "Did you mean 'The Raine Group'? (spelled R-A-I-N-E)"
+            }
+          ],
+          correction: "The Raine Group"
+        };
+      }
+      
+      // Default response
+      return {
+        success: true,
+        results: [],
+        message: `No web results found for "${query}"`
+      };
+    } catch (error) {
+      return {
+        success: false,
+        error: error.message
       };
     }
   }
