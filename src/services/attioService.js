@@ -44,6 +44,8 @@ async function searchAttio(query) {
       allResults.forEach(r => console.log(`  - ${r.name} (${r.type}) ${r.url ? `-> ${r.url}` : 'NO URL'}`));
     } else {
       console.log('No results found');
+      // Provide search hints for the agent
+      console.log('Hint: Try searching for just part of the name or without common words like "The", "Inc", etc.');
     }
 
     // Sort by relevance (you might want to implement a better ranking algorithm)

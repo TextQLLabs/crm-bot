@@ -44,7 +44,7 @@ class ReactAgent {
       }
     };
     
-    this.maxIterations = 10;
+    this.maxIterations = 15; // Increased to allow for multiple search attempts
   }
 
   async processMessage(message, options = {}) {
@@ -178,18 +178,29 @@ When you have the final answer:
 Thought: I now have enough information to provide the final answer
 Final Answer: [Your complete response to the user]
 
-IMPORTANT:
+SEARCH STRATEGY - IMPORTANT:
+- When searching for entities, if your first search returns no results, ALWAYS try alternative searches
+- For company searches, try these variations in order:
+  1. Exact name as provided (e.g., "The Raine Group")
+  2. Without common words like "The" (e.g., "Raine Group")
+  3. Core name only (e.g., "Raine")
+  4. Abbreviations or alternate names the user suggests
+- For person searches, try:
+  1. Full name (e.g., "John Smith")
+  2. Last name only (e.g., "Smith")
+  3. First name only if last name gives too many results
+- NEVER give up after one search - always try at least 2-3 variations
+- The search function uses fuzzy matching, so partial names often work better than full names
+
+RESPONSE RULES:
 - Always start with a Thought
 - Use EXACT tool names from the list
 - Action Input must be valid JSON
 - Continue until you have a Final Answer
-- If you need more information, use tools to get it
-- When the user provides additional context (marked with "Additional context:"), incorporate it into your understanding
-- Be aware that users may provide clarifications or additional details in follow-up messages
 - CRITICAL: When presenting search results, ALWAYS include clickable Attio URLs for each found entity
 - Never claim to have found something without providing the direct link to verify it
 - BE CONCISE: Final Answers should be 1-3 sentences max unless showing a list of results
-- When no results found: Simply state "No results found for [query]" and suggest alternative searches
+- When no results found after trying variations: State what you searched for and suggest the entity may need to be added
 - When results found: List them with links, no extra explanation needed`;
   }
 

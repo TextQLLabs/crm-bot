@@ -42,6 +42,7 @@ app.message(async ({ message, say, client }) => {
 app.action('approve_action', handleButtonAction);
 app.action('cancel_action', handleButtonAction);
 app.action('show_technical_details', handleButtonAction);
+app.action('show_search_details', handleButtonAction);
 
 // Start the app
 (async () => {
