@@ -250,11 +250,15 @@ async function handleMention({ event, message, say, client }) {
 
     // Format and send response
     if (result.success) {
+      // Create message with optional details button
+      const { text, blocks } = formatSuccessMessage(result);
+      
       // Update the thinking message with the result
       await client.chat.update({
         channel: msg.channel,
         ts: thinkingMessage.ts,
-        text: formatSuccessMessage(result)
+        text: text,
+        blocks: blocks
       });
 
       // Only show reasoning steps if explicitly requested or if there was an error
@@ -292,32 +296,50 @@ function formatSuccessMessage(result) {
     message = '✅ Task completed successfully!';
   }
 
-  // Check if any steps have URLs (like note creation)
-  const urlSteps = result.steps
-    .filter(s => s.observation && s.observation.url)
-    .map(s => s.observation.url);
-  
-  if (urlSteps.length > 0 && !message.includes('http')) {
-    message += '\n\n🔗 Links:';
-    urlSteps.forEach(url => {
-      message += `\n• ${url}`;
-    });
-  }
-
-  // Only show actions summary for complex operations
-  const actions = result.steps
-    .filter(s => s.action)
-    .map(s => s.action);
-  
-  if (actions.length > 2 && !actions.every(a => a === 'search_crm')) {
-    const uniqueActions = [...new Set(actions)];
-    message += '\n\n📋 ' + uniqueActions.join(', ');
-  }
-
   // Add version info
   message += `\n\n🚂 v${pkg.version}`;
 
-  return message;
+  // Build blocks for Slack message
+  const blocks = [
+    {
+      type: 'section',
+      text: {
+        type: 'mrkdwn',
+        text: message
+      }
+    }
+  ];
+
+  // Collect all search observations for the details
+  const searchSteps = result.steps.filter(s => 
+    s.action === 'search_crm' && s.observation
+  );
+
+  if (searchSteps.length > 0) {
+    // Add a button to show search details
+    blocks.push({
+      type: 'actions',
+      elements: [
+        {
+          type: 'button',
+          text: {
+            type: 'plain_text',
+            text: '🔍 Show Search Details',
+            emoji: true
+          },
+          action_id: 'show_search_details',
+          value: JSON.stringify({
+            steps: searchSteps.map(s => ({
+              query: s.actionInput?.search_query || s.actionInput?.query || 'unknown',
+              results: s.observation
+            }))
+          })
+        }
+      ]
+    });
+  }
+
+  return { text: message, blocks };
 }
 
 function formatReasoningSteps(steps) {
@@ -478,6 +500,75 @@ async function handleButtonAction({ body, ack, client }) {
             }
           }
         ]
+      }
+    });
+    return;
+  }
+
+  if (actionId === 'show_search_details') {
+    // Show search results in a modal
+    const searchData = JSON.parse(value);
+    const blocks = [];
+    
+    searchData.steps.forEach((step, index) => {
+      blocks.push({
+        type: 'header',
+        text: {
+          type: 'plain_text',
+          text: `Search ${index + 1}: "${step.query}"`
+        }
+      });
+      
+      if (Array.isArray(step.results) && step.results.length > 0) {
+        blocks.push({
+          type: 'section',
+          text: {
+            type: 'mrkdwn',
+            text: `Found ${step.results.length} results:`
+          }
+        });
+        
+        step.results.forEach(result => {
+          const resultText = `*${result.name}* (${result.type})\n` +
+                            (result.description ? `${result.description}\n` : '') +
+                            (result.url ? `<${result.url}|View in Attio>` : '');
+          
+          blocks.push({
+            type: 'section',
+            text: {
+              type: 'mrkdwn',
+              text: resultText
+            }
+          });
+        });
+      } else {
+        blocks.push({
+          type: 'section',
+          text: {
+            type: 'mrkdwn',
+            text: '_No results found_'
+          }
+        });
+      }
+      
+      if (index < searchData.steps.length - 1) {
+        blocks.push({ type: 'divider' });
+      }
+    });
+    
+    await client.views.open({
+      trigger_id: body.trigger_id,
+      view: {
+        type: 'modal',
+        title: {
+          type: 'plain_text',
+          text: 'Search Details'
+        },
+        close: {
+          type: 'plain_text',
+          text: 'Close'
+        },
+        blocks: blocks
       }
     });
     return;
