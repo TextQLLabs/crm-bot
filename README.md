@@ -26,10 +26,13 @@ crm-bot/
 │   │   ├── database-mock.js        # In-memory DB fallback
 │   │   └── database.js             # MongoDB integration
 │   └── workers/                    # Cloudflare Workers (unused)
+├── local-bot.js                    # 🆕 Local testing interface
+├── test-bot.js                     # 🆕 Automated test suite
 ├── .env                            # Environment variables (source of truth)
 ├── railway.toml                    # Railway deployment config
 ├── CLAUDE.md                       # AI assistant context
-└── SESSION_CONTEXT.md              # Session recovery info
+├── DEVELOPMENT_WORKFLOW.md         # 🆕 Development guide
+└── LOCAL_TESTING.md                # 🆕 Local testing setup
 ```
 
 ## 🚀 Current Functionality
@@ -108,50 +111,67 @@ MONGODB_URI=mongodb+srv://...
 
 ### Local Development
 
-**⚠️ Important**: The bot is currently only connected to the production Railway deployment. There is no separate development bot configured in Slack.
+**🎉 NEW**: Test the AI locally without Slack! Perfect for rapid development.
 
-#### Development Workflow Options
+#### Development Workflow
 
-1. **Direct Production Updates** (Current Setup)
+1. **Test AI Logic Locally** (No Slack Required!)
+   ```bash
+   # Interactive testing - chat with the bot
+   npm run local
+   
+   # Type commands like:
+   > find rain group
+   > search for the raine group
+   > /debug  # Show AI reasoning steps
+   > /exit   # Quit
+   
+   # Or quick one-liner tests
+   echo "find the raine group" | npm run local
+   
+   # Run automated test suite
+   npm run test:bot
+   ```
+
+2. **Deploy to Test Slack Features**
    ```bash
    git push origin main  # Auto-deploys to Railway
    ```
-   - ⚡ Fast iteration
-   - ⚠️ Risk of breaking production
-   - ✅ Good for small fixes
 
-2. **Create a Development Bot** (Recommended)
-   - Create a new Slack app for development
-   - Use different bot name (e.g., `@crm-bot-dev`)
-   - Run locally with dev credentials:
-   ```bash
-   npm install
-   npm run dev  # Runs with nodemon
-   ```
+3. **Full Development Cycle**:
+   - **Phase 1**: Test AI changes locally (`npm run local`)
+   - **Phase 2**: Deploy and test Slack integration
+   - See [DEVELOPMENT_WORKFLOW.md](./DEVELOPMENT_WORKFLOW.md) for details
 
-3. **Fork & Test Strategy**
-   - Fork the repository for major changes
-   - Create a separate Railway project
-   - Test thoroughly before merging to main
+#### Local Testing Features
+
+- **Interactive Chat**: Real-time conversation with the bot
+- **Debug Mode**: See the AI's reasoning process
+- **Fuzzy Search**: Test misspellings like "rain" → "raine"
+- **Thread Context**: Test multi-message conversations
+- **Instant Feedback**: No deployment wait times
 
 #### Best Practices
 
-1. **Test Commands Locally First**
-   - Use the test scripts in `/src/test-*.js`
-   - Verify API calls work before deploying
+1. **Always Test AI Logic Locally First**
+   ```bash
+   # Make changes to reactAgent.js or attioService.js
+   npm run local
+   # Test your changes instantly
+   ```
 
 2. **Use Feature Branches**
    ```bash
-   git checkout -b feature/add-new-command
-   # Make changes
-   git push origin feature/add-new-command
-   # Create PR for review
+   git checkout -b feature/improve-search
+   # Test locally until perfect
+   npm run local
+   # Then deploy
+   git push origin feature/improve-search
    ```
 
-3. **Monitor Deployments**
-   - Watch Railway logs during deployment
-   - Test immediately after deploy
-   - Have rollback plan ready
+3. **Monitor Production**
+   - Railway logs show deployment status
+   - Bot includes version in responses (e.g., "🚂 v1.8.0")
 
 ## 🚂 Deployment
 
