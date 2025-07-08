@@ -316,10 +316,10 @@ async function handleMention({ event, message, say, client }) {
 
     // Format and send response
     if (result.success) {
-      // Create message with optional details button
-      const { text, blocks } = formatSuccessMessage(result);
-      
       try {
+        // Create message with optional details button
+        const { text, blocks } = formatSuccessMessage(result);
+      
         // Check if this is a notes response - if so, use text only
         const hasNotesInResponse = result.steps && result.steps.some(s => s.action === 'get_notes');
         
@@ -369,12 +369,17 @@ async function handleMention({ event, message, say, client }) {
           });
         } catch (fallbackError) {
           console.error('Error updating message even without blocks:', fallbackError);
+          // DO NOT RETHROW - this prevents Bolt from seeing the error
         }
       }
 
       // Only show reasoning steps if explicitly requested or if there was an error
       // This keeps responses cleaner and less sprawling
       // REMOVED: Old say() call that could cause issues
+      } catch (responseError) {
+        console.error('Error sending success response:', responseError);
+        // Ensure we never throw to Bolt
+      }
     } else {
       await client.chat.update({
         channel: msg.channel,
@@ -411,7 +416,6 @@ async function handleMention({ event, message, say, client }) {
 }
 
 function formatSuccessMessage(result) {
-  const pkg = require('../../package.json');
   let message = '';
   
   if (result.answer) {
@@ -419,9 +423,6 @@ function formatSuccessMessage(result) {
   } else {
     message = '✅ Task completed successfully!';
   }
-
-  // Temporarily disable version info to debug
-  // message += `\n\n🚂 v${pkg.version}`;
   
   // Validate message length for Slack (max 3000 chars for text)
   if (message.length > 3000) {
@@ -429,7 +430,7 @@ function formatSuccessMessage(result) {
     message = message.substring(0, 2950) + '...';
   }
 
-  // Build blocks for Slack message - validate text content
+  // Simple validation - no special characters or formatting
   const validatedMessage = message
     .replace(/\n{3,}/g, '\n\n') // Replace multiple newlines with max 2
     .trim();
