@@ -41,13 +41,17 @@ const app = new App({
   token: process.env.SLACK_BOT_TOKEN,
   receiver,
   socketMode: true,
-  appToken: process.env.SLACK_APP_TOKEN
+  appToken: process.env.SLACK_APP_TOKEN,
+  // Disable Bolt's default error handler
+  processBeforeResponse: true,
+  extendedErrorHandler: true
 });
 
 // Handle app mentions in any channel with error handling
-app.event('app_mention', async (args) => {
+app.event('app_mention', async ({ event, client }) => {
   try {
-    await handleMention(args);
+    // Don't pass say to avoid automatic block formatting
+    await handleMention({ event, client });
   } catch (error) {
     console.error('Error in app_mention handler:', error);
     // Don't let Bolt send its own error message
@@ -81,6 +85,13 @@ app.action('approve_action', handleButtonAction);
 app.action('cancel_action', handleButtonAction);
 app.action('show_technical_details', handleButtonAction);
 app.action('show_search_details', handleButtonAction);
+
+// Custom error handler to prevent Bolt from sending invalid_blocks
+app.error(async (error) => {
+  console.error('Global error handler:', error);
+  // Return false to prevent Bolt from sending its own error message
+  return false;
+});
 
 // Start the app
 (async () => {
