@@ -495,4 +495,64 @@ async function deleteNote(noteId) {
   }
 }
 
-module.exports = { searchAttio, createOrUpdateRecord, getAttioClient, deleteNote, getNoteDetails };
+async function getNotes(options = {}) {
+  try {
+    let url = '/notes';
+    const params = new URLSearchParams();
+    
+    // Add filters if provided
+    if (options.recordId) {
+      params.append('parent_record_id', options.recordId);
+    }
+    if (options.recordType) {
+      params.append('parent_object', options.recordType);
+    }
+    if (options.limit) {
+      params.append('limit', options.limit);
+    }
+    
+    if (params.toString()) {
+      url += `?${params.toString()}`;
+    }
+    
+    console.log('Getting notes with URL:', url);
+    const response = await getAttioClient().get(url);
+    
+    if (!response.data || !response.data.data) {
+      console.log('No notes data in response');
+      return [];
+    }
+    
+    // Format notes for display
+    const notes = response.data.data.map(note => {
+      // Get parent record info
+      let parentInfo = 'Unknown record';
+      if (note.parent_object && note.parent_record_id) {
+        parentInfo = `${note.parent_object}/${note.parent_record_id}`;
+      }
+      
+      // Format created date
+      const createdDate = note.created_at ? new Date(note.created_at).toLocaleString() : 'Unknown date';
+      
+      return {
+        id: note.id?.note_id || note.id,
+        title: note.title || 'Untitled Note',
+        content: note.content?.plaintext || note.content || '',
+        parentObject: note.parent_object,
+        parentRecordId: note.parent_record_id,
+        parentInfo: parentInfo,
+        createdAt: createdDate,
+        createdBy: note.created_by_actor?.name || 'Unknown',
+        tags: note.tags || []
+      };
+    });
+    
+    console.log(`Found ${notes.length} notes`);
+    return notes;
+  } catch (error) {
+    console.error('Get notes error:', error.response?.data || error.message);
+    throw error;
+  }
+}
+
+module.exports = { searchAttio, createOrUpdateRecord, getAttioClient, deleteNote, getNoteDetails, getNotes };

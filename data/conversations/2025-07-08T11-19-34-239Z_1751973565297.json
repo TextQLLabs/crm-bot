@@ -1,0 +1,75 @@
+{
+  "conversationId": "1751973565297",
+  "userId": "Test User",
+  "userName": "Test User",
+  "channel": "#test",
+  "messageTs": "1751973565297",
+  "userMessage": "can you show me a list of all the notes on raine group?",
+  "conversationHistory": [],
+  "botActionHistory": [],
+  "agentThoughts": [
+    "I need to first search for Raine Group in the CRM to get its entity ID, then I can fetch its notes.",
+    "Great, I found The Raine Group in the CRM. Now I can fetch all notes associated with this company using its ID.",
+    "I have all the information needed to provide a summary of notes on The Raine Group."
+  ],
+  "agentActions": [
+    {
+      "action": "search_crm",
+      "input": {
+        "entity_type": "company",
+        "search_query": "The Raine Group"
+      },
+      "observation": [
+        {
+          "id": "a41e73b9-5dac-493f-bb2d-d38bb166c330",
+          "name": "The Raine Group",
+          "description": "The Raine Group is an integrated merchant bank specializing in advising and investing in high-growth sectors of technology, media, and telecom. They offer a wide range of advisory services, including mergers and acquisitions, divestitures, private capi...",
+          "domains": [
+            "raine.com"
+          ],
+          "slug": "raine.com",
+          "url": "https://app.attio.com/textql-data/company/a41e73b9-5dac-493f-bb2d-d38bb166c330/overview",
+          "type": "company"
+        }
+      ]
+    },
+    {
+      "action": "get_notes",
+      "input": {
+        "entity_type": "company",
+        "entity_id": "a41e73b9-5dac-493f-bb2d-d38bb166c330"
+      },
+      "observation": {
+        "success": true,
+        "notes": [
+          {
+            "id": "ce09b30f-b107-4af0-8c6f-5c57b240aa53",
+            "title": "Note from Slack",
+            "content": "",
+            "parentObject": "companies",
+            "parentRecordId": "a41e73b9-5dac-493f-bb2d-d38bb166c330",
+            "parentInfo": "companies/a41e73b9-5dac-493f-bb2d-d38bb166c330",
+            "createdAt": "7/4/2025, 3:05:20 AM",
+            "createdBy": "Unknown",
+            "tags": []
+          }
+        ],
+        "message": "Found 1 note:\n\n1. **Note from Slack** (7/4/2025, 3:05:20 AM)\n   \n   Created by: Unknown",
+        "count": 1
+      }
+    }
+  ],
+  "finalResponse": "Here are all notes on The Raine Group (https://app.attio.com/textql-data/company/a41e73b9-5dac-493f-bb2d-d38bb166c330/overview):\n1. \"Note from Slack\" created on 7/4/2025 - Empty note content",
+  "toolsUsed": [
+    "search_crm",
+    "get_notes"
+  ],
+  "success": true,
+  "error": null,
+  "processingTime": 8941,
+  "attachmentCount": 0,
+  "iterationCount": 3,
+  "timestamp": "2025-07-08T11:19:34.238Z",
+  "version": "1.11.1",
+  "environment": "development"
+}

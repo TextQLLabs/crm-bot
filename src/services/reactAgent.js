@@ -41,6 +41,11 @@ class ReactAgent {
         parameters: ["note_id"],
         execute: this.deleteNote.bind(this)
       },
+      get_notes: {
+        description: "Get notes for a specific record or all notes",
+        parameters: ["entity_type", "entity_id"],
+        execute: this.getNotes.bind(this)
+      },
       create_entity: {
         description: "Create a new company, person, or deal",
         parameters: ["entity_type", "data"],
@@ -289,17 +294,23 @@ SEARCH STRATEGY - IMPORTANT:
   3. Get additional context about the company
   4. Then retry CRM search with the corrected name
 
-NOTE DELETION - IMPORTANT:
-- NEVER show raw note IDs (UUIDs) to users - they are meaningless to humans
-- When asked to delete a note, you MUST:
-  1. First ask which record (company/person/deal) the note is on
-  2. Search for and find that record
-  3. Explain you need the specific note's context to delete it safely
-  4. Tell them to find the note in Attio and provide identifying details
-- If given a note ID directly:
-  - DO NOT just delete it with the raw UUID
-  - Instead say something like: "I need more context about which note you want to delete. Could you tell me which company/person/deal this note is on?"
-- The delete_note tool requires the exact note ID, but users should identify notes by their content and parent record, not by ID
+NOTES - LISTING AND DELETION:
+- To list notes on a record, use get_notes with entity_type and entity_id
+- When asked to show notes on a company/person/deal:
+  1. First search for the entity to get its ID
+  2. Then use get_notes with the entity_type and entity_id
+  3. Display the notes with their titles, content preview, and creation info
+- For deleting notes:
+  - NEVER show raw note IDs (UUIDs) to users - they are meaningless to humans
+  - When asked to delete a note, you MUST:
+    1. First ask which record (company/person/deal) the note is on
+    2. Search for and find that record
+    3. Use get_notes to list the notes on that record
+    4. Ask the user to specify which note they want to delete based on the list
+  - If given a note ID directly:
+    - DO NOT just delete it with the raw UUID
+    - Instead say something like: "I need more context about which note you want to delete. Could you tell me which company/person/deal this note is on?"
+  - The delete_note tool requires the exact note ID, but users should identify notes by their content and parent record, not by ID
 
 RESPONSE RULES:
 - Always start with a Thought
@@ -414,6 +425,12 @@ DELETE NOTE SAFETY:
       case 'delete_note':
         return await this.deleteNote(input.note_id);
         
+      case 'get_notes':
+        return await this.getNotes(
+          input.entity_type,
+          input.entity_id
+        );
+        
       case 'create_entity':
         return await this.createEntity(
           input.entity_type,
@@ -526,6 +543,63 @@ DELETE NOTE SAFETY:
         success: false,
         error: error.message,
         message: 'I encountered an error. To delete a note, please tell me which company, person, or deal the note is on, and describe the note you want to delete.'
+      };
+    }
+  }
+
+  async getNotes(entityType, entityId) {
+    try {
+      const { getNotes } = require('./attioService');
+      
+      // Build options based on parameters
+      const options = {};
+      if (entityId) {
+        options.recordId = entityId;
+      }
+      if (entityType) {
+        // Convert to plural form for API
+        if (entityType === 'company') {
+          options.recordType = 'companies';
+        } else if (entityType === 'person') {
+          options.recordType = 'people';
+        } else if (entityType === 'deal') {
+          options.recordType = 'deals';
+        } else {
+          options.recordType = entityType + 's';
+        }
+      }
+      options.limit = 20; // Reasonable limit for display
+      
+      const notes = await getNotes(options);
+      
+      if (!notes || notes.length === 0) {
+        return {
+          success: true,
+          notes: [],
+          message: entityId ? 
+            `No notes found for this ${entityType}` : 
+            'No notes found'
+        };
+      }
+      
+      // Format notes for display
+      const formattedNotes = notes.map((note, index) => {
+        return `${index + 1}. **${note.title}** (${note.createdAt})
+   ${note.content.substring(0, 150)}${note.content.length > 150 ? '...' : ''}
+   Created by: ${note.createdBy}`;
+      }).join('\n\n');
+      
+      return {
+        success: true,
+        notes: notes,
+        message: `Found ${notes.length} note${notes.length > 1 ? 's' : ''}:\n\n${formattedNotes}`,
+        count: notes.length
+      };
+    } catch (error) {
+      console.error('Get notes error:', error);
+      return {
+        success: false,
+        error: error.message || 'Failed to retrieve notes'
       };
     }
   }

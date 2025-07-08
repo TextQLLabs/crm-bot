@@ -1,0 +1,275 @@
+{
+  "conversationId": "1751973538194",
+  "userId": "Test User",
+  "userName": "Test User",
+  "channel": "#test",
+  "messageTs": "1751973538194",
+  "userMessage": "show me all recent notes",
+  "conversationHistory": [],
+  "botActionHistory": [],
+  "agentThoughts": [
+    "I need to get all recent notes from the system. Since no specific entity was mentioned, I'll request notes without filtering by entity.",
+    "I notice that while we have a list of notes, they all appear to be empty with no content and just timestamps. Let me get more details about the parent records to provide more meaningful information.",
+    "I notice that all recent notes are empty and just have timestamps. Since there's no actual content to display and the parent record details are not accessible, I should provide a concise summary of what I found."
+  ],
+  "agentActions": [
+    {
+      "action": "get_notes",
+      "input": {
+        "entity_type": null,
+        "entity_id": null
+      },
+      "observation": {
+        "success": true,
+        "notes": [
+          {
+            "id": "87377e2b-09fa-4489-b558-92e3c5fb4597",
+            "title": "-",
+            "content": "",
+            "parentObject": "companies",
+            "parentRecordId": "ccfd1ddb-3229-414b-8901-c9c0e3db1718",
+            "parentInfo": "companies/ccfd1ddb-3229-414b-8901-c9c0e3db1718",
+            "createdAt": "5/18/2023, 9:30:49 AM",
+            "createdBy": "Unknown",
+            "tags": []
+          },
+          {
+            "id": "e5731e0e-e729-4a38-b699-76b5974fb1b2",
+            "title": "-",
+            "content": "",
+            "parentObject": "companies",
+            "parentRecordId": "a4209bd2-0938-4e2b-bc4e-7fb9780df0c1",
+            "parentInfo": "companies/a4209bd2-0938-4e2b-bc4e-7fb9780df0c1",
+            "createdAt": "5/19/2023, 5:00:31 AM",
+            "createdBy": "Unknown",
+            "tags": []
+          },
+          {
+            "id": "818d4fa8-65bb-460e-a622-9a6f9de907e6",
+            "title": "-",
+            "content": "",
+            "parentObject": "companies",
+            "parentRecordId": "da054124-d5f5-4b62-9865-392736223a86",
+            "parentInfo": "companies/da054124-d5f5-4b62-9865-392736223a86",
+            "createdAt": "5/22/2023, 5:33:00 AM",
+            "createdBy": "Unknown",
+            "tags": []
+          },
+          {
+            "id": "11452e15-9808-4b6a-9f04-5c827fb6a0b4",
+            "title": "-",
+            "content": "",
+            "parentObject": "deals",
+            "parentRecordId": "bed25344-07ed-43cb-b4fe-6aa115ba3912",
+            "parentInfo": "deals/bed25344-07ed-43cb-b4fe-6aa115ba3912",
+            "createdAt": "5/22/2023, 10:00:44 AM",
+            "createdBy": "Unknown",
+            "tags": []
+          },
+          {
+            "id": "c9f8bd07-1d9d-4fb3-ad47-a0732f7ece01",
+            "title": "-",
+            "content": "",
+            "parentObject": "deals",
+            "parentRecordId": "6d36718c-5b2f-4658-8fde-79a48133f676",
+            "parentInfo": "deals/6d36718c-5b2f-4658-8fde-79a48133f676",
+            "createdAt": "5/22/2023, 10:31:17 AM",
+            "createdBy": "Unknown",
+            "tags": []
+          },
+          {
+            "id": "f1b6b8c5-44af-4c04-a516-31e525195e80",
+            "title": "-",
+            "content": "",
+            "parentObject": "deals",
+            "parentRecordId": "7d545126-1f13-43ce-8f4b-dd24f7cb74f9",
+            "parentInfo": "deals/7d545126-1f13-43ce-8f4b-dd24f7cb74f9",
+            "createdAt": "5/23/2023, 3:31:13 AM",
+            "createdBy": "Unknown",
+            "tags": []
+          },
+          {
+            "id": "a50c1f51-9fe1-4d49-a4f6-7c3949e5386e",
+            "title": "-",
+            "content": "",
+            "parentObject": "deals",
+            "parentRecordId": "ade5c480-fd46-4091-9f15-802a958d0f0f",
+            "parentInfo": "deals/ade5c480-fd46-4091-9f15-802a958d0f0f",
+            "createdAt": "5/23/2023, 4:31:08 AM",
+            "createdBy": "Unknown",
+            "tags": []
+          },
+          {
+            "id": "6e7cc1bf-61e8-4e26-8353-1b386cd5ed1f",
+            "title": "-",
+            "content": "",
+            "parentObject": "companies",
+            "parentRecordId": "641caf12-f051-4d97-8603-c3d3eebfb03a",
+            "parentInfo": "companies/641caf12-f051-4d97-8603-c3d3eebfb03a",
+            "createdAt": "5/23/2023, 5:01:11 AM",
+            "createdBy": "Unknown",
+            "tags": []
+          },
+          {
+            "id": "e541a934-6980-44ea-8c79-d0e1ad2fc3ae",
+            "title": "-",
+            "content": "",
+            "parentObject": "companies",
+            "parentRecordId": "6f917256-87ca-4284-a8d6-ebd9637eea68",
+            "parentInfo": "companies/6f917256-87ca-4284-a8d6-ebd9637eea68",
+            "createdAt": "5/23/2023, 9:32:22 AM",
+            "createdBy": "Unknown",
+            "tags": []
+          },
+          {
+            "id": "deeb15d9-8fe4-40d5-b451-9ac0852b764c",
+            "title": "-",
+            "content": "",
+            "parentObject": "deals",
+            "parentRecordId": "e8ae1da3-691a-4f7d-a1bb-94e1013b9d80",
+            "parentInfo": "deals/e8ae1da3-691a-4f7d-a1bb-94e1013b9d80",
+            "createdAt": "5/24/2023, 4:31:25 AM",
+            "createdBy": "Unknown",
+            "tags": []
+          },
+          {
+            "id": "f84d6ad3-c7b3-4595-a5c1-38a580369a7b",
+            "title": "-",
+            "content": "",
+            "parentObject": "companies",
+            "parentRecordId": "6f917256-87ca-4284-a8d6-ebd9637eea68",
+            "parentInfo": "companies/6f917256-87ca-4284-a8d6-ebd9637eea68",
+            "createdAt": "5/24/2023, 11:01:31 AM",
+            "createdBy": "Unknown",
+            "tags": []
+          },
+          {
+            "id": "fab45ef6-fc18-466a-9227-358a2e4c7bd8",
+            "title": "-",
+            "content": "",
+            "parentObject": "companies",
+            "parentRecordId": "7bdbccce-c6ac-407e-9662-34099ee60a8d",
+            "parentInfo": "companies/7bdbccce-c6ac-407e-9662-34099ee60a8d",
+            "createdAt": "5/25/2023, 8:01:38 AM",
+            "createdBy": "Unknown",
+            "tags": []
+          },
+          {
+            "id": "20aec3aa-3b4b-445e-aed9-c33111c672a7",
+            "title": "-",
+            "content": "",
+            "parentObject": "companies",
+            "parentRecordId": "6f917256-87ca-4284-a8d6-ebd9637eea68",
+            "parentInfo": "companies/6f917256-87ca-4284-a8d6-ebd9637eea68",
+            "createdAt": "5/25/2023, 8:32:47 AM",
+            "createdBy": "Unknown",
+            "tags": []
+          },
+          {
+            "id": "d39f2506-fdfc-4e3f-bef7-cf3b49ff13c3",
+            "title": "-",
+            "content": "",
+            "parentObject": "companies",
+            "parentRecordId": "d6507f87-8268-4a4b-940f-f010a0c628c7",
+            "parentInfo": "companies/d6507f87-8268-4a4b-940f-f010a0c628c7",
+            "createdAt": "5/25/2023, 11:31:44 AM",
+            "createdBy": "Unknown",
+            "tags": []
+          },
+          {
+            "id": "9519e000-5521-4400-bb3b-8aac3ecfeb65",
+            "title": "-",
+            "content": "",
+            "parentObject": "companies",
+            "parentRecordId": "6f917256-87ca-4284-a8d6-ebd9637eea68",
+            "parentInfo": "companies/6f917256-87ca-4284-a8d6-ebd9637eea68",
+            "createdAt": "5/26/2023, 8:30:58 AM",
+            "createdBy": "Unknown",
+            "tags": []
+          },
+          {
+            "id": "b7adde5e-3aee-411c-ae6e-3d9232765363",
+            "title": "-",
+            "content": "",
+            "parentObject": "deals",
+            "parentRecordId": "7d545126-1f13-43ce-8f4b-dd24f7cb74f9",
+            "parentInfo": "deals/7d545126-1f13-43ce-8f4b-dd24f7cb74f9",
+            "createdAt": "5/30/2023, 3:31:00 AM",
+            "createdBy": "Unknown",
+            "tags": []
+          },
+          {
+            "id": "266490db-894c-4057-8c41-2f3168af3e4c",
+            "title": "-",
+            "content": "",
+            "parentObject": "deals",
+            "parentRecordId": "b1b40209-9421-4be0-97d3-b89542a17c77",
+            "parentInfo": "deals/b1b40209-9421-4be0-97d3-b89542a17c77",
+            "createdAt": "5/30/2023, 7:02:10 AM",
+            "createdBy": "Unknown",
+            "tags": []
+          },
+          {
+            "id": "d2d6d9c5-a66f-4afe-8711-fe958a79a125",
+            "title": "-",
+            "content": "",
+            "parentObject": "companies",
+            "parentRecordId": "6f917256-87ca-4284-a8d6-ebd9637eea68",
+            "parentInfo": "companies/6f917256-87ca-4284-a8d6-ebd9637eea68",
+            "createdAt": "5/30/2023, 8:02:25 AM",
+            "createdBy": "Unknown",
+            "tags": []
+          },
+          {
+            "id": "8e47f135-ad60-490d-8921-aeea485f3c93",
+            "title": "-",
+            "content": "",
+            "parentObject": "deals",
+            "parentRecordId": "bed25344-07ed-43cb-b4fe-6aa115ba3912",
+            "parentInfo": "deals/bed25344-07ed-43cb-b4fe-6aa115ba3912",
+            "createdAt": "5/30/2023, 10:00:58 AM",
+            "createdBy": "Unknown",
+            "tags": []
+          },
+          {
+            "id": "6aaa4770-9aaf-4f76-973a-0270be4c41a5",
+            "title": "-",
+            "content": "",
+            "parentObject": "companies",
+            "parentRecordId": "cd5511a6-5907-42b9-bc2d-91b70bd2e41a",
+            "parentInfo": "companies/cd5511a6-5907-42b9-bc2d-91b70bd2e41a",
+            "createdAt": "5/31/2023, 9:32:53 AM",
+            "createdBy": "Unknown",
+            "tags": []
+          }
+        ],
+        "message": "Found 20 notes:\n\n1. **-** (5/18/2023, 9:30:49 AM)\n   \n   Created by: Unknown\n\n2. **-** (5/19/2023, 5:00:31 AM)\n   \n   Created by: Unknown\n\n3. **-** (5/22/2023, 5:33:00 AM)\n   \n   Created by: Unknown\n\n4. **-** (5/22/2023, 10:00:44 AM)\n   \n   Created by: Unknown\n\n5. **-** (5/22/2023, 10:31:17 AM)\n   \n   Created by: Unknown\n\n6. **-** (5/23/2023, 3:31:13 AM)\n   \n   Created by: Unknown\n\n7. **-** (5/23/2023, 4:31:08 AM)\n   \n   Created by: Unknown\n\n8. **-** (5/23/2023, 5:01:11 AM)\n   \n   Created by: Unknown\n\n9. **-** (5/23/2023, 9:32:22 AM)\n   \n   Created by: Unknown\n\n10. **-** (5/24/2023, 4:31:25 AM)\n   \n   Created by: Unknown\n\n11. **-** (5/24/2023, 11:01:31 AM)\n   \n   Created by: Unknown\n\n12. **-** (5/25/2023, 8:01:38 AM)\n   \n   Created by: Unknown\n\n13. **-** (5/25/2023, 8:32:47 AM)\n   \n   Created by: Unknown\n\n14. **-** (5/25/2023, 11:31:44 AM)\n   \n   Created by: Unknown\n\n15. **-** (5/26/2023, 8:30:58 AM)\n   \n   Created by: Unknown\n\n16. **-** (5/30/2023, 3:31:00 AM)\n   \n   Created by: Unknown\n\n17. **-** (5/30/2023, 7:02:10 AM)\n   \n   Created by: Unknown\n\n18. **-** (5/30/2023, 8:02:25 AM)\n   \n   Created by: Unknown\n\n19. **-** (5/30/2023, 10:00:58 AM)\n   \n   Created by: Unknown\n\n20. **-** (5/31/2023, 9:32:53 AM)\n   \n   Created by: Unknown",
+        "count": 20
+      }
+    },
+    {
+      "action": "get_entity_details",
+      "input": {
+        "entity_type": "companies",
+        "entity_id": "6f917256-87ca-4284-a8d6-ebd9637eea68"
+      },
+      "observation": {
+        "success": false,
+        "error": "No Object was found for path param slug \"companiess\"."
+      }
+    }
+  ],
+  "finalResponse": "Found 20 recent notes from May 18-31, 2023, but all notes appear to be empty system entries. The notes are linked to various companies and deals, but contain no content to display. Consider creating new notes with actual content to track important information.",
+  "toolsUsed": [
+    "get_notes",
+    "get_entity_details"
+  ],
+  "success": true,
+  "error": null,
+  "processingTime": 10771,
+  "attachmentCount": 0,
+  "iterationCount": 3,
+  "timestamp": "2025-07-08T11:19:08.965Z",
+  "version": "1.11.1",
+  "environment": "development"
+}

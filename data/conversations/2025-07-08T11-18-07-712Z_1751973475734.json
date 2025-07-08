@@ -1,0 +1,78 @@
+{
+  "conversationId": "1751973475734",
+  "userId": "Test User",
+  "userName": "Test User",
+  "channel": "#test",
+  "messageTs": "1751973475734",
+  "userMessage": "show me all recent notes",
+  "conversationHistory": [],
+  "botActionHistory": [],
+  "agentThoughts": [
+    "I need to get all recent notes from the system. Since no specific entity was mentioned, I'll request notes without filtering by entity.",
+    "I apologize for the confusion. Let me try a different approach. Since we need to find notes, let's first search for recent entities that might have notes.",
+    "Now that I have some companies, I'll check for notes on one of them to see the note structure and continue gathering notes systematically.",
+    "I apologize, but I notice that the get_notes action is not currently functioning. Let me provide a clear response to the user about this limitation."
+  ],
+  "agentActions": [
+    {
+      "action": "get_notes",
+      "input": {
+        "entity_type": null,
+        "entity_id": null
+      },
+      "observation": "Error executing get_notes: No execution handler for action: get_notes"
+    },
+    {
+      "action": "search_crm",
+      "input": {
+        "entity_type": "company",
+        "search_query": "*"
+      },
+      "observation": [
+        {
+          "id": "c9263cf8-0f3c-46ae-b70a-75018013210d",
+          "name": "A* Capital",
+          "description": "A* Capital is an early-stage venture capital firm that focuses on transforming the investment landscape by fostering meaningful partnerships and providing unwavering support to innovative tech startups from their initial ideas to successful IPOs.",
+          "domains": [
+            "a-star.co"
+          ],
+          "slug": "a-star.co",
+          "url": "https://app.attio.com/textql-data/company/c9263cf8-0f3c-46ae-b70a-75018013210d/overview",
+          "type": "company"
+        },
+        {
+          "id": "fdda7b2a-1604-4c5d-8055-106ad1d59344",
+          "name": "Talentech Group ** (goto Talentech Group)",
+          "description": "TalentechGroup is a company that specializes in providing expert teams for data science and platform architecture projects. They offer end-to-end solutions, from platform development to data science to UI design. By outsourcing projects to TalentechGro...",
+          "domains": [
+            "talentechgroup.com"
+          ],
+          "slug": "talentechgroup.com",
+          "url": "https://app.attio.com/textql-data/company/fdda7b2a-1604-4c5d-8055-106ad1d59344/overview",
+          "type": "company"
+        }
+      ]
+    },
+    {
+      "action": "get_notes",
+      "input": {
+        "entity_type": "company",
+        "entity_id": "c9263cf8-0f3c-46ae-b70a-75018013210d"
+      },
+      "observation": "Error executing get_notes: No execution handler for action: get_notes"
+    }
+  ],
+  "finalResponse": "I apologize, but I'm currently unable to retrieve notes due to a technical limitation. To view recent notes, please visit the Attio web interface directly. You can access specific company records through these links I found:\n- A* Capital: https://app.attio.com/textql-data/company/c9263cf8-0f3c-46ae-b70a-75018013210d/overview\n- Talentech Group: https://app.attio.com/textql-data/company/fdda7b2a-1604-4c5d-8055-106ad1d59344/overview",
+  "toolsUsed": [
+    "get_notes",
+    "search_crm"
+  ],
+  "success": true,
+  "error": null,
+  "processingTime": 11978,
+  "attachmentCount": 0,
+  "iterationCount": 4,
+  "timestamp": "2025-07-08T11:18:07.712Z",
+  "version": "1.11.1",
+  "environment": "development"
+}

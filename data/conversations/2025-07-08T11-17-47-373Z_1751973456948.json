@@ -1,0 +1,58 @@
+{
+  "conversationId": "1751973456948",
+  "userId": "Test User",
+  "userName": "Test User",
+  "channel": "#test",
+  "messageTs": "1751973456948",
+  "userMessage": "can you show me a list of all the notes on raine group?",
+  "conversationHistory": [],
+  "botActionHistory": [],
+  "agentThoughts": [
+    "I need to first search for Raine Group in the CRM to get its entity ID, then I can fetch its notes.",
+    "Great, I found The Raine Group in the CRM. Now I can fetch all notes associated with this company using its ID.",
+    "I apologize for the confusion with the get_notes action. Since I found The Raine Group in the CRM, I can provide their details and link."
+  ],
+  "agentActions": [
+    {
+      "action": "search_crm",
+      "input": {
+        "entity_type": "company",
+        "search_query": "The Raine Group"
+      },
+      "observation": [
+        {
+          "id": "a41e73b9-5dac-493f-bb2d-d38bb166c330",
+          "name": "The Raine Group",
+          "description": "The Raine Group is an integrated merchant bank specializing in advising and investing in high-growth sectors of technology, media, and telecom. They offer a wide range of advisory services, including mergers and acquisitions, divestitures, private capi...",
+          "domains": [
+            "raine.com"
+          ],
+          "slug": "raine.com",
+          "url": "https://app.attio.com/textql-data/company/a41e73b9-5dac-493f-bb2d-d38bb166c330/overview",
+          "type": "company"
+        }
+      ]
+    },
+    {
+      "action": "get_notes",
+      "input": {
+        "entity_type": "company",
+        "entity_id": "a41e73b9-5dac-493f-bb2d-d38bb166c330"
+      },
+      "observation": "Error executing get_notes: No execution handler for action: get_notes"
+    }
+  ],
+  "finalResponse": "I found The Raine Group in the CRM (https://app.attio.com/textql-data/company/a41e73b9-5dac-493f-bb2d-d38bb166c330/overview), but I'm currently unable to fetch their notes. You can view all notes directly in Attio by clicking the link and navigating to the Notes section.",
+  "toolsUsed": [
+    "search_crm",
+    "get_notes"
+  ],
+  "success": true,
+  "error": null,
+  "processingTime": 10423,
+  "attachmentCount": 0,
+  "iterationCount": 3,
+  "timestamp": "2025-07-08T11:17:47.372Z",
+  "version": "1.11.1",
+  "environment": "development"
+}

@@ -1,5 +1,6 @@
 const { ReactAgent } = require('../services/reactAgent');
 const axios = require('axios');
+const { logInteraction } = require('../services/database');
 
 async function handleMention({ event, message, say, client }) {
   const msg = event || message;
