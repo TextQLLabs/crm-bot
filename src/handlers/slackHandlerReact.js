@@ -303,13 +303,27 @@ async function handleMention({ event, message, say, client }) {
       // Create message with optional details button
       const { text, blocks } = formatSuccessMessage(result);
       
-      // Update the thinking message with the result
-      await client.chat.update({
-        channel: msg.channel,
-        ts: thinkingMessage.ts,
-        text: text,
-        blocks: blocks
-      });
+      try {
+        // Update the thinking message with the result
+        await client.chat.update({
+          channel: msg.channel,
+          ts: thinkingMessage.ts,
+          text: text,
+          blocks: blocks
+        });
+      } catch (updateError) {
+        console.error('Error updating message with blocks:', updateError);
+        // Fallback to simple text message without blocks
+        try {
+          await client.chat.update({
+            channel: msg.channel,
+            ts: thinkingMessage.ts,
+            text: text
+          });
+        } catch (fallbackError) {
+          console.error('Error updating message even without blocks:', fallbackError);
+        }
+      }
 
       // Only show reasoning steps if explicitly requested or if there was an error
       // This keeps responses cleaner and less sprawling
@@ -366,27 +380,39 @@ function formatSuccessMessage(result) {
   );
 
   if (searchSteps.length > 0) {
-    // Add a button to show search details
-    blocks.push({
-      type: 'actions',
-      elements: [
-        {
-          type: 'button',
-          text: {
-            type: 'plain_text',
-            text: '🔍 Show Search Details',
-            emoji: true
-          },
-          action_id: 'show_search_details',
-          value: JSON.stringify({
-            steps: searchSteps.map(s => ({
-              query: s.actionInput?.search_query || s.actionInput?.query || 'unknown',
-              results: s.observation
-            }))
-          })
-        }
-      ]
-    });
+    try {
+      // Prepare search details data
+      const searchData = {
+        steps: searchSteps.map(s => ({
+          query: s.actionInput?.search_query || s.actionInput?.query || 'unknown',
+          results: s.observation
+        }))
+      };
+      
+      // Check if the stringified value is too long for Slack (max 2000 chars)
+      const valueString = JSON.stringify(searchData);
+      if (valueString.length <= 2000) {
+        // Add a button to show search details
+        blocks.push({
+          type: 'actions',
+          elements: [
+            {
+              type: 'button',
+              text: {
+                type: 'plain_text',
+                text: '🔍 Show Search Details',
+                emoji: true
+              },
+              action_id: 'show_search_details',
+              value: valueString
+            }
+          ]
+        });
+      }
+    } catch (e) {
+      console.error('Error adding search details button:', e);
+      // Continue without the button if there's an error
+    }
   }
 
   return { text: message, blocks };

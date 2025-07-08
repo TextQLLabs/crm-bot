@@ -654,19 +654,28 @@ DELETE NOTE SAFETY:
       
       // Format notes for display
       const formattedNotes = notes.map((note, index) => {
+        // Escape special characters for Slack mrkdwn
+        const escapeForSlack = (text) => {
+          if (!text) return '';
+          return text
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;');
+        };
+        
         const contentDisplay = wantsFullContent ? 
-          note.content || '(empty note)' : 
-          `${note.content.substring(0, 150)}${note.content.length > 150 ? '...' : ''}`;
+          escapeForSlack(note.content || '(empty note)') : 
+          escapeForSlack(`${note.content.substring(0, 150)}${note.content.length > 150 ? '...' : ''}`);
         
         // Construct direct note URL
         let noteUrl = '';
         if (note.id && note.parentObject && note.parentRecordId) {
-          noteUrl = `\n   📎 View note: https://app.attio.com/textql-data/${note.parentObject}/record/${note.parentRecordId}/notes?modal=note&id=${note.id}`;
+          noteUrl = `\n   📎 View note: <https://app.attio.com/textql-data/${note.parentObject}/record/${note.parentRecordId}/notes?modal=note&id=${note.id}|Open in Attio>`;
         }
           
-        return `${index + 1}. **${note.title}** (${note.createdAt})
+        return `${index + 1}. *${escapeForSlack(note.title)}* (${note.createdAt})
    ${contentDisplay}
-   Created by: ${note.createdBy}${noteUrl}`;
+   Created by: ${escapeForSlack(note.createdBy)}${noteUrl}`;
       }).join('\n\n');
       
       return {
