@@ -316,8 +316,14 @@ async function handleMention({ event, message, say, client }) {
     // Format and send response
     if (result.success) {
       try {
-        // Check if this is a notes response FIRST
-        const hasNotesInResponse = result.steps && result.steps.some(s => s.action === 'get_notes');
+        // Check if this is a notes response FIRST - with extra safety
+        let hasNotesInResponse = false;
+        try {
+          hasNotesInResponse = result && result.steps && Array.isArray(result.steps) && 
+                               result.steps.some(s => s && s.action === 'get_notes');
+        } catch (e) {
+          console.error('Error checking for notes:', e);
+        }
         
         if (hasNotesInResponse) {
           // Debug: Log the entire result object for notes
@@ -325,13 +331,15 @@ async function handleMention({ event, message, say, client }) {
           
           // For notes, bypass ALL formatting - don't even call formatSuccessMessage
           console.log('📝 Sending notes response (bypassing ALL formatting)');
-          let plainText = result.answer || 'Found notes';
+          let plainText = String(result.answer || 'Found notes');
           
-          // Sanitize text for Slack - remove any potential problematic characters
+          // Aggressively sanitize text for Slack
           plainText = plainText
-            .replace(/[<>]/g, '') // Remove angle brackets that might be interpreted as mentions
+            .replace(/https?:\/\/[^\s]+/g, '[URL]') // Replace URLs with [URL]
+            .replace(/[<>]/g, '') // Remove angle brackets
             .replace(/&/g, 'and') // Replace ampersands
             .replace(/[\u0000-\u001F\u007F-\u009F]/g, '') // Remove control characters
+            .replace(/[()]/g, '') // Remove parentheses
             .trim();
           
           console.log('Sanitized text length:', plainText.length);
@@ -354,6 +362,10 @@ async function handleMention({ event, message, say, client }) {
               text: plainText
             });
           }
+          
+          // IMPORTANT: Return early for notes to prevent any further processing
+          console.log('✅ Notes sent successfully, returning early');
+          return;
         } else {
           // For non-notes responses, format normally
           const { text, blocks } = formatSuccessMessage(result);
