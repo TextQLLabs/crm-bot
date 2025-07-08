@@ -14,24 +14,23 @@ try {
 }
 
 async function handleMention({ event, message, say, client }) {
-  const msg = event || message;
-  const agent = new ReactAgent();
-  
-  // Debug: Log all Slack API calls
-  console.log('🔍 handleMention called with:', {
-    hasEvent: !!event,
-    hasMessage: !!message,
-    hasSay: !!say,
-    hasClient: !!client,
-    messageText: msg?.text?.substring(0, 50) + '...'
-  });
-  
-  // IMPORTANT: Never use say() as it can cause block formatting issues
-  if (say) {
-    console.warn('⚠️ WARNING: say parameter was passed but should not be used!');
-  }
-  
   try {
+    const msg = event || message;
+    const agent = new ReactAgent();
+    
+    // Debug: Log all Slack API calls
+    console.log('🔍 handleMention called with:', {
+      hasEvent: !!event,
+      hasMessage: !!message,
+      hasSay: !!say,
+      hasClient: !!client,
+      messageText: msg?.text?.substring(0, 50) + '...'
+    });
+    
+    // IMPORTANT: Never use say() as it can cause block formatting issues
+    if (say) {
+      console.warn('⚠️ WARNING: say parameter was passed but should not be used!');
+    }
     // Check if this is a threaded message
     let conversationHistory = [];
     let botActionHistory = []; // Hidden context of what bot has done
@@ -403,6 +402,12 @@ async function handleMention({ event, message, say, client }) {
       console.error('Failed to send error message:', errorMessageError);
       // Silently fail - don't let any error bubble up to Bolt
     }
+  }
+  } catch (outerError) {
+    console.error('CRITICAL: Outer error in handleMention:', outerError);
+    console.error('Stack:', outerError.stack);
+    // NEVER let any error bubble to Bolt
+    return;
   }
 }
 
