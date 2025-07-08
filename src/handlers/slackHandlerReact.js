@@ -304,15 +304,27 @@ async function handleMention({ event, message, say, client }) {
       const { text, blocks } = formatSuccessMessage(result);
       
       try {
-        // Update the thinking message with the result
-        await client.chat.update({
-          channel: msg.channel,
-          ts: thinkingMessage.ts,
-          text: text,
-          blocks: blocks
-        });
+        // Check if this is a notes response - if so, use text only
+        const hasNotesInResponse = result.steps && result.steps.some(s => s.action === 'get_notes');
+        
+        if (hasNotesInResponse) {
+          // For notes, use text-only format to avoid formatting issues
+          await client.chat.update({
+            channel: msg.channel,
+            ts: thinkingMessage.ts,
+            text: text
+          });
+        } else {
+          // For other responses, use blocks
+          await client.chat.update({
+            channel: msg.channel,
+            ts: thinkingMessage.ts,
+            text: text,
+            blocks: blocks
+          });
+        }
       } catch (updateError) {
-        console.error('Error updating message with blocks:', updateError);
+        console.error('Error updating message:', updateError);
         console.error('Failed blocks:', JSON.stringify(blocks, null, 2));
         console.error('Message text length:', text.length);
         console.error('Message preview:', text.substring(0, 200) + '...');
@@ -373,13 +385,17 @@ function formatSuccessMessage(result) {
     message = message.substring(0, 2950) + '...\n\n🚂 v' + pkg.version;
   }
 
-  // Build blocks for Slack message
+  // Build blocks for Slack message - validate text content
+  const validatedMessage = message
+    .replace(/\n{3,}/g, '\n\n') // Replace multiple newlines with max 2
+    .trim();
+    
   const blocks = [
     {
       type: 'section',
       text: {
         type: 'mrkdwn',
-        text: message
+        text: validatedMessage
       }
     }
   ];
