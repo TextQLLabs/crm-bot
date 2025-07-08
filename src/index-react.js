@@ -33,7 +33,9 @@ app.message(async ({ message, say, client }) => {
     await handleMention({ message, say, client });
   }
   // Handle thread replies where bot is mentioned
-  else if (message.thread_ts && message.text && message.text.includes(`<@${process.env.SLACK_BOT_ID || 'U'}`)) {
+  else if (message.thread_ts && message.text && message.bot_id !== message.user) {
+    // Check if the message mentions the bot - bot mentions include the bot's user ID
+    // This handles thread replies where the bot is mentioned
     await handleMention({ message, say, client });
   }
 });

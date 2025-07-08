@@ -1,4 +1,5 @@
 const { ReactAgent } = require('../services/reactAgent');
+const axios = require('axios');
 
 // Try to use real database, fall back to mock if needed
 let db;
@@ -116,12 +117,54 @@ async function handleMention({ event, message, say, client }) {
       fullContext += 'Remember: The user cannot see this hidden context. Only reference these actions if relevant to the current request.]';
     }
     
-    // Get any file attachments
-    const attachments = msg.files || [];
+    // Get any file attachments and download them
+    const attachments = [];
+    if (msg.files && msg.files.length > 0) {
+      console.log(`Processing ${msg.files.length} file attachments...`);
+      
+      for (const file of msg.files) {
+        if (file.mimetype && file.mimetype.startsWith('image/')) {
+          try {
+            // For testing, check if we have test data
+            if (msg._testImageData) {
+              attachments.push({
+                type: 'image',
+                mime_type: file.mimetype,  // Changed from mimetype to mime_type
+                filename: file.name,       // Changed from name to filename
+                data: msg._testImageData
+              });
+            } else {
+              // In production, download the file from Slack
+              console.log(`Downloading image: ${file.name}`);
+              const response = await axios.get(file.url_private_download, {
+                headers: {
+                  'Authorization': `Bearer ${process.env.SLACK_BOT_TOKEN}`
+                },
+                responseType: 'arraybuffer'
+              });
+              
+              const base64Data = Buffer.from(response.data).toString('base64');
+              
+              attachments.push({
+                type: 'image',
+                mime_type: file.mimetype,  // Changed from mimetype to mime_type
+                filename: file.name,       // Changed from name to filename
+                data: base64Data
+              });
+              console.log(`Successfully downloaded ${file.name}`);
+            }
+          } catch (error) {
+            console.error(`Error processing file ${file.name}:`, error);
+          }
+        }
+      }
+    }
 
     // Process with ReAct agent in preview mode first
     console.log('\n=== Starting ReAct Agent (Preview Mode) ===');
     console.log('Full context:', fullContext);
+    console.log('Attachments:', attachments.length);
+    
     const result = await agent.processMessage({
       text: fullContext,
       userName,

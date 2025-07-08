@@ -32,6 +32,11 @@ class ReactAgent {
         parameters: ["entity_type", "entity_id", "note_content"],
         execute: this.createNote.bind(this)
       },
+      delete_note: {
+        description: "Delete a specific note by its ID",
+        parameters: ["note_id"],
+        execute: this.deleteNote.bind(this)
+      },
       create_entity: {
         description: "Create a new company, person, or deal",
         parameters: ["entity_type", "data"],
@@ -46,6 +51,11 @@ class ReactAgent {
         description: "Get full details of a specific entity",
         parameters: ["entity_type", "entity_id"],
         execute: this.getEntityDetails.bind(this)
+      },
+      analyze_image: {
+        description: "Analyze or transcribe text from an uploaded image",
+        parameters: ["image_index", "analysis_type"],
+        execute: this.analyzeImage.bind(this)
       }
     };
     
@@ -57,8 +67,12 @@ class ReactAgent {
       message: message.text,
       user: message.userName,
       channel: message.channel,
+      attachments: message.attachments || [],
       iterations: []
     };
+
+    // Store context for access in tool implementations
+    this.currentContext = context;
 
     // If preview mode, stop before executing write actions
     const previewMode = options.preview || false;
@@ -105,7 +119,7 @@ class ReactAgent {
   }
 
   isWriteAction(action) {
-    const writeActions = ['create_note', 'create_entity', 'update_entity'];
+    const writeActions = ['create_note', 'create_entity', 'update_entity', 'delete_note'];
     return writeActions.includes(action);
   }
 
@@ -166,6 +180,10 @@ You help users manage their CRM data in Attio by searching, creating, and updati
 You have access to these tools:
 ${toolDescriptions}
 
+IMPORTANT: If the user has attached images, they will be referenced in the message. Use analyze_image to examine them.
+- image_index: 0-based index of the image (0 for first image, 1 for second, etc.)
+- analysis_type: "transcribe" (extract all text), "analyze" (understand content), or "both"
+
 You must follow this EXACT format for EVERY response:
 
 Thought: [Your reasoning about what to do next]
@@ -211,13 +229,30 @@ RESPONSE RULES:
 - Never claim to have found something without providing the direct link to verify it
 - BE CONCISE: Final Answers should be 1-3 sentences max unless showing a list of results
 - When no results found after trying variations: State what you searched for and suggest the entity may need to be added
-- When results found: List them with links, no extra explanation needed`;
+- When results found: List them with links, no extra explanation needed
+
+DELETE NOTE SAFETY:
+- The delete_note tool permanently deletes notes - there is no undo
+- Always confirm the note_id is correct before deleting
+- If asked to delete a note without a specific ID, ask for the note ID
+- Be extra careful with note IDs - they should look like UUIDs (e.g., 550e8400-e29b-41d4-a716-446655440000)
+- Note: get_entity_details does NOT work for notes - only for companies, people, and deals
+- To delete a note, you need the exact note ID, which users can find in the Attio UI`;
   }
 
   buildUserPrompt(context) {
     let prompt = `User message: "${context.message}"\n`;
     prompt += `User: ${context.user}\n`;
-    prompt += `Channel: ${context.channel}\n\n`;
+    prompt += `Channel: ${context.channel}\n`;
+    
+    // Add attachment information
+    if (context.attachments && context.attachments.length > 0) {
+      prompt += `\nAttachments: ${context.attachments.length} image(s) attached\n`;
+      context.attachments.forEach((att, index) => {
+        prompt += `  - Image ${index}: ${att.name || 'unnamed'} (${att.mimetype})\n`;
+      });
+    }
+    prompt += '\n';
 
     // Add previous iterations
     if (context.iterations.length > 0) {
@@ -295,6 +330,9 @@ RESPONSE RULES:
           input.note_content || input.note
         );
         
+      case 'delete_note':
+        return await this.deleteNote(input.note_id);
+        
       case 'create_entity':
         return await this.createEntity(
           input.entity_type,
@@ -312,6 +350,12 @@ RESPONSE RULES:
         return await this.getEntityDetails(
           input.entity_type,
           input.entity_id
+        );
+        
+      case 'analyze_image':
+        return await this.analyzeImage(
+          input.image_index,
+          input.analysis_type
         );
         
       default:
@@ -357,6 +401,33 @@ RESPONSE RULES:
       return { 
         success: false, 
         error: error.response?.data?.message || error.message 
+      };
+    }
+  }
+
+  async deleteNote(noteId) {
+    try {
+      const { deleteNote } = require('./attioService');
+      
+      console.log(`Deleting note with ID: ${noteId}`);
+      
+      const result = await deleteNote(noteId);
+      
+      if (result.success) {
+        return {
+          success: true,
+          noteId: noteId,
+          message: `Note ${noteId} deleted successfully`
+        };
+      } else {
+        return result;
+      }
+    } catch (error) {
+      console.error('Delete note error:', error);
+      return {
+        success: false,
+        error: error.message,
+        noteId: noteId
       };
     }
   }
@@ -445,6 +516,93 @@ RESPONSE RULES:
         message: `No web results found for "${query}"`
       };
     } catch (error) {
+      return {
+        success: false,
+        error: error.message
+      };
+    }
+  }
+
+  async analyzeImage(imageIndex, analysisType) {
+    try {
+      // Get attachments from the current context
+      // We need to pass context through the execution chain
+      const currentIteration = this.currentContext?.iterations?.length || 0;
+      const attachments = this.currentContext?.attachments || [];
+      
+      if (!attachments || attachments.length === 0) {
+        return {
+          success: false,
+          error: 'No images attached to analyze'
+        };
+      }
+      
+      if (imageIndex >= attachments.length) {
+        return {
+          success: false,
+          error: `Invalid image index ${imageIndex}. Only ${attachments.length} image(s) attached.`
+        };
+      }
+      
+      const attachment = attachments[imageIndex];
+      
+      // Prepare the image for Claude's vision API
+      const imageData = {
+        type: 'image',
+        source: {
+          type: 'base64',
+          media_type: attachment.mimetype || 'image/jpeg',
+          data: attachment.data
+        }
+      };
+      
+      // Determine the prompt based on analysis type
+      let prompt = '';
+      switch (analysisType) {
+        case 'transcribe':
+          prompt = 'Please transcribe all text visible in this image. Include all messages, timestamps, usernames, and any other text you can see. Format it clearly.';
+          break;
+        case 'analyze':
+          prompt = 'Please analyze this image and describe what you see. If it contains a conversation, summarize the key points, participants, and topics discussed.';
+          break;
+        case 'both':
+        default:
+          prompt = 'Please analyze this image. First, transcribe all visible text (messages, timestamps, usernames, etc.). Then provide a summary of what the image shows and any key information.';
+          break;
+      }
+      
+      console.log(`Analyzing image ${imageIndex} with type: ${analysisType}`);
+      
+      // Call Claude's vision API
+      const response = await this.anthropic.messages.create({
+        model: 'claude-3-opus-20240229',
+        max_tokens: 1500,
+        temperature: 0.2,
+        messages: [{
+          role: 'user',
+          content: [
+            imageData,
+            {
+              type: 'text',
+              text: prompt
+            }
+          ]
+        }]
+      });
+      
+      const analysisResult = response.content[0].text;
+      console.log('Image analysis result:', analysisResult);
+      
+      return {
+        success: true,
+        imageIndex: imageIndex,
+        imageName: attachment.name || `Image ${imageIndex}`,
+        analysisType: analysisType,
+        result: analysisResult
+      };
+      
+    } catch (error) {
+      console.error('Image analysis error:', error);
       return {
         success: false,
         error: error.message

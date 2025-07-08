@@ -16,23 +16,39 @@ Built to streamline GTM (Go-To-Market) operations by:
 
 ```
 crm-bot/
-├── src/
+├── src/                            # Main application source code
 │   ├── index-react.js              # Main entry point (Socket Mode)
 │   ├── handlers/
 │   │   └── slackHandlerReact.js    # Slack event handlers with preview mode
-│   ├── services/
-│   │   ├── reactAgent.js           # ReAct AI agent implementation
-│   │   ├── attioService.js         # Attio CRM API integration
-│   │   ├── database-mock.js        # In-memory DB fallback
-│   │   └── database.js             # MongoDB integration
-│   └── workers/                    # Cloudflare Workers (unused)
-├── local-bot.js                    # 🆕 Local testing interface
-├── test-bot.js                     # 🆕 Automated test suite
+│   └── services/
+│       ├── reactAgent.js           # ReAct AI agent implementation
+│       ├── attioService.js         # Attio CRM API integration
+│       ├── database-mock.js        # In-memory DB fallback
+│       └── database.js             # MongoDB integration
+├── tests/                          # All test files
+│   ├── test-bot.js                 # Automated test suite
+│   ├── test-suite.js               # Comprehensive test runner
+│   ├── test-*.js                   # Individual feature tests
+│   └── test-logs/                  # Test execution logs
+├── docs/                           # Project documentation
+│   ├── credentials/                # API credentials info
+│   ├── SETUP_INSTRUCTIONS.md       # Setup guide
+│   ├── RAILWAY_DEPLOYMENT.md       # Deployment guide
+│   ├── MONGODB_SETUP.md            # Database setup
+│   ├── DEVELOPMENT_WORKFLOW.md     # Development guide
+│   └── LOCAL_TESTING.md            # Local testing setup
+├── scripts/                        # Utility and deployment scripts
+│   ├── deploy-railway.sh           # Railway deployment script
+│   ├── deploy-secrets.sh           # Secrets management
+│   └── update-railway-vars.sh      # Update environment variables
+├── config/                         # Configuration files
+│   ├── railway.json                # Railway deployment config
+│   ├── railway.toml                # Railway build config
+│   └── nixpacks.toml               # Nixpacks build config
+├── local-bot.js                    # Local testing interface
+├── package.json                    # Node.js dependencies
 ├── .env                            # Environment variables (source of truth)
-├── railway.toml                    # Railway deployment config
-├── CLAUDE.md                       # AI assistant context
-├── DEVELOPMENT_WORKFLOW.md         # 🆕 Development guide
-└── LOCAL_TESTING.md                # 🆕 Local testing setup
+└── CLAUDE.md                       # AI assistant context
 ```
 
 ## 🚀 Current Functionality
@@ -141,7 +157,7 @@ MONGODB_URI=mongodb+srv://...
 3. **Full Development Cycle**:
    - **Phase 1**: Test AI changes locally (`npm run local`)
    - **Phase 2**: Deploy and test Slack integration
-   - See [DEVELOPMENT_WORKFLOW.md](./DEVELOPMENT_WORKFLOW.md) for details
+   - See [DEVELOPMENT_WORKFLOW.md](./docs/DEVELOPMENT_WORKFLOW.md) for details
 
 #### Local Testing Features
 
@@ -304,4 +320,5 @@ An MCP (Model Context Protocol) server is configured for the Slack integration, 
 
 ## 📚 Additional Documentation
 
-See `CLAUDE.md` for AI assistant context and technical implementation details.
+- See `CLAUDE.md` for AI assistant context and technical implementation details
+- See `docs/` directory for comprehensive guides on setup, deployment, and development

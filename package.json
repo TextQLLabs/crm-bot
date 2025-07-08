@@ -1,6 +1,6 @@
 {
   "name": "crm-bot",
-  "version": "1.9.0",
+  "version": "1.10.0",
   "description": "Slack bot for GTM channel that updates Attio CRM",
   "main": "src/index-react.js",
   "engines": {
@@ -11,6 +11,9 @@
     "dev": "nodemon src/index-react.js",
     "local": "node local-bot.js",
     "test:bot": "node test-bot.js",
+    "test:suite": "node test-suite.js",
+    "test:logs": "node view-test-logs.js",
+    "test:history": "node view-test-history.js",
     "deploy": "wrangler deploy",
     "deploy:staging": "wrangler deploy --env staging",
     "deploy:production": "wrangler deploy --env production",

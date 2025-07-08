@@ -49,20 +49,59 @@ If you encounter Slack authentication errors or find conflicting tokens, note th
 - Always-on hosting
 
 ## Environment Variables
-```
-SLACK_BOT_TOKEN=xoxb-...
-SLACK_SIGNING_SECRET=...
-SLACK_APP_TOKEN=xapp-...
-ANTHROPIC_API_KEY=sk-ant-...
-ATTIO_API_KEY=...
-MONGODB_URI=mongodb+srv://...
-```
+
+### 📋 CRM Bot Environment Variable Guidelines
+
+When working with this project's environment variables:
+
+1. **Check Shared Variables First**
+   - See `/Users/ethanding/projects/CLAUDE.md` for shared variables
+   - This project uses `MDB_MCP_CONNECTION_STRING` as fallback for MongoDB
+
+2. **Project-Specific Variables** (Never share these!)
+   ```
+   SLACK_BOT_TOKEN=xoxb-...      # CRM bot's specific Slack token
+   SLACK_SIGNING_SECRET=...       # CRM bot's signing secret  
+   SLACK_APP_TOKEN=xapp-...       # Socket Mode token
+   ATTIO_API_KEY=...              # TextQL workspace only
+   ```
+
+3. **Variable Locations**
+   - **Development**: `.env` file (git-ignored)
+   - **Production**: Railway dashboard environment variables
+   - **Shared**: MCP server configs or shell profile
+
+4. **Database Connection Pattern**
+   ```javascript
+   // This pattern is used throughout the project:
+   const MONGODB_URI = process.env.MONGODB_URI || process.env.MDB_MCP_CONNECTION_STRING;
+   ```
+   - Allows project-specific override
+   - Falls back to shared MCP connection
+   - Can use different database names for dev/test/prod
+
+5. **Adding New Variables**
+   - Add to `.env.example` with clear comments
+   - Document in `/docs/ENVIRONMENT_VARIABLES.md`
+   - Add to Railway dashboard for production
+   - Update this section if it's a critical variable
+
+6. **Railway Deployment Context**
+   - Project: invigorating-imagination
+   - Service: crm-bot  
+   - All `.env` variables must be mirrored in Railway dashboard
+   - Railway auto-deploys from main branch
+
+7. **Testing Considerations**
+   - Tests use same MongoDB cluster (via MCP)
+   - Consider using separate database name for tests
+   - Mock external APIs when possible
 
 ## Deployment
 1. Local development: `npm run dev`
-2. Deploy to Cloudflare: `npm run deploy`
-3. MongoDB Atlas for database
-4. Slack app configuration
+2. Production: Auto-deploys via Railway from main branch
+3. MongoDB Atlas for database (shared cluster)
+4. Slack app configuration in TextQL workspace
 
 ## Testing
 - Unit tests for each service
@@ -128,6 +167,59 @@ When testing changes:
 3. Verify bot responds in Slack
 4. Test both new messages and thread replies
 5. Ensure preview mode works for write operations
+
+## MongoDB Documentation
+
+**IMPORTANT**: See `/Users/ethanding/projects/MONGODB.md` for comprehensive documentation about all MongoDB collections used across TextQLLabs projects, including:
+- Collection schemas
+- Sample queries
+- Index strategies
+- Retention policies
+
+The CRM Bot stores test results in MongoDB:
+- **Database**: `crm-bot`
+- **Collection**: `test-runs` (all test suite execution results with metrics)
+
+## Automated Testing Suite
+
+### Running the Test Suite
+```bash
+npm run test:suite        # Run all tests
+npm run test:logs        # View local test logs
+npm run test:history     # View MongoDB test history
+```
+
+### Test Categories
+1. **Fuzzy Search** - Tests spelling variations (rain→raine, rayne→raine)
+2. **Search Operations** - Tests all entity types (companies, people, deals)
+3. **Note Creation** - Tests adding notes with preview mode
+4. **Entity Details** - Tests information retrieval
+5. **Error Handling** - Tests ambiguous/invalid requests
+
+### Metrics Tracked
+- **Success Rate**: Percentage of tests passing
+- **Tool Calls**: Average number of tools used per test
+- **Response Time**: Average time to complete each test
+- **Tool Usage**: Which tools were actually called
+
+### GUI Features
+- Real-time test progress with status icons (✓ ✗ ◉)
+- Color-coded results (green=pass, red=fail, yellow=running)
+- Tool icons showing which tools were used (🔍 🌐 📝 ➕ ✏️)
+- Summary statistics and progress bar
+- Failed test details with error messages
+
+### Adding New Tests
+Add to `test-suite.js`:
+```javascript
+{
+  name: 'Your test name',
+  input: 'User message to test',
+  expectedTools: ['search_crm', 'create_note'],
+  expectedSuccess: true,
+  validation: (result) => result.answer.includes('expected text')
+}
+```
 
 ## Known Complexities
 

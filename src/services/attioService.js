@@ -413,4 +413,44 @@ async function createNote(recordId, recordType, content) {
   return response.data.data;
 }
 
-module.exports = { searchAttio, createOrUpdateRecord, getAttioClient };
+async function deleteNote(noteId) {
+  try {
+    console.log(`\n=== Deleting Attio note: ${noteId} ===`);
+    
+    // First, verify the note exists by trying to get it
+    try {
+      const getResponse = await getAttioClient().get(`/notes/${noteId}`);
+      console.log(`Note found: ${getResponse.data.data.title || 'Untitled'}`);
+    } catch (error) {
+      if (error.response?.status === 404) {
+        console.log('Note not found - it may have already been deleted');
+        return {
+          success: false,
+          error: 'Note not found',
+          noteId: noteId
+        };
+      }
+      throw error;
+    }
+    
+    // Delete the note
+    const response = await getAttioClient().delete(`/notes/${noteId}`);
+    
+    console.log('Note deleted successfully');
+    
+    return {
+      success: true,
+      noteId: noteId,
+      message: 'Note deleted successfully'
+    };
+  } catch (error) {
+    console.error('Delete note error:', error.response?.data || error.message);
+    return {
+      success: false,
+      error: error.response?.data?.message || error.message,
+      noteId: noteId
+    };
+  }
+}
+
+module.exports = { searchAttio, createOrUpdateRecord, getAttioClient, deleteNote };
