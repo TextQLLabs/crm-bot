@@ -316,26 +316,48 @@ async function handleMention({ event, message, say, client }) {
     // Format and send response
     if (result.success) {
       try {
-        // Create message with optional details button
-        const { text, blocks } = formatSuccessMessage(result);
-      
-        // Check if this is a notes response - if so, use text only
+        // Check if this is a notes response FIRST
         const hasNotesInResponse = result.steps && result.steps.some(s => s.action === 'get_notes');
         
         if (hasNotesInResponse) {
-          // For notes, bypass all formatting and send plain text
-          console.log('📝 Sending notes response (bypassing all formatting)');
-          const plainText = result.answer || 'Found notes';
-          console.log('Plain text length:', plainText.length);
-          console.log('Plain text preview:', plainText.substring(0, 100) + '...');
+          // Debug: Log the entire result object for notes
+          console.log('📝 Notes result object:', JSON.stringify(result, null, 2));
           
-          // Update the thinking message with plain text only
-          await client.chat.update({
-            channel: msg.channel,
-            ts: thinkingMessage.ts,
-            text: plainText
-          });
+          // For notes, bypass ALL formatting - don't even call formatSuccessMessage
+          console.log('📝 Sending notes response (bypassing ALL formatting)');
+          let plainText = result.answer || 'Found notes';
+          
+          // Sanitize text for Slack - remove any potential problematic characters
+          plainText = plainText
+            .replace(/[<>]/g, '') // Remove angle brackets that might be interpreted as mentions
+            .replace(/&/g, 'and') // Replace ampersands
+            .replace(/[\u0000-\u001F\u007F-\u009F]/g, '') // Remove control characters
+            .trim();
+          
+          console.log('Sanitized text length:', plainText.length);
+          console.log('Sanitized text preview:', plainText.substring(0, 100) + '...');
+          
+          // Check if thinking message exists
+          if (!thinkingMessage || !thinkingMessage.ts) {
+            console.error('No thinking message to update!');
+            // Post a new message instead
+            await client.chat.postMessage({
+              channel: msg.channel,
+              thread_ts: msg.thread_ts || msg.ts,
+              text: plainText
+            });
+          } else {
+            // Simple update with text only
+            await client.chat.update({
+              channel: msg.channel,
+              ts: thinkingMessage.ts,
+              text: plainText
+            });
+          }
         } else {
+          // For non-notes responses, format normally
+          const { text, blocks } = formatSuccessMessage(result);
+          
           // For other responses, use blocks
           await client.chat.update({
             channel: msg.channel,
@@ -346,9 +368,7 @@ async function handleMention({ event, message, say, client }) {
         }
       } catch (updateError) {
         console.error('Error updating message:', updateError);
-        console.error('Failed blocks:', JSON.stringify(blocks, null, 2));
-        console.error('Message text length:', text.length);
-        console.error('Message preview:', text.substring(0, 200) + '...');
+        console.error('Update error details:', updateError.data || updateError.message);
         
         // Fallback to simple text message without blocks
         try {
