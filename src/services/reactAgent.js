@@ -1,8 +1,31 @@
 const Anthropic = require('@anthropic-ai/sdk');
 const fileStorage = require('./fileStorage');
 
-// Use file storage due to Node v24 MongoDB TLS issues
-const saveConversation = fileStorage.saveConversation;
+// Dynamic storage selection based on MongoDB availability
+let saveConversation;
+let dbConnected = false;
+
+// Initialize storage on first use
+async function initializeStorage() {
+  if (saveConversation) return saveConversation;
+  
+  try {
+    // Try MongoDB first
+    const db = require('./database');
+    // Test connection
+    await db.connectDB();
+    saveConversation = db.saveConversation;
+    dbConnected = true;
+    console.log('✅ Using MongoDB for conversation storage');
+  } catch (error) {
+    // Fallback to file storage
+    console.log('⚠️  MongoDB not available, using file storage');
+    saveConversation = fileStorage.saveConversation;
+    dbConnected = false;
+  }
+  
+  return saveConversation;
+}
 
 class ReactAgent {
   constructor() {
@@ -179,8 +202,10 @@ class ReactAgent {
         iterationCount: context.iterations.length
       };
       
-      await saveConversation(conversationData);
-      console.log('💾 Conversation saved successfully (File storage)');
+      // Initialize storage if not already done
+      const storage = await initializeStorage();
+      await storage(conversationData);
+      console.log(`💾 Conversation saved successfully (${dbConnected ? 'MongoDB' : 'File storage'})`);
     } catch (error) {
       console.error('Failed to save conversation:', error);
     }

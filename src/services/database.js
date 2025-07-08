@@ -1,5 +1,10 @@
 const { MongoClient } = require('mongodb');
 
+// Load production config if on Railway
+if (process.env.RAILWAY_ENVIRONMENT) {
+  require('../config/production');
+}
+
 let db = null;
 let client = null;
 
@@ -12,11 +17,25 @@ async function connectDB() {
       throw new Error('MongoDB connection string not found. Please set MONGODB_URI or MDB_MCP_CONNECTION_STRING');
     }
     
-    client = new MongoClient(MONGODB_URI, {
+    // Railway-optimized connection settings
+    const connectionOptions = {
       serverSelectionTimeoutMS: 5000,
       retryWrites: true,
-      w: 'majority'
-    });
+      w: 'majority',
+      maxPoolSize: 10,
+      minPoolSize: 2,
+      maxIdleTimeMS: 10000,
+      connectTimeoutMS: 10000,
+      socketTimeoutMS: 45000,
+    };
+    
+    // Additional settings for Railway production
+    if (process.env.RAILWAY_ENVIRONMENT === 'production') {
+      connectionOptions.retryReads = true;
+      connectionOptions.compressors = ['zlib'];
+    }
+    
+    client = new MongoClient(MONGODB_URI, connectionOptions);
     
     await client.connect();
     db = client.db('crm-bot');
@@ -183,8 +202,14 @@ async function closeDB() {
   }
 }
 
+// Helper function to get DB instance
+function getDB() {
+  return db;
+}
+
 module.exports = {
   connectDB,
+  getDB,
   logInteraction,
   saveConversation,
   getConversationHistory,
