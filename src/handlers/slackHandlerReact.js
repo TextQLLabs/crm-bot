@@ -325,11 +325,26 @@ async function handleMention({ event, message, say, client }) {
         
         if (hasNotesInResponse) {
           // For notes, use text-only format to avoid formatting issues
-          await client.chat.update({
+          console.log('📝 Updating with notes response (text-only)');
+          console.log('Text length:', text.length);
+          console.log('Text preview:', text.substring(0, 100) + '...');
+          
+          // Use postMessage instead of update to avoid any block issues
+          await client.chat.postMessage({
             channel: msg.channel,
-            ts: thinkingMessage.ts,
+            thread_ts: msg.thread_ts || msg.ts,
             text: text
           });
+          
+          // Delete the thinking message
+          try {
+            await client.chat.delete({
+              channel: msg.channel,
+              ts: thinkingMessage.ts
+            });
+          } catch (deleteError) {
+            console.log('Could not delete thinking message:', deleteError.message);
+          }
         } else {
           // For other responses, use blocks
           await client.chat.update({

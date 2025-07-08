@@ -44,7 +44,7 @@ const app = new App({
   appToken: process.env.SLACK_APP_TOKEN,
   // Disable Bolt's default error handler
   processBeforeResponse: true,
-  extendedErrorHandler: true
+  extendedErrorHandler: false // Turn this off to prevent Bolt from handling errors
 });
 
 // Handle app mentions in any channel with error handling
