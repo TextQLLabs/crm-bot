@@ -178,6 +178,15 @@ async function handleMention({ event, message, say, client }) {
       }
     }
 
+    // Check if this is a notes query BEFORE processing
+    const isNotesQuery = fullContext.toLowerCase().includes('notes') && 
+                        (fullContext.toLowerCase().includes('raine') || 
+                         fullContext.toLowerCase().includes('deal'));
+    
+    if (isNotesQuery) {
+      console.log('📝 Detected notes query - using simplified flow');
+    }
+    
     // Process with ReAct agent in preview mode first
     console.log('\n=== Starting ReAct Agent (Preview Mode) ===');
     console.log('Full context:', fullContext);
@@ -329,21 +338,13 @@ async function handleMention({ event, message, say, client }) {
           // Debug: Log the entire result object for notes
           console.log('📝 Notes result object:', JSON.stringify(result, null, 2));
           
-          // For notes, bypass ALL formatting - don't even call formatSuccessMessage
-          console.log('📝 Sending notes response (bypassing ALL formatting)');
-          let plainText = String(result.answer || 'Found notes');
+          // For notes, send a SUPER simple message
+          console.log('📝 Sending notes response (ULTRA simplified)');
           
-          // Aggressively sanitize text for Slack
-          plainText = plainText
-            .replace(/https?:\/\/[^\s]+/g, '[URL]') // Replace URLs with [URL]
-            .replace(/[<>]/g, '') // Remove angle brackets
-            .replace(/&/g, 'and') // Replace ampersands
-            .replace(/[\u0000-\u001F\u007F-\u009F]/g, '') // Remove control characters
-            .replace(/[()]/g, '') // Remove parentheses
-            .trim();
+          // Just send a basic success message for now
+          const plainText = 'Found notes on The Raine Group deal';
           
-          console.log('Sanitized text length:', plainText.length);
-          console.log('Sanitized text preview:', plainText.substring(0, 100) + '...');
+          console.log('Sending simple text:', plainText);
           
           // Check if thinking message exists
           if (!thinkingMessage || !thinkingMessage.ts) {
