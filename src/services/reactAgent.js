@@ -129,7 +129,7 @@ class ReactAgent {
 
     try {
       const response = await this.anthropic.messages.create({
-        model: 'claude-3-opus-20240229',
+        model: 'claude-3-5-sonnet-20241022',
         max_tokens: 1000,
         temperature: 0.3,
         system: systemPrompt,
@@ -219,6 +219,18 @@ SEARCH STRATEGY - IMPORTANT:
   2. Find the correct/official company name
   3. Get additional context about the company
   4. Then retry CRM search with the corrected name
+
+NOTE DELETION - IMPORTANT:
+- NEVER show raw note IDs (UUIDs) to users - they are meaningless to humans
+- When asked to delete a note, you MUST:
+  1. First ask which record (company/person/deal) the note is on
+  2. Search for and find that record
+  3. Explain you need the specific note's context to delete it safely
+  4. Tell them to find the note in Attio and provide identifying details
+- If given a note ID directly:
+  - DO NOT just delete it with the raw UUID
+  - Instead say something like: "I need more context about which note you want to delete. Could you tell me which company/person/deal this note is on?"
+- The delete_note tool requires the exact note ID, but users should identify notes by their content and parent record, not by ID
 
 RESPONSE RULES:
 - Always start with a Thought
@@ -407,27 +419,44 @@ DELETE NOTE SAFETY:
 
   async deleteNote(noteId) {
     try {
-      const { deleteNote } = require('./attioService');
+      const { deleteNote, getNoteDetails } = require('./attioService');
       
-      console.log(`Deleting note with ID: ${noteId}`);
+      console.log(`Delete note requested for ID: ${noteId}`);
       
-      const result = await deleteNote(noteId);
-      
-      if (result.success) {
-        return {
-          success: true,
-          noteId: noteId,
-          message: `Note ${noteId} deleted successfully`
-        };
-      } else {
-        return result;
+      // First get note details to show context
+      const noteDetails = await getNoteDetails(noteId);
+      if (!noteDetails.success) {
+        // If we can't find the note, provide helpful guidance
+        if (noteDetails.error === 'Note not found') {
+          return {
+            success: false,
+            error: 'Note not found',
+            message: 'I couldn\'t find that note. To delete a note, please first tell me which company, person, or deal the note is on, and I can help you identify the right note to delete.'
+          };
+        }
+        return noteDetails;
       }
+      
+      // We have the note details, but we should guide the user to identify notes properly
+      return {
+        success: false,
+        needsConfirmation: true,
+        noteDetails: {
+          title: noteDetails.title,
+          content: noteDetails.content.substring(0, 100) + (noteDetails.content.length > 100 ? '...' : ''),
+          parentName: noteDetails.parentName,
+          parentType: noteDetails.parentType,
+          parentUrl: noteDetails.parentUrl
+        },
+        message: `I found a note titled "${noteDetails.title}" on ${noteDetails.parentType} "${noteDetails.parentName}". However, for safety, I need you to confirm the deletion by describing which note you want to delete and on which record. You can view this ${noteDetails.parentType} at: ${noteDetails.parentUrl}`
+      };
+      
     } catch (error) {
       console.error('Delete note error:', error);
       return {
         success: false,
         error: error.message,
-        noteId: noteId
+        message: 'I encountered an error. To delete a note, please tell me which company, person, or deal the note is on, and describe the note you want to delete.'
       };
     }
   }
@@ -575,7 +604,7 @@ DELETE NOTE SAFETY:
       
       // Call Claude's vision API
       const response = await this.anthropic.messages.create({
-        model: 'claude-3-opus-20240229',
+        model: 'claude-3-5-sonnet-20241022',
         max_tokens: 1500,
         temperature: 0.2,
         messages: [{

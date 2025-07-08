@@ -413,25 +413,66 @@ async function createNote(recordId, recordType, content) {
   return response.data.data;
 }
 
+async function getNoteDetails(noteId) {
+  try {
+    console.log(`\n=== Getting Attio note details: ${noteId} ===`);
+    
+    const response = await getAttioClient().get(`/notes/${noteId}`);
+    const note = response.data.data;
+    
+    // Extract note details
+    const details = {
+      success: true,
+      noteId: noteId,
+      title: note.title || 'Untitled',
+      content: note.content?.content || 'No content',
+      parentType: note.parent_object?.replace(/s$/, ''), // Remove 's' from 'companies' -> 'company'
+      parentId: note.parent_record_id,
+      createdAt: note.created_at,
+      createdBy: note.created_by_actor
+    };
+    
+    // Try to get parent record details for context
+    if (details.parentType && details.parentId) {
+      try {
+        const parentResponse = await getAttioClient().get(`/objects/${note.parent_object}/records/${note.parent_record_id}`);
+        const parentData = parentResponse.data.data;
+        details.parentName = parentData.values?.name?.[0]?.value || 'Unknown';
+        details.parentUrl = `https://app.attio.com/textql-data/${details.parentType}/${details.parentId}/overview`;
+      } catch (parentError) {
+        console.log('Could not fetch parent record details:', parentError.message);
+      }
+    }
+    
+    return details;
+  } catch (error) {
+    if (error.response?.status === 404) {
+      return {
+        success: false,
+        error: 'Note not found',
+        noteId: noteId
+      };
+    }
+    console.error('Get note details error:', error.response?.data || error.message);
+    return {
+      success: false,
+      error: error.response?.data?.message || error.message,
+      noteId: noteId
+    };
+  }
+}
+
 async function deleteNote(noteId) {
   try {
     console.log(`\n=== Deleting Attio note: ${noteId} ===`);
     
-    // First, verify the note exists by trying to get it
-    try {
-      const getResponse = await getAttioClient().get(`/notes/${noteId}`);
-      console.log(`Note found: ${getResponse.data.data.title || 'Untitled'}`);
-    } catch (error) {
-      if (error.response?.status === 404) {
-        console.log('Note not found - it may have already been deleted');
-        return {
-          success: false,
-          error: 'Note not found',
-          noteId: noteId
-        };
-      }
-      throw error;
+    // First, get note details for logging
+    const noteDetails = await getNoteDetails(noteId);
+    if (!noteDetails.success) {
+      return noteDetails; // Return the error from getNoteDetails
     }
+    
+    console.log(`Deleting note: "${noteDetails.title}" from ${noteDetails.parentType} "${noteDetails.parentName}"`);
     
     // Delete the note
     const response = await getAttioClient().delete(`/notes/${noteId}`);
@@ -441,7 +482,8 @@ async function deleteNote(noteId) {
     return {
       success: true,
       noteId: noteId,
-      message: 'Note deleted successfully'
+      noteDetails: noteDetails,
+      message: `Deleted note "${noteDetails.title}" from ${noteDetails.parentType} "${noteDetails.parentName}"`
     };
   } catch (error) {
     console.error('Delete note error:', error.response?.data || error.message);
@@ -453,4 +495,4 @@ async function deleteNote(noteId) {
   }
 }
 
-module.exports = { searchAttio, createOrUpdateRecord, getAttioClient, deleteNote };
+module.exports = { searchAttio, createOrUpdateRecord, getAttioClient, deleteNote, getNoteDetails };
