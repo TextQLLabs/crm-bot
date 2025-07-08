@@ -688,6 +688,13 @@ async function handleButtonAction({ body, ack, client }) {
         case 'update_entity':
           successMsg += `✏️ **Updated ${pendingAction.input.entity_type}**\n`;
           break;
+        case 'delete_note':
+          successMsg += `🗑️ **Deleted note successfully**\n`;
+          if (pendingAction.noteDetails) {
+            successMsg += `Note: "${pendingAction.noteDetails.title || 'Untitled'}"\n`;
+            successMsg += `From: ${pendingAction.noteDetails.parentType} "${pendingAction.noteDetails.parentName}"\n`;
+          }
+          break;
         default:
           successMsg += `**Action**: ${pendingAction.action}\n`;
       }

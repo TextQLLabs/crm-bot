@@ -1,6 +1,8 @@
-const { App } = require('@slack/bolt');
+const { App, ExpressReceiver } = require('@slack/bolt');
 const dotenv = require('dotenv');
+const express = require('express');
 const { handleMention, handleButtonAction } = require('./handlers/slackHandlerReact'); // Using ReAct handler
+const healthRoutes = require('./health');
 
 // Database service - will attempt MongoDB first, fallback to mock
 let connectDB;
@@ -18,12 +20,28 @@ console.log('Environment check:', {
   hasAttio: !!process.env.ATTIO_API_KEY
 });
 
+// Create Express receiver to support HTTP endpoints
+const receiver = new ExpressReceiver({
+  signingSecret: process.env.SLACK_SIGNING_SECRET
+});
+
+// Add health check routes
+receiver.router.use(healthRoutes);
+
+// Add a basic root route
+receiver.router.get('/', (req, res) => {
+  res.json({
+    service: 'CRM Bot',
+    status: 'running',
+    version: require('../package.json').version
+  });
+});
+
 const app = new App({
   token: process.env.SLACK_BOT_TOKEN,
-  signingSecret: process.env.SLACK_SIGNING_SECRET,
+  receiver,
   socketMode: true,
-  appToken: process.env.SLACK_APP_TOKEN,
-  port: process.env.PORT || 3000
+  appToken: process.env.SLACK_APP_TOKEN
 });
 
 // Handle app mentions in any channel
@@ -72,10 +90,12 @@ app.action('show_search_details', handleButtonAction);
     console.log('💾 Database:', dbService);
     
     // Start Slack app
-    await app.start();
-    console.log('⚡️ CRM Bot with ReAct Agent is running!');
+    const port = process.env.PORT || 3000;
+    await app.start(port);
+    console.log(`⚡️ CRM Bot with ReAct Agent is running on port ${port}!`);
     console.log('📝 Using ReAct (Reasoning + Acting) pattern for intelligent CRM updates');
     console.log('🔐 Preview mode enabled - all write actions require approval before execution');
+    console.log(`🩺 Health check available at: http://localhost:${port}/health`);
   } catch (error) {
     console.error('Unable to start app:', error);
     process.exit(1);

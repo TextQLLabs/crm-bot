@@ -124,14 +124,35 @@ class ReactAgent {
 
       // If in preview mode and this is a write action, stop here
       if (previewMode && step.action && this.isWriteAction(step.action)) {
+        const pendingAction = {
+          action: step.action,
+          input: step.actionInput,
+          thought: step.thought
+        };
+        
+        // For delete_note, try to get note details for better preview
+        if (step.action === 'delete_note' && step.actionInput.note_id) {
+          try {
+            const { getNoteDetails } = require('./attioService');
+            const noteDetails = await getNoteDetails(step.actionInput.note_id);
+            if (noteDetails.success) {
+              pendingAction.noteDetails = {
+                title: noteDetails.title,
+                content: noteDetails.content,
+                parentName: noteDetails.parentName,
+                parentType: noteDetails.parentType,
+                parentUrl: noteDetails.parentUrl
+              };
+            }
+          } catch (e) {
+            console.log('Could not fetch note details for preview:', e.message);
+          }
+        }
+        
         return {
           success: true,
           preview: true,
-          pendingAction: {
-            action: step.action,
-            input: step.actionInput,
-            thought: step.thought
-          },
+          pendingAction: pendingAction,
           steps: context.iterations
         };
       }

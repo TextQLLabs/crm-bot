@@ -1,0 +1,151 @@
+{
+  "conversationId": "1751988453.621079",
+  "userId": "U0951TSB4P2",
+  "userName": "slack-mcp-textql-ethan",
+  "channel": "C0946T1T4CB",
+  "threadTs": "1751988453.621079",
+  "messageTs": "1751988453.621079",
+  "userMessage": "User: test mongodb - find companies related to stripe",
+  "conversationHistory": [
+    {
+      "user": "U0951TSB4P2",
+      "text": "test mongodb - find companies related to stripe",
+      "ts": "1751988453.621079"
+    }
+  ],
+  "botActionHistory": [],
+  "agentThoughts": [
+    "I should search for companies in the CRM that are related to MongoDB and Stripe. Let me start with MongoDB.",
+    "I found MongoDB entries, now let me search for companies related to Stripe to complete the request.",
+    "I now have enough information to provide a summary of the MongoDB and Stripe related companies found in the CRM."
+  ],
+  "agentActions": [
+    {
+      "action": "search_crm",
+      "input": {
+        "entity_type": "company",
+        "search_query": "mongodb"
+      },
+      "observation": [
+        {
+          "id": "6d41a63a-6f66-43e1-86dc-da8b9523bfde",
+          "name": "MongoDB",
+          "description": "MongoDB provides a developer data platform that simplifies data management and accelerates application development, enabling businesses to leverage modern database technology for innovative solutions across various industries.",
+          "domains": [
+            "mongodb.com"
+          ],
+          "slug": "mongodb.com",
+          "url": "https://app.attio.com/textql-data/company/6d41a63a-6f66-43e1-86dc-da8b9523bfde/overview",
+          "type": "company"
+        },
+        {
+          "id": "cddc80da-de64-4956-b6b3-4767af0f0097",
+          "name": "MongoDB",
+          "description": "Value: Unknown",
+          "url": "https://app.attio.com/textql-data/deals/cddc80da-de64-4956-b6b3-4767af0f0097/overview",
+          "type": "deal"
+        }
+      ]
+    },
+    {
+      "action": "search_crm",
+      "input": {
+        "entity_type": "company",
+        "search_query": "stripe"
+      },
+      "observation": [
+        {
+          "id": "4de293a5-eeb1-4139-9617-6f143309a93a",
+          "name": "Stripe",
+          "description": "Stripe is a global technology company that builds economic infrastructure for the internet. They provide a set of unified APIs and tools that enable businesses to accept and manage online payments, send payouts, automate financial processes, and embed ...",
+          "domains": [
+            "growth.stripe.com"
+          ],
+          "slug": "growth.stripe.com",
+          "url": "https://app.attio.com/textql-data/company/4de293a5-eeb1-4139-9617-6f143309a93a/overview",
+          "type": "company"
+        },
+        {
+          "id": "bdbfdcf1-35da-4358-b975-993e39939870",
+          "name": "Stripe",
+          "description": "Stripe is a global technology company that provides financial infrastructure for the internet. They offer a suite of APIs and tools for businesses to accept online and in-person payments, automate financial processes, and embed financial services in th...",
+          "domains": [
+            "stripe.com"
+          ],
+          "slug": "stripe.com",
+          "url": "https://app.attio.com/textql-data/company/bdbfdcf1-35da-4358-b975-993e39939870/overview",
+          "type": "company"
+        },
+        {
+          "id": "1f9660fd-2cc6-496b-beac-4357392d150b",
+          "name": "Stripes Convenience Stores",
+          "description": "Stripes® Convenience Stores operates more than 700 convenience stores in Texas, New Mexico, Oklahoma and Louisiana. Restaurant service is available in over 440 of its stores, primarily under the proprietary Laredo Taco Company® brand.",
+          "domains": [
+            "stripesstores.com"
+          ],
+          "slug": "stripesstores.com",
+          "url": "https://app.attio.com/textql-data/company/1f9660fd-2cc6-496b-beac-4357392d150b/overview",
+          "type": "company"
+        },
+        {
+          "id": "901bfe16-aba5-4751-b1c8-9ff9f232be9e",
+          "name": "CAL's Convenience, Inc. - Operator of Stripes C-Stores",
+          "description": "CAL’s Convenience, Inc. is a company that operates 209 Stripes locations in West Texas, Oklahoma, New Mexico, Pennsylvania, and New York. They provide a wide range of products including high-quality fuels, groceries, snacks, name brand fountain and bev...",
+          "domains": [
+            "calscstores.com"
+          ],
+          "slug": "calscstores.com",
+          "url": "https://app.attio.com/textql-data/company/901bfe16-aba5-4751-b1c8-9ff9f232be9e/overview",
+          "type": "company"
+        },
+        {
+          "id": "05688beb-cf39-4712-8094-6b538623e9aa",
+          "name": "Stripe Press / Works in Progress",
+          "description": "cal-izds606uxp1zzgu@calendar.luma-mail.com",
+          "url": "https://app.attio.com/textql-data/person/05688beb-cf39-4712-8094-6b538623e9aa/overview",
+          "type": "person"
+        },
+        {
+          "id": "1945ab58-994a-40d6-95e5-8659e33cbde2",
+          "name": "Matt Klineman <mklineman@stripe.com>",
+          "description": "mklineman@stripe.com",
+          "url": "https://app.attio.com/textql-data/person/1945ab58-994a-40d6-95e5-8659e33cbde2/overview",
+          "type": "person"
+        },
+        {
+          "id": "28a5d514-9cf8-4b44-997d-b40feddae654",
+          "name": "Stripe",
+          "description": "notifications@stripe.com",
+          "url": "https://app.attio.com/textql-data/person/28a5d514-9cf8-4b44-997d-b40feddae654/overview",
+          "type": "person"
+        },
+        {
+          "id": "aa3587bb-b2c6-416c-88d5-19c3ecfd73d7",
+          "name": "Stripe",
+          "description": "accounts@stripe.com",
+          "url": "https://app.attio.com/textql-data/person/aa3587bb-b2c6-416c-88d5-19c3ecfd73d7/overview",
+          "type": "person"
+        },
+        {
+          "id": "f53b19b2-f314-4799-afd9-e7e024c05419",
+          "name": "Stripe",
+          "description": "support+lpm-adoption@stripe.com",
+          "url": "https://app.attio.com/textql-data/person/f53b19b2-f314-4799-afd9-e7e024c05419/overview",
+          "type": "person"
+        }
+      ]
+    }
+  ],
+  "finalResponse": "Found these relevant companies:\nMongoDB: https://app.attio.com/textql-data/company/6d41a63a-6f66-43e1-86dc-da8b9523bfde/overview\nStripe: https://app.attio.com/textql-data/company/bdbfdcf1-35da-4358-b975-993e39939870/overview and https://app.attio.com/textql-data/company/4de293a5-eeb1-4139-9617-6f143309a93a/overview",
+  "toolsUsed": [
+    "search_crm"
+  ],
+  "success": true,
+  "error": null,
+  "processingTime": 13840,
+  "attachmentCount": 0,
+  "iterationCount": 3,
+  "timestamp": "2025-07-08T15:27:51.166Z",
+  "version": "1.11.1",
+  "environment": "development"
+}
