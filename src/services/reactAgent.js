@@ -1,4 +1,8 @@
 const Anthropic = require('@anthropic-ai/sdk');
+const fileStorage = require('./fileStorage');
+
+// Use file storage due to Node v24 MongoDB TLS issues
+const saveConversation = fileStorage.saveConversation;
 
 class ReactAgent {
   constructor() {
@@ -63,12 +67,19 @@ class ReactAgent {
   }
 
   async processMessage(message, options = {}) {
+    const startTime = Date.now();
     const context = {
       message: message.text,
       user: message.userName,
       channel: message.channel,
       attachments: message.attachments || [],
-      iterations: []
+      iterations: [],
+      // Add metadata for conversation tracking
+      threadTs: message.threadTs,
+      messageTs: message.messageTs || new Date().getTime().toString(),
+      userId: message.userId,
+      conversationHistory: message.conversationHistory || [],
+      botActionHistory: message.botActionHistory || []
     };
 
     // Store context for access in tool implementations
@@ -98,11 +109,16 @@ class ReactAgent {
       }
 
       if (step.finalAnswer) {
-        return {
+        const result = {
           success: true,
           answer: step.finalAnswer,
           steps: context.iterations
         };
+        
+        // Save the conversation
+        await this.saveConversation(context, result, startTime);
+        
+        return result;
       }
 
       if (step.error) {
@@ -111,11 +127,60 @@ class ReactAgent {
       }
     }
 
-    return {
+    const result = {
       success: false,
       error: 'Max iterations reached',
       steps: context.iterations
     };
+    
+    // Save failed conversation
+    await this.saveConversation(context, result, startTime);
+    
+    return result;
+  }
+  
+  async saveConversation(context, result, startTime) {
+    try {
+      const conversationData = {
+        // User and channel info
+        userId: context.userId || context.user,
+        userName: context.user,
+        channel: context.channel,
+        threadTs: context.threadTs,
+        messageTs: context.messageTs,
+        
+        // Message content
+        userMessage: context.message,
+        conversationHistory: context.conversationHistory,
+        botActionHistory: context.botActionHistory,
+        
+        // Agent processing details
+        agentThoughts: context.iterations.map(s => s.thought).filter(Boolean),
+        agentActions: context.iterations.map(s => ({
+          action: s.action,
+          input: s.actionInput,
+          observation: s.observation
+        })).filter(s => s.action),
+        
+        // Results
+        finalResponse: result.answer || result.error,
+        success: result.success,
+        error: result.error || null,
+        
+        // Metadata
+        toolsUsed: [...new Set(context.iterations.map(s => s.action).filter(Boolean))],
+        processingTime: Date.now() - startTime,
+        attachmentCount: context.attachments?.length || 0,
+        iterationCount: context.iterations.length
+      };
+      
+      // Initialize storage if needed
+      const storageFunc = await initializeStorage();
+      await storageFunc(conversationData);
+      console.log(`💾 Conversation saved successfully (${dbConnected ? 'MongoDB' : 'File'})`);
+    } catch (error) {
+      console.error('Failed to save conversation:', error);
+    }
   }
 
   isWriteAction(action) {

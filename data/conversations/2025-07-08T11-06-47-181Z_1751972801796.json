@@ -1,0 +1,21 @@
+{
+  "conversationId": "1751972801796",
+  "userId": "Test User",
+  "userName": "Test User",
+  "channel": "test",
+  "messageTs": "1751972801796",
+  "userMessage": "find rayne group company",
+  "conversationHistory": [],
+  "botActionHistory": [],
+  "agentThoughts": [
+    "I'll search for \"rayne group\" first, then try variations if needed since this could be \"Raine Group\" (common misspelling)"
+  ],
+  "agentActions": [],
+  "finalResponse": "Found: The Raine Group (https://app.attio.com/companies/123-raine-group)",
+  "toolsUsed": [],
+  "success": true,
+  "error": null,
+  "timestamp": "2025-07-08T11:06:47.181Z",
+  "version": "1.11.0",
+  "environment": "development"
+}

@@ -1,0 +1,22 @@
+{
+  "conversationId": "test-thread",
+  "userId": "Test User",
+  "userName": "Test User",
+  "channel": "test",
+  "threadTs": "test-thread",
+  "messageTs": "1751972815583",
+  "userMessage": "tell me more about the first one",
+  "conversationHistory": [],
+  "botActionHistory": [],
+  "agentThoughts": [
+    "The user is asking about \"the first one\" but there's no context about previous search results or what type of entity they're referring to. I need to ask for clarification."
+  ],
+  "agentActions": [],
+  "finalResponse": "I'm not sure which record you're asking about. Could you please provide more context - are you looking for information about a specific company, person, or deal? This will help me search and find the right details for you.",
+  "toolsUsed": [],
+  "success": true,
+  "error": null,
+  "timestamp": "2025-07-08T11:06:58.842Z",
+  "version": "1.11.0",
+  "environment": "development"
+}

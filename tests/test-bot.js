@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 require('dotenv').config();
-const { ReactAgent } = require('./src/services/reactAgent');
+const { ReactAgent } = require('../src/services/reactAgent');
 
 // Test cases to run
 const testCases = [

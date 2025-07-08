@@ -1,0 +1,28 @@
+{
+  "conversationId": "1234567890.123456",
+  "userId": "U123TEST",
+  "userName": "Test User",
+  "channel": "C123TEST",
+  "threadTs": "1234567890.123456",
+  "messageTs": "1234567890.123456",
+  "userMessage": "Find information about The Raine Group",
+  "conversationHistory": [
+    {
+      "user": "U123TEST",
+      "text": "Hi bot!",
+      "ts": "1234567890.123455"
+    }
+  ],
+  "botActionHistory": [],
+  "agentThoughts": [
+    "I'll start by searching for \"The Raine Group\" in the CRM, and if needed, try variations of the name."
+  ],
+  "agentActions": [],
+  "finalResponse": "The Raine Group is not currently in the CRM system. I searched for variations including \"The Raine Group\", \"Raine Group\", and \"Raine\" but found no matches. Would you like me to create a new company record for them?",
+  "toolsUsed": [],
+  "success": true,
+  "error": null,
+  "timestamp": "2025-07-08T11:04:08.064Z",
+  "version": "1.11.0",
+  "environment": "development"
+}

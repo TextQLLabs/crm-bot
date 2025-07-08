@@ -1,5 +1,6 @@
 // Mock database service for testing without MongoDB
 const interactions = [];
+const conversations = [];
 const cache = new Map();
 const errors = [];
 
@@ -14,6 +15,43 @@ async function logInteraction(interaction) {
     timestamp: new Date()
   });
   console.log('Logged interaction:', interaction.message);
+}
+
+// Save complete conversation with all context
+async function saveConversation(conversationData) {
+  const conversation = {
+    conversationId: conversationData.threadTs || conversationData.messageTs,
+    userId: conversationData.userId,
+    userName: conversationData.userName,
+    channel: conversationData.channel,
+    channelName: conversationData.channelName,
+    threadTs: conversationData.threadTs,
+    messageTs: conversationData.messageTs,
+    userMessage: conversationData.userMessage,
+    conversationHistory: conversationData.conversationHistory || [],
+    botActionHistory: conversationData.botActionHistory || [],
+    agentThoughts: conversationData.agentThoughts || [],
+    agentActions: conversationData.agentActions || [],
+    finalResponse: conversationData.finalResponse,
+    toolsUsed: conversationData.toolsUsed || [],
+    success: conversationData.success !== undefined ? conversationData.success : true,
+    error: conversationData.error || null,
+    timestamp: new Date(),
+    version: process.env.npm_package_version || '1.11.0',
+    environment: process.env.RAILWAY_ENVIRONMENT || 'development'
+  };
+  
+  conversations.push(conversation);
+  console.log(`Saved conversation ${conversation.conversationId} to in-memory store`);
+  return conversation;
+}
+
+// Get conversation history for a thread
+async function getConversationHistory(threadTs, channel) {
+  return conversations.filter(c => 
+    (c.threadTs === threadTs || c.conversationId === threadTs) && 
+    c.channel === channel
+  ).sort((a, b) => b.timestamp - a.timestamp);
 }
 
 async function cacheAttioData(key, data) {
@@ -58,6 +96,8 @@ async function closeDB() {
 module.exports = {
   connectDB,
   logInteraction,
+  saveConversation,
+  getConversationHistory,
   cacheAttioData,
   getCachedData,
   logError,

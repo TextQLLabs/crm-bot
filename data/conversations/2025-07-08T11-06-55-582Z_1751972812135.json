@@ -1,0 +1,21 @@
+{
+  "conversationId": "1751972812135",
+  "userId": "Test User",
+  "userName": "Test User",
+  "channel": "test",
+  "messageTs": "1751972812135",
+  "userMessage": "find companies with media in the name",
+  "conversationHistory": [],
+  "botActionHistory": [],
+  "agentThoughts": [
+    "I should search for companies in the CRM with \"media\" in their name."
+  ],
+  "agentActions": [],
+  "finalResponse": "Found 3 companies: Media One Group (https://app.attio.com/companies/123), New Media Ventures (https://app.attio.com/companies/456), and Social Media Today LLC (https://app.attio.com/companies/789).",
+  "toolsUsed": [],
+  "success": true,
+  "error": null,
+  "timestamp": "2025-07-08T11:06:55.582Z",
+  "version": "1.11.0",
+  "environment": "development"
+}

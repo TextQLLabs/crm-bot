@@ -163,10 +163,33 @@ This removes Ethan from the testing loop and allows autonomous bot development a
 
 When testing changes:
 1. Test API calls locally first (`node src/test-*.js`)
-2. Check Railway build logs after pushing
-3. Verify bot responds in Slack
-4. Test both new messages and thread replies
-5. Ensure preview mode works for write operations
+2. **CRITICAL: Test prompt changes locally BEFORE deployment**
+   - Use `npm run local` or `npm run test:bot` to test locally
+   - Verify existing functionality still works (search variations, fuzzy matching)
+   - Test new features in isolation
+   - Only deploy after confirming no regressions
+3. Check Railway build logs after pushing
+4. Verify bot responds in Slack
+5. Test both new messages and thread replies
+6. Ensure preview mode works for write operations
+
+## Prompt Testing Guidelines
+
+**NEVER deploy prompt changes without local testing!**
+
+Before changing the system prompt in ReactAgent:
+1. Create a test case that verifies current behavior
+2. Make your prompt changes
+3. Run the same test to ensure nothing broke
+4. Test edge cases that rely on the prompt instructions
+5. Only deploy after all tests pass
+
+Common prompt-related features to test:
+- Multiple search variations (e.g., "The Raine Group" → "Raine Group" → "Raine")
+- Fuzzy search behavior
+- Note deletion safety (never showing UUIDs)
+- Web search fallback
+- Error recovery strategies
 
 ## MongoDB Documentation
 

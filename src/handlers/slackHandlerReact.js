@@ -1,15 +1,6 @@
 const { ReactAgent } = require('../services/reactAgent');
 const axios = require('axios');
 
-// Try to use real database, fall back to mock if needed
-let db;
-try {
-  db = require('../services/database');
-} catch (e) {
-  db = require('../services/database-mock');
-}
-const { logInteraction } = db;
-
 async function handleMention({ event, message, say, client }) {
   const msg = event || message;
   const agent = new ReactAgent();
@@ -168,10 +159,14 @@ async function handleMention({ event, message, say, client }) {
     const result = await agent.processMessage({
       text: fullContext,
       userName,
+      userId: msg.user,
       channel: msg.channel,
       attachments,
       isThreaded: msg.thread_ts && msg.thread_ts !== msg.ts,
-      threadTs: msg.thread_ts || msg.ts
+      threadTs: msg.thread_ts || msg.ts,
+      messageTs: msg.ts,
+      conversationHistory,
+      botActionHistory
     }, { preview: true });
 
     // Check if we have a pending action to approve

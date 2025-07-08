@@ -1,7 +1,10 @@
 const { App } = require('@slack/bolt');
 const dotenv = require('dotenv');
 const { handleMention, handleButtonAction } = require('./handlers/slackHandlerReact'); // Using ReAct handler
-const { connectDB } = require('./services/database-mock'); // Using mock DB
+
+// Database service - will attempt MongoDB first, fallback to mock
+let connectDB;
+let dbService = 'MongoDB'; // Track which service we're using
 
 // Load environment variables
 dotenv.config();
@@ -49,11 +52,24 @@ app.action('show_search_details', handleButtonAction);
 // Start the app
 (async () => {
   try {
-    // Connect to Mock DB (no MongoDB)
-    await connectDB();
+    // Try to connect to MongoDB first
+    try {
+      const mongoDb = require('./services/database');
+      connectDB = mongoDb.connectDB;
+      await connectDB();
+      dbService = 'MongoDB';
+    } catch (mongoError) {
+      // If MongoDB fails, fallback to mock
+      console.log('⚠️  MongoDB connection failed, falling back to in-memory storage');
+      const mockDb = require('./services/database-mock');
+      connectDB = mockDb.connectDB;
+      await connectDB();
+      dbService = 'In-Memory';
+    }
     
     console.log('🚂 Starting CRM Bot on Railway...');
     console.log('🔍 Deployment:', process.env.RAILWAY_ENVIRONMENT ? `Railway (${process.env.RAILWAY_ENVIRONMENT})` : 'Local Development');
+    console.log('💾 Database:', dbService);
     
     // Start Slack app
     await app.start();
