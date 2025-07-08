@@ -284,19 +284,23 @@ Add to `test-suite.js`:
 - **Search**: Supports fuzzy search via query parameter
 
 ### Attio URL Format (IMPORTANT - Updated Jan 2025)
-- **Correct URL structure**:
+- **Overview URLs** (for viewing records):
   - Companies: `https://app.attio.com/textql-data/company/{id}/overview`
   - Deals: `https://app.attio.com/textql-data/deals/{id}/overview`
   - People: `https://app.attio.com/textql-data/person/{id}/overview`
-- **Key differences from API paths**:
-  - Use singular form for companies and people (company, person)
-  - Use PLURAL form for deals (deals, not deal)
-  - No `/record/` in the path
-  - Must include `/overview` at the end
-  - Without `/overview`, links just go to the index page
+  - Key rules:
+    - Use singular form for companies and people (company, person)
+    - Use PLURAL form for deals (deals, not deal)
+    - No `/record/` in overview paths
+    - Must include `/overview` at the end
+- **Note URLs** (for viewing specific notes):
+  - Format: `https://app.attio.com/textql-data/{type}/record/{record_id}/notes?modal=note&id={note_id}`
+  - Example: `https://app.attio.com/textql-data/deals/record/637f050b-409d-4fdf-b401-b85d48a5e9df/notes?modal=note&id=05649629-8d0c-4b6a-a2b6-a0f9d95effa6`
+  - Note URLs DO include `/record/` in the path
 - **Examples**: 
-  - ✅ Correct company: `https://app.attio.com/textql-data/company/a41e73b9-5dac-493f-bb2d-d38bb166c330/overview`
-  - ✅ Correct deal: `https://app.attio.com/textql-data/deals/637f050b-409d-4fdf-b401-b85d48a5e9df/overview`
+  - ✅ Correct company overview: `https://app.attio.com/textql-data/company/a41e73b9-5dac-493f-bb2d-d38bb166c330/overview`
+  - ✅ Correct deal overview: `https://app.attio.com/textql-data/deals/637f050b-409d-4fdf-b401-b85d48a5e9df/overview`
+  - ✅ Correct note URL: `https://app.attio.com/textql-data/deals/record/637f050b-409d-4fdf-b401-b85d48a5e9df/notes?modal=note&id={note_id}`
   - ❌ Wrong: `https://app.attio.com/textql-data/deal/637f050b-409d-4fdf-b401-b85d48a5e9df/overview` (must be "deals" not "deal")
 
 ### Slack Bot Tokens

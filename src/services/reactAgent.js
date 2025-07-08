@@ -608,10 +608,16 @@ DELETE NOTE SAFETY:
         const contentDisplay = wantsFullContent ? 
           note.content || '(empty note)' : 
           `${note.content.substring(0, 150)}${note.content.length > 150 ? '...' : ''}`;
+        
+        // Construct direct note URL
+        let noteUrl = '';
+        if (note.id && note.parentObject && note.parentRecordId) {
+          noteUrl = `\n   📎 View note: https://app.attio.com/textql-data/${note.parentObject}/record/${note.parentRecordId}/notes?modal=note&id=${note.id}`;
+        }
           
         return `${index + 1}. **${note.title}** (${note.createdAt})
    ${contentDisplay}
-   Created by: ${note.createdBy}`;
+   Created by: ${note.createdBy}${noteUrl}`;
       }).join('\n\n');
       
       return {
