@@ -405,13 +405,13 @@ function formatSuccessMessage(result) {
     message = '✅ Task completed successfully!';
   }
 
-  // Add version info
-  message += `\n\n🚂 v${pkg.version}`;
+  // Temporarily disable version info to debug
+  // message += `\n\n🚂 v${pkg.version}`;
   
   // Validate message length for Slack (max 3000 chars for text)
   if (message.length > 3000) {
     console.warn('Message too long for Slack, truncating...');
-    message = message.substring(0, 2950) + '...\n\n🚂 v' + pkg.version;
+    message = message.substring(0, 2950) + '...';
   }
 
   // Build blocks for Slack message - validate text content
