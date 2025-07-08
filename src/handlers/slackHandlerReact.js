@@ -1,6 +1,17 @@
 const { ReactAgent } = require('../services/reactAgent');
 const axios = require('axios');
-const { logInteraction } = require('../services/database');
+
+// Dynamic database service loading
+let logInteraction;
+try {
+  // Try to load from main database service
+  const db = require('../services/database');
+  logInteraction = db.logInteraction;
+} catch (error) {
+  // Fallback to mock if main database fails
+  const mockDb = require('../services/database-mock');
+  logInteraction = mockDb.logInteraction;
+}
 
 async function handleMention({ event, message, say, client }) {
   const msg = event || message;
