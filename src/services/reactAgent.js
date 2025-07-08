@@ -174,10 +174,8 @@ class ReactAgent {
         iterationCount: context.iterations.length
       };
       
-      // Initialize storage if needed
-      const storageFunc = await initializeStorage();
-      await storageFunc(conversationData);
-      console.log(`💾 Conversation saved successfully (${dbConnected ? 'MongoDB' : 'File'})`);
+      await saveConversation(conversationData);
+      console.log('💾 Conversation saved successfully (File storage)');
     } catch (error) {
       console.error('Failed to save conversation:', error);
     }
@@ -255,7 +253,11 @@ Thought: [Your reasoning about what to do next]
 Action: [One of: ${Object.keys(this.tools).join(', ')}]
 Action Input: {"param1": "value1", "param2": "value2"}
 
-After I provide an Observation, continue with:
+STOP HERE! Do NOT include "Observation:" in your response.
+I will execute the action and provide the observation.
+Wait for my observation before continuing.
+
+After I provide an Observation, you may continue with:
 
 Thought: [Reflect on the observation]
 Action: [Next action or none]
@@ -265,6 +267,8 @@ When you have the final answer:
 
 Thought: I now have enough information to provide the final answer
 Final Answer: [Your complete response to the user]
+
+CRITICAL: Never write "Observation:" in your responses. Only write Thought, Action, Action Input, or Final Answer.
 
 SEARCH STRATEGY - IMPORTANT:
 - When searching for entities, if your first search returns no results, ALWAYS try alternative searches

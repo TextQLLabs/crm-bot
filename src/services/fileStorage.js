@@ -36,8 +36,11 @@ async function saveConversation(conversationData) {
       toolsUsed: conversationData.toolsUsed || [],
       success: conversationData.success !== undefined ? conversationData.success : true,
       error: conversationData.error || null,
+      processingTime: conversationData.processingTime || 0,
+      attachmentCount: conversationData.attachmentCount || 0,
+      iterationCount: conversationData.iterationCount || 0,
       timestamp: new Date().toISOString(),
-      version: process.env.npm_package_version || '1.11.0',
+      version: process.env.npm_package_version || '1.11.1',
       environment: process.env.RAILWAY_ENVIRONMENT || 'development'
     };
     

@@ -1,5 +1,18 @@
 # CRM Bot Changelog
 
+## v1.11.1 (2025-07-08)
+
+### Bug Fixes
+- Fixed Claude 3.5 Sonnet hallucinating observations in responses
+- Updated system prompt to explicitly prevent Claude from including fake "Observation:" sections
+- This fixes the issue where searches would return "No results found" even when results existed
+- All search functionality now works correctly with Claude 3.5 Sonnet
+
+### Testing Improvements
+- Added comprehensive testing guidelines to CLAUDE.md
+- Emphasized importance of testing prompt changes locally before deployment
+- Created debug tools to identify and fix hallucination issues
+
 ## v1.11.0 (2025-01-08)
 
 ### Major Changes

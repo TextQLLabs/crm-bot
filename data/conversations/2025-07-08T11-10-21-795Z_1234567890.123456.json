@@ -1,0 +1,65 @@
+{
+  "conversationId": "1234567890.123456",
+  "userId": "U123TEST",
+  "userName": "Test User",
+  "channel": "C123TEST",
+  "threadTs": "1234567890.123456",
+  "messageTs": "1234567890.123456",
+  "userMessage": "Find information about The Raine Group",
+  "conversationHistory": [
+    {
+      "user": "U123TEST",
+      "text": "Hi bot!",
+      "ts": "1234567890.123455"
+    }
+  ],
+  "botActionHistory": [],
+  "agentThoughts": [
+    "I'll start by searching for \"The Raine Group\" in the CRM system. If no results, I'll try variations of the name.",
+    "I found The Raine Group in the CRM. Let me get more detailed information about the company.",
+    "I have found The Raine Group in the CRM system. Even though the detailed fetch failed, I have enough information from the search results to provide a useful response."
+  ],
+  "agentActions": [
+    {
+      "action": "search_crm",
+      "input": {
+        "entity_type": "company",
+        "search_query": "The Raine Group"
+      },
+      "observation": [
+        {
+          "id": "a41e73b9-5dac-493f-bb2d-d38bb166c330",
+          "name": "The Raine Group",
+          "description": "The Raine Group is an integrated merchant bank specializing in advising and investing in high-growth sectors of technology, media, and telecom. They offer a wide range of advisory services, including mergers and acquisitions, divestitures, private capi...",
+          "domains": [
+            "raine.com"
+          ],
+          "slug": "raine.com",
+          "url": "https://app.attio.com/textql-data/company/a41e73b9-5dac-493f-bb2d-d38bb166c330/overview",
+          "type": "company"
+        }
+      ]
+    },
+    {
+      "action": "get_entity_details",
+      "input": {
+        "entity_type": "company",
+        "entity_id": "a41e73b9-5dac-493f-bb2d-d38bb166c330"
+      },
+      "observation": {
+        "success": false,
+        "error": "No Object was found for path param slug \"companys\"."
+      }
+    }
+  ],
+  "finalResponse": "Found The Raine Group in the CRM: https://app.attio.com/textql-data/company/a41e73b9-5dac-493f-bb2d-d38bb166c330/overview. They are an integrated merchant bank specializing in technology, media, and telecom advisory services.",
+  "toolsUsed": [
+    "search_crm",
+    "get_entity_details"
+  ],
+  "success": true,
+  "error": null,
+  "timestamp": "2025-07-08T11:10:21.795Z",
+  "version": "1.11.0",
+  "environment": "development"
+}
