@@ -313,6 +313,10 @@ async function handleMention({ event, message, say, client }) {
         });
       } catch (updateError) {
         console.error('Error updating message with blocks:', updateError);
+        console.error('Failed blocks:', JSON.stringify(blocks, null, 2));
+        console.error('Message text length:', text.length);
+        console.error('Message preview:', text.substring(0, 200) + '...');
+        
         // Fallback to simple text message without blocks
         try {
           await client.chat.update({
@@ -362,6 +366,12 @@ function formatSuccessMessage(result) {
 
   // Add version info
   message += `\n\n🚂 v${pkg.version}`;
+  
+  // Validate message length for Slack (max 3000 chars for text)
+  if (message.length > 3000) {
+    console.warn('Message too long for Slack, truncating...');
+    message = message.substring(0, 2950) + '...\n\n🚂 v' + pkg.version;
+  }
 
   // Build blocks for Slack message
   const blocks = [
