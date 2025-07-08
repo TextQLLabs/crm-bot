@@ -60,7 +60,7 @@ class ReactAgent {
         execute: this.createNote.bind(this)
       },
       delete_note: {
-        description: "Delete a specific note by its ID",
+        description: "Delete a specific note by its ID (one at a time)",
         parameters: ["note_id"],
         execute: this.deleteNote.bind(this)
       },
@@ -356,7 +356,10 @@ DELETE NOTE SAFETY:
 - If asked to delete a note without a specific ID, ask for the note ID
 - Be extra careful with note IDs - they should look like UUIDs (e.g., 550e8400-e29b-41d4-a716-446655440000)
 - Note: get_entity_details does NOT work for notes - only for companies, people, and deals
-- To delete a note, you need the exact note ID, which users can find in the Attio UI`;
+- To delete a note, you need the exact note ID, which users can find in the Attio UI
+- IMPORTANT: The delete_note tool can only delete ONE note at a time
+- If asked to delete multiple notes, inform the user you'll need to delete them one by one
+- After deleting one note, ask if they want to delete the next one`;
   }
 
   buildUserPrompt(context) {

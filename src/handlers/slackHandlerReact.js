@@ -462,6 +462,29 @@ function formatActionPreview(pendingAction) {
       });
       break;
       
+    case 'delete_note':
+      // Extract note details from the thought or observation
+      const noteInfo = pendingAction.noteDetails || {};
+      humanReadable = `🗑️ **Delete Note**\n\n`;
+      
+      if (noteInfo.title || noteInfo.parentName) {
+        humanReadable += `📄 **Note**: "${noteInfo.title || 'Untitled'}"\n`;
+        humanReadable += `📍 **On**: ${noteInfo.parentType || 'record'} "${noteInfo.parentName || 'Unknown'}"\n`;
+        if (noteInfo.content) {
+          humanReadable += `📝 **Preview**: ${noteInfo.content.substring(0, 100)}${noteInfo.content.length > 100 ? '...' : ''}\n`;
+        }
+        if (noteInfo.parentUrl) {
+          humanReadable += `\n🔗 **View record**: ${noteInfo.parentUrl}\n`;
+        }
+      } else {
+        // Fallback if we don't have note details
+        humanReadable += `📄 **Note ID**: ${pendingAction.input.note_id}\n`;
+        humanReadable += `\n⚠️ **Warning**: This will permanently delete the note. This action cannot be undone.\n`;
+      }
+      
+      humanReadable += `\n💡 **Tip**: To delete multiple notes, please request them one at a time.`;
+      break;
+      
     default:
       humanReadable = `⚡ **Action**: ${pendingAction.action}\n`;
       humanReadable += `**Details**: ${JSON.stringify(pendingAction.input, null, 2)}`;
