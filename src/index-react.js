@@ -80,11 +80,38 @@ app.message(async ({ message, say, client }) => {
   }
 });
 
-// Handle button interactions
-app.action('approve_action', handleButtonAction);
-app.action('cancel_action', handleButtonAction);
-app.action('show_technical_details', handleButtonAction);
-app.action('show_search_details', handleButtonAction);
+// Handle button interactions with error catching
+app.action('approve_action', async (args) => {
+  try {
+    await handleButtonAction(args);
+  } catch (error) {
+    console.error('Error in approve_action:', error);
+  }
+});
+
+app.action('cancel_action', async (args) => {
+  try {
+    await handleButtonAction(args);
+  } catch (error) {
+    console.error('Error in cancel_action:', error);
+  }
+});
+
+app.action('show_technical_details', async (args) => {
+  try {
+    await handleButtonAction(args);
+  } catch (error) {
+    console.error('Error in show_technical_details:', error);
+  }
+});
+
+app.action('show_search_details', async (args) => {
+  try {
+    await handleButtonAction(args);
+  } catch (error) {
+    console.error('Error in show_search_details:', error);
+  }
+});
 
 // Custom error handler to prevent Bolt from sending invalid_blocks
 app.error(async (error) => {

@@ -26,6 +26,11 @@ async function handleMention({ event, message, say, client }) {
     messageText: msg?.text?.substring(0, 50) + '...'
   });
   
+  // IMPORTANT: Never use say() as it can cause block formatting issues
+  if (say) {
+    console.warn('⚠️ WARNING: say parameter was passed but should not be used!');
+  }
+  
   try {
     // Check if this is a threaded message
     let conversationHistory = [];
@@ -354,12 +359,7 @@ async function handleMention({ event, message, say, client }) {
 
       // Only show reasoning steps if explicitly requested or if there was an error
       // This keeps responses cleaner and less sprawling
-      if (false && result.steps && result.steps.length > 1) {
-        await say({
-          text: formatReasoningSteps(result.steps),
-          thread_ts: msg.ts
-        });
-      }
+      // REMOVED: Old say() call that could cause issues
     } else {
       await client.chat.update({
         channel: msg.channel,
