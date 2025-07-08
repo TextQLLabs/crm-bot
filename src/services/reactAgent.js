@@ -657,15 +657,19 @@ DELETE NOTE SAFETY:
         // Escape special characters for Slack mrkdwn
         const escapeForSlack = (text) => {
           if (!text) return '';
-          return text
+          return String(text)
             .replace(/&/g, '&amp;')
             .replace(/</g, '&lt;')
             .replace(/>/g, '&gt;');
         };
         
+        // Safely handle note content
+        const noteContent = note.content || '';
         const contentDisplay = wantsFullContent ? 
-          escapeForSlack(note.content || '(empty note)') : 
-          escapeForSlack(`${note.content.substring(0, 150)}${note.content.length > 150 ? '...' : ''}`);
+          escapeForSlack(noteContent || '(empty note)') : 
+          escapeForSlack(noteContent.length > 150 ? 
+            `${noteContent.substring(0, 150)}...` : 
+            noteContent);
         
         // Construct direct note URL
         let noteUrl = '';
@@ -673,9 +677,9 @@ DELETE NOTE SAFETY:
           noteUrl = `\n   📎 View note: <https://app.attio.com/textql-data/${note.parentObject}/record/${note.parentRecordId}/notes?modal=note&id=${note.id}|Open in Attio>`;
         }
           
-        return `${index + 1}. *${escapeForSlack(note.title)}* (${note.createdAt})
+        return `${index + 1}. *${escapeForSlack(note.title || 'Untitled')}* (${note.createdAt || 'Unknown date'})
    ${contentDisplay}
-   Created by: ${escapeForSlack(note.createdBy)}${noteUrl}`;
+   Created by: ${escapeForSlack(note.createdBy || 'Unknown')}${noteUrl}`;
       }).join('\n\n');
       
       return {

@@ -389,13 +389,19 @@ function formatSuccessMessage(result) {
     s.action === 'search_crm' && s.observation
   );
 
-  if (searchSteps.length > 0) {
+  // Only add search details button if we have search steps and not dealing with notes
+  // Notes responses can be very long and cause issues with button values
+  const hasNotesAction = result.steps.some(s => s.action === 'get_notes');
+  
+  if (searchSteps.length > 0 && !hasNotesAction) {
     try {
       // Prepare search details data
       const searchData = {
         steps: searchSteps.map(s => ({
           query: s.actionInput?.search_query || s.actionInput?.query || 'unknown',
-          results: s.observation
+          results: Array.isArray(s.observation) ? 
+            s.observation.slice(0, 5) : // Limit to first 5 results
+            s.observation
         }))
       };
       
