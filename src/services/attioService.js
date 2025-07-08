@@ -262,7 +262,7 @@ async function searchDeals(query) {
         id: deal.id?.record_id,
         name: name,
         description: `Value: ${value}`,
-        url: `https://app.attio.com/textql-data/deal/${deal.id?.record_id}/overview`
+        url: `https://app.attio.com/textql-data/deals/${deal.id?.record_id}/overview`
       };
     });
   } catch (error) {

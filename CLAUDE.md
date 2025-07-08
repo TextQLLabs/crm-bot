@@ -286,16 +286,18 @@ Add to `test-suite.js`:
 ### Attio URL Format (IMPORTANT - Updated Jan 2025)
 - **Correct URL structure**:
   - Companies: `https://app.attio.com/textql-data/company/{id}/overview`
-  - Deals: `https://app.attio.com/textql-data/deal/{id}/overview`
+  - Deals: `https://app.attio.com/textql-data/deals/{id}/overview`
   - People: `https://app.attio.com/textql-data/person/{id}/overview`
 - **Key differences from API paths**:
-  - Use singular form (company, not companies)
+  - Use singular form for companies and people (company, person)
+  - Use PLURAL form for deals (deals, not deal)
   - No `/record/` in the path
   - Must include `/overview` at the end
   - Without `/overview`, links just go to the index page
-- **Example**: 
-  - ✅ Correct: `https://app.attio.com/textql-data/company/a41e73b9-5dac-493f-bb2d-d38bb166c330/overview`
-  - ❌ Wrong: `https://app.attio.com/textql-data/companies/record/a41e73b9-5dac-493f-bb2d-d38bb166c330`
+- **Examples**: 
+  - ✅ Correct company: `https://app.attio.com/textql-data/company/a41e73b9-5dac-493f-bb2d-d38bb166c330/overview`
+  - ✅ Correct deal: `https://app.attio.com/textql-data/deals/637f050b-409d-4fdf-b401-b85d48a5e9df/overview`
+  - ❌ Wrong: `https://app.attio.com/textql-data/deal/637f050b-409d-4fdf-b401-b85d48a5e9df/overview` (must be "deals" not "deal")
 
 ### Slack Bot Tokens
 - **Current App ID**: A094BJTADMG (CRM Bot)
