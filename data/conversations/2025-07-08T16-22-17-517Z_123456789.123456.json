@@ -1,0 +1,49 @@
+{
+  "conversationId": "123456789.123456",
+  "userId": "U123456",
+  "userName": "Test User",
+  "channel": "#test",
+  "threadTs": "123456789.123456",
+  "messageTs": "123456789.123456",
+  "userMessage": "search for The Raine Group",
+  "conversationHistory": [],
+  "botActionHistory": [],
+  "agentThoughts": [
+    "I'll search for \"The Raine Group\" in the CRM, starting with the exact name. If no results, I'll try variations.",
+    "I found an exact match for The Raine Group in the CRM. I can provide the result directly since we have all the necessary information."
+  ],
+  "agentActions": [
+    {
+      "action": "search_crm",
+      "input": {
+        "entity_type": "company",
+        "search_query": "The Raine Group"
+      },
+      "observation": [
+        {
+          "id": "a41e73b9-5dac-493f-bb2d-d38bb166c330",
+          "name": "The Raine Group",
+          "description": "The Raine Group is an integrated merchant bank specializing in advising and investing in high-growth sectors of technology, media, and telecom. They offer a wide range of advisory services, including mergers and acquisitions, divestitures, private capi...",
+          "domains": [
+            "raine.com"
+          ],
+          "slug": "raine.com",
+          "url": "https://app.attio.com/textql-data/company/a41e73b9-5dac-493f-bb2d-d38bb166c330/overview",
+          "type": "company"
+        }
+      ]
+    }
+  ],
+  "finalResponse": "Found The Raine Group: https://app.attio.com/textql-data/company/a41e73b9-5dac-493f-bb2d-d38bb166c330/overview",
+  "toolsUsed": [
+    "search_crm"
+  ],
+  "success": true,
+  "error": null,
+  "processingTime": 13360,
+  "attachmentCount": 0,
+  "iterationCount": 2,
+  "timestamp": "2025-07-08T16:22:17.512Z",
+  "version": "1.11.1",
+  "environment": "development"
+}

@@ -17,6 +17,15 @@ async function handleMention({ event, message, say, client }) {
   const msg = event || message;
   const agent = new ReactAgent();
   
+  // Debug: Log all Slack API calls
+  console.log('🔍 handleMention called with:', {
+    hasEvent: !!event,
+    hasMessage: !!message,
+    hasSay: !!say,
+    hasClient: !!client,
+    messageText: msg?.text?.substring(0, 50) + '...'
+  });
+  
   try {
     // Check if this is a threaded message
     let conversationHistory = [];
@@ -361,24 +370,27 @@ async function handleMention({ event, message, say, client }) {
 
   } catch (error) {
     console.error('Error in ReAct handler:', error);
+    console.error('Error stack:', error.stack);
+    
     try {
       // Try to update the thinking message with the error
       if (thinkingMessage && thinkingMessage.ts) {
         await client.chat.update({
           channel: msg.channel,
           ts: thinkingMessage.ts,
-          text: `❌ Sorry, I encountered an unexpected error: ${error.message}`
+          text: `❌ I encountered an issue processing your request. Please try again.`
         });
       } else {
         // If no thinking message, post a new message
         await client.chat.postMessage({
           channel: msg.channel,
-          text: `❌ Sorry, I encountered an unexpected error: ${error.message}`,
+          text: `❌ I encountered an issue processing your request. Please try again.`,
           thread_ts: msg.thread_ts || msg.ts
         });
       }
     } catch (errorMessageError) {
       console.error('Failed to send error message:', errorMessageError);
+      // Silently fail - don't let any error bubble up to Bolt
     }
   }
 }

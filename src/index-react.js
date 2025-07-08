@@ -44,20 +44,35 @@ const app = new App({
   appToken: process.env.SLACK_APP_TOKEN
 });
 
-// Handle app mentions in any channel
-app.event('app_mention', handleMention);
+// Handle app mentions in any channel with error handling
+app.event('app_mention', async (args) => {
+  try {
+    await handleMention(args);
+  } catch (error) {
+    console.error('Error in app_mention handler:', error);
+    // Don't let Bolt send its own error message
+    // Our handler already sends error messages
+  }
+});
 
 // Handle direct messages and thread replies
 app.message(async ({ message, say, client }) => {
-  // Handle DMs
-  if (message.channel_type === 'im') {
-    await handleMention({ message, say, client });
-  }
-  // Handle thread replies where bot is mentioned
-  else if (message.thread_ts && message.text && message.bot_id !== message.user) {
-    // Check if the message mentions the bot - bot mentions include the bot's user ID
-    // This handles thread replies where the bot is mentioned
-    await handleMention({ message, say, client });
+  try {
+    // Handle DMs
+    if (message.channel_type === 'im') {
+      // Don't pass say to avoid automatic block formatting
+      await handleMention({ message, client });
+    }
+    // Handle thread replies where bot is mentioned
+    else if (message.thread_ts && message.text && message.bot_id !== message.user) {
+      // Check if the message mentions the bot - bot mentions include the bot's user ID
+      // This handles thread replies where the bot is mentioned
+      // Don't pass say to avoid automatic block formatting
+      await handleMention({ message, client });
+    }
+  } catch (error) {
+    console.error('Error in message handler:', error);
+    // Don't let Bolt send its own error message
   }
 });
 
