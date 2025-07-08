@@ -66,7 +66,8 @@ async function handleMention({ event, message, say, client }) {
         });
       
       // Send thinking message in thread
-      thinkingMessage = await say({
+      thinkingMessage = await client.chat.postMessage({
+        channel: msg.channel,
         text: "🤔 Processing your additional context...",
         thread_ts: msg.thread_ts
       });
@@ -79,7 +80,8 @@ async function handleMention({ event, message, say, client }) {
       }];
       
       // Send initial thinking message
-      thinkingMessage = await say({
+      thinkingMessage = await client.chat.postMessage({
+        channel: msg.channel,
         text: "🤔 Let me help you with that...",
         thread_ts: msg.ts
       });
@@ -359,10 +361,25 @@ async function handleMention({ event, message, say, client }) {
 
   } catch (error) {
     console.error('Error in ReAct handler:', error);
-    await say({
-      text: `❌ Sorry, I encountered an unexpected error: ${error.message}`,
-      thread_ts: msg.ts
-    });
+    try {
+      // Try to update the thinking message with the error
+      if (thinkingMessage && thinkingMessage.ts) {
+        await client.chat.update({
+          channel: msg.channel,
+          ts: thinkingMessage.ts,
+          text: `❌ Sorry, I encountered an unexpected error: ${error.message}`
+        });
+      } else {
+        // If no thinking message, post a new message
+        await client.chat.postMessage({
+          channel: msg.channel,
+          text: `❌ Sorry, I encountered an unexpected error: ${error.message}`,
+          thread_ts: msg.thread_ts || msg.ts
+        });
+      }
+    } catch (errorMessageError) {
+      console.error('Failed to send error message:', errorMessageError);
+    }
   }
 }
 
