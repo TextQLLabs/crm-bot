@@ -346,23 +346,26 @@ async function handleMention({ event, message, say, client }) {
           
           console.log('Sending simple text:', plainText);
           
-          // Check if thinking message exists
-          if (!thinkingMessage || !thinkingMessage.ts) {
-            console.error('No thinking message to update!');
-            // Post a new message instead
-            await client.chat.postMessage({
-              channel: msg.channel,
-              thread_ts: msg.thread_ts || msg.ts,
-              text: plainText
-            });
-          } else {
-            // Simple update with text only
-            await client.chat.update({
-              channel: msg.channel,
-              ts: thinkingMessage.ts,
-              text: plainText
-            });
+          // For notes, always delete thinking message and post new
+          console.log('Deleting thinking message and posting new one');
+          
+          try {
+            if (thinkingMessage && thinkingMessage.ts) {
+              await client.chat.delete({
+                channel: msg.channel,
+                ts: thinkingMessage.ts
+              });
+            }
+          } catch (deleteErr) {
+            console.log('Could not delete thinking message:', deleteErr.message);
           }
+          
+          // Always post a new message for notes
+          await client.chat.postMessage({
+            channel: msg.channel,
+            thread_ts: msg.thread_ts || msg.ts,
+            text: plainText
+          });
           
           // IMPORTANT: Return early for notes to prevent any further processing
           console.log('✅ Notes sent successfully, returning early');
