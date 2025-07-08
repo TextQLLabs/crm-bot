@@ -300,6 +300,8 @@ NOTES - LISTING AND DELETION:
   1. First search for the entity to get its ID
   2. Then use get_notes with the entity_type and entity_id
   3. Display the notes with their titles, content preview, and creation info
+- The bot automatically shows full note content when user says "dump", "full content", "complete", or "entire"
+- Notes include: title, full content, creation date, and who created them
 - For deleting notes:
   - NEVER show raw note IDs (UUIDs) to users - they are meaningless to humans
   - When asked to delete a note, you MUST:
@@ -547,7 +549,7 @@ DELETE NOTE SAFETY:
     }
   }
 
-  async getNotes(entityType, entityId) {
+  async getNotes(entityType, entityId, showFullContent = false) {
     try {
       const { getNotes } = require('./attioService');
       
@@ -568,7 +570,18 @@ DELETE NOTE SAFETY:
           options.recordType = entityType + 's';
         }
       }
-      options.limit = 20; // Reasonable limit for display
+      // Check if user specified a number of notes
+      const userMessage = this.currentContext?.message || '';
+      const numberMatch = userMessage.match(/last\s+(\d+)(?:-(\d+))?\s+notes?/i) || 
+                         userMessage.match(/(\d+)(?:-(\d+))?\s+(?:most\s+)?recent\s+notes?/i);
+      
+      if (numberMatch) {
+        const num1 = parseInt(numberMatch[1]);
+        const num2 = numberMatch[2] ? parseInt(numberMatch[2]) : num1;
+        options.limit = Math.max(num1, num2);
+      } else {
+        options.limit = 20; // Default reasonable limit
+      }
       
       const notes = await getNotes(options);
       
@@ -582,10 +595,22 @@ DELETE NOTE SAFETY:
         };
       }
       
+      // Check if user wants full content (phrases like "dump", "full content", "complete notes")
+      const messageLower = this.currentContext?.message?.toLowerCase() || '';
+      const wantsFullContent = showFullContent || 
+        messageLower.includes('dump') || 
+        messageLower.includes('full content') || 
+        messageLower.includes('complete') ||
+        messageLower.includes('entire');
+      
       // Format notes for display
       const formattedNotes = notes.map((note, index) => {
+        const contentDisplay = wantsFullContent ? 
+          note.content || '(empty note)' : 
+          `${note.content.substring(0, 150)}${note.content.length > 150 ? '...' : ''}`;
+          
         return `${index + 1}. **${note.title}** (${note.createdAt})
-   ${note.content.substring(0, 150)}${note.content.length > 150 ? '...' : ''}
+   ${contentDisplay}
    Created by: ${note.createdBy}`;
       }).join('\n\n');
       
@@ -593,7 +618,8 @@ DELETE NOTE SAFETY:
         success: true,
         notes: notes,
         message: `Found ${notes.length} note${notes.length > 1 ? 's' : ''}:\n\n${formattedNotes}`,
-        count: notes.length
+        count: notes.length,
+        fullContent: wantsFullContent
       };
     } catch (error) {
       console.error('Get notes error:', error);

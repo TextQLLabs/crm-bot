@@ -1,0 +1,62 @@
+{
+  "conversationId": "1751987016565",
+  "userId": "Test User",
+  "userName": "Test User",
+  "channel": "#test",
+  "messageTs": "1751987016565",
+  "userMessage": "what were the last 3-4 notes on twilio? dump the context",
+  "conversationHistory": [],
+  "botActionHistory": [],
+  "agentThoughts": [
+    "I need to first search for Twilio in the CRM to get its entity ID, then get its notes.",
+    "Now that I have Twilio's entity ID, I'll get the notes associated with it. Since the user asked to \"dump the context\", I should show the full note content.",
+    "I see that there are currently no notes on the Twilio company record in the CRM."
+  ],
+  "agentActions": [
+    {
+      "action": "search_crm",
+      "input": {
+        "entity_type": "company",
+        "search_query": "Twilio"
+      },
+      "observation": [
+        {
+          "id": "0fc901b5-197b-4049-88d5-4ae40d67cc6a",
+          "name": "Twilio",
+          "description": "Twilio is a cloud communication company that offers Communication APIs for SMS, Voice, Video, and Authentication, empowering developers to embed communication capabilities into their software applications globally.",
+          "domains": [
+            "twilio.com"
+          ],
+          "slug": "twilio.com",
+          "url": "https://app.attio.com/textql-data/company/0fc901b5-197b-4049-88d5-4ae40d67cc6a/overview",
+          "type": "company"
+        }
+      ]
+    },
+    {
+      "action": "get_notes",
+      "input": {
+        "entity_type": "company",
+        "entity_id": "0fc901b5-197b-4049-88d5-4ae40d67cc6a"
+      },
+      "observation": {
+        "success": true,
+        "notes": [],
+        "message": "No notes found for this company"
+      }
+    }
+  ],
+  "finalResponse": "There are no notes currently attached to Twilio (https://app.attio.com/textql-data/company/0fc901b5-197b-4049-88d5-4ae40d67cc6a/overview). Would you like me to help you add a note?",
+  "toolsUsed": [
+    "search_crm",
+    "get_notes"
+  ],
+  "success": true,
+  "error": null,
+  "processingTime": 11051,
+  "attachmentCount": 0,
+  "iterationCount": 3,
+  "timestamp": "2025-07-08T15:03:47.616Z",
+  "version": "1.11.1",
+  "environment": "development"
+}

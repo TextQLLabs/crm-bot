@@ -511,6 +511,9 @@ async function getNotes(options = {}) {
       params.append('limit', options.limit);
     }
     
+    // Add sorting to get most recent notes first
+    params.append('sort', '-created_at');
+    
     if (params.toString()) {
       url += `?${params.toString()}`;
     }

@@ -1,0 +1,62 @@
+{
+  "conversationId": "1751987038460",
+  "userId": "Test User",
+  "userName": "Test User",
+  "channel": "#test",
+  "messageTs": "1751987038460",
+  "userMessage": "show me the last 2 notes on twilio",
+  "conversationHistory": [],
+  "botActionHistory": [],
+  "agentThoughts": [
+    "I need to first search for Twilio in the CRM to get its entity ID, then get its notes.",
+    "Now that I have found Twilio's entity ID, I can fetch its notes.",
+    "I have searched for Twilio and checked its notes, but found that there are currently no notes on the Twilio company record."
+  ],
+  "agentActions": [
+    {
+      "action": "search_crm",
+      "input": {
+        "entity_type": "company",
+        "search_query": "Twilio"
+      },
+      "observation": [
+        {
+          "id": "0fc901b5-197b-4049-88d5-4ae40d67cc6a",
+          "name": "Twilio",
+          "description": "Twilio is a cloud communication company that offers Communication APIs for SMS, Voice, Video, and Authentication, empowering developers to embed communication capabilities into their software applications globally.",
+          "domains": [
+            "twilio.com"
+          ],
+          "slug": "twilio.com",
+          "url": "https://app.attio.com/textql-data/company/0fc901b5-197b-4049-88d5-4ae40d67cc6a/overview",
+          "type": "company"
+        }
+      ]
+    },
+    {
+      "action": "get_notes",
+      "input": {
+        "entity_type": "company",
+        "entity_id": "0fc901b5-197b-4049-88d5-4ae40d67cc6a"
+      },
+      "observation": {
+        "success": true,
+        "notes": [],
+        "message": "No notes found for this company"
+      }
+    }
+  ],
+  "finalResponse": "There are no notes currently on the Twilio record (https://app.attio.com/textql-data/company/0fc901b5-197b-4049-88d5-4ae40d67cc6a/overview). Would you like to add a new note?",
+  "toolsUsed": [
+    "search_crm",
+    "get_notes"
+  ],
+  "success": true,
+  "error": null,
+  "processingTime": 12523,
+  "attachmentCount": 0,
+  "iterationCount": 3,
+  "timestamp": "2025-07-08T15:04:10.983Z",
+  "version": "1.11.1",
+  "environment": "development"
+}
