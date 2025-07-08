@@ -113,12 +113,7 @@ app.action('show_search_details', async (args) => {
   }
 });
 
-// Custom error handler to prevent Bolt from sending invalid_blocks
-app.error(async (error) => {
-  console.error('Global error handler:', error);
-  // Return false to prevent Bolt from sending its own error message
-  return false;
-});
+// Remove global error handler - let errors be silent
 
 // Start the app
 (async () => {
