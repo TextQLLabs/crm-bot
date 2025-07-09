@@ -194,9 +194,11 @@ async function handleMention({ event, message, say, client }) {
     // Add a timeout to prevent hanging
     const timeoutPromise = new Promise((resolve) => {
       setTimeout(() => {
+        console.log('⏰ Request timed out after 45 seconds');
         resolve({
           success: false,
-          error: 'Request timed out after 45 seconds'
+          error: 'Request timed out after 45 seconds',
+          answer: 'The request is taking longer than expected. Please try again in a moment.'
         });
       }, 45000); // 45 second timeout
     });
@@ -361,6 +363,10 @@ async function handleMention({ event, message, say, client }) {
         console.log('📏 Text length:', responseText.length);
         console.log('🔍 Contains **?', responseText.includes('**'));
         console.log('🔍 Has blocks?', !!updatePayload.blocks);
+        console.log('📝 Full response text:', responseText);
+        console.log('🎯 Result object keys:', Object.keys(result));
+        console.log('🎯 Result.answer:', result.answer);
+        console.log('🎯 Result.success:', result.success);
         
         await client.chat.update(updatePayload);
         console.log('✅ Update successful!');

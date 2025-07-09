@@ -8,7 +8,8 @@
   },
   "scripts": {
     "start": "node src/index-react.js",
-    "dev": "nodemon src/index-react.js",
+    "dev": "NODE_ENV=development nodemon -r dotenv/config src/index-react.js dotenv_config_path=.env.dev",
+    "dev:watch": "nodemon src/index-react.js",
     "local": "node local-bot.js",
     "test:bot": "node test-bot.js",
     "test:suite": "node test-suite.js",
