@@ -36,6 +36,7 @@ async function handleMention({ event, message, say, client }) {
     let conversationHistory = [];
     let botActionHistory = []; // Hidden context of what bot has done
     let thinkingMessage;
+    let isNotesQuery = false; // Track if this is a notes query
     
     if (msg.thread_ts && msg.thread_ts !== msg.ts) {
       // This is a reply in a thread - get the conversation history
@@ -200,6 +201,11 @@ async function handleMention({ event, message, say, client }) {
       }, 45000); // 45 second timeout
     });
     
+    // Check if this is a notes query
+    isNotesQuery = fullContext.toLowerCase().includes('notes') || 
+                   fullContext.toLowerCase().includes('note');
+    console.log('🔍 Is notes query?', isNotesQuery);
+    
     const agentPromise = agent.processMessage({
       text: fullContext,
       userName,
@@ -211,7 +217,7 @@ async function handleMention({ event, message, say, client }) {
       messageTs: msg.ts,
       conversationHistory,
       botActionHistory
-    }, { preview: true });
+    }, { preview: !isNotesQuery });  // Disable preview for notes queries
     
     // Race between agent and timeout
     const result = await Promise.race([agentPromise, timeoutPromise]);
@@ -343,9 +349,13 @@ async function handleMention({ event, message, say, client }) {
         const updatePayload = {
           channel: msg.channel,
           ts: thinkingMessage.ts,
-          text: responseText,
-          blocks: []  // Empty array to override any automatic blocks
+          text: responseText
         };
+        
+        // Only add blocks if not a notes query
+        if (!isNotesQuery) {
+          updatePayload.blocks = [];
+        }
         
         console.log('📤 Sending update to Slack:', JSON.stringify(updatePayload, null, 2));
         console.log('📏 Text length:', responseText.length);
