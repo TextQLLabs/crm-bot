@@ -191,16 +191,16 @@ async function handleMention({ event, message, say, client }) {
     console.log('Full context:', fullContext);
     console.log('Attachments:', attachments.length);
     
-    // Add a timeout to prevent hanging
+    // Add a timeout to prevent hanging (very generous timeout)
     const timeoutPromise = new Promise((resolve) => {
       setTimeout(() => {
-        console.log('⏰ Request timed out after 45 seconds');
+        console.log('⏰ Request timed out after 1 hour');
         resolve({
           success: true,  // Mark as success to avoid error handling path
-          answer: 'The request is taking longer than expected. Please try again in a moment.',
+          answer: 'The request took too long to complete. Please try again.',
           timedOut: true
         });
-      }, 25000); // 25 second timeout to avoid Slack's timeout
+      }, 3600000); // 1 hour timeout (3600000ms)
     });
     
     // Check if this is a notes query
