@@ -4,7 +4,7 @@
   "description": "Slack bot for GTM channel that updates Attio CRM",
   "main": "src/index-react.js",
   "engines": {
-    "node": ">=22.0.0"
+    "node": "22.x"
   },
   "scripts": {
     "start": "node src/index-react.js",

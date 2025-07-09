@@ -42,15 +42,28 @@ receiver.router.get('/', (req, res) => {
   });
 });
 
-const app = new App({
+// Configure app based on environment
+const isSocketMode = process.env.NODE_ENV === 'development' || process.env.SLACK_APP_TOKEN;
+const appConfig = {
   token: process.env.SLACK_BOT_TOKEN,
-  receiver,
-  socketMode: true,
-  appToken: process.env.SLACK_APP_TOKEN,
+  signingSecret: process.env.SLACK_SIGNING_SECRET,
   // Disable Bolt's default error handler
   processBeforeResponse: true,
   extendedErrorHandler: false // Turn this off to prevent Bolt from handling errors
-});
+};
+
+if (isSocketMode) {
+  // Use Socket Mode for development
+  appConfig.socketMode = true;
+  appConfig.appToken = process.env.SLACK_APP_TOKEN;
+  console.log('🔌 Using Socket Mode (development)');
+} else {
+  // Use HTTP receiver for production
+  appConfig.receiver = receiver;
+  console.log('🌐 Using HTTP receiver (production)');
+}
+
+const app = new App(appConfig);
 
 // Handle app mentions in any channel with error handling
 app.event('app_mention', async ({ event, client }) => {

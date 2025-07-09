@@ -104,9 +104,26 @@ When working with this project's environment variables:
 4. Slack app configuration in TextQL workspace
 
 ## Testing
-- Unit tests for each service
-- Integration tests for Slack events
-- Mock Attio API responses
+
+### Local Development Testing (NEW!)
+**Quick Start**: Test locally with `@crm-bot-ethan-dev` before deploying!
+
+1. **Setup** (one-time):
+   - Create dev Slack app: https://api.slack.com/apps
+   - Enable Socket Mode + add bot scopes
+   - Copy tokens to `.env.dev`
+   - Full guide: `/docs/LOCAL_DEVELOPMENT.md`
+
+2. **Run**: `npm run dev`
+3. **Test**: `@crm-bot-ethan-dev search for raine`
+4. **Benefits**: Instant testing, hot reload, separate DB
+
+### Other Testing Methods
+- **Local CLI**: `npm run local` (no Slack, direct agent testing)
+- **Unit tests**: For individual services
+- **Integration tests**: For Slack events
+- **Test suite**: `npm run test:suite` (automated test scenarios)
+- **Production**: Push to main branch for Railway auto-deploy
 
 ## Error Handling
 - Retry failed API calls
@@ -151,27 +168,35 @@ This removes Ethan from the testing loop and allows autonomous bot development a
 - **Deployment**: Railway (auto-deploys from main branch)
 - **Repository**: https://github.com/TextQLLabs/crm-bot
 
-## Development Notes
+## Development Workflow
 
-- The bot is currently production-only (no dev instance)
-- All pushes to main auto-deploy to Railway
-- Use feature branches for safer development
-- Railway logs show deployment status and errors
-- Bot includes deployment info in responses ("🚂 Railway" indicator)
+1. **Local Testing** (NEW!): `npm run dev` → test with `@crm-bot-ethan-dev`
+2. **Production**: Push to main → Railway auto-deploys → `@crm-bot-ethan`
+3. **Logs**: `railway logs` for production, console for local dev
+
+### Local Dev Setup (Quick Reference)
+- **App Name**: `crm-bot-dev-ethan` 
+- **Bot Name**: `@crm-bot-ethan-dev`
+- **Config**: `.env.dev` (copy from `.env.example`)
+- **Tokens Needed**: Bot token, Signing secret, App token (Socket Mode)
+- **Full Guide**: `/docs/LOCAL_DEVELOPMENT.md`
 
 ## Testing Checklist
 
 When testing changes:
 1. Test API calls locally first (`node src/test-*.js`)
-2. **CRITICAL: Test prompt changes locally BEFORE deployment**
-   - Use `npm run local` or `npm run test:bot` to test locally
+2. **NEW: Test with local dev bot** (`npm run dev`)
+   - Use `@crm-bot-ethan-dev` in Slack
+   - Real-time testing without deployment
+3. **CRITICAL: Test prompt changes locally BEFORE deployment**
+   - Use `npm run local` or `npm run dev` to test locally
    - Verify existing functionality still works (search variations, fuzzy matching)
    - Test new features in isolation
    - Only deploy after confirming no regressions
-3. Check Railway build logs after pushing
-4. Verify bot responds in Slack
-5. Test both new messages and thread replies
-6. Ensure preview mode works for write operations
+4. Check Railway build logs after pushing to production
+5. Verify production bot responds in Slack
+6. Test both new messages and thread replies
+7. Ensure preview mode works for write operations
 
 ## Prompt Testing Guidelines
 

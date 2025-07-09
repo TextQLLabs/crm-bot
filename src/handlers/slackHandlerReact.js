@@ -196,11 +196,11 @@ async function handleMention({ event, message, say, client }) {
       setTimeout(() => {
         console.log('⏰ Request timed out after 45 seconds');
         resolve({
-          success: false,
-          error: 'Request timed out after 45 seconds',
-          answer: 'The request is taking longer than expected. Please try again in a moment.'
+          success: true,  // Mark as success to avoid error handling path
+          answer: 'The request is taking longer than expected. Please try again in a moment.',
+          timedOut: true
         });
-      }, 45000); // 45 second timeout
+      }, 55000); // 55 second timeout (Slack has 3 second ack timeout + some buffer)
     });
     
     // Check if this is a notes query
@@ -354,8 +354,9 @@ async function handleMention({ event, message, say, client }) {
           text: responseText
         };
         
-        // Only add blocks if not a notes query
-        if (!isNotesQuery) {
+        // Don't include blocks field at all for notes queries
+        // For other queries, explicitly set empty blocks to clear any existing blocks
+        if (!isNotesQuery && !result.timedOut) {
           updatePayload.blocks = [];
         }
         
@@ -388,11 +389,26 @@ async function handleMention({ event, message, say, client }) {
       }
 
     } else {
-      await client.chat.update({
-        channel: msg.channel,
-        ts: thinkingMessage.ts,
-        text: `❌ I encountered an issue: ${result.error}\n\nPlease try rephrasing your request or contact support if this persists.`
-      });
+      // Handle error/timeout case
+      try {
+        await client.chat.update({
+          channel: msg.channel,
+          ts: thinkingMessage.ts,
+          text: `❌ I encountered an issue: ${result.error}\n\nPlease try rephrasing your request or contact support if this persists.`
+        });
+      } catch (errorUpdateError) {
+        console.error('Error updating message with error:', errorUpdateError);
+        // Try posting a new message as fallback
+        try {
+          await client.chat.postMessage({
+            channel: msg.channel,
+            thread_ts: msg.thread_ts || msg.ts,
+            text: `❌ ${result.error}`
+          });
+        } catch (errorPostError) {
+          console.error('Error posting error message:', errorPostError);
+        }
+      }
     }
 
   } catch (error) {
