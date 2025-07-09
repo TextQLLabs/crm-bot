@@ -1,0 +1,62 @@
+{
+  "conversationId": "1752066773.721379",
+  "userId": "U0951TSB4P2",
+  "userName": "slack-mcp-textql-ethan",
+  "channel": "C0946T1T4CB",
+  "threadTs": "1752066773.721379",
+  "messageTs": "1752066773.721379",
+  "userMessage": "User: quick test - search for BMG company",
+  "conversationHistory": [
+    {
+      "user": "U0951TSB4P2",
+      "text": "quick test - search for BMG company",
+      "ts": "1752066773.721379"
+    }
+  ],
+  "botActionHistory": [],
+  "agentThoughts": [
+    "I'll search for BMG company in the CRM. I should try variations of the name since it could be stored differently.",
+    "I found two results for BMG - one company record and one deal record. Since the user asked for the company, I'll provide that information concisely."
+  ],
+  "agentActions": [
+    {
+      "action": "search_crm",
+      "input": {
+        "entity_type": "company",
+        "search_query": "BMG"
+      },
+      "observation": [
+        {
+          "id": "ebf8bdfb-27d0-4593-827d-098f0d1ddbc2",
+          "name": "BMG",
+          "description": "BMG is a leading international music company specializing in music publishing and recording rights, prioritizing the needs of artists and songwriters to help them succeed in their careers.",
+          "domains": [
+            "bmg.com"
+          ],
+          "slug": "bmg.com",
+          "url": "https://app.attio.com/textql-data/company/ebf8bdfb-27d0-4593-827d-098f0d1ddbc2/overview",
+          "type": "company"
+        },
+        {
+          "id": "cd30b453-3dd8-420a-b32f-84968b7c5155",
+          "name": "BMG",
+          "description": "Value: Unknown",
+          "url": "https://app.attio.com/textql-data/deals/cd30b453-3dd8-420a-b32f-84968b7c5155/overview",
+          "type": "deal"
+        }
+      ]
+    }
+  ],
+  "finalResponse": "Found BMG company: https://app.attio.com/textql-data/company/ebf8bdfb-27d0-4593-827d-098f0d1ddbc2/overview",
+  "toolsUsed": [
+    "search_crm"
+  ],
+  "success": true,
+  "error": null,
+  "processingTime": 26758,
+  "attachmentCount": 0,
+  "iterationCount": 2,
+  "timestamp": "2025-07-09T15:00:22.896Z",
+  "version": "1.11.1",
+  "environment": "development"
+}

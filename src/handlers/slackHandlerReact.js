@@ -14,6 +14,7 @@ try {
 }
 
 async function handleMention({ event, message, say, client }) {
+  console.log('🚀 handleMention START');
   try {
     const msg = event || message;
     const agent = new ReactAgent();
@@ -178,32 +179,7 @@ async function handleMention({ event, message, say, client }) {
       }
     }
 
-    // Check if this is a notes query BEFORE processing
-    console.log('Checking for notes query in:', fullContext);
-    const isNotesQuery = fullContext.toLowerCase().includes('notes') && 
-                        (fullContext.toLowerCase().includes('raine') || 
-                         fullContext.toLowerCase().includes('deal'));
-    
-    console.log('Is notes query?', isNotesQuery);
-    
-    if (isNotesQuery) {
-      console.log('📝 Detected notes query - BYPASSING AGENT COMPLETELY');
-      
-      try {
-        // Send a simple response directly
-        const updateResult = await client.chat.update({
-          channel: msg.channel,
-          ts: thinkingMessage.ts,
-          text: 'Found 3 notes on the Raine deal'
-        });
-        console.log('Update result:', updateResult);
-      } catch (bypassError) {
-        console.error('Error in bypass update:', bypassError);
-      }
-      
-      console.log('✅ Notes bypass complete, returning');
-      return;
-    }
+    // Remove the bypass - let's fix the actual issue
     
     // Process with ReAct agent in preview mode first
     console.log('\n=== Starting ReAct Agent (Preview Mode) ===');
@@ -356,37 +332,36 @@ async function handleMention({ event, message, say, client }) {
           // Debug: Log the entire result object for notes
           console.log('📝 Notes result object:', JSON.stringify(result, null, 2));
           
-          // For notes, send a SUPER simple message
-          console.log('📝 Sending notes response (ULTRA simplified)');
+          // For notes, use the actual result answer
+          console.log('📝 Sending notes response');
+          let notesText = result.answer || 'Found notes';
           
-          // Just send a basic success message for now
-          const plainText = 'Found notes on The Raine Group deal';
+          // Make sure it's a string
+          notesText = String(notesText);
           
-          console.log('Sending simple text:', plainText);
+          console.log('Notes text length:', notesText.length);
+          console.log('Notes text preview:', notesText.substring(0, 200) + '...');
           
-          // For notes, always delete thinking message and post new
-          console.log('Deleting thinking message and posting new one');
-          
+          // Update the thinking message with the notes
           try {
-            if (thinkingMessage && thinkingMessage.ts) {
-              await client.chat.delete({
-                channel: msg.channel,
-                ts: thinkingMessage.ts
-              });
-            }
-          } catch (deleteErr) {
-            console.log('Could not delete thinking message:', deleteErr.message);
+            await client.chat.update({
+              channel: msg.channel,
+              ts: thinkingMessage.ts,
+              text: notesText
+            });
+            console.log('✅ Notes updated successfully');
+          } catch (updateErr) {
+            console.error('Error updating notes message:', updateErr);
+            // Fallback: post a new message
+            await client.chat.postMessage({
+              channel: msg.channel,
+              thread_ts: msg.thread_ts || msg.ts,
+              text: notesText
+            });
           }
           
-          // Always post a new message for notes
-          await client.chat.postMessage({
-            channel: msg.channel,
-            thread_ts: msg.thread_ts || msg.ts,
-            text: plainText
-          });
-          
           // IMPORTANT: Return early for notes to prevent any further processing
-          console.log('✅ Notes sent successfully, returning early');
+          console.log('✅ Notes flow complete, returning early');
           return;
         } else {
           // For non-notes responses, format normally
@@ -422,8 +397,11 @@ async function handleMention({ event, message, say, client }) {
       // REMOVED: Old say() call that could cause issues
       } catch (responseError) {
         console.error('Error sending success response:', responseError);
+        console.error('Response error details:', responseError.data || responseError.message);
         // Ensure we never throw to Bolt
       }
+      
+      console.log('📍 End of success block');
     } else {
       await client.chat.update({
         channel: msg.channel,
