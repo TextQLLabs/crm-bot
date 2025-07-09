@@ -343,7 +343,8 @@ async function handleMention({ event, message, say, client }) {
         const updatePayload = {
           channel: msg.channel,
           ts: thinkingMessage.ts,
-          text: responseText
+          text: responseText,
+          blocks: null  // Explicitly set blocks to null to prevent Bolt from adding any
         };
         
         console.log('📤 Sending update to Slack:', JSON.stringify(updatePayload, null, 2));
@@ -352,8 +353,11 @@ async function handleMention({ event, message, say, client }) {
         console.log('🔍 Has blocks?', !!updatePayload.blocks);
         
         await client.chat.update(updatePayload);
+        console.log('✅ Update successful!');
       } catch (updateError) {
-        console.error('Error updating message:', updateError);
+        console.error('❌ Error updating message:', updateError);
+        console.error('Error type:', updateError.data?.error || updateError.message);
+        console.error('Full error:', JSON.stringify(updateError, null, 2));
         
         // Fallback: post a new message
         try {
