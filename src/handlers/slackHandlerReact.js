@@ -179,19 +179,27 @@ async function handleMention({ event, message, say, client }) {
     }
 
     // Check if this is a notes query BEFORE processing
+    console.log('Checking for notes query in:', fullContext);
     const isNotesQuery = fullContext.toLowerCase().includes('notes') && 
                         (fullContext.toLowerCase().includes('raine') || 
                          fullContext.toLowerCase().includes('deal'));
     
+    console.log('Is notes query?', isNotesQuery);
+    
     if (isNotesQuery) {
       console.log('📝 Detected notes query - BYPASSING AGENT COMPLETELY');
       
-      // Send a simple response directly
-      await client.chat.update({
-        channel: msg.channel,
-        ts: thinkingMessage.ts,
-        text: 'Found 3 notes on the Raine deal'
-      });
+      try {
+        // Send a simple response directly
+        const updateResult = await client.chat.update({
+          channel: msg.channel,
+          ts: thinkingMessage.ts,
+          text: 'Found 3 notes on the Raine deal'
+        });
+        console.log('Update result:', updateResult);
+      } catch (bypassError) {
+        console.error('Error in bypass update:', bypassError);
+      }
       
       console.log('✅ Notes bypass complete, returning');
       return;
@@ -451,7 +459,23 @@ async function handleMention({ event, message, say, client }) {
   }
   } catch (outerError) {
     console.error('CRITICAL: Outer error in handleMention:', outerError);
+    console.error('Error type:', outerError.constructor.name);
+    console.error('Error message:', outerError.message);
     console.error('Stack:', outerError.stack);
+    
+    // Try to send an error message to Slack
+    try {
+      if (client && msg && msg.channel) {
+        await client.chat.postMessage({
+          channel: msg.channel,
+          thread_ts: msg.thread_ts || msg.ts,
+          text: '❌ An error occurred processing your request'
+        });
+      }
+    } catch (errorSendingError) {
+      console.error('Could not send error message:', errorSendingError);
+    }
+    
     // NEVER let any error bubble to Bolt
     return;
   }
