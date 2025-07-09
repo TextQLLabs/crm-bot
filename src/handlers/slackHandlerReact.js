@@ -344,7 +344,7 @@ async function handleMention({ event, message, say, client }) {
           channel: msg.channel,
           ts: thinkingMessage.ts,
           text: responseText,
-          blocks: null  // Explicitly set blocks to null to prevent Bolt from adding any
+          blocks: []  // Empty array to override any automatic blocks
         };
         
         console.log('📤 Sending update to Slack:', JSON.stringify(updatePayload, null, 2));
