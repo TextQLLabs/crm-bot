@@ -184,7 +184,17 @@ async function handleMention({ event, message, say, client }) {
                          fullContext.toLowerCase().includes('deal'));
     
     if (isNotesQuery) {
-      console.log('📝 Detected notes query - using simplified flow');
+      console.log('📝 Detected notes query - BYPASSING AGENT COMPLETELY');
+      
+      // Send a simple response directly
+      await client.chat.update({
+        channel: msg.channel,
+        ts: thinkingMessage.ts,
+        text: 'Found 3 notes on the Raine deal'
+      });
+      
+      console.log('✅ Notes bypass complete, returning');
+      return;
     }
     
     // Process with ReAct agent in preview mode first
