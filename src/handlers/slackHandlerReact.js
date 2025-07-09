@@ -380,13 +380,19 @@ async function handleMention({ event, message, say, client }) {
           // For non-notes responses, format normally
           const { text, blocks } = formatSuccessMessage(result);
           
-          // For other responses, use blocks
-          await client.chat.update({
+          // For other responses, use blocks only if they exist
+          const updatePayload = {
             channel: msg.channel,
             ts: thinkingMessage.ts,
-            text: text,
-            blocks: blocks
-          });
+            text: text
+          };
+          
+          // Only add blocks if they exist and are not empty
+          if (blocks && blocks.length > 0) {
+            updatePayload.blocks = blocks;
+          }
+          
+          await client.chat.update(updatePayload);
         }
       } catch (updateError) {
         console.error('Error updating message:', updateError);
@@ -477,6 +483,15 @@ async function handleMention({ event, message, say, client }) {
 }
 
 function formatSuccessMessage(result) {
+  // Check if this is a notes response - if so, return simple text only
+  const hasNotes = result.steps && result.steps.some(s => s.action === 'get_notes');
+  if (hasNotes) {
+    return {
+      text: result.answer || 'Found notes',
+      blocks: [] // No blocks for notes
+    };
+  }
+  
   let message = '';
   
   if (result.answer) {
