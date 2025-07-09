@@ -110,13 +110,7 @@ app.action('show_technical_details', async (args) => {
   }
 });
 
-app.action('show_search_details', async (args) => {
-  try {
-    await handleButtonAction(args);
-  } catch (error) {
-    console.error('Error in show_search_details:', error);
-  }
-});
+// Removed show_search_details action - using simple text responses now
 
 // Remove global error handler - let errors be silent
 

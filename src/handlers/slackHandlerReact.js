@@ -332,99 +332,30 @@ async function handleMention({ event, message, say, client }) {
     // Format and send response
     if (result.success) {
       try {
-        // Check if this is a notes response FIRST - with extra safety
-        let hasNotesInResponse = false;
-        try {
-          hasNotesInResponse = result && result.steps && Array.isArray(result.steps) && 
-                               result.steps.some(s => s && s.action === 'get_notes');
-        } catch (e) {
-          console.error('Error checking for notes:', e);
-        }
+        // Simple response handling
+        const responseText = result.answer || 'Task completed successfully!';
         
-        if (hasNotesInResponse) {
-          // Debug: Log the entire result object for notes
-          console.log('📝 Notes result object:', JSON.stringify(result, null, 2));
-          
-          // For notes, use the actual result answer
-          console.log('📝 Sending notes response');
-          let notesText = result.answer || 'Found notes';
-          
-          // Make sure it's a string
-          notesText = String(notesText);
-          
-          console.log('Notes text length:', notesText.length);
-          console.log('Notes text preview:', notesText.substring(0, 200) + '...');
-          
-          // Update the thinking message with the notes
-          try {
-            await client.chat.update({
-              channel: msg.channel,
-              ts: thinkingMessage.ts,
-              text: notesText
-            });
-            console.log('✅ Notes updated successfully');
-          } catch (updateErr) {
-            console.error('Error updating notes message:', updateErr);
-            // Fallback: post a new message
-            await client.chat.postMessage({
-              channel: msg.channel,
-              thread_ts: msg.thread_ts || msg.ts,
-              text: notesText
-            });
-          }
-          
-          // IMPORTANT: Return early for notes to prevent any further processing
-          console.log('✅ Notes flow complete, returning early');
-          return;
-        } else {
-          // For non-notes responses, format normally
-          const { text, blocks } = formatSuccessMessage(result);
-          
-          // For other responses, use blocks only if they exist
-          const updatePayload = {
-            channel: msg.channel,
-            ts: thinkingMessage.ts,
-            text: text
-          };
-          
-          // Only add blocks if they exist and are not empty
-          if (blocks && blocks.length > 0) {
-            updatePayload.blocks = blocks;
-          }
-          
-          await client.chat.update(updatePayload);
-        }
+        // Always use simple text-only update
+        await client.chat.update({
+          channel: msg.channel,
+          ts: thinkingMessage.ts,
+          text: responseText
+        });
       } catch (updateError) {
         console.error('Error updating message:', updateError);
-        console.error('Update error details:', updateError.data || updateError.message);
         
-        // For non-notes responses, try fallback
-        if (!hasNotesInResponse) {
-          // Fallback to simple text message without blocks
-          try {
-            const simpleText = result.answer || 'Task completed';
-            await client.chat.update({
-              channel: msg.channel,
-              ts: thinkingMessage.ts,
-              text: simpleText
-            });
-          } catch (fallbackError) {
-            console.error('Error updating message even without blocks:', fallbackError);
-            // DO NOT RETHROW - this prevents Bolt from seeing the error
-          }
+        // Fallback: post a new message
+        try {
+          await client.chat.postMessage({
+            channel: msg.channel,
+            thread_ts: msg.thread_ts || msg.ts,
+            text: result.answer || 'Task completed'
+          });
+        } catch (fallbackError) {
+          console.error('Error posting fallback message:', fallbackError);
         }
       }
 
-      // Only show reasoning steps if explicitly requested or if there was an error
-      // This keeps responses cleaner and less sprawling
-      // REMOVED: Old say() call that could cause issues
-      } catch (responseError) {
-        console.error('Error sending success response:', responseError);
-        console.error('Response error details:', responseError.data || responseError.message);
-        // Ensure we never throw to Bolt
-      }
-      
-      console.log('📍 End of success block');
     } else {
       await client.chat.update({
         channel: msg.channel,
@@ -458,118 +389,9 @@ async function handleMention({ event, message, say, client }) {
       // Silently fail - don't let any error bubble up to Bolt
     }
   }
-  } catch (outerError) {
-    console.error('CRITICAL: Outer error in handleMention:', outerError);
-    console.error('Error type:', outerError.constructor.name);
-    console.error('Error message:', outerError.message);
-    console.error('Stack:', outerError.stack);
-    
-    // Try to send an error message to Slack
-    try {
-      if (client && msg && msg.channel) {
-        await client.chat.postMessage({
-          channel: msg.channel,
-          thread_ts: msg.thread_ts || msg.ts,
-          text: '❌ An error occurred processing your request'
-        });
-      }
-    } catch (errorSendingError) {
-      console.error('Could not send error message:', errorSendingError);
-    }
-    
-    // NEVER let any error bubble to Bolt
-    return;
-  }
 }
 
-function formatSuccessMessage(result) {
-  // Check if this is a notes response - if so, return simple text only
-  const hasNotes = result.steps && result.steps.some(s => s.action === 'get_notes');
-  if (hasNotes) {
-    return {
-      text: result.answer || 'Found notes',
-      blocks: [] // No blocks for notes
-    };
-  }
-  
-  let message = '';
-  
-  if (result.answer) {
-    message = result.answer;
-  } else {
-    message = '✅ Task completed successfully!';
-  }
-  
-  // Validate message length for Slack (max 3000 chars for text)
-  if (message.length > 3000) {
-    console.warn('Message too long for Slack, truncating...');
-    message = message.substring(0, 2950) + '...';
-  }
-
-  // Simple validation - no special characters or formatting
-  const validatedMessage = message
-    .replace(/\n{3,}/g, '\n\n') // Replace multiple newlines with max 2
-    .trim();
-    
-  const blocks = [
-    {
-      type: 'section',
-      text: {
-        type: 'mrkdwn',
-        text: validatedMessage
-      }
-    }
-  ];
-
-  // Collect all search observations for the details
-  const searchSteps = result.steps.filter(s => 
-    s.action === 'search_crm' && s.observation
-  );
-
-  // Only add search details button if we have search steps and not dealing with notes
-  // Notes responses can be very long and cause issues with button values
-  const hasNotesAction = result.steps.some(s => s.action === 'get_notes');
-  
-  if (searchSteps.length > 0 && !hasNotesAction) {
-    try {
-      // Prepare search details data
-      const searchData = {
-        steps: searchSteps.map(s => ({
-          query: s.actionInput?.search_query || s.actionInput?.query || 'unknown',
-          results: Array.isArray(s.observation) ? 
-            s.observation.slice(0, 5) : // Limit to first 5 results
-            s.observation
-        }))
-      };
-      
-      // Check if the stringified value is too long for Slack (max 2000 chars)
-      const valueString = JSON.stringify(searchData);
-      if (valueString.length <= 2000) {
-        // Add a button to show search details
-        blocks.push({
-          type: 'actions',
-          elements: [
-            {
-              type: 'button',
-              text: {
-                type: 'plain_text',
-                text: '🔍 Show Search Details',
-                emoji: true
-              },
-              action_id: 'show_search_details',
-              value: valueString
-            }
-          ]
-        });
-      }
-    } catch (e) {
-      console.error('Error adding search details button:', e);
-      // Continue without the button if there's an error
-    }
-  }
-
-  return { text: message, blocks };
-}
+// Removed formatSuccessMessage - no longer needed with simple text responses
 
 function formatReasoningSteps(steps) {
   let message = '🧠 Here\'s how I processed your request:\n\n';
@@ -757,74 +579,7 @@ async function handleButtonAction({ body, ack, client }) {
     return;
   }
 
-  if (actionId === 'show_search_details') {
-    // Show search results in a modal
-    const searchData = JSON.parse(value);
-    const blocks = [];
-    
-    searchData.steps.forEach((step, index) => {
-      blocks.push({
-        type: 'header',
-        text: {
-          type: 'plain_text',
-          text: `Search ${index + 1}: "${step.query}"`
-        }
-      });
-      
-      if (Array.isArray(step.results) && step.results.length > 0) {
-        blocks.push({
-          type: 'section',
-          text: {
-            type: 'mrkdwn',
-            text: `Found ${step.results.length} results:`
-          }
-        });
-        
-        step.results.forEach(result => {
-          const resultText = `*${result.name}* (${result.type})\n` +
-                            (result.description ? `${result.description}\n` : '') +
-                            (result.url ? `<${result.url}|View in Attio>` : '');
-          
-          blocks.push({
-            type: 'section',
-            text: {
-              type: 'mrkdwn',
-              text: resultText
-            }
-          });
-        });
-      } else {
-        blocks.push({
-          type: 'section',
-          text: {
-            type: 'mrkdwn',
-            text: '_No results found_'
-          }
-        });
-      }
-      
-      if (index < searchData.steps.length - 1) {
-        blocks.push({ type: 'divider' });
-      }
-    });
-    
-    await client.views.open({
-      trigger_id: body.trigger_id,
-      view: {
-        type: 'modal',
-        title: {
-          type: 'plain_text',
-          text: 'Search Details'
-        },
-        close: {
-          type: 'plain_text',
-          text: 'Close'
-        },
-        blocks: blocks
-      }
-    });
-    return;
-  }
+  // Removed show_search_details handler - no longer needed with simple text responses
   
   if (actionId === 'cancel_action') {
     await client.chat.update({
