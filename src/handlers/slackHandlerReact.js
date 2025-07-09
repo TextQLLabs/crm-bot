@@ -186,7 +186,17 @@ async function handleMention({ event, message, say, client }) {
     console.log('Full context:', fullContext);
     console.log('Attachments:', attachments.length);
     
-    const result = await agent.processMessage({
+    // Add a timeout to prevent hanging
+    const timeoutPromise = new Promise((resolve) => {
+      setTimeout(() => {
+        resolve({
+          success: false,
+          error: 'Request timed out after 45 seconds'
+        });
+      }, 45000); // 45 second timeout
+    });
+    
+    const agentPromise = agent.processMessage({
       text: fullContext,
       userName,
       userId: msg.user,
@@ -198,6 +208,9 @@ async function handleMention({ event, message, say, client }) {
       conversationHistory,
       botActionHistory
     }, { preview: true });
+    
+    // Race between agent and timeout
+    const result = await Promise.race([agentPromise, timeoutPromise]);
 
     // Check if we have a pending action to approve
     if (result.preview && result.pendingAction) {
@@ -379,16 +392,20 @@ async function handleMention({ event, message, say, client }) {
         console.error('Error updating message:', updateError);
         console.error('Update error details:', updateError.data || updateError.message);
         
-        // Fallback to simple text message without blocks
-        try {
-          await client.chat.update({
-            channel: msg.channel,
-            ts: thinkingMessage.ts,
-            text: text
-          });
-        } catch (fallbackError) {
-          console.error('Error updating message even without blocks:', fallbackError);
-          // DO NOT RETHROW - this prevents Bolt from seeing the error
+        // For non-notes responses, try fallback
+        if (!hasNotesInResponse) {
+          // Fallback to simple text message without blocks
+          try {
+            const simpleText = result.answer || 'Task completed';
+            await client.chat.update({
+              channel: msg.channel,
+              ts: thinkingMessage.ts,
+              text: simpleText
+            });
+          } catch (fallbackError) {
+            console.error('Error updating message even without blocks:', fallbackError);
+            // DO NOT RETHROW - this prevents Bolt from seeing the error
+          }
         }
       }
 
