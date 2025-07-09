@@ -94,11 +94,15 @@ async function handleMention({ event, message, say, client }) {
       }];
       
       // Send initial thinking message
-      thinkingMessage = await client.chat.postMessage({
+      console.log('📮 Sending initial thinking message...');
+      const thinkingPayload = {
         channel: msg.channel,
         text: "🤔 Let me help you with that...",
         thread_ts: msg.ts
-      });
+      };
+      console.log('Thinking payload:', JSON.stringify(thinkingPayload, null, 2));
+      thinkingMessage = await client.chat.postMessage(thinkingPayload);
+      console.log('✅ Thinking message sent:', thinkingMessage.ts);
     }
 
     // Get user info
@@ -336,11 +340,18 @@ async function handleMention({ event, message, say, client }) {
         const responseText = result.answer || 'Task completed successfully!';
         
         // Always use simple text-only update
-        await client.chat.update({
+        const updatePayload = {
           channel: msg.channel,
           ts: thinkingMessage.ts,
           text: responseText
-        });
+        };
+        
+        console.log('📤 Sending update to Slack:', JSON.stringify(updatePayload, null, 2));
+        console.log('📏 Text length:', responseText.length);
+        console.log('🔍 Contains **?', responseText.includes('**'));
+        console.log('🔍 Has blocks?', !!updatePayload.blocks);
+        
+        await client.chat.update(updatePayload);
       } catch (updateError) {
         console.error('Error updating message:', updateError);
         
