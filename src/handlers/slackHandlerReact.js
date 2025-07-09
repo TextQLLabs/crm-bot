@@ -200,7 +200,7 @@ async function handleMention({ event, message, say, client }) {
           answer: 'The request is taking longer than expected. Please try again in a moment.',
           timedOut: true
         });
-      }, 55000); // 55 second timeout (Slack has 3 second ack timeout + some buffer)
+      }, 25000); // 25 second timeout to avoid Slack's timeout
     });
     
     // Check if this is a notes query

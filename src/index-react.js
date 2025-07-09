@@ -66,8 +66,11 @@ if (isSocketMode) {
 const app = new App(appConfig);
 
 // Handle app mentions in any channel with error handling
-app.event('app_mention', async ({ event, client }) => {
+app.event('app_mention', async ({ event, client, ack }) => {
   try {
+    // Acknowledge immediately
+    if (ack) await ack();
+    
     // Don't pass say to avoid automatic block formatting
     await handleMention({ event, client });
   } catch (error) {
