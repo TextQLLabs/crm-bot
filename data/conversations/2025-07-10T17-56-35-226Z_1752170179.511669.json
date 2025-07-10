@@ -1,0 +1,29 @@
+{
+  "conversationId": "1752170179.511669",
+  "userId": "U04HC95ENRY",
+  "userName": "Ethan Ding",
+  "channel": "C0946T1T4CB",
+  "threadTs": "1752170179.511669",
+  "messageTs": "1752170179.511669",
+  "userMessage": "User: how amyn notes are on the raine group?",
+  "conversationHistory": [
+    {
+      "user": "U04HC95ENRY",
+      "text": "how amyn notes are on the raine group?",
+      "ts": "1752170179.511669"
+    }
+  ],
+  "botActionHistory": [],
+  "agentThoughts": [],
+  "agentActions": [],
+  "finalResponse": "I'll search for The Raine Group and then check how many notes are on their record.\n\nTool result: Found 1 result(s):\nThe Raine Group (company) [ID: a41e73b9-5dac-493f-bb2d-d38bb166c330]: https://app.attio.com/textql-data/company/a41e73b9-5dac-493f-bb2d-d38bb166c330/overview\n\nI'll now get the notes for The Raine Group to count how many there are.\n\nTool result: Found 8 notes:\n\n1. *Note from Slack* (7/4/2025, 9:05:20 AM)\n   \n   Created by: Unknown\n   📎 View note: <https://app.attio.com/textql-data/companies/record/a41e73b9-5dac-493f-bb2d-d38bb166c330/notes?modal=note&id=ce09b30f-b107-4af0-8c6f-5c57b240aa53|Open in Attio>\n\n2. *Note from Slack* (7/10/2025, 1:37:50 PM)\n   \n   Created by: Unknown\n   📎 View note: <https://app.attio.com/textql-data/companies/record/a41e73b9-5dac-493f-bb2d-d38bb166c330/notes?modal=note&id=88a4267d-a417-4075-a4a6-ed0fc39fdf61|Open in Attio>\n\n3. *Note from Slack* (7/10/2025, 1:38:17 PM)\n   \n   Created by: Unknown\n   📎 View note: <https://app.attio.com/textql-data/companies/record/a41e73b9-5dac-493f-bb2d-d38bb166c330/notes?modal=note&id=cc51fd58-b363-4cab-bab9-3a457ac785b2|Open in Attio>\n\n4. *Note from Slack* (7/10/2025, 1:42:37 PM)\n   \n   Created by: Unknown\n   📎 View note: <https://app.attio.com/textql-data/companies/record/a41e73b9-5dac-493f-bb2d-d38bb166c330/notes?modal=note&id=fa123aa2-3a90-4f33-90a2-1b7e53dde466|Open in Attio>\n\n5. *Note from Slack* (7/10/2025, 1:44:28 PM)\n   \n   Created by: Unknown\n   📎 View note: <https://app.attio.com/textql-data/companies/record/a41e73b9-5dac-493f-bb2d-d38bb166c330/notes?modal=note&id=8cfea681-136d-4896-b621-0f818bf334f3|Open in Attio>\n\n6. *Note from Slack* (7/10/2025, 1:46:57 PM)\n   \n   Created by: Unknown\n   📎 View note: <https://app.attio.com/textql-data/companies/record/a41e73b9-5dac-493f-bb2d-d38bb166c330/notes?modal=note&id=cce2c733-4ba3-4a59-b58c-52e3799b701c|Open in Attio>\n\n7. *Note from Slack* (7/10/2025, 1:53:41 PM)\n   \n   Created by: Unknown\n   📎 View note: <https://app.attio.com/textql-data/companies/record/a41e73b9-5dac-493f-bb2d-d38bb166c330/notes?modal=note&id=f9b3a84a-aead-455a-8b9b-0e0f5cf68d17|Open in Attio>\n\n8. *Note from Slack* (7/10/2025, 1:55:23 PM)\n   \n   Created by: Unknown\n   📎 View note: <https://app.attio.com/textql-data/companies/record/a41e73b9-5dac-493f-bb2d-d38bb166c330/notes?modal=note&id=ded47ad8-3647-4e25-b126-a1ff9d6824a6|Open in Attio>",
+  "toolsUsed": [],
+  "success": true,
+  "error": null,
+  "processingTime": 9399,
+  "attachmentCount": 0,
+  "iterationCount": 0,
+  "timestamp": "2025-07-10T17:56:35.226Z",
+  "version": "1.11.1",
+  "environment": "development"
+}

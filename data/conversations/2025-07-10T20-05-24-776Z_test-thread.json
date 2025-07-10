@@ -1,0 +1,36 @@
+{
+  "conversationId": "test-thread",
+  "userId": "test-user",
+  "userName": "Test Suite",
+  "channel": "test",
+  "threadTs": "test-thread",
+  "messageTs": "1752177921501",
+  "userMessage": "find all companies in the tech industry",
+  "conversationHistory": [],
+  "botActionHistory": [],
+  "agentThoughts": [],
+  "agentActions": [],
+  "finalResponse": "No matches found. Try searching with different terms or partial names.",
+  "toolsUsed": [
+    {
+      "tool": "advanced_search",
+      "input": {
+        "entity_type": "company",
+        "filters": {
+          "industry": "tech"
+        },
+        "limit": 50
+      },
+      "success": false,
+      "timestamp": "2025-07-10T20:05:24.776Z"
+    }
+  ],
+  "success": true,
+  "error": null,
+  "processingTime": 3275,
+  "attachmentCount": 0,
+  "iterationCount": 0,
+  "timestamp": "2025-07-10T20:05:24.776Z",
+  "version": "1.11.1",
+  "environment": "development"
+}

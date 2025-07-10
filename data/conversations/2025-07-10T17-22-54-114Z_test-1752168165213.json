@@ -1,0 +1,23 @@
+{
+  "conversationId": "test-1752168165213",
+  "userId": "U123TEST",
+  "userName": "Test User",
+  "channel": "C123TEST",
+  "threadTs": "test-1752168165213",
+  "messageTs": "1752168165213",
+  "userMessage": "What do you see in this image?",
+  "conversationHistory": [],
+  "botActionHistory": [],
+  "agentThoughts": [],
+  "agentActions": [],
+  "finalResponse": "I'm sorry, but I'm unable to see or analyze images. There seems to be a technical limitation preventing me from processing the image you uploaded.\n\nHowever, I'm here to help you with your Attio CRM tasks! I can assist you with:\n\n- Searching for companies, people, or deals in your CRM\n- Creating and managing notes on records\n- Adding new entities (companies, people, deals)\n- Updating existing records\n- Finding detailed information about your CRM entries\n\nIs there anything specific you'd like to do with your CRM data? Just let me know what you're looking for and I'll be happy to help!",
+  "toolsUsed": [],
+  "success": true,
+  "error": null,
+  "processingTime": 3794,
+  "attachmentCount": 1,
+  "iterationCount": 0,
+  "timestamp": "2025-07-10T17:22:54.113Z",
+  "version": "1.11.1",
+  "environment": "development"
+}

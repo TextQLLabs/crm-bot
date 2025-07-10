@@ -1,0 +1,41 @@
+{
+  "conversationId": "local-thread",
+  "userId": "Local User",
+  "userName": "Local User",
+  "channel": "local-test",
+  "threadTs": "local-thread",
+  "messageTs": "1752174686418",
+  "userMessage": "can you summarize all the notes on the deal bmg?",
+  "conversationHistory": [],
+  "botActionHistory": [],
+  "agentThoughts": [],
+  "agentActions": [],
+  "finalResponse": "I'll search for the BMG deal first, then get all the notes on it to provide you with a summary.\n\n✅ **Status**: Multi-step operation completed (read-only).",
+  "toolsUsed": [
+    {
+      "tool": "search_crm",
+      "input": {
+        "query": "bmg"
+      },
+      "success": true,
+      "timestamp": "2025-07-10T19:11:33.170Z"
+    },
+    {
+      "tool": "get_notes",
+      "input": {
+        "entity_type": "deal",
+        "entity_id": "cd30b453-3dd8-420a-b32f-84968b7c5155"
+      },
+      "success": true,
+      "timestamp": "2025-07-10T19:11:33.170Z"
+    }
+  ],
+  "success": true,
+  "error": null,
+  "processingTime": 6752,
+  "attachmentCount": 0,
+  "iterationCount": 0,
+  "timestamp": "2025-07-10T19:11:38.277Z",
+  "version": "1.11.1",
+  "environment": "development"
+}

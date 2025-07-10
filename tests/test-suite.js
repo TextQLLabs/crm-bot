@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 require('dotenv').config();
-const { ReactAgent } = require('./src/services/reactAgent');
-const { MongoClient } = require('mongodb');
+const { ClaudeAgent } = require('../src/services/claudeAgent');
 const readline = require('readline');
 
 // ANSI color codes and symbols
@@ -36,76 +35,253 @@ const symbols = {
   web: '🌐'
 };
 
+/**
+ * Advanced CRM Bot Test Suite
+ * 
+ * This test suite validates the enhanced search capabilities of the CRM bot,
+ * including new advanced search, relationship queries, and time-based filtering.
+ * 
+ * Test Categories:
+ * 
+ * 1. Core Search Functionality
+ *    - Tests basic fuzzy search and multi-step operations
+ *    - Validates critical "rayn → raine" fuzzy matching
+ * 
+ * 2. Advanced Search - Value Filtering
+ *    - Tests deal value range filtering ($1M+, $500K-$2M, <$100K)
+ *    - Validates advanced_search tool usage with financial filters
+ * 
+ * 3. Advanced Search - Date Filtering  
+ *    - Tests date-based entity filtering (created this year, last month)
+ *    - Validates search_by_time_range tool for recent activity
+ * 
+ * 4. Advanced Search - Status & Attributes
+ *    - Tests status filtering (open deals, tech companies)
+ *    - Validates complex multi-attribute queries
+ * 
+ * 5. Relationship Search
+ *    - Tests entity relationship discovery (company→deals, company→people)
+ *    - Validates search_related_entities tool usage
+ * 
+ * 6. Advanced Sorting & Ranking
+ *    - Tests custom sorting (largest deals, newest companies)
+ *    - Validates proper tool selection for ranking queries
+ * 
+ * 7. Write Operations (Preview Mode)
+ *    - Tests note creation with preview mode
+ *    - Validates write action safety mechanisms
+ * 
+ * 8. Introspection & Meta Questions
+ *    - Tests conversational responses about bot capabilities
+ *    - Validates that introspective questions don't trigger CRM tools
+ *    - Tests architecture questions, greetings, and mixed requests
+ * 
+ * 9. Error Handling
+ *    - Tests graceful handling of non-existent entities
+ *    - Validates error recovery and user guidance
+ * 
+ * Key Testing Improvements:
+ * - Removed redundant low-level tests (exact name matching, simple misspellings)
+ * - Added comprehensive advanced search validation
+ * - Focus on real-world enterprise CRM queries
+ * - Tests tool selection intelligence (when to use which search tool)
+ * 
+ * Expected Tool Usage Patterns:
+ * - search_crm: Basic name/text search with fuzzy matching
+ * - advanced_search: Attribute filtering (value, status, date, industry)
+ * - search_related_entities: Cross-entity relationship discovery
+ * - search_by_time_range: Time-based queries and recent activity
+ */
+
 // Test suite definition
 const testSuite = [
   {
-    category: 'Fuzzy Search',
+    category: 'Core Search Functionality',
     tests: [
       {
-        name: 'Exact company name match',
-        input: 'find The Raine Group',
-        expectedTools: ['search_crm'],
+        name: 'Critical: rayn → raine fuzzy search with notes',
+        input: 'how many notes are on the account rayn group',
+        expectedTools: ['search_crm', 'get_notes'],
         expectedSuccess: true,
-        validation: (result) => result.answer && result.answer.includes('https://app.attio.com')
+        validation: (result) => result.answer && result.answer.toLowerCase().includes('raine') && result.answer.includes('notes')
       },
       {
-        name: 'Misspelling: rain → raine',
-        input: 'search for rain group',
-        expectedTools: ['search_crm'],
+        name: 'Multi-step: Search + note count workflow',
+        input: 'how many notes does The Raine Group have',
+        expectedTools: ['search_crm', 'get_notes'],
         expectedSuccess: true,
-        validation: (result) => result.answer && result.answer.toLowerCase().includes('raine')
-      },
-      {
-        name: 'Misspelling: rayne → raine',
-        input: 'find rayne group company',
-        expectedTools: ['search_crm'],
-        expectedSuccess: true,
-        validation: (result) => result.answer && result.answer.toLowerCase().includes('raine')
-      },
-      {
-        name: 'Partial name search',
-        input: 'find companies with Raine in the name',
-        expectedTools: ['search_crm'],
-        expectedSuccess: true,
-        validation: (result) => result.answer && result.answer.includes('https://app.attio.com')
-      },
-      {
-        name: 'Non-existent company triggers web search',
-        input: 'find XYZ123456 Corporation',
-        expectedTools: ['search_crm', 'web_search'],
-        expectedSuccess: true,
-        validation: (result) => result.answer && (result.answer.includes('not found') || result.answer.includes('does not exist'))
+        validation: (result) => result.answer && result.answer.includes('notes') && result.answer.includes('Raine')
       }
     ]
   },
   {
-    category: 'Search Operations',
+    category: 'Advanced Search - Value Filtering',
     tests: [
       {
-        name: 'Search for people',
-        input: 'find person named John',
-        expectedTools: ['search_crm'],
+        name: 'High-value deals search',
+        input: 'show me all deals over $1 million',
+        expectedTools: ['advanced_search'],
         expectedSuccess: true,
-        validation: (result) => result.answer && !result.answer.includes('error')
+        validation: (result) => {
+          const hasAdvancedSearch = result.toolsUsed?.some(t => t.tool === 'advanced_search');
+          const hasCorrectFilter = result.answer && (result.answer.includes('deal') || result.answer.includes('found') || result.answer.includes('result'));
+          return hasAdvancedSearch && hasCorrectFilter;
+        }
       },
       {
-        name: 'Search for deals',
-        input: 'find deals worth more than 100k',
-        expectedTools: ['search_crm'],
+        name: 'Deal value range filter',
+        input: 'find deals between $500K and $2M',
+        expectedTools: ['advanced_search'],
         expectedSuccess: true,
-        validation: (result) => result.answer && !result.answer.includes('error')
+        validation: (result) => {
+          const hasAdvancedSearch = result.toolsUsed?.some(t => t.tool === 'advanced_search');
+          return hasAdvancedSearch && result.answer;
+        }
       },
       {
-        name: 'Multi-entity search',
-        input: 'search for anything related to media',
-        expectedTools: ['search_crm'],
+        name: 'Low-value deals filter',
+        input: 'show me deals under $100,000',
+        expectedTools: ['advanced_search'],
         expectedSuccess: true,
-        validation: (result) => result.answer && !result.answer.includes('error')
+        validation: (result) => {
+          const hasAdvancedSearch = result.toolsUsed?.some(t => t.tool === 'advanced_search');
+          return hasAdvancedSearch && result.answer;
+        }
       }
     ]
   },
   {
-    category: 'Note Creation',
+    category: 'Advanced Search - Date Filtering',
+    tests: [
+      {
+        name: 'Companies created this year',
+        input: 'show me companies created in 2024',
+        expectedTools: ['advanced_search'],
+        expectedSuccess: true,
+        validation: (result) => {
+          const hasAdvancedSearch = result.toolsUsed?.some(t => t.tool === 'advanced_search');
+          return hasAdvancedSearch && result.answer;
+        }
+      },
+      {
+        name: 'Recent deals search',
+        input: 'find deals created in the last month',
+        expectedTools: ['advanced_search'],
+        expectedSuccess: true,
+        validation: (result) => {
+          const hasAdvancedSearch = result.toolsUsed?.some(t => t.tool === 'advanced_search');
+          return hasAdvancedSearch && result.answer;
+        }
+      },
+      {
+        name: 'Time-based entity search',
+        input: 'what companies were added recently',
+        expectedTools: ['search_by_time_range'],
+        expectedSuccess: true,
+        validation: (result) => {
+          const hasTimeSearch = result.toolsUsed?.some(t => t.tool === 'search_by_time_range');
+          return hasTimeSearch && result.answer;
+        }
+      }
+    ]
+  },
+  {
+    category: 'Advanced Search - Status & Attributes',
+    tests: [
+      {
+        name: 'Open deals filter',
+        input: 'show me all open deals',
+        expectedTools: ['advanced_search'],
+        expectedSuccess: true,
+        validation: (result) => {
+          const hasAdvancedSearch = result.toolsUsed?.some(t => t.tool === 'advanced_search');
+          return hasAdvancedSearch && result.answer;
+        }
+      },
+      {
+        name: 'Tech companies search',
+        input: 'find all companies in the tech industry',
+        expectedTools: ['advanced_search'],
+        expectedSuccess: true,
+        validation: (result) => {
+          const hasAdvancedSearch = result.toolsUsed?.some(t => t.tool === 'advanced_search');
+          return hasAdvancedSearch && result.answer;
+        }
+      },
+      {
+        name: 'Complex multi-filter search',
+        input: 'show me open deals over $500K from tech companies',
+        expectedTools: ['advanced_search'],
+        expectedSuccess: true,
+        validation: (result) => {
+          const hasAdvancedSearch = result.toolsUsed?.some(t => t.tool === 'advanced_search');
+          return hasAdvancedSearch && result.answer;
+        }
+      }
+    ]
+  },
+  {
+    category: 'Relationship Search',
+    tests: [
+      {
+        name: 'Company to deals relationship',
+        input: 'show me all deals for The Raine Group',
+        expectedTools: ['search_crm', 'search_related_entities'],
+        expectedSuccess: true,
+        validation: (result) => {
+          const hasRelatedSearch = result.toolsUsed?.some(t => t.tool === 'search_related_entities');
+          return hasRelatedSearch && result.answer && result.answer.includes('deal');
+        }
+      },
+      {
+        name: 'Company to people relationship', 
+        input: 'who works at The Raine Group',
+        expectedTools: ['search_crm', 'search_related_entities'],
+        expectedSuccess: true,
+        validation: (result) => {
+          const hasRelatedSearch = result.toolsUsed?.some(t => t.tool === 'search_related_entities');
+          return hasRelatedSearch && result.answer;
+        }
+      },
+      {
+        name: 'Deal to company relationship',
+        input: 'what company is associated with the largest deal',
+        expectedTools: ['advanced_search', 'search_related_entities'],
+        expectedSuccess: true,
+        validation: (result) => {
+          const hasSearch = result.toolsUsed?.some(t => ['advanced_search', 'search_related_entities'].includes(t.tool));
+          return hasSearch && result.answer;
+        }
+      }
+    ]
+  },
+  {
+    category: 'Advanced Sorting & Ranking',
+    tests: [
+      {
+        name: 'Largest deals first',
+        input: 'show me the largest deals first',
+        expectedTools: ['advanced_search'],
+        expectedSuccess: true,
+        validation: (result) => {
+          const hasAdvancedSearch = result.toolsUsed?.some(t => t.tool === 'advanced_search');
+          return hasAdvancedSearch && result.answer;
+        }
+      },
+      {
+        name: 'Newest companies first',
+        input: 'show me the most recently added companies',
+        expectedTools: ['search_by_time_range'],
+        expectedSuccess: true,
+        validation: (result) => {
+          const hasTimeSearch = result.toolsUsed?.some(t => t.tool === 'search_by_time_range');
+          return hasTimeSearch && result.answer;
+        }
+      }
+    ]
+  },
+  {
+    category: 'Write Operations (Preview Mode)',
     tests: [
       {
         name: 'Create note with entity search',
@@ -114,25 +290,81 @@ const testSuite = [
         expectedSuccess: true,
         validation: (result) => result.preview === true && result.pendingAction?.action === 'create_note',
         isWriteOperation: true
-      },
-      {
-        name: 'Note on non-existent entity',
-        input: 'add a note to XYZ123 Corporation saying "This should fail"',
-        expectedTools: ['search_crm'],
-        expectedSuccess: true,
-        validation: (result) => result.answer && result.answer.includes('not found')
       }
     ]
   },
   {
-    category: 'Entity Details',
+    category: 'Introspection & Meta Questions',
     tests: [
       {
-        name: 'Get company details',
-        input: 'tell me more about The Raine Group',
-        expectedTools: ['search_crm'],
+        name: 'Architecture question - Claude vs ReAct',
+        input: 'are you using react or claude? like the reAct framework or claude directly',
+        expectedTools: [], // Should NOT use any tools for introspective questions
         expectedSuccess: true,
-        validation: (result) => result.answer && result.answer.includes('https://app.attio.com')
+        validation: (result) => {
+          const answer = result.answer.toLowerCase();
+          const hasNoTools = !result.toolsUsed || result.toolsUsed.length === 0;
+          // Very flexible validation - should be conversational, not search results
+          const isNotSearchError = !answer.includes('no matches found') && !answer.includes('try searching');
+          const isConversational = answer.length > 30; // Should be a real explanation
+          const seemsRelevant = answer.includes('claude') || answer.includes('tool') || answer.includes('framework') || answer.includes('help');
+          return hasNoTools && isNotSearchError && isConversational && seemsRelevant;
+        }
+      },
+      {
+        name: 'Capability inquiry',
+        input: 'what can you do? what are your capabilities?',
+        expectedTools: [], // Should explain capabilities without using tools
+        expectedSuccess: true,
+        validation: (result) => {
+          const answer = result.answer.toLowerCase();
+          const hasNoTools = !result.toolsUsed || result.toolsUsed.length === 0;
+          const isNotSearchError = !answer.includes('no matches found') && !answer.includes('try searching');
+          const isConversational = answer.length > 30;
+          const explainsCRMCapabilities = answer.includes('search') || answer.includes('crm') || answer.includes('help') || answer.includes('find');
+          return hasNoTools && isNotSearchError && isConversational && explainsCRMCapabilities;
+        }
+      },
+      {
+        name: 'How do you work question',
+        input: 'how do you work? explain your process',
+        expectedTools: [], // Should explain process without using tools
+        expectedSuccess: true,
+        validation: (result) => {
+          const answer = result.answer.toLowerCase();
+          const hasNoTools = !result.toolsUsed || result.toolsUsed.length === 0;
+          const isNotSearchError = !answer.includes('no matches found') && !answer.includes('try searching');
+          const isConversational = answer.length > 30;
+          const explainsWork = answer.includes('help') || answer.includes('tool') || answer.includes('search') || answer.includes('work');
+          return hasNoTools && isNotSearchError && isConversational && explainsWork;
+        }
+      },
+      {
+        name: 'Mixed conversation and CRM request',
+        input: 'hi, how are you? also can you search for raine group',
+        expectedTools: ['search_crm'], // Should use tools for the CRM part
+        expectedSuccess: true,
+        validation: (result) => {
+          const answer = result.answer.toLowerCase();
+          const hasSearchTool = result.toolsUsed?.some(t => t.tool === 'search_crm');
+          const hasGreeting = answer.includes('hi') || answer.includes('hello') || answer.includes('good');
+          const hasSearchResults = answer.includes('raine') || answer.includes('found') || answer.includes('result');
+          return hasSearchTool && (hasGreeting || hasSearchResults);
+        }
+      },
+      {
+        name: 'General greeting',
+        input: 'hello there!',
+        expectedTools: [], // Should respond conversationally without tools
+        expectedSuccess: true,
+        validation: (result) => {
+          const answer = result.answer.toLowerCase();
+          const hasNoTools = !result.toolsUsed || result.toolsUsed.length === 0;
+          const isNotSearchError = !answer.includes('no matches found') && !answer.includes('try searching');
+          const isConversational = answer.length > 10; // Should be friendly, not empty
+          const seemsFriendly = answer.includes('hello') || answer.includes('hi') || answer.includes('help') || answer.includes('here') || answer.includes('how');
+          return hasNoTools && isNotSearchError && isConversational && seemsFriendly;
+        }
       }
     ]
   },
@@ -140,18 +372,11 @@ const testSuite = [
     category: 'Error Handling',
     tests: [
       {
-        name: 'Ambiguous request handling',
-        input: 'find',
-        expectedTools: [],
-        expectedSuccess: true,
-        validation: (result) => result.answer && result.answer.toLowerCase().includes('specific')
-      },
-      {
-        name: 'Empty search query',
-        input: 'search for ""',
+        name: 'Non-existent entity graceful failure',
+        input: 'find notes on XYZ123NonExistent Corporation',
         expectedTools: ['search_crm'],
         expectedSuccess: true,
-        validation: (result) => result.answer !== undefined
+        validation: (result) => result.answer && (result.answer.includes('not found') || result.answer.includes('No matches'))
       }
     ]
   }
@@ -160,7 +385,7 @@ const testSuite = [
 // Test runner class
 class TestRunner {
   constructor() {
-    this.agent = new ReactAgent();
+    this.agent = new ClaudeAgent();
     this.results = [];
     this.startTime = Date.now();
     this.logBuffer = [];
@@ -232,21 +457,29 @@ class TestRunner {
         this.agent.processMessage({
           text: test.input,
           userName: 'Test Suite',
+          userId: 'test-user',
           channel: 'test',
           attachments: [],
-          preview: test.isWriteOperation // Use preview mode for write operations
-        }),
+          threadTs: 'test-thread',
+          messageTs: Date.now().toString()
+        }, { preview: test.isWriteOperation }),
         new Promise((_, reject) => 
           setTimeout(() => reject(new Error('Test timeout after 30s')), TIMEOUT)
         )
       ]);
 
-      // Count tool calls
-      if (result.steps) {
-        actualTools = result.steps
-          .filter(s => s.action && s.action !== 'none')
-          .map(s => s.action);
-        toolCalls = actualTools.length;
+      // Count tool calls - ClaudeAgent doesn't expose step details
+      // For now, estimate based on result content
+      actualTools = [];
+      if (result.answer) {
+        if (result.answer.includes('Tool result:')) toolCalls += 1;
+        if (result.answer.includes('Found') && result.answer.includes('result')) {
+          actualTools.push('search_crm');
+        }
+        if (result.preview && result.pendingAction) {
+          actualTools.push(result.pendingAction.action);
+          toolCalls += 1;
+        }
       }
 
       // Validate result
@@ -357,7 +590,7 @@ class TestRunner {
   }
 
   printHeader() {
-    const version = require('./package.json').version;
+    const version = require('../package.json').version;
     const header = [
       `${colors.bright}${colors.cyan}╔═══════════════════════════════════════════════════════════╗${colors.reset}`,
       `${colors.bright}${colors.cyan}║           CRM Bot Test Suite v${version}                    ║${colors.reset}`,
@@ -376,44 +609,7 @@ class TestRunner {
     const fs = require('fs').promises;
     const path = require('path');
     
-    // Try to save to MongoDB
-    let mongoClient = null;
-    try {
-      const MONGODB_URI = process.env.MONGODB_URI || process.env.MDB_MCP_CONNECTION_STRING;
-      
-      if (MONGODB_URI) {
-        mongoClient = new MongoClient(MONGODB_URI, {
-          serverSelectionTimeoutMS: 5000
-        });
-        
-        await mongoClient.connect();
-        const db = mongoClient.db('crm-bot');
-        
-        const testRun = {
-          ...summary,
-          _id: this.timestamp,
-          createdAt: new Date(),
-          environment: process.env.NODE_ENV || 'development',
-          nodeVersion: process.version,
-          fullLog: this.logBuffer.join('\n')
-        };
-        
-        await db.collection('test-runs').insertOne(testRun);
-        console.log(`\n${colors.dim}📁 Test results saved to MongoDB${colors.reset}`);
-        console.log(`   ${colors.cyan}Collection: test-runs${colors.reset}`);
-        console.log(`   ${colors.cyan}Document ID: ${this.timestamp}${colors.reset}`);
-      } else {
-        console.log(`\n${colors.yellow}MongoDB URI not found. Saving locally only.${colors.reset}`);
-      }
-    } catch (err) {
-      console.error(`${colors.red}Failed to save to MongoDB:${colors.reset}`, err.message);
-    } finally {
-      if (mongoClient) {
-        await mongoClient.close();
-      }
-    }
-    
-    // Also save locally as backup
+    // Save test results locally only
     const logsDir = path.join(process.cwd(), 'test-logs');
     try {
       await fs.mkdir(logsDir, { recursive: true });

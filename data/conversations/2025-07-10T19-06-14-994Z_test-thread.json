@@ -1,0 +1,23 @@
+{
+  "conversationId": "test-thread",
+  "userId": "test-user",
+  "userName": "Test Suite",
+  "channel": "test",
+  "threadTs": "test-thread",
+  "messageTs": "1752174372211",
+  "userMessage": "search for rain group",
+  "conversationHistory": [],
+  "botActionHistory": [],
+  "agentThoughts": [],
+  "agentActions": [],
+  "finalResponse": "Found **10 matches**:\n1. **The Raine Group** (company) - <https://app.attio.com/textql-data/company/a41e73b9-5dac-493f-bb2d-d38bb166c330/overview|view>\n2. **Brainforge** (company) - <https://app.attio.com/textql-data/company/0b7bb7e7-9392-4218-a9d6-88f067b3938b/overview|view>\n3. **L3 Link Simulation & Training** (company) - <https://app.attio.com/textql-data/company/21fbde2a-d4c6-40c7-ba38-47e059188f6c/overview|view>\n4. **Rainbow Apparel Co** (company) - <https://app.attio.com/textql-data/company/2cfd1558-c342-4a02-8b7d-9b56bd0beb78/overview|view>\n5. **Grain** (company) - <https://app.attio.com/textql-data/company/2e9381ca-cc3e-4bfb-a8c2-d924d072eb3c/overview|view>\n... and 5 more",
+  "toolsUsed": [],
+  "success": true,
+  "error": null,
+  "processingTime": 2783,
+  "attachmentCount": 0,
+  "iterationCount": 0,
+  "timestamp": "2025-07-10T19:06:14.994Z",
+  "version": "1.11.1",
+  "environment": "development"
+}

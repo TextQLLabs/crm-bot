@@ -1,0 +1,32 @@
+{
+  "conversationId": "test-thread",
+  "userId": "test-user",
+  "userName": "Test Suite",
+  "channel": "test",
+  "threadTs": "test-thread",
+  "messageTs": "1752177932551",
+  "userMessage": "who works at The Raine Group",
+  "conversationHistory": [],
+  "botActionHistory": [],
+  "agentThoughts": [],
+  "agentActions": [],
+  "finalResponse": "Found **The Raine Group** (<https://app.attio.com/textql-data/company/a41e73b9-5dac-493f-bb2d-d38bb166c330/overview|here>)",
+  "toolsUsed": [
+    {
+      "tool": "search_crm",
+      "input": {
+        "query": "The Raine Group"
+      },
+      "success": true,
+      "timestamp": "2025-07-10T20:05:35.827Z"
+    }
+  ],
+  "success": true,
+  "error": null,
+  "processingTime": 3276,
+  "attachmentCount": 0,
+  "iterationCount": 0,
+  "timestamp": "2025-07-10T20:05:35.827Z",
+  "version": "1.11.1",
+  "environment": "development"
+}

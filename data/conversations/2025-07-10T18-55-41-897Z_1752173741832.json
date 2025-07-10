@@ -1,0 +1,22 @@
+{
+  "conversationId": "1752173741832",
+  "userId": "TEST123",
+  "userName": "Test User",
+  "channel": "TEST_CHANNEL",
+  "messageTs": "1752173741832",
+  "userMessage": "how many notes are on the account rayn group",
+  "conversationHistory": [],
+  "botActionHistory": [],
+  "agentThoughts": [],
+  "agentActions": [],
+  "finalResponse": "I encountered an error processing your request. Please try again.",
+  "toolsUsed": [],
+  "success": false,
+  "error": "Could not resolve authentication method. Expected either apiKey or authToken to be set. Or for one of the \"X-Api-Key\" or \"Authorization\" headers to be explicitly omitted",
+  "processingTime": 2,
+  "attachmentCount": 0,
+  "iterationCount": 0,
+  "timestamp": "2025-07-10T18:55:41.897Z",
+  "version": "1.11.1",
+  "environment": "development"
+}

@@ -1,0 +1,29 @@
+{
+  "conversationId": "1752181456.098559",
+  "userId": "U04HC95ENRY",
+  "userName": "Ethan Ding",
+  "channel": "C0946T1T4CB",
+  "threadTs": "1752181456.098559",
+  "messageTs": "1752181456.098559",
+  "userMessage": "User: can you see this",
+  "conversationHistory": [
+    {
+      "user": "U04HC95ENRY",
+      "text": "can you see this",
+      "ts": "1752181456.098559"
+    }
+  ],
+  "botActionHistory": [],
+  "agentThoughts": [],
+  "agentActions": [],
+  "finalResponse": "Yes, I can see your message! I'm here and ready to help you with your Attio CRM. I can help you search for companies, people, and deals, manage notes, and perform various CRM operations. \n\nWhat would you like to do today?",
+  "toolsUsed": [],
+  "success": true,
+  "error": null,
+  "processingTime": 3325,
+  "attachmentCount": 0,
+  "iterationCount": 0,
+  "timestamp": "2025-07-10T21:04:21.292Z",
+  "version": "1.11.1",
+  "environment": "development"
+}

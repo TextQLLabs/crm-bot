@@ -1,0 +1,23 @@
+{
+  "conversationId": "test-thread",
+  "userId": "test-user",
+  "userName": "Test Suite",
+  "channel": "test",
+  "threadTs": "test-thread",
+  "messageTs": "1752174383689",
+  "userMessage": "how many notes does The Raine Group have",
+  "conversationHistory": [],
+  "botActionHistory": [],
+  "agentThoughts": [],
+  "agentActions": [],
+  "finalResponse": "I'll help you find out how many notes The Raine Group has. Let me first search for the company and then get their notes.\n\n✅ **Status**: Multi-step operation completed (read-only).",
+  "toolsUsed": [],
+  "success": true,
+  "error": null,
+  "processingTime": 7521,
+  "attachmentCount": 0,
+  "iterationCount": 0,
+  "timestamp": "2025-07-10T19:06:31.210Z",
+  "version": "1.11.1",
+  "environment": "development"
+}

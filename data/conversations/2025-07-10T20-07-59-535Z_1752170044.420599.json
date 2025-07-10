@@ -1,0 +1,129 @@
+{
+  "conversationId": "1752170044.420599",
+  "userId": "U04HC95ENRY",
+  "userName": "Ethan Ding",
+  "channel": "C04PANKUJAG",
+  "threadTs": "1752170044.420599",
+  "messageTs": "1752178063.589879",
+  "userMessage": "User: <https://docs.google.com/document/d/1chfw6AI486QAgJenfiLaC4NGzDUnbLaQXLQQQaqdABs/edit?tab=t.0#heading=h.yt8pzvbzzc7b>\n\nUser: what is this?\n\nUser: I told Dandy to make a doc similar to this and to just paste it into org context. It actually works really well so I think we should just have every small customer that inbounds do this + let them use it for a few days, if they like it then charge them 5-10k a year\n\nUser: can you creat ea note on dandy that logs these messages, and also makes a note of teh sql analyst like test-onboarding that we're running with dandy via this?",
+  "conversationHistory": [
+    {
+      "user": "U04H9AVH8H3",
+      "text": "<https://docs.google.com/document/d/1chfw6AI486QAgJenfiLaC4NGzDUnbLaQXLQQQaqdABs/edit?tab=t.0#heading=h.yt8pzvbzzc7b>",
+      "ts": "1752170044.420599",
+      "isBot": false,
+      "blocks": [
+        {
+          "type": "rich_text",
+          "block_id": "p7JFg",
+          "elements": [
+            {
+              "type": "rich_text_section",
+              "elements": [
+                {
+                  "type": "link",
+                  "url": "https://docs.google.com/document/d/1chfw6AI486QAgJenfiLaC4NGzDUnbLaQXLQQQaqdABs/edit?tab=t.0#heading=h.yt8pzvbzzc7b"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "user": "U06V1F3MNN4",
+      "text": "what is this?",
+      "ts": "1752170082.569519",
+      "isBot": false,
+      "blocks": [
+        {
+          "type": "rich_text",
+          "block_id": "dqu+j",
+          "elements": [
+            {
+              "type": "rich_text_section",
+              "elements": [
+                {
+                  "type": "text",
+                  "text": "what is this?"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "user": "U04H9AVH8H3",
+      "text": "I told Dandy to make a doc similar to this and to just paste it into org context. It actually works really well so I think we should just have every small customer that inbounds do this + let them use it for a few days, if they like it then charge them 5-10k a year",
+      "ts": "1752170193.017289",
+      "isBot": false,
+      "blocks": [
+        {
+          "type": "rich_text",
+          "block_id": "1OErg",
+          "elements": [
+            {
+              "type": "rich_text_section",
+              "elements": [
+                {
+                  "type": "text",
+                  "text": "I told Dandy to make a doc similar to this and to just paste it into org context. It actually works really well so I think we should just have every small customer that inbounds do this + let them use it for a few days, if they like it then charge them 5-10k a year"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "user": "U04HC95ENRY",
+      "text": "can you creat ea note on dandy that logs these messages, and also makes a note of teh sql analyst like test-onboarding that we're running with dandy via this?",
+      "ts": "1752178063.589879",
+      "isBot": false,
+      "blocks": [
+        {
+          "type": "rich_text",
+          "block_id": "s2Rd1",
+          "elements": [
+            {
+              "type": "rich_text_section",
+              "elements": [
+                {
+                  "type": "user",
+                  "user_id": "U0953GV1A8L"
+                },
+                {
+                  "type": "text",
+                  "text": " can you creat ea note on dandy that logs these messages, and also makes a note of teh sql analyst like test-onboarding that we're running with dandy via this?"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "botActionHistory": [],
+  "agentThoughts": [],
+  "agentActions": [],
+  "finalResponse": "Found **2 matches**:\n1. **Dandy** (company) - <https://app.attio.com/textql-data/company/14bc2c28-7002-4b8d-85e2-45235a7f29ea/overview|view>\n2. **Dandy** (deal) - <https://app.attio.com/textql-data/deals/148ca6b7-9095-4408-abc5-c2ea3cac1955/overview|view>\n",
+  "toolsUsed": [
+    {
+      "tool": "search_crm",
+      "input": {
+        "query": "Dandy"
+      },
+      "success": true,
+      "timestamp": "2025-07-10T20:07:54.505Z"
+    }
+  ],
+  "success": true,
+  "error": null,
+  "processingTime": 5189,
+  "attachmentCount": 0,
+  "iterationCount": 0,
+  "timestamp": "2025-07-10T20:07:59.534Z",
+  "version": "1.11.1",
+  "environment": "development"
+}

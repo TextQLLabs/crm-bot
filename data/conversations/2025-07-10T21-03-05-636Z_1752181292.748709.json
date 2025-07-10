@@ -1,0 +1,74 @@
+{
+  "conversationId": "1752181292.748709",
+  "userId": "U04HC95ENRY",
+  "userName": "Ethan Ding",
+  "channel": "C0946T1T4CB",
+  "threadTs": "1752181292.748709",
+  "messageTs": "1752181379.537199",
+  "userMessage": "User: F0954G13PC3\n\nUser: can you read this?",
+  "conversationHistory": [
+    {
+      "user": "U04HC95ENRY",
+      "text": "F0954G13PC3",
+      "ts": "1752181292.748709",
+      "isBot": false,
+      "blocks": [
+        {
+          "type": "rich_text",
+          "block_id": "LxAQN",
+          "elements": [
+            {
+              "type": "rich_text_section",
+              "elements": [
+                {
+                  "type": "canvas",
+                  "file_id": "F0954G13PC3"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "user": "U04HC95ENRY",
+      "text": "can you read this?",
+      "ts": "1752181379.537199",
+      "isBot": false,
+      "blocks": [
+        {
+          "type": "rich_text",
+          "block_id": "FSVOZ",
+          "elements": [
+            {
+              "type": "rich_text_section",
+              "elements": [
+                {
+                  "type": "user",
+                  "user_id": "U0953GV1A8L"
+                },
+                {
+                  "type": "text",
+                  "text": " can you read this?"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "botActionHistory": [],
+  "agentThoughts": [],
+  "agentActions": [],
+  "finalResponse": "Yes, I can read \"F0954G13PC3\" - it appears to be an alphanumeric code or identifier of some kind. \n\nAre you looking for this in your CRM system? It could be a company code, deal reference, or some other identifier. Would you like me to search for it in your Attio CRM to see if it matches any records?",
+  "toolsUsed": [],
+  "success": true,
+  "error": null,
+  "processingTime": 3740,
+  "attachmentCount": 0,
+  "iterationCount": 0,
+  "timestamp": "2025-07-10T21:03:05.633Z",
+  "version": "1.11.1",
+  "environment": "development"
+}

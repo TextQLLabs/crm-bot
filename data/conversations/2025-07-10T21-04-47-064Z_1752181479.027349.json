@@ -1,0 +1,29 @@
+{
+  "conversationId": "1752181479.027349",
+  "userId": "U04HC95ENRY",
+  "userName": "Ethan Ding",
+  "channel": "C0954G13PC3",
+  "threadTs": "1752181479.027349",
+  "messageTs": "1752181479.027349",
+  "userMessage": "User: was mentioned in a canvas",
+  "conversationHistory": [
+    {
+      "user": "U04HC95ENRY",
+      "text": "was mentioned in a canvas",
+      "ts": "1752181479.027349"
+    }
+  ],
+  "botActionHistory": [],
+  "agentThoughts": [],
+  "agentActions": [],
+  "finalResponse": "I'd be happy to help you search for something that was mentioned in a canvas! However, I need a bit more information to assist you effectively.\n\nCould you clarify:\n- What specifically are you looking for? (a company name, person name, or deal?)\n- Do you remember any part of the name or details about what was mentioned?\n\nFor example, you could say:\n- \"Search for [company name] that was mentioned in a canvas\"\n- \"Find the person [name] from the canvas discussion\"\n- \"Look up the deal about [topic] from the canvas\"\n\nOnce you provide the name or details, I can search your Attio CRM to find the relevant records!",
+  "toolsUsed": [],
+  "success": true,
+  "error": null,
+  "processingTime": 4838,
+  "attachmentCount": 0,
+  "iterationCount": 0,
+  "timestamp": "2025-07-10T21:04:47.063Z",
+  "version": "1.11.1",
+  "environment": "development"
+}

@@ -1,0 +1,23 @@
+{
+  "conversationId": "test-thread",
+  "userId": "test-user",
+  "userName": "Test Suite",
+  "channel": "test",
+  "threadTs": "test-thread",
+  "messageTs": "1752174381007",
+  "userMessage": "find companies with Raine in the name",
+  "conversationHistory": [],
+  "botActionHistory": [],
+  "agentThoughts": [],
+  "agentActions": [],
+  "finalResponse": "Found **7 matches**:\n1. **The Raine Group** (company) - <https://app.attio.com/textql-data/company/a41e73b9-5dac-493f-bb2d-d38bb166c330/overview|view>\n2. **Raine** (deal) - <https://app.attio.com/textql-data/deals/637f050b-409d-4fdf-b401-b85d48a5e9df/overview|view>\n3. **Lorraine Williams** (person) - <https://app.attio.com/textql-data/person/04fcc6e7-af95-4923-bfb8-10070fa70c12/overview|view>\n4. **Hashtag Trainee** (person) - <https://app.attio.com/textql-data/person/17dcf72c-5ad0-471a-8718-141f81247f8c/overview|view>\n5. **Matt Raines** (person) - <https://app.attio.com/textql-data/person/2918a9f9-135b-45ed-a411-d3d3ce1d2826/overview|view>\n... and 2 more",
+  "toolsUsed": [],
+  "success": true,
+  "error": null,
+  "processingTime": 2681,
+  "attachmentCount": 0,
+  "iterationCount": 0,
+  "timestamp": "2025-07-10T19:06:23.688Z",
+  "version": "1.11.1",
+  "environment": "development"
+}

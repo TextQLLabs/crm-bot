@@ -1,0 +1,38 @@
+{
+  "conversationId": "test-thread",
+  "userId": "test-user",
+  "userName": "Test Suite",
+  "channel": "test",
+  "threadTs": "test-thread",
+  "messageTs": "1752177893039",
+  "userMessage": "show me deals under $100,000",
+  "conversationHistory": [],
+  "botActionHistory": [],
+  "agentThoughts": [],
+  "agentActions": [],
+  "finalResponse": "No matches found. Try searching with different terms or partial names.",
+  "toolsUsed": [
+    {
+      "tool": "advanced_search",
+      "input": {
+        "entity_type": "deal",
+        "filters": {
+          "deal_value_max": 100000
+        },
+        "sort_by": "value",
+        "sort_order": "desc",
+        "limit": 20
+      },
+      "success": true,
+      "timestamp": "2025-07-10T20:05:06.257Z"
+    }
+  ],
+  "success": true,
+  "error": null,
+  "processingTime": 13218,
+  "attachmentCount": 0,
+  "iterationCount": 0,
+  "timestamp": "2025-07-10T20:05:06.257Z",
+  "version": "1.11.1",
+  "environment": "development"
+}

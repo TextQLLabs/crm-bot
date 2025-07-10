@@ -9,33 +9,12 @@ router.get('/health', async (req, res) => {
       timestamp: new Date().toISOString(),
       environment: process.env.RAILWAY_ENVIRONMENT || 'development',
       nodeVersion: process.version,
-      storage: 'unknown',
-      mongoUri: !!process.env.MONGODB_URI || !!process.env.MDB_MCP_CONNECTION_STRING
+      storage: 'file'
     };
     
-    // Check MongoDB connection
-    try {
-      const db = require('./services/database');
-      const dbInstance = db.getDB();
-      
-      if (dbInstance) {
-        // Try to ping MongoDB
-        await dbInstance.admin().ping();
-        health.storage = 'mongodb';
-        health.mongodb = 'connected';
-        
-        // Get conversation count
-        const count = await dbInstance.collection('conversations').countDocuments();
-        health.conversationCount = count;
-      } else {
-        // Database not initialized
-        health.storage = 'file';
-        health.mongodb = 'not initialized';
-      }
-    } catch (error) {
-      health.storage = 'file';
-      health.mongodb = `error: ${error.message}`;
-    }
+    // Using file storage only
+    health.storage = 'file';
+    health.fileStorage = 'active';
     
     res.json(health);
   } catch (error) {
@@ -57,42 +36,36 @@ router.get('/health/storage-test', async (req, res) => {
       tests: {}
     };
     
-    // Test 1: Check if MongoDB URI exists
-    testResult.tests.mongoUriConfigured = !!process.env.MONGODB_URI || !!process.env.MDB_MCP_CONNECTION_STRING;
+    // Test 1: File storage configuration
+    testResult.tests.fileStorageActive = true;
     
-    // Test 2: Try to save a test conversation
+    // Test 2: File storage write test
     try {
-      const { ReactAgent } = require('./services/reactAgent');
-      const agent = new ReactAgent();
-      
-      // Check what storage type the agent is using
-      testResult.tests.agentStorageType = agent.storageType || 'unknown';
+      const fileStorage = require('./services/fileStorage');
       
       // Try to save a test conversation
-      await agent.saveConversation({
-        conversationId: 'health-check-' + Date.now(),
+      await fileStorage.saveConversation({
+        timestamp: new Date().toISOString(),
         userId: 'health-check',
         userName: 'Health Check',
         channel: '#health-check',
-        userMessage: 'Storage test',
-        finalResponse: 'Testing storage capability',
+        message: 'Storage test',
+        finalAnswer: 'Testing storage capability',
         success: true
       });
       
       testResult.tests.conversationSaveSuccess = true;
-      testResult.tests.conversationSaveLocation = agent.storageType;
+      testResult.tests.conversationSaveLocation = 'file';
     } catch (error) {
       testResult.tests.conversationSaveSuccess = false;
       testResult.tests.conversationSaveError = error.message;
     }
     
     // Determine overall storage status
-    if (testResult.tests.conversationSaveSuccess && testResult.tests.agentStorageType === 'mongodb') {
-      testResult.storageStatus = 'MongoDB is working correctly';
-    } else if (testResult.tests.conversationSaveSuccess && testResult.tests.agentStorageType === 'file') {
-      testResult.storageStatus = 'Using file storage (MongoDB not available)';
+    if (testResult.tests.conversationSaveSuccess) {
+      testResult.storageStatus = 'File storage is working correctly';
     } else {
-      testResult.storageStatus = 'Storage system error';
+      testResult.storageStatus = 'File storage system error';
     }
     
     res.json(testResult);

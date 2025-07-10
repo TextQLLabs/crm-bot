@@ -1,0 +1,42 @@
+{
+  "conversationId": "local-thread",
+  "userId": "Local User",
+  "userName": "Local User",
+  "channel": "local-test",
+  "threadTs": "local-thread",
+  "messageTs": "1752175694131",
+  "userMessage": "can you summarize all the notes on the deal bmg?",
+  "conversationHistory": [],
+  "botActionHistory": [],
+  "agentThoughts": [],
+  "agentActions": [],
+  "finalResponse": "Found **2 matches**:\n1. **BMG** (company) - <https://app.attio.com/textql-data/company/ebf8bdfb-27d0-4593-827d-098f0d1ddbc2/overview|view>\n2. **BMG** (deal) - <https://app.attio.com/textql-data/deals/cd30b453-3dd8-420a-b32f-84968b7c5155/overview|view>\n\n\nNotes on the selected entity:\nFound **4 notes**:\n1. *Note from Slack* (7/9/2025, 1:51:10 PM)\n   CTO Meeting Context (Friday)\n- 3 teams outside IT have requested TextQL:\n  1. Global Analytics Team\n  2. Local Analytics/Marketing Team\n  3. Finance Team\n\n- Nico reports to IT/Global Data Engineering under CTO\n- Finance team and local Anthropic team showed excitement\n- Marketing analytics use case: Chat interface for sales data analysis\n- Nico has shared with 1-2 people, noting rapid interest growth\n- If POC proceeds, Nico's team would handle compliance/legal/IT requirements\n\nNext Steps:\n- Frida...\n   📎 <https://app.attio.com/textql-data/deals/record/cd30b453-3dd8-420a-b32f-84968b7c5155/notes?modal=note&id=04dfe52c-3bed-44c2-b20d-8f70797d69a5|View in Attio>\n\n2. *Note from Slack* (7/9/2025, 1:52:08 PM)\n   CTO Meeting Update - Teams Interested in Product:\n\n1. IT Team (where Nico reports - global data engineering)\n2. Global Analytics Team\n3. Local Analytics Team (Marketing)\n4. Finance Team\n\nKey Points:\n- Finance team and local Anthropic team showed excitement\n- Marketing analytics focused on sales data in denormalized format with chat interface\n- Business teams requested CTO evaluation\n- Nico has shared with 1-2 people, noting rapid progress\n- Nico's team would handle compliance/legal aspects for P...\n   📎 <https://app.attio.com/textql-data/deals/record/cd30b453-3dd8-420a-b32f-84968b7c5155/notes?modal=note&id=766e3425-5151-4010-ab38-303b7ce30fd7|View in Attio>\n\n3. *Note from Slack* (7/9/2025, 2:02:31 PM)\n   CTO Meeting Prep - Call Summary with Nico\n\nKey Points:\n- 3 teams outside IT have requested our product:\n  1. Global Analytics Team\n  2. Local Analytics/Marketing Team\n  3. Finance Team\n\n- Organizational Structure:\n  - Nico reports to CTO (IT/Global Data Engineering)\n  - CTO heads IT department\n  - Local analytics focuses on marketing/sales data analysis\n\n- Current Status:\n  - Nico has shared with finance team (positive response)\n  - Local analytics team interested in chat interface for sales dat...\n   📎 <https://app.attio.com/textql-data/deals/record/cd30b453-3dd8-420a-b32f-84968b7c5155/notes?modal=note&id=9f3ef1f8-e7ac-4735-8ce6-f8d0f917e443|View in Attio>\n\n4. *BMG conversation with Nico* (7/10/2025, 10:51:32 AM)\n   \nfor the BMG call tmr morning Do an update. Okay. This is just for note taking because I just finished the call, with Nico. For the CTO conversation with BMG on Friday. There are 3 teams that have requested this. They set all outside of IT. CTO is head of IT. And IT is where Nico reports into, which is global data engineering. Separately, there is a global analytics team and then there is a local analytics team, and then there is a finance team, all 3 of whom have expressed interest in our produ...\n   📎 <https://app.attio.com/textql-data/deals/record/cd30b453-3dd8-420a-b32f-84968b7c5155/notes?modal=note&id=361185d9-7e31-46b1-b2a5-bde23f470687|View in Attio>\n\n",
+  "toolsUsed": [
+    {
+      "tool": "search_crm",
+      "input": {
+        "query": "bmg"
+      },
+      "success": true,
+      "timestamp": "2025-07-10T19:28:24.766Z"
+    },
+    {
+      "tool": "get_notes",
+      "input": {
+        "entity_type": "deal",
+        "entity_id": "cd30b453-3dd8-420a-b32f-84968b7c5155",
+        "include_content": true
+      },
+      "success": true,
+      "timestamp": "2025-07-10T19:28:24.766Z"
+    }
+  ],
+  "success": true,
+  "error": null,
+  "processingTime": 10635,
+  "attachmentCount": 0,
+  "iterationCount": 0,
+  "timestamp": "2025-07-10T19:28:29.880Z",
+  "version": "1.11.1",
+  "environment": "development"
+}

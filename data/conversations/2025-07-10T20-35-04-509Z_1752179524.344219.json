@@ -1,0 +1,176 @@
+{
+  "conversationId": "1752179524.344219",
+  "userId": "U04HC95ENRY",
+  "userName": "Ethan Ding",
+  "channel": "C04PANKUJAG",
+  "threadTs": "1752179524.344219",
+  "messageTs": "1752179696.942269",
+  "userMessage": "User: <https://docs.google.com/document/d/1o68j9LxxwzAutEB4kEIQgQsU10Vy7js42CzJXHtkPNQ/edit?tab=t.0> blackstone content\n\nUser: @dlyan\n\nAssistant: Found **3 matches**:\n1. **Blackstone** (company) - <https://app.attio.com/textql-data/company/ffc6013f-2148-4427-8c1f-fec7b3f36554/overview|view>\n2. **LivCor, a Blackstone Portfolio Company** (company) - <https://app.attio.com/textql-data/company/4f023580-7915-4e81-82a5-f68a2fd70274/overview|view>\n3. **Blackstone** (deal) - <https://app.attio.com/textql-data/deals/f2fb2437-f573-4fbd-90bc-f7eaf8e50aa7/overview|view>\n\nUser: lets stay in sync iwth htis",
+  "conversationHistory": [
+    {
+      "user": "U04HC95ENRY",
+      "text": "<https://docs.google.com/document/d/1o68j9LxxwzAutEB4kEIQgQsU10Vy7js42CzJXHtkPNQ/edit?tab=t.0> blackstone content",
+      "ts": "1752179524.344219",
+      "isBot": false,
+      "blocks": [
+        {
+          "type": "rich_text",
+          "block_id": "07s+G",
+          "elements": [
+            {
+              "type": "rich_text_section",
+              "elements": [
+                {
+                  "type": "link",
+                  "url": "https://docs.google.com/document/d/1o68j9LxxwzAutEB4kEIQgQsU10Vy7js42CzJXHtkPNQ/edit?tab=t.0"
+                },
+                {
+                  "type": "text",
+                  "text": " blackstone content "
+                },
+                {
+                  "type": "user",
+                  "user_id": "U04H9AVH8H3"
+                },
+                {
+                  "type": "text",
+                  "text": " "
+                },
+                {
+                  "type": "user",
+                  "user_id": "U06PNCZ5ENA"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "user": "U04HC95ENRY",
+      "text": "@dlyan",
+      "ts": "1752179688.373539",
+      "isBot": false,
+      "blocks": [
+        {
+          "type": "rich_text",
+          "block_id": "j/B8J",
+          "elements": [
+            {
+              "type": "rich_text_section",
+              "elements": [
+                {
+                  "type": "text",
+                  "text": "@dlyan"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "user": "U0953GV1A8L",
+      "text": "Found **3 matches**:\n1. **Blackstone** (company) - <https://app.attio.com/textql-data/company/ffc6013f-2148-4427-8c1f-fec7b3f36554/overview|view>\n2. **LivCor, a Blackstone Portfolio Company** (company) - <https://app.attio.com/textql-data/company/4f023580-7915-4e81-82a5-f68a2fd70274/overview|view>\n3. **Blackstone** (deal) - <https://app.attio.com/textql-data/deals/f2fb2437-f573-4fbd-90bc-f7eaf8e50aa7/overview|view>",
+      "ts": "1752179690.486199",
+      "isBot": true,
+      "botId": "B0953GUV2MA",
+      "blocks": [
+        {
+          "type": "rich_text",
+          "block_id": "SWAlR",
+          "elements": [
+            {
+              "type": "rich_text_section",
+              "elements": [
+                {
+                  "type": "text",
+                  "text": "Found **3 matches**:\n1. **Blackstone** (company) - "
+                },
+                {
+                  "type": "link",
+                  "url": "https://app.attio.com/textql-data/company/ffc6013f-2148-4427-8c1f-fec7b3f36554/overview",
+                  "text": "view"
+                },
+                {
+                  "type": "text",
+                  "text": "\n2. **LivCor, a Blackstone Portfolio Company** (company) - "
+                },
+                {
+                  "type": "link",
+                  "url": "https://app.attio.com/textql-data/company/4f023580-7915-4e81-82a5-f68a2fd70274/overview",
+                  "text": "view"
+                },
+                {
+                  "type": "text",
+                  "text": "\n3. **Blackstone** (deal) - "
+                },
+                {
+                  "type": "link",
+                  "url": "https://app.attio.com/textql-data/deals/f2fb2437-f573-4fbd-90bc-f7eaf8e50aa7/overview",
+                  "text": "view"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "user": "U04HC95ENRY",
+      "text": "lets stay in sync iwth htis",
+      "ts": "1752179696.942269",
+      "isBot": false,
+      "blocks": [
+        {
+          "type": "rich_text",
+          "block_id": "kYqQm",
+          "elements": [
+            {
+              "type": "rich_text_section",
+              "elements": [
+                {
+                  "type": "user",
+                  "user_id": "U08CLKF28ET"
+                },
+                {
+                  "type": "text",
+                  "text": " "
+                },
+                {
+                  "type": "user",
+                  "user_id": "U06PNCZ5ENA"
+                },
+                {
+                  "type": "text",
+                  "text": " "
+                },
+                {
+                  "type": "user",
+                  "user_id": "U04H9AVH8H3"
+                },
+                {
+                  "type": "text",
+                  "text": " lets stay in sync iwth htis"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "botActionHistory": [],
+  "agentThoughts": [],
+  "agentActions": [],
+  "finalResponse": "No matches found. Try searching with different terms or partial names.",
+  "toolsUsed": [],
+  "success": true,
+  "error": null,
+  "processingTime": 5589,
+  "attachmentCount": 0,
+  "iterationCount": 0,
+  "timestamp": "2025-07-10T20:35:04.507Z",
+  "version": "1.11.1",
+  "environment": "development"
+}

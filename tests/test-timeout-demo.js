@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 require('dotenv').config();
-const { ReactAgent } = require('./src/services/reactAgent');
+const { ClaudeAgent } = require('./src/services/claudeAgent');
 
 // ANSI colors for output
 const colors = {
@@ -14,7 +14,7 @@ const colors = {
 console.log(`${colors.cyan}🧪 Testing Timeout Behavior${colors.reset}\n`);
 
 async function testWithTimeout(name, input, timeoutMs = 30000) {
-  const agent = new ReactAgent();
+  const agent = new ClaudeAgent();
   const startTime = Date.now();
   
   console.log(`${colors.yellow}⏱️  Running: ${name} (timeout: ${timeoutMs/1000}s)${colors.reset}`);

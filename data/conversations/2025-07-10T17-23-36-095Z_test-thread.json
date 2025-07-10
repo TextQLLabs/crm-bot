@@ -1,0 +1,23 @@
+{
+  "conversationId": "test-thread",
+  "userId": "test-user",
+  "userName": "Test Suite",
+  "channel": "test",
+  "threadTs": "test-thread",
+  "messageTs": "1752168210727",
+  "userMessage": "search for anything related to media",
+  "conversationHistory": [],
+  "botActionHistory": [],
+  "agentThoughts": [],
+  "agentActions": [],
+  "finalResponse": "I'll search for anything related to media in your CRM.\n\nTool result: Found 10 result(s):\nCMI Media Group (company): https://app.attio.com/textql-data/company/0004b308-2034-4eb9-8583-d248a5d3d0b7/overview\nAlbertsons Media Collective (company): https://app.attio.com/textql-data/company/08d4dd68-5ac9-4c6b-94f5-7667eb102f0b/overview\nuptiermedia.com (company): https://app.attio.com/textql-data/company/0da31c6b-6be2-43eb-b7d0-131639250dba/overview\nMytitanmedia (company): https://app.attio.com/textql-data/company/1e29be27-6984-4099-9878-8fa5542ec022/overview\nOcean Media (company): https://app.attio.com/textql-data/company/23e06a57-523c-41f7-9c39-9a7698c8431a/overview\nLamark Media (company): https://app.attio.com/textql-data/company/26145738-834e-4882-bd8b-1c2974686b13/overview\nMedia.Monks (company): https://app.attio.com/textql-data/company/2db2bc02-a818-49dd-9c9e-d79eed3df9ba/overview\nKatz Media (company): https://app.attio.com/textql-data/company/332cb32a-41c4-4bdf-8144-c866bc997b4f/overview\nSmartMedia Technologies (company): https://app.attio.com/textql-data/company/3522d749-00dc-4ebb-aedb-aad65bd73315/overview\nMedia.Monks (company): https://app.attio.com/textql-data/company/04df94f7-26b1-4388-bf45-152c845069a8/overview",
+  "toolsUsed": [],
+  "success": true,
+  "error": null,
+  "processingTime": 5368,
+  "attachmentCount": 0,
+  "iterationCount": 0,
+  "timestamp": "2025-07-10T17:23:36.095Z",
+  "version": "1.11.1",
+  "environment": "development"
+}

@@ -1,0 +1,23 @@
+{
+  "conversationId": "test-1752168174117",
+  "userId": "U123TEST",
+  "userName": "Test User",
+  "channel": "C123TEST",
+  "threadTs": "test-1752168174117",
+  "messageTs": "1752168174117",
+  "userMessage": "Can you transcribe any text in this image?",
+  "conversationHistory": [],
+  "botActionHistory": [],
+  "agentThoughts": [],
+  "agentActions": [],
+  "finalResponse": "I apologize, but I'm unable to process or analyze images, including transcribing text from them. This is due to technical limitations in my current setup.\n\nHowever, I can help you with your Attio CRM tasks! If you have any text you'd like to work with in your CRM, you could:\n\n1. **Copy and paste the text** from the image if possible, and I can help you create notes, update records, or search for related information\n2. **Tell me what type of information** was in the image (like a business card, document, etc.) and I can help you structure that data in your CRM\n3. **Search for existing records** if you remember any names or companies from the image\n\nIs there anything specific from the image content that you'd like help with in your CRM?",
+  "toolsUsed": [],
+  "success": true,
+  "error": null,
+  "processingTime": 7299,
+  "attachmentCount": 1,
+  "iterationCount": 0,
+  "timestamp": "2025-07-10T17:23:01.416Z",
+  "version": "1.11.1",
+  "environment": "development"
+}

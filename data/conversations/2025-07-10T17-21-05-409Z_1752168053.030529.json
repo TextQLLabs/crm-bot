@@ -1,0 +1,29 @@
+{
+  "conversationId": "1752168053.030529",
+  "userId": "U0951TSB4P2",
+  "userName": "slack-mcp-textql-ethan",
+  "channel": "C0946T1T4CB",
+  "threadTs": "1752168053.030529",
+  "messageTs": "1752168053.030529",
+  "userMessage": "User: test fixed search - find Raine Group",
+  "conversationHistory": [
+    {
+      "user": "U0951TSB4P2",
+      "text": "test fixed search - find Raine Group",
+      "ts": "1752168053.030529"
+    }
+  ],
+  "botActionHistory": [],
+  "agentThoughts": [],
+  "agentActions": [],
+  "finalResponse": "I'll search for \"Raine Group\" in your CRM.\n\nTool result: Found 1 result(s):\nThe Raine Group (company): https://app.attio.com/textql-data/company/a41e73b9-5dac-493f-bb2d-d38bb166c330/overview",
+  "toolsUsed": [],
+  "success": true,
+  "error": null,
+  "processingTime": 5318,
+  "attachmentCount": 0,
+  "iterationCount": 0,
+  "timestamp": "2025-07-10T17:21:05.408Z",
+  "version": "1.11.1",
+  "environment": "development"
+}

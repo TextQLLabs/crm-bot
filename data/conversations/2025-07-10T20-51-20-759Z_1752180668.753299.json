@@ -1,0 +1,29 @@
+{
+  "conversationId": "1752180668.753299",
+  "userId": "U04HC95ENRY",
+  "userName": "Ethan Ding",
+  "channel": "C0946T1T4CB",
+  "threadTs": "1752180668.753299",
+  "messageTs": "1752180668.753299",
+  "userMessage": "User: what kidn fotolls do you ahve acess to?",
+  "conversationHistory": [
+    {
+      "user": "U04HC95ENRY",
+      "text": "what kidn fotolls do you ahve acess to?",
+      "ts": "1752180668.753299"
+    }
+  ],
+  "botActionHistory": [],
+  "agentThoughts": [],
+  "agentActions": [],
+  "finalResponse": "No matches found. Try searching with different terms or partial names.",
+  "toolsUsed": [],
+  "success": true,
+  "error": null,
+  "processingTime": 10496,
+  "attachmentCount": 0,
+  "iterationCount": 0,
+  "timestamp": "2025-07-10T20:51:20.758Z",
+  "version": "1.11.1",
+  "environment": "development"
+}

@@ -1,46 +1,51 @@
-# Environment Variables Organization
+## Context: Environment Variables Organization
+**Tags:** #env-vars #environment #variables #shared #production #development #mongodb #railway #slack #attio #security #scope #crm-bot #mcp
+**Date:** 2025-01-10
+**Scope:** project
 
-## Overview
-This document clarifies which environment variables are used where, which are shared across projects, and which are specific to the CRM bot.
+### Summary
+Comprehensive guide to environment variable organization for the CRM bot project, distinguishing between shared variables across all projects and project-specific variables for development, testing, and production environments.
 
-## Variable Categories
+### Details
 
-### 1. 🌍 Shared Across All Projects
+#### Variable Categories
+
+##### 1. 🌍 Shared Across All Projects
 **Location**: `/Users/ethanding/projects/CLAUDE.md` and MCP configurations
 
-#### MongoDB MCP Server
+**MongoDB MCP Server**
 - **Variable**: `MDB_MCP_CONNECTION_STRING`
 - **Scope**: All projects using MongoDB via MCP
 - **Used by**: Claude Code MCP server, all projects
 - **Example**: `mongodb+srv://ethan:password@ethan-test.mongodb.net/`
 - **Note**: This is the SAME connection used by all projects
 
-#### Railway CLI
+**Railway CLI**
 - **Variable**: `RAILWAY_TOKEN` (if using Railway CLI globally)
 - **Scope**: All Railway projects
 - **Location**: User's shell profile (~/.zshrc or ~/.bashrc)
 - **Note**: Allows `railway` CLI commands across all projects
 
-### 2. 🤖 CRM Bot Specific - Production
+##### 2. 🤖 CRM Bot Specific - Production
 **Location**: Railway Dashboard Environment Variables
 
-#### Core Bot Credentials
+**Core Bot Credentials**
 - **SLACK_BOT_TOKEN**: `xoxb-...` (CRM bot's specific Slack token)
 - **SLACK_SIGNING_SECRET**: CRM bot's Slack signing secret
 - **SLACK_APP_TOKEN**: `xapp-...` (for Socket Mode)
 - **ATTIO_API_KEY**: TextQL's Attio workspace key
 - **ANTHROPIC_API_KEY**: `sk-ant-...` (could be shared, but kept separate for usage tracking)
 
-#### Database
+**Database**
 - **MONGODB_URI**: Same as `MDB_MCP_CONNECTION_STRING` but specifically for production
   - Can point to a different database name: `.../crm-bot-prod`
 
-#### Railway Specific
+**Railway Specific**
 - **Project**: invigorating-imagination
 - **Service**: crm-bot
 - **Environment**: production
 
-### 3. 🧪 CRM Bot Specific - Development/Testing
+##### 3. 🧪 CRM Bot Specific - Development/Testing
 **Location**: `/Users/ethanding/projects/crm-bot/.env`
 
 ```env
@@ -59,7 +64,7 @@ ANTHROPIC_API_KEY=sk-ant-...
 MONGODB_URI=mongodb+srv://ethan:password@ethan-test.mongodb.net/crm-bot-dev
 ```
 
-### 4. 🔄 Environment Variable Flow
+##### 4. 🔄 Environment Variable Flow
 
 ```
 ┌─────────────────────────────────────┐
@@ -91,9 +96,9 @@ MONGODB_URI=mongodb+srv://ethan:password@ethan-test.mongodb.net/crm-bot-dev
 └─────────────────────────────────────┘
 ```
 
-## Implementation in Code
+#### Implementation in Code
 
-### Database Connection Priority
+**Database Connection Priority**
 ```javascript
 // In database.js and test files:
 const MONGODB_URI = process.env.MONGODB_URI || process.env.MDB_MCP_CONNECTION_STRING;
@@ -103,56 +108,56 @@ This allows:
 2. Falls back to shared MCP connection
 3. Can use different database names
 
-### Removed/Deprecated Variables
+**Removed/Deprecated Variables**
 - `SLACK_BOT_ID` - No longer needed (bot detection handled automatically)
 - Cloudflare environment variables - Project uses Railway exclusively
 
-### Fallback Variables
+**Fallback Variables**
 - `MDB_MCP_CONNECTION_STRING` - Shared MongoDB connection from MCP server
   - Used as fallback when `MONGODB_URI` is not set
   - Configured at the MCP server level, not in project
 
-## Best Practices
+#### Best Practices
 
-### 1. Shared Variables
+**1. Shared Variables**
 - Store in `/Users/ethanding/projects/CLAUDE.md` for documentation
 - Configure once in MCP servers or shell profile
 - Use for: MongoDB connections, global tools
 
-### 2. Project Variables
+**2. Project Variables**
 - Store in `.env` for development
 - Mirror in Railway dashboard for production
 - Use for: API keys, tokens, project-specific configs
 
-### 3. Never Share These
+**3. Never Share These**
 - Slack tokens (workspace-specific)
 - Attio API keys (workspace-specific)
 - Any credentials with limited scope
 
-### 4. Testing vs Production
+**4. Testing vs Production**
 - Use different database names: `crm-bot-dev` vs `crm-bot-prod`
 - Keep same cluster for simplicity
 - Use `NODE_ENV` to switch behavior
 
-## Setup Instructions
+#### Setup Instructions
 
-### For New Developer
+**For New Developer**
 1. Copy `.env.example` to `.env`
 2. Fill in CRM bot specific values
 3. Ensure MCP MongoDB server is configured with shared connection
 4. Run `railway link` and select "invigorating-imagination" project
 
-### For Production Deployment
+**For Production Deployment**
 1. All variables in `.env` should be mirrored in Railway dashboard
 2. Set `NODE_ENV=production`
 3. Use production database name in `MONGODB_URI`
 
-### For Testing
+**For Testing**
 1. Can use same `.env` file
 2. Tests will use `MDB_MCP_CONNECTION_STRING` as fallback
 3. Test data goes to same database (consider separate test DB)
 
-## Variable Reference
+#### Variable Reference
 
 | Variable | Shared? | Required? | Location | Notes |
 |----------|---------|-----------|----------|-------|
@@ -166,3 +171,9 @@ This allows:
 | NODE_ENV | ❌ No | No | .env, Railway | Default: development |
 | PORT | ❌ No | No | .env | Default: 3000 |
 | RAILWAY_TOKEN | ✅ Yes | For CLI | Shell profile | For railway CLI |
+
+### Related
+- `/Users/ethanding/projects/CLAUDE.md` - Global project settings and shared variables
+- `/Users/ethanding/projects/crm-bot/.env` - Development environment variables
+- Railway Dashboard - Production environment variables
+- MCP MongoDB server configuration

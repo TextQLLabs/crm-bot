@@ -1,0 +1,29 @@
+{
+  "conversationId": "1752162815.949999",
+  "userId": "U0951TSB4P2",
+  "userName": "slack-mcp-textql-ethan",
+  "channel": "C0946T1T4CB",
+  "threadTs": "1752162815.949999",
+  "messageTs": "1752162815.949999",
+  "userMessage": "User: test new claude agent - simple search",
+  "conversationHistory": [
+    {
+      "user": "U0951TSB4P2",
+      "text": "test new claude agent - simple search",
+      "ts": "1752162815.949999"
+    }
+  ],
+  "botActionHistory": [],
+  "agentThoughts": [],
+  "agentActions": [],
+  "finalResponse": "I'll help you perform a test search. Since this is a test, I'll do a simple search for \"test\" to demonstrate the search functionality.\n\nTool error: undefined",
+  "toolsUsed": [],
+  "success": true,
+  "error": null,
+  "processingTime": 2849,
+  "attachmentCount": 0,
+  "iterationCount": 0,
+  "timestamp": "2025-07-10T15:53:45.919Z",
+  "version": "1.11.1",
+  "environment": "development"
+}

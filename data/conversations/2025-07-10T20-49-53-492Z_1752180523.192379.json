@@ -1,0 +1,125 @@
+{
+  "conversationId": "1752180523.192379",
+  "userId": "U04HC95ENRY",
+  "userName": "Ethan Ding",
+  "channel": "C0946T1T4CB",
+  "threadTs": "1752180523.192379",
+  "messageTs": "1752180585.103129",
+  "userMessage": "User: are oyu using react or calude? like the reAct frameowkr or claud deiectly\n\nAssistant: No matches found. Try searching with different terms or partial names.\n\nUser: are you using teh react frame owrk?\n\nUser: what's going on",
+  "conversationHistory": [
+    {
+      "user": "U04HC95ENRY",
+      "text": "are oyu using react or calude? like the reAct frameowkr or claud deiectly",
+      "ts": "1752180523.192379",
+      "isBot": false,
+      "blocks": [
+        {
+          "type": "rich_text",
+          "block_id": "R+wn0",
+          "elements": [
+            {
+              "type": "rich_text_section",
+              "elements": [
+                {
+                  "type": "user",
+                  "user_id": "U0953GV1A8L"
+                },
+                {
+                  "type": "text",
+                  "text": " are oyu using react or calude? like the reAct frameowkr or claud deiectly"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "user": "U0953GV1A8L",
+      "text": "No matches found. Try searching with different terms or partial names.",
+      "ts": "1752180524.937669",
+      "isBot": true,
+      "botId": "B0953GUV2MA",
+      "blocks": [
+        {
+          "type": "rich_text",
+          "block_id": "atq/A",
+          "elements": [
+            {
+              "type": "rich_text_section",
+              "elements": [
+                {
+                  "type": "text",
+                  "text": "No matches found. Try searching with different terms or partial names."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "user": "U04HC95ENRY",
+      "text": "are you using teh react frame owrk?",
+      "ts": "1752180545.338069",
+      "isBot": false,
+      "blocks": [
+        {
+          "type": "rich_text",
+          "block_id": "lU2h7",
+          "elements": [
+            {
+              "type": "rich_text_section",
+              "elements": [
+                {
+                  "type": "text",
+                  "text": "are you using teh react frame owrk?"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "user": "U04HC95ENRY",
+      "text": "what's going on",
+      "ts": "1752180585.103129",
+      "isBot": false,
+      "blocks": [
+        {
+          "type": "rich_text",
+          "block_id": "T+1d7",
+          "elements": [
+            {
+              "type": "rich_text_section",
+              "elements": [
+                {
+                  "type": "user",
+                  "user_id": "U0953GV1A8L"
+                },
+                {
+                  "type": "text",
+                  "text": " what's going on"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "botActionHistory": [],
+  "agentThoughts": [],
+  "agentActions": [],
+  "finalResponse": "No matches found. Try searching with different terms or partial names.",
+  "toolsUsed": [],
+  "success": true,
+  "error": null,
+  "processingTime": 6420,
+  "attachmentCount": 0,
+  "iterationCount": 0,
+  "timestamp": "2025-07-10T20:49:53.491Z",
+  "version": "1.11.1",
+  "environment": "development"
+}

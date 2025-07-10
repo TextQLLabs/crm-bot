@@ -1,0 +1,42 @@
+{
+  "conversationId": "test-thread",
+  "userId": "test-user",
+  "userName": "Test Suite",
+  "channel": "test",
+  "threadTs": "test-thread",
+  "messageTs": "1752177875933",
+  "userMessage": "how many notes does The Raine Group have",
+  "conversationHistory": [],
+  "botActionHistory": [],
+  "agentThoughts": [],
+  "agentActions": [],
+  "finalResponse": "Found **The Raine Group** (<https://app.attio.com/textql-data/company/a41e73b9-5dac-493f-bb2d-d38bb166c330/overview|here>)\n\nThere are **16 notes** on this account:\n1. *Note from Slack* (7/4/2025, 9:05:20 AM) - <https://app.attio.com/textql-data/companies/record/a41e73b9-5dac-493f-bb2d-d38bb166c330/notes?modal=note&id=ce09b30f-b107-4af0-8c6f-5c57b240aa53|view>\n2. *Note from Slack* (7/10/2025, 1:37:50 PM) - <https://app.attio.com/textql-data/companies/record/a41e73b9-5dac-493f-bb2d-d38bb166c330/notes?modal=note&id=88a4267d-a417-4075-a4a6-ed0fc39fdf61|view>\n3. *Note from Slack* (7/10/2025, 1:38:17 PM) - <https://app.attio.com/textql-data/companies/record/a41e73b9-5dac-493f-bb2d-d38bb166c330/notes?modal=note&id=cc51fd58-b363-4cab-bab9-3a457ac785b2|view>\n4. *Note from Slack* (7/10/2025, 1:42:37 PM) - <https://app.attio.com/textql-data/companies/record/a41e73b9-5dac-493f-bb2d-d38bb166c330/notes?modal=note&id=fa123aa2-3a90-4f33-90a2-1b7e53dde466|view>\n5. *Note from Slack* (7/10/2025, 1:44:28 PM) - <https://app.attio.com/textql-data/companies/record/a41e73b9-5dac-493f-bb2d-d38bb166c330/notes?modal=note&id=8cfea681-136d-4896-b621-0f818bf334f3|view>\n\n_...and 11 more notes. Ask me to \"show all notes\" to see the complete list._",
+  "toolsUsed": [
+    {
+      "tool": "search_crm",
+      "input": {
+        "query": "The Raine Group"
+      },
+      "success": true,
+      "timestamp": "2025-07-10T20:04:44.440Z"
+    },
+    {
+      "tool": "get_notes",
+      "input": {
+        "entity_type": "company",
+        "entity_id": "a41e73b9-5dac-493f-bb2d-d38bb166c330",
+        "include_content": false
+      },
+      "success": true,
+      "timestamp": "2025-07-10T20:04:44.440Z"
+    }
+  ],
+  "success": true,
+  "error": null,
+  "processingTime": 8507,
+  "attachmentCount": 0,
+  "iterationCount": 0,
+  "timestamp": "2025-07-10T20:04:44.440Z",
+  "version": "1.11.1",
+  "environment": "development"
+}

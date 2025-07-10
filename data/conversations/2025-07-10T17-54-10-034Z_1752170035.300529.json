@@ -1,0 +1,29 @@
+{
+  "conversationId": "1752170035.300529",
+  "userId": "U0951TSB4P2",
+  "userName": "slack-mcp-textql-ethan",
+  "channel": "C0946T1T4CB",
+  "threadTs": "1752170035.300529",
+  "messageTs": "1752170035.300529",
+  "userMessage": "User: debug continuation - add a note to The Raine Group saying \"Testing enhanced debugging with real Slack\"",
+  "conversationHistory": [
+    {
+      "user": "U0951TSB4P2",
+      "text": "debug continuation - add a note to The Raine Group saying \"Testing enhanced debugging with real Slack\"",
+      "ts": "1752170035.300529"
+    }
+  ],
+  "botActionHistory": [],
+  "agentThoughts": [],
+  "agentActions": [],
+  "finalResponse": "I'll help you add that note to The Raine Group. Let me first search for the company to get the correct entity ID.\n\nTool result: Found 1 result(s):\nThe Raine Group (company) [ID: a41e73b9-5dac-493f-bb2d-d38bb166c330]: https://app.attio.com/textql-data/company/a41e73b9-5dac-493f-bb2d-d38bb166c330/overview\n\n[Continuation step completed - no result returned]",
+  "toolsUsed": [],
+  "success": true,
+  "error": null,
+  "processingTime": 7882,
+  "attachmentCount": 0,
+  "iterationCount": 0,
+  "timestamp": "2025-07-10T17:54:10.033Z",
+  "version": "1.11.1",
+  "environment": "development"
+}

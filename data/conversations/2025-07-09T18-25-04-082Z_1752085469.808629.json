@@ -1,0 +1,79 @@
+{
+  "conversationId": "1752085469.808629",
+  "userId": "U0951TSB4P2",
+  "userName": "slack-mcp-textql-ethan",
+  "channel": "C0946T1T4CB",
+  "threadTs": "1752085469.808629",
+  "messageTs": "1752085469.808629",
+  "userMessage": "User: are you working? simple test",
+  "conversationHistory": [
+    {
+      "user": "U0951TSB4P2",
+      "text": "are you working? simple test",
+      "ts": "1752085469.808629"
+    }
+  ],
+  "botActionHistory": [],
+  "agentThoughts": [
+    "I should test the search functionality to confirm I'm working properly. I'll search for the user \"Ethan\" who sent this message.",
+    "The search was successful and returned several people named Ethan in the CRM. Since this was just a test message, I can confirm that I'm working properly by providing a simple response."
+  ],
+  "agentActions": [
+    {
+      "action": "search_crm",
+      "input": {
+        "entity_type": "people",
+        "search_query": "Ethan"
+      },
+      "observation": [
+        {
+          "id": "08eb7485-4f00-4701-9d9e-9394f600b196",
+          "name": "Ethan",
+          "description": "ethan@lextegrity.com",
+          "url": "https://app.attio.com/textql-data/person/08eb7485-4f00-4701-9d9e-9394f600b196/overview",
+          "type": "person"
+        },
+        {
+          "id": "170327bf-95a8-4f93-a67d-657245833692",
+          "name": "Ethan Abrams",
+          "description": "ethan.abrams@braze.com",
+          "url": "https://app.attio.com/textql-data/person/170327bf-95a8-4f93-a67d-657245833692/overview",
+          "type": "person"
+        },
+        {
+          "id": "17ac5935-f5ff-474e-8e6a-bd100b7c84a1",
+          "name": "Ethan Bidna",
+          "description": "ebidna@morningconsult.com",
+          "url": "https://app.attio.com/textql-data/person/17ac5935-f5ff-474e-8e6a-bd100b7c84a1/overview",
+          "type": "person"
+        },
+        {
+          "id": "2b621b30-3cdb-417b-b8cb-20c0786950a6",
+          "name": "Bethany Kiernan",
+          "description": "bethany.kiernan@clarivate.com",
+          "url": "https://app.attio.com/textql-data/person/2b621b30-3cdb-417b-b8cb-20c0786950a6/overview",
+          "type": "person"
+        },
+        {
+          "id": "394da9b7-7d87-4e36-a346-2ba1aac767d3",
+          "name": "Ethan Ding",
+          "description": "ethan@textql.net",
+          "url": "https://app.attio.com/textql-data/person/394da9b7-7d87-4e36-a346-2ba1aac767d3/overview",
+          "type": "person"
+        }
+      ]
+    }
+  ],
+  "finalResponse": "Yes, I'm working! I successfully searched the CRM and found several people named Ethan, including Ethan Ding (https://app.attio.com/textql-data/person/394da9b7-7d87-4e36-a346-2ba1aac767d3/overview). How can I help you with your CRM data today?",
+  "toolsUsed": [
+    "search_crm"
+  ],
+  "success": true,
+  "error": null,
+  "processingTime": 19083,
+  "attachmentCount": 0,
+  "iterationCount": 2,
+  "timestamp": "2025-07-09T18:25:04.080Z",
+  "version": "1.11.1",
+  "environment": "development"
+}

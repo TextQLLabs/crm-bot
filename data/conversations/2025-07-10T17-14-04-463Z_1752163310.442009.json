@@ -1,0 +1,392 @@
+{
+  "conversationId": "1752163310.442009",
+  "userId": "U04HC95ENRY",
+  "userName": "Ethan Ding",
+  "channel": "C0946T1T4CB",
+  "threadTs": "1752163310.442009",
+  "messageTs": "1752167633.471349",
+  "userMessage": "User: are youj working?\n\nAssistant: Yes, I am working! I notice there's a small typo in your message (\"youj\" instead of \"you\"), but I understand what you're asking. I'm ready to help you with any CRM-related tasks like:\n\n- Searching for companies, people, or deals\n- Creating or managing notes\n- Creating or updating records\n- Getting entity details\n- Analyzing images\n- And more!\n\nWhat would you like help with?\n\nUser: what does this transcript say\n\nAssistant: :thinking_face: Processing your additional context...\n\nAssistant: :x: I encountered an issue: 400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Could not process image\"}}\n\nPlease try rephrasing your request or contact support if this persists.\n\nUser: can you read this transcript\n\nAssistant: :x: I encountered an issue: 400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Could not process image\"}}\n\nPlease try rephrasing your request or contact support if this persists.\n\nAssistant: :x: I encountered an issue: 400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Could not process image\"}}\n\nPlease try rephrasing your request or contact support if this persists.\n\nUser: what doest his say\n\nAssistant: :thinking_face: Processing your additional context...\n\nAssistant: I see you're trying to get me to analyze some text or an image, but I notice there might be some confusion. To analyze an image that you've uploaded, I need to use the `analyze_image` tool specifically. Let me try that now:\n\nTool error: 400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Could not process image\"}}\n\nUser: can oyu read thsi ?\n\nAssistant: :thinking_face: Processing your additional context...",
+  "conversationHistory": [
+    {
+      "user": "U04HC95ENRY",
+      "text": "are youj working?",
+      "ts": "1752163310.442009",
+      "isBot": false,
+      "blocks": [
+        {
+          "type": "rich_text",
+          "block_id": "jfLql",
+          "elements": [
+            {
+              "type": "rich_text_section",
+              "elements": [
+                {
+                  "type": "user",
+                  "user_id": "U0953GV1A8L"
+                },
+                {
+                  "type": "text",
+                  "text": " are youj working?"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "user": "U0953GV1A8L",
+      "text": "Yes, I am working! I notice there's a small typo in your message (\"youj\" instead of \"you\"), but I understand what you're asking. I'm ready to help you with any CRM-related tasks like:\n\n- Searching for companies, people, or deals\n- Creating or managing notes\n- Creating or updating records\n- Getting entity details\n- Analyzing images\n- And more!\n\nWhat would you like help with?",
+      "ts": "1752163312.001749",
+      "isBot": true,
+      "botId": "B0953GUV2MA",
+      "blocks": [
+        {
+          "type": "rich_text",
+          "block_id": "ORt",
+          "elements": [
+            {
+              "type": "rich_text_section",
+              "elements": [
+                {
+                  "type": "text",
+                  "text": "Yes, I am working! I notice there's a small typo in your message (\"youj\" instead of \"you\"), but I understand what you're asking. I'm ready to help you with any CRM-related tasks like:\n\n- Searching for companies, people, or deals\n- Creating or managing notes\n- Creating or updating records\n- Getting entity details\n- Analyzing images\n- And more!\n\nWhat would you like help with?"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "user": "U04HC95ENRY",
+      "text": "what does this transcript say",
+      "ts": "1752167287.589109",
+      "isBot": false,
+      "blocks": [
+        {
+          "type": "rich_text",
+          "block_id": "gSKEJ",
+          "elements": [
+            {
+              "type": "rich_text_section",
+              "elements": [
+                {
+                  "type": "user",
+                  "user_id": "U0953GV1A8L"
+                },
+                {
+                  "type": "text",
+                  "text": " what does this transcript say"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "user": "U0953GV1A8L",
+      "text": ":thinking_face: Processing your additional context...",
+      "ts": "1752167289.582599",
+      "isBot": true,
+      "botId": "B0953GUV2MA",
+      "blocks": [
+        {
+          "type": "rich_text",
+          "block_id": "qPS",
+          "elements": [
+            {
+              "type": "rich_text_section",
+              "elements": [
+                {
+                  "type": "emoji",
+                  "name": "thinking_face",
+                  "unicode": "1f914"
+                },
+                {
+                  "type": "text",
+                  "text": " Processing your additional context..."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "user": "U0953GV1A8L",
+      "text": ":x: I encountered an issue: 400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Could not process image\"}}\n\nPlease try rephrasing your request or contact support if this persists.",
+      "ts": "1752167289.640509",
+      "isBot": true,
+      "botId": "B0953GUV2MA",
+      "blocks": [
+        {
+          "type": "rich_text",
+          "block_id": "2qOq",
+          "elements": [
+            {
+              "type": "rich_text_section",
+              "elements": [
+                {
+                  "type": "emoji",
+                  "name": "x",
+                  "unicode": "274c"
+                },
+                {
+                  "type": "text",
+                  "text": " I encountered an issue: 400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Could not process image\"}}\n\nPlease try rephrasing your request or contact support if this persists."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "user": "U04HC95ENRY",
+      "text": "can you read this transcript",
+      "ts": "1752167413.128709",
+      "isBot": false,
+      "blocks": [
+        {
+          "type": "rich_text",
+          "block_id": "X0bPL",
+          "elements": [
+            {
+              "type": "rich_text_section",
+              "elements": [
+                {
+                  "type": "user",
+                  "user_id": "U0953GV1A8L"
+                },
+                {
+                  "type": "text",
+                  "text": " can you read this transcript"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "user": "U0953GV1A8L",
+      "text": ":x: I encountered an issue: 400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Could not process image\"}}\n\nPlease try rephrasing your request or contact support if this persists.",
+      "ts": "1752167414.805939",
+      "isBot": true,
+      "botId": "B0953GUV2MA",
+      "blocks": [
+        {
+          "type": "rich_text",
+          "block_id": "uX30c",
+          "elements": [
+            {
+              "type": "rich_text_section",
+              "elements": [
+                {
+                  "type": "emoji",
+                  "name": "x",
+                  "unicode": "274c"
+                },
+                {
+                  "type": "text",
+                  "text": " I encountered an issue: 400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Could not process image\"}}\n\nPlease try rephrasing your request or contact support if this persists."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "user": "U0953GV1A8L",
+      "text": ":x: I encountered an issue: 400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Could not process image\"}}\n\nPlease try rephrasing your request or contact support if this persists.",
+      "ts": "1752167414.841199",
+      "isBot": true,
+      "botId": "B0953GUV2MA",
+      "blocks": [
+        {
+          "type": "rich_text",
+          "block_id": "vfTQE",
+          "elements": [
+            {
+              "type": "rich_text_section",
+              "elements": [
+                {
+                  "type": "emoji",
+                  "name": "x",
+                  "unicode": "274c"
+                },
+                {
+                  "type": "text",
+                  "text": " I encountered an issue: 400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Could not process image\"}}\n\nPlease try rephrasing your request or contact support if this persists."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "user": "U04HC95ENRY",
+      "text": "what doest his say",
+      "ts": "1752167512.766879",
+      "isBot": false,
+      "blocks": [
+        {
+          "type": "rich_text",
+          "block_id": "Aoeep",
+          "elements": [
+            {
+              "type": "rich_text_section",
+              "elements": [
+                {
+                  "type": "user",
+                  "user_id": "U0953GV1A8L"
+                },
+                {
+                  "type": "text",
+                  "text": " what doest his say"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "user": "U0953GV1A8L",
+      "text": ":thinking_face: Processing your additional context...",
+      "ts": "1752167514.636269",
+      "isBot": true,
+      "botId": "B0953GUV2MA",
+      "blocks": [
+        {
+          "type": "rich_text",
+          "block_id": "bwKi",
+          "elements": [
+            {
+              "type": "rich_text_section",
+              "elements": [
+                {
+                  "type": "emoji",
+                  "name": "thinking_face",
+                  "unicode": "1f914"
+                },
+                {
+                  "type": "text",
+                  "text": " Processing your additional context..."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "user": "U0953GV1A8L",
+      "text": "I see you're trying to get me to analyze some text or an image, but I notice there might be some confusion. To analyze an image that you've uploaded, I need to use the `analyze_image` tool specifically. Let me try that now:\n\nTool error: 400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Could not process image\"}}",
+      "ts": "1752167514.934969",
+      "isBot": true,
+      "botId": "B0953GUV2MA",
+      "blocks": [
+        {
+          "type": "rich_text",
+          "block_id": "qU/UF",
+          "elements": [
+            {
+              "type": "rich_text_section",
+              "elements": [
+                {
+                  "type": "text",
+                  "text": "I see you're trying to get me to analyze some text or an image, but I notice there might be some confusion. To analyze an image that you've uploaded, I need to use the "
+                },
+                {
+                  "type": "text",
+                  "text": "analyze_image",
+                  "style": {
+                    "code": true
+                  }
+                },
+                {
+                  "type": "text",
+                  "text": " tool specifically. Let me try that now:\n\nTool error: 400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Could not process image\"}}"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "user": "U04HC95ENRY",
+      "text": "can oyu read thsi ?",
+      "ts": "1752167633.471349",
+      "isBot": false,
+      "blocks": [
+        {
+          "type": "rich_text",
+          "block_id": "ZA609",
+          "elements": [
+            {
+              "type": "rich_text_section",
+              "elements": [
+                {
+                  "type": "user",
+                  "user_id": "U0953GV1A8L"
+                },
+                {
+                  "type": "text",
+                  "text": " can oyu read thsi ?"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "user": "U0953GV1A8L",
+      "text": ":thinking_face: Processing your additional context...",
+      "ts": "1752167635.143409",
+      "isBot": true,
+      "botId": "B0953GUV2MA",
+      "blocks": [
+        {
+          "type": "rich_text",
+          "block_id": "s9L6+",
+          "elements": [
+            {
+              "type": "rich_text_section",
+              "elements": [
+                {
+                  "type": "emoji",
+                  "name": "thinking_face",
+                  "unicode": "1f914"
+                },
+                {
+                  "type": "text",
+                  "text": " Processing your additional context..."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "botActionHistory": [],
+  "agentThoughts": [],
+  "agentActions": [],
+  "finalResponse": "I notice you're trying to share something with me, but I don't see any actual image or text content to analyze. I can only work with:\n\n1. Direct text messages you type\n2. CRM-related tasks using the specific tools I have available (searching, creating notes, managing records, etc.)\n\nIf you're trying to share something specific, please try:\n- Typing out your question or request directly\n- Using specific CRM-related commands\n- Being specific about what information you're looking for\n\nHow can I help you with your CRM tasks today?",
+  "toolsUsed": [],
+  "success": true,
+  "error": null,
+  "processingTime": 3479,
+  "attachmentCount": 1,
+  "iterationCount": 0,
+  "timestamp": "2025-07-10T17:14:04.462Z",
+  "version": "1.11.1",
+  "environment": "development"
+}

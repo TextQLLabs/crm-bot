@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 require('dotenv').config();
 const readline = require('readline');
-const { ReactAgent } = require('./src/services/reactAgent');
+const { ClaudeAgent } = require('./src/services/claudeAgent');
 
 // ANSI color codes for prettier output
 const colors = {
@@ -20,8 +20,8 @@ const rl = readline.createInterface({
   prompt: `${colors.user}You: ${colors.reset}`
 });
 
-// Initialize the ReactAgent
-const agent = new ReactAgent();
+// Initialize the Claude Agent
+const agent = new ClaudeAgent();
 
 console.log(`${colors.system}===========================================`);
 console.log(`CRM Bot Local Testing Environment`);
@@ -79,7 +79,7 @@ async function handleMessage(message) {
   console.log(`${colors.bot}🤔 Thinking...${colors.reset}`);
   
   try {
-    // Process message with ReactAgent
+    // Process message with Claude Agent
     const result = await agent.processMessage({
       text: message,
       userName: 'Local User',

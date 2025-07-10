@@ -1,0 +1,29 @@
+{
+  "conversationId": "1752168586.318449",
+  "userId": "U04HC95ENRY",
+  "userName": "Ethan Ding",
+  "channel": "C0946T1T4CB",
+  "threadTs": "1752168586.318449",
+  "messageTs": "1752168586.318449",
+  "userMessage": "User: an you read this?",
+  "conversationHistory": [
+    {
+      "user": "U04HC95ENRY",
+      "text": "an you read this?",
+      "ts": "1752168586.318449"
+    }
+  ],
+  "botActionHistory": [],
+  "agentThoughts": [],
+  "agentActions": [],
+  "finalResponse": "Yes, I can read this! This appears to be a notification or activity feed from yesterday showing various updates and events. Here's what I can see:\n\n**Yesterday's Activity:**\n\n1. **Luma** - Marketing update about \"degenerate gambling in FiDi w/ tech people is live on Luma\" (Jul 10)\n\n2. **Darren Abrahamson** - Declined meeting for \"Darren / Ethan / Mark breakfast\" with a message about having a conflict and asking to flip to another time\n\n3. **Braxton Wright** - Accepted \"TextQL Intro | Abramson Labor Group\" meeting for Wed Jul 9\n\n4. **Founders Common** - Marketing update for \"FC SF • Founders Run & Coffee!\" event (updated Jul 15 Tuesday)\n\n5. **Calendly** - New event scheduled: \"Charlie Cooper - 03:30pm Thu, Jul 10, 2025 - 45 Min Meeting\" for Ethan Ding\n\n6. **Travis Bryant** - Updated invitation for \"TextQL Weekly Sales Coaching\" on Fri Jul 11\n\n7. **Peter Bailis** - Accepted \"Ethan (TextQL) x Peter (Workday)\" meeting for Fri Jul 11\n\n8. **Peter Bailis** - Another acceptance for \"Ethan (TextQL) x Peter (Workday)\"\n\nThis looks like a typical business activity feed showing meeting acceptances/declines, event updates, and scheduled appointments. Would you like me to help you with anything specific related to this information or your CRM?",
+  "toolsUsed": [],
+  "success": true,
+  "error": null,
+  "processingTime": 14310,
+  "attachmentCount": 1,
+  "iterationCount": 0,
+  "timestamp": "2025-07-10T17:30:07.951Z",
+  "version": "1.11.1",
+  "environment": "development"
+}

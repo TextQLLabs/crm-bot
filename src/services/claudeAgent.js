@@ -517,6 +517,29 @@ class ClaudeAgent {
   buildSystemPrompt() {
     return `You are a helpful CRM assistant that helps users manage their Attio CRM data. You can search for companies, people, and deals, create and manage notes, and perform various CRM operations.
 
+CONVERSATION HANDLING:
+- Answer conversational questions about yourself directly WITHOUT using tools
+- If asked about your capabilities, architecture, or how you work, explain in plain English
+- Examples of conversational questions: "how do you work?", "what can you do?", "are you using Claude?", "what framework do you use?"
+- Only use CRM tools when users are actually asking for CRM operations (search, create notes, etc.)
+- You use Claude Sonnet 4 with native tool calling (not ReAct framework) to manage Attio CRM data
+
+RESPONSE FORMATTING STYLES:
+When users ask CRM questions (search, notes, etc.), format your responses with:
+- Entity names in **bold** with clickable <url|here> links  
+- Clear summaries like "Found **Company Name**" or "No matches found"
+- Note counts and details when relevant
+- Action confirmations for operations
+
+When users ask conversational questions about you, just respond naturally and helpfully.
+
+For mixed requests like "hi, search for raine", handle both parts naturally - greet them and then provide the CRM results.
+
+EXAMPLES:
+- CRM: "search for raine" → "Found **The Raine Group** (<url|here>) - is that what you meant?"
+- Conversational: "what can you do?" → "I can help you search your Attio CRM for companies, people, and deals, create and manage notes, and perform various CRM operations using Claude Sonnet 4 with native tool calling."
+- Mixed: "hi, find raine" → "Hello! Found **The Raine Group** (<url|here>) - is that what you meant?"
+
 CRITICAL MULTI-STEP OPERATION RULES:
 
 When a user asks to "add note to [company/person/deal]":
@@ -901,129 +924,19 @@ Remember: You have native access to these tools and can use them as needed to he
   }
   
   formatCleanResponse(originalContent, toolResults, context) {
-    // Extract key information from tool results for clean presentation
-    const searchResults = toolResults.filter(t => t.tool === 'search_crm' && t.result.success);
-    const noteResults = toolResults.filter(t => t.tool === 'get_notes' && t.result.success);
-    const webSearchResults = toolResults.filter(t => t.tool === 'web_search' && t.result.success);
-    
-    let cleanResponse = '';
-    let methodology = [];
-    
-    // Build methodology summary (for potential expansion)
-    if (webSearchResults.length > 0) {
-      methodology.push('Used web search to find correct company name');
-    }
-    if (searchResults.length > 1) {
-      methodology.push('Tried multiple search variations');
+    // Always prefer Claude's original response - it knows best how to format based on context
+    if (originalContent && originalContent.trim().length > 0) {
+      return originalContent;
     }
     
-    // Format the main response based on what was found
-    const lastSearchResult = searchResults[searchResults.length - 1];
-    const lastNoteResult = noteResults[noteResults.length - 1];
-    
-    if (lastSearchResult && lastSearchResult.result.data) {
-      const entities = lastSearchResult.result.data;
-      
-      if (entities.length === 1) {
-        const entity = entities[0];
-        cleanResponse += `Found **${entity.name}** (<${entity.url || '#'}|here>)`;
-        
-        // Check if user's query was different from what we found
-        const userQuery = context.message.toLowerCase();
-        const foundName = entity.name.toLowerCase();
-        if (!userQuery.includes(foundName.replace(/the |inc|llc|group/g, '').trim())) {
-          cleanResponse += ' - is that what you meant?';
-        }
-        
-        // Add note count if we have note results
-        if (lastNoteResult && lastNoteResult.result.notes) {
-          const noteCount = lastNoteResult.result.notes.length;
-          cleanResponse += `\n\nThere ${noteCount === 1 ? 'is' : 'are'} **${noteCount} note${noteCount !== 1 ? 's' : ''}** on this account`;
-          
-          if (noteCount > 0 && noteCount <= 10) {
-            // Show all notes if reasonable number
-            cleanResponse += ':\n';
-            lastNoteResult.result.notes.forEach((note, index) => {
-              const noteUrl = note.id && note.parentObject && note.parentRecordId ? 
-                `https://app.attio.com/textql-data/${note.parentObject}/record/${note.parentRecordId}/notes?modal=note&id=${note.id}` : '#';
-              cleanResponse += `${index + 1}. *${note.title || 'Note from Slack'}* (${note.createdAt}) - <${noteUrl}|view>\n`;
-            });
-          } else if (noteCount > 10) {
-            // Show first few and offer to see more
-            cleanResponse += ':\n';
-            lastNoteResult.result.notes.slice(0, 5).forEach((note, index) => {
-              const noteUrl = note.id && note.parentObject && note.parentRecordId ? 
-                `https://app.attio.com/textql-data/${note.parentObject}/record/${note.parentRecordId}/notes?modal=note&id=${note.id}` : '#';
-              cleanResponse += `${index + 1}. *${note.title || 'Note from Slack'}* (${note.createdAt}) - <${noteUrl}|view>\n`;
-            });
-            cleanResponse += `\n_...and ${noteCount - 5} more notes. Ask me to "show all notes" to see the complete list._`;
-          }
-        }
-      } else if (entities.length > 1) {
-        cleanResponse += `Found **${entities.length} matches**:\n`;
-        entities.slice(0, 5).forEach((entity, index) => {
-          cleanResponse += `${index + 1}. **${entity.name}** (${entity.type}) - <${entity.url || '#'}|view>\n`;
-        });
-        if (entities.length > 5) {
-          cleanResponse += `... and ${entities.length - 5} more`;
-        }
-        
-        // If we have note results and the user asked about notes, show them
-        if (lastNoteResult && lastNoteResult.result.notes && context.message.toLowerCase().includes('note')) {
-          const noteCount = lastNoteResult.result.notes.length;
-          cleanResponse += `\n\nNotes on the selected entity:\n`;
-          cleanResponse += `Found **${noteCount} note${noteCount !== 1 ? 's' : ''}**`;
-          
-          if (noteCount > 0 && noteCount <= 10) {
-            cleanResponse += ':\n';
-            lastNoteResult.result.notes.forEach((note, index) => {
-              const noteUrl = note.id && note.parentObject && note.parentRecordId ? 
-                `https://app.attio.com/textql-data/${note.parentObject}/record/${note.parentRecordId}/notes?modal=note&id=${note.id}` : '#';
-              // Auto-truncate when there are many notes OR explicitly requested via truncate_content parameter
-              const shouldTruncate = lastNoteResult?.input?.truncate_content === true || 
-                                   (noteCount > 3 && lastNoteResult?.input?.truncate_content !== false);
-              const content = note.content ? 
-                (shouldTruncate && note.content.length > 300 ? note.content.substring(0, 300) + '...' : note.content) : 
-                'No content available';
-              cleanResponse += `${index + 1}. *${note.title || 'Note from Slack'}* (${note.createdAt})\n   ${content}\n   📎 <${noteUrl}|View in Attio>\n\n`;
-            });
-          } else if (noteCount > 10) {
-            cleanResponse += ':\n';
-            lastNoteResult.result.notes.slice(0, 5).forEach((note, index) => {
-              const noteUrl = note.id && note.parentObject && note.parentRecordId ? 
-                `https://app.attio.com/textql-data/${note.parentObject}/record/${note.parentRecordId}/notes?modal=note&id=${note.id}` : '#';
-              // Auto-truncate when there are many notes OR explicitly requested via truncate_content parameter
-              const shouldTruncate = lastNoteResult?.input?.truncate_content === true || 
-                                   (noteCount > 3 && lastNoteResult?.input?.truncate_content !== false);
-              const content = note.content ? 
-                (shouldTruncate && note.content.length > 300 ? note.content.substring(0, 300) + '...' : note.content) : 
-                'No content available';
-              cleanResponse += `${index + 1}. *${note.title || 'Note from Slack'}* (${note.createdAt})\n   ${content}\n   📎 <${noteUrl}|View in Attio>\n\n`;
-            });
-            cleanResponse += `_...and ${noteCount - 5} more notes. For full content, ask for specific notes or use fewer filters._`;
-          }
-        }
-      }
-    } else if (webSearchResults.length > 0) {
-      // Only web search results, no CRM matches
-      const webResult = webSearchResults[webSearchResults.length - 1];
-      if (webResult.result.correction) {
-        cleanResponse += `No exact match in CRM, but web search suggests: **${webResult.result.correction}**\n`;
-        cleanResponse += `Try searching for "${webResult.result.correction}" in your CRM.`;
-      } else {
-        cleanResponse += 'No matches found in CRM. Web search provided some guidance - see details below.';
-      }
-    } else {
-      // No results at all
-      cleanResponse += 'No matches found. Try searching with different terms or partial names.';
+    // Only apply minimal fallback formatting if Claude's response is empty/missing
+    if (toolResults.length === 0) {
+      return "I'm here to help! Ask me about CRM operations or feel free to chat.";
     }
-    
-    // Add methodology as collapsible section (Slack-friendly)
-    if (methodology.length > 0) {
-      cleanResponse += `\n\n_🔍 Search method: ${methodology.join(' → ')}_`;
-    }
-    
-    return cleanResponse;
+
+    // Simple fallback for the rare case where Claude didn't provide a response
+    // but tools were executed (this should rarely happen)
+    return "I completed the requested actions. Please let me know if you need anything else!";
   }
   
   buildContinuationPrompt(context, toolResults) {

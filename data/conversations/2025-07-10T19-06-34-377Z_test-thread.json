@@ -1,0 +1,23 @@
+{
+  "conversationId": "test-thread",
+  "userId": "test-user",
+  "userName": "Test Suite",
+  "channel": "test",
+  "threadTs": "test-thread",
+  "messageTs": "1752174391211",
+  "userMessage": "add a note to The Raine Group saying \"Test note from automated suite\"",
+  "conversationHistory": [],
+  "botActionHistory": [],
+  "agentThoughts": [],
+  "agentActions": [],
+  "finalResponse": "Found **The Raine Group** (<https://app.attio.com/textql-data/company/a41e73b9-5dac-493f-bb2d-d38bb166c330/overview|here>)\n\n⚠️ **Approval needed**: Found target entity, note creation pending your confirmation.",
+  "toolsUsed": [],
+  "success": true,
+  "error": null,
+  "processingTime": 3166,
+  "attachmentCount": 0,
+  "iterationCount": 0,
+  "timestamp": "2025-07-10T19:06:34.377Z",
+  "version": "1.11.1",
+  "environment": "development"
+}

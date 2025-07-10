@@ -1,0 +1,22 @@
+{
+  "conversationId": "1752173752199",
+  "userId": "TEST123",
+  "userName": "Test User",
+  "channel": "TEST_CHANNEL",
+  "messageTs": "1752173752199",
+  "userMessage": "how many notes are on the account rayn group",
+  "conversationHistory": [],
+  "botActionHistory": [],
+  "agentThoughts": [],
+  "agentActions": [],
+  "finalResponse": "I'll help you find the notes on the Rayn Group account. Let me search for this company first.\n\nI'll continue by trying different search variations for \"rayn group\" since the initial search found no results.\n\nI can see that searching for \"rayn group\" returned 3 people with similar names, but no company called \"Rayn Group\". Let me try a few more search variations to find the company you're looking for.\n\nNo matches found. Try searching with different terms or partial names.\n\n✅ **Status**: Multi-step operation completed (read-only).\n\n✅ **Status**: Multi-step operation completed (read-only).\n\n✅ **Status**: Multi-step operation completed (read-only).",
+  "toolsUsed": [],
+  "success": true,
+  "error": null,
+  "processingTime": 19049,
+  "attachmentCount": 0,
+  "iterationCount": 0,
+  "timestamp": "2025-07-10T18:56:16.358Z",
+  "version": "1.11.1",
+  "environment": "development"
+}

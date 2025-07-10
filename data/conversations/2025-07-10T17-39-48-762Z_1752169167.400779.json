@@ -1,0 +1,29 @@
+{
+  "conversationId": "1752169167.400779",
+  "userId": "U04HC95ENRY",
+  "userName": "Ethan Ding",
+  "channel": "C0946T1T4CB",
+  "threadTs": "1752169167.400779",
+  "messageTs": "1752169167.400779",
+  "userMessage": "User: can you crate a note on The Raine Group saying \"this is note #X\" where you replcae X which the number of times you created this note",
+  "conversationHistory": [
+    {
+      "user": "U04HC95ENRY",
+      "text": "can you crate a note on The Raine Group saying \"this is note #X\" where you replcae X which the number of times you created this note",
+      "ts": "1752169167.400779"
+    }
+  ],
+  "botActionHistory": [],
+  "agentThoughts": [],
+  "agentActions": [],
+  "finalResponse": "I'll help you create a note on The Raine Group. First, let me search for the company to get its ID, then check existing notes to determine the correct number.\n\nTool result: Found 1 result(s):\nThe Raine Group (company) [ID: a41e73b9-5dac-493f-bb2d-d38bb166c330]: https://app.attio.com/textql-data/company/a41e73b9-5dac-493f-bb2d-d38bb166c330/overview",
+  "toolsUsed": [],
+  "success": true,
+  "error": null,
+  "processingTime": 14480,
+  "attachmentCount": 0,
+  "iterationCount": 0,
+  "timestamp": "2025-07-10T17:39:48.760Z",
+  "version": "1.11.1",
+  "environment": "development"
+}

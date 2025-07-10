@@ -1,0 +1,23 @@
+{
+  "conversationId": "local-thread",
+  "userId": "Local User",
+  "userName": "Local User",
+  "channel": "local-test",
+  "threadTs": "local-thread",
+  "messageTs": "1752169001346",
+  "userMessage": "add a note to The Raine Group saying \"Testing multi-step operation fix\"",
+  "conversationHistory": [],
+  "botActionHistory": [],
+  "agentThoughts": [],
+  "agentActions": [],
+  "finalResponse": "I'll search for The Raine Group and add that note for you.\n\nTool result: Found 1 result(s):\nThe Raine Group (company) [ID: a41e73b9-5dac-493f-bb2d-d38bb166c330]: https://app.attio.com/textql-data/company/a41e73b9-5dac-493f-bb2d-d38bb166c330/overview\n\nTool error: Body payload validation error.",
+  "toolsUsed": [],
+  "success": true,
+  "error": null,
+  "processingTime": 9788,
+  "attachmentCount": 0,
+  "iterationCount": 0,
+  "timestamp": "2025-07-10T17:36:56.251Z",
+  "version": "1.11.1",
+  "environment": "development"
+}

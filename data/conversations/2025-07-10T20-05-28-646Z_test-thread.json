@@ -1,0 +1,40 @@
+{
+  "conversationId": "test-thread",
+  "userId": "test-user",
+  "userName": "Test Suite",
+  "channel": "test",
+  "threadTs": "test-thread",
+  "messageTs": "1752177924779",
+  "userMessage": "show me open deals over $500K from tech companies",
+  "conversationHistory": [],
+  "botActionHistory": [],
+  "agentThoughts": [],
+  "agentActions": [],
+  "finalResponse": "No matches found. Try searching with different terms or partial names.",
+  "toolsUsed": [
+    {
+      "tool": "advanced_search",
+      "input": {
+        "entity_type": "deal",
+        "filters": {
+          "deal_value_min": 500000,
+          "status": "open",
+          "industry": "tech"
+        },
+        "sort_by": "value",
+        "sort_order": "desc",
+        "limit": 20
+      },
+      "success": false,
+      "timestamp": "2025-07-10T20:05:28.646Z"
+    }
+  ],
+  "success": true,
+  "error": null,
+  "processingTime": 3867,
+  "attachmentCount": 0,
+  "iterationCount": 0,
+  "timestamp": "2025-07-10T20:05:28.646Z",
+  "version": "1.11.1",
+  "environment": "development"
+}

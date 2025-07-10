@@ -2,7 +2,9 @@
 
 ## Overview
 
-CRM Bot is an intelligent Slack bot that monitors conversations and automatically creates/updates records in Attio CRM. Built by Ethan Ding for TextQL, this bot uses a ReAct (Reasoning + Acting) AI agent pattern to understand natural language requests and perform CRM operations.
+CRM Bot is an intelligent Slack bot that monitors conversations and automatically creates/updates records in Attio CRM. Built by Ethan Ding for TextQL, this bot uses Claude Sonnet 4's native tool calling to understand natural language requests and perform CRM operations.
+
+> **📦 v1.12.0 Migration Notice**: This bot has been upgraded from a custom ReAct framework to Claude's native tool calling. See `CHANGELOG.md` and `MIGRATION.md` for details.
 
 ## 🎯 Purpose & Vision
 
@@ -17,14 +19,18 @@ Built to streamline GTM (Go-To-Market) operations by:
 ```
 crm-bot/
 ├── src/                            # Main application source code
-│   ├── index-react.js              # Main entry point (Socket Mode)
+│   ├── index-claude.js             # Main entry point (Claude Agent)
 │   ├── handlers/
-│   │   └── slackHandlerReact.js    # Slack event handlers with preview mode
+│   │   └── slackHandlerClaude.js   # Slack event handlers with Claude agent
 │   └── services/
-│       ├── reactAgent.js           # ReAct AI agent implementation
+│       ├── claudeAgent.js          # Claude Sonnet 4 native tool calling
 │       ├── attioService.js         # Attio CRM API integration
 │       ├── database-mock.js        # In-memory DB fallback
 │       └── database.js             # MongoDB integration
+├── legacy/                         # Legacy ReAct framework files (moved)
+│   ├── index-react.js              # Old ReAct entry point
+│   ├── reactAgent.js               # Old ReAct implementation
+│   └── slackHandlerReact.js        # Old ReAct handler
 ├── tests/                          # All test files
 │   ├── test-bot.js                 # Automated test suite
 │   ├── test-suite.js               # Comprehensive test runner

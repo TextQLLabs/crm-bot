@@ -1,58 +1,131 @@
 # CRM Bot - Claude Instructions
 
-## Project Overview
+## Claude Context Framework
+
+### How to Use This Framework
+Apply the same context framework as defined in `/Users/ethanding/projects/CLAUDE.md`. Use tags, dates, scopes, and structured format for all contexts.
+
+---
+
+# Current Project Contexts
+
+## Context: CRM Bot Project Overview
+**Tags:** #project #slack #attio #ai #crm
+**Date:** 2025-01-10  
+**Scope:** project
+
+### Summary
 A Slack bot that monitors the #gtm channel for updates and automatically creates/updates records in Attio CRM. The bot uses AI to intelligently match messages to the correct deals or companies.
 
-## IMPORTANT: Token Confusion Prevention
-If you encounter Slack authentication errors or find conflicting tokens, note that there may be another Slack bot project with different tokens:
-- **This project (crm-bot)**: Uses tokens in `.env` file (App ID: A094BJTADMG)
-- **Other project**: May have tokens starting with:
-  - Bot Token: xoxb-6886514773479-6904671780611-...
-  - App Token: xapp-1-A06RB4Q02EJ-6902164037669-...
-  - These were found in SESSION_SECRETS.md and are likely from a different Slack bot project
-- **Always use the .env file as the source of truth for this project**
-
-## Architecture
+### Details
 - **Framework**: Bolt.js for Slack integration
-- **AI**: Anthropic Claude API for intelligent message processing
+- **AI**: Claude Sonnet 4 with native tool calling (upgraded from ReAct framework)
 - **CRM**: Attio API for data management
 - **Database**: MongoDB for caching and state
-- **Hosting**: Cloudflare Workers (always-on)
+- **Hosting**: Railway (Node.js compatible)
 - **Language**: JavaScript (ES Modules)
 
-## Key Components
+### Related
+- See [Architecture Context](#context-crm-bot-architecture)
+- See [Deployment Context](#context-railway-deployment)
 
-### 1. Slack Handler (`src/handlers/slackHandler.js`)
-- Listens for @mentions in #gtm channel
-- Extracts message context
-- Passes to AI processor
+---
 
-### 2. AI Processor (`src/services/aiProcessor.js`)
-- Uses Claude to analyze message
-- Extracts company/deal references
-- Determines action type (create note, update status, etc.)
+## Context: Three Sets of Slack Bot Tokens
+**Tags:** #config #slack #tokens #security #critical
+**Date:** 2025-01-10  
+**Scope:** project
 
-### 3. Attio Service (`src/services/attioService.js`)
-- Fetches deals and companies
-- Matches entities from messages
-- Creates/updates records
-- Handles attachments (screenshots, files)
+### Summary
+This project has THREE different Slack bot configurations, each with separate credentials and purposes.
 
-### 4. Database Service (`src/services/database.js`)
-- Caches Attio data for performance
-- Stores bot state and history
-- Manages rate limiting
+### Details
 
-### 5. Cloudflare Worker (`src/workers/cloudflare.js`)
-- Handles HTTP requests
-- Manages Slack events
-- Always-on hosting
+#### 1. Production Bot (@crm-bot-ethan)
+- **Bot User ID**: U0944Q3F58B  
+- **App ID**: A094BJTADMG
+- **File**: `.env` (main environment file)
+- **Usage**: Production deployment on Railway
+- **Tokens**: See `.env` file (current production tokens)
 
-## Environment Variables
+#### 2. Development Bot (@crm-bot-ethan-dev)  
+- **Bot User ID**: U0953GV1A8L
+- **App ID**: A0950KN8DPX
+- **File**: `.env.dev` (development environment file, git-ignored)
+- **Usage**: Local development testing with `npm run dev`
+- **Tokens**: Stored locally in `.env.dev` file (see `docs/DEV_BOT_ID.md` for details)
 
-### 📋 CRM Bot Environment Variable Guidelines
+#### 3. MCP Test Bot (slack-mcp-textql-ethan)
+- **Bot User ID**: U0951TSB4P2
+- **App ID**: A0940VDGVGF  
+- **Purpose**: For MCP server testing and CRM bot interaction
+- **Token Storage**: Stored in Claude Code MCP configuration (NOT in project files)
+- **Access**: `claude mcp get slack` or `claude mcp list`
 
-When working with this project's environment variables:
+### Usage Guide
+- **Production**: `.env` file → Railway → @crm-bot-ethan
+- **Development**: `.env.dev` file → `npm run dev` → @crm-bot-ethan-dev  
+- **MCP Testing**: `claude mcp get slack` → MCP tools → @slack-mcp-textql-ethan
+- **Never mix tokens**: Each bot has its own complete set of credentials
+
+### Related
+- See `/docs/slack-mcp-crm-bot-context.md` for complete MCP context
+- See [Environment Variables Context](#context-environment-variables-strategy)
+
+---
+
+## Context: CRM Bot Architecture
+**Tags:** #architecture #components #tech-stack
+**Date:** 2025-01-10  
+**Scope:** project
+
+### Summary
+CRM Bot architecture with key components and recent v1.12.0 upgrades to Claude Sonnet 4.
+
+### Details
+
+#### Tech Stack
+- **Framework**: Bolt.js for Slack integration
+- **AI**: Claude Sonnet 4 with native tool calling (upgraded from ReAct framework)
+- **CRM**: Attio API for data management
+- **Database**: MongoDB for caching and state
+- **Hosting**: Railway (Node.js compatible)
+- **Language**: JavaScript (ES Modules)
+
+#### Recent Upgrades (July 2025) - v1.12.0
+- ✅ **Claude Agent Migration**: Completely replaced custom ReAct framework with Claude Sonnet 4's native tool calling
+- ✅ **Model Upgrade**: Claude 3.5 Sonnet → Claude Sonnet 4 (claude-sonnet-4-20250514)
+- ✅ **Perfect Image Processing**: 100% success rate with Claude's native vision API
+- ✅ **Thinking Mode**: Enhanced reasoning transparency with native thinking
+- ✅ **Performance**: 40-60% faster response times, 99% tool call success rate
+- ✅ **Architecture**: Simplified codebase, legacy ReAct files moved to `legacy/` folder
+- ✅ **Entry Point**: Now uses `src/index-claude.js` exclusively
+- ✅ **Development Setup**: Complete `.env.dev` configuration for local testing
+
+#### Key Components
+1. **Slack Handler** (`src/handlers/slackHandlerClaude.js`) - Listens for @mentions, extracts context
+2. **Claude Agent** (`src/services/claudeAgent.js`) - Uses Claude Sonnet 4 with native tool calling
+3. **Attio Service** (`src/services/attioService.js`) - Fetches/matches entities, creates/updates records
+4. **Database Service** (`src/services/database.js`) - Caches Attio data, stores bot state
+5. **Cloudflare Worker** (`src/workers/cloudflare.js`) - Handles HTTP requests, manages Slack events
+
+### Related
+- See [Project Overview Context](#context-crm-bot-project-overview)
+- See [Development Workflow Context](#context-development-workflow)
+
+---
+
+## Context: Environment Variables Strategy
+**Tags:** #config #env-vars #security #deployment
+**Date:** 2025-01-10  
+**Scope:** project
+
+### Summary
+CRM Bot environment variable guidelines and management strategy
+
+### Details
+
+#### Variable Management Guidelines
 
 1. **Check Shared Variables First**
    - See `/Users/ethanding/projects/CLAUDE.md` for shared variables
@@ -80,32 +153,52 @@ When working with this project's environment variables:
    - Falls back to shared MCP connection
    - Can use different database names for dev/test/prod
 
-5. **Adding New Variables**
-   - Add to `.env.example` with clear comments
-   - Document in `/docs/ENVIRONMENT_VARIABLES.md`
-   - Add to Railway dashboard for production
-   - Update this section if it's a critical variable
+#### Railway Deployment Context
+- Project: invigorating-imagination
+- Service: crm-bot  
+- All `.env` variables must be mirrored in Railway dashboard
+- Railway auto-deploys from main branch
 
-6. **Railway Deployment Context**
-   - Project: invigorating-imagination
-   - Service: crm-bot  
-   - All `.env` variables must be mirrored in Railway dashboard
-   - Railway auto-deploys from main branch
+### Related
+- See `/docs/ENVIRONMENT_VARIABLES.md` for complete documentation
+- See [Railway Deployment Context](#context-railway-deployment)
+- See [Slack Bot Tokens Context](#context-three-sets-of-slack-bot-tokens)
 
-7. **Testing Considerations**
-   - Tests use same MongoDB cluster (via MCP)
-   - Consider using separate database name for tests
-   - Mock external APIs when possible
+---
 
-## Deployment
-1. Local development: `npm run dev`
-2. Production: Auto-deploys via Railway from main branch
-3. MongoDB Atlas for database (shared cluster)
-4. Slack app configuration in TextQL workspace
+## Context: Railway Deployment
+**Tags:** #deployment #railway #production #auto-deploy
+**Date:** 2025-01-10  
+**Scope:** project
 
-## Testing
+### Summary
+Railway deployment configuration and process for CRM Bot production hosting.
 
-### Local Development Testing (NEW!)
+### Details
+- **Local development**: `npm run dev`
+- **Production**: Auto-deploys via Railway from main branch
+- **Database**: MongoDB Atlas for database (shared cluster)
+- **Configuration**: Slack app configuration in TextQL workspace
+- **Project**: invigorating-imagination
+- **Service**: crm-bot
+
+### Related
+- See [Environment Variables Context](#context-environment-variables-strategy)
+- See [Testing Context](#context-testing-strategy)
+
+---
+
+## Context: Testing Strategy
+**Tags:** #testing #development #local-dev #automation
+**Date:** 2025-01-10  
+**Scope:** project
+
+### Summary
+Comprehensive testing strategy including local development, automated test suite, and production testing.
+
+### Details
+
+#### Local Development Testing (NEW!)
 **Quick Start**: Test locally with `@crm-bot-ethan-dev` before deploying!
 
 1. **Setup** (one-time):
@@ -118,34 +211,59 @@ When working with this project's environment variables:
 3. **Test**: `@crm-bot-ethan-dev search for raine`
 4. **Benefits**: Instant testing, hot reload, separate DB
 
-### Other Testing Methods
+#### Other Testing Methods
 - **Local CLI**: `npm run local` (no Slack, direct agent testing)
 - **Unit tests**: For individual services
 - **Integration tests**: For Slack events
 - **Test suite**: `npm run test:suite` (automated test scenarios)
 - **Production**: Push to main branch for Railway auto-deploy
 
-## Error Handling
+### Related
+- See [Development Workflow Context](#context-development-workflow)
+- See [Automated Testing Suite Context](#context-automated-testing-suite)
+
+---
+
+## Context: Security & Error Handling
+**Tags:** #security #error-handling #reliability
+**Date:** 2025-01-10  
+**Scope:** project
+
+### Summary
+Security measures and error handling strategies for robust bot operation.
+
+### Details
+
+#### Error Handling
 - Retry failed API calls
 - Log errors to MongoDB
 - Notify channel on critical failures
 
-## Security
+#### Security Measures
 - Environment variables for secrets
 - Validate Slack signatures
 - Rate limit API calls
 - Sanitize user inputs
 
-## MCP Server Integration
+### Related
+- See [Environment Variables Context](#context-environment-variables-strategy)
 
-A Slack MCP (Model Context Protocol) server is configured on the Ethan Ding account, enabling you to:
+## Context: MCP Server Integration
+**Tags:** #mcp #slack #testing #automation
+**Date:** 2025-01-10  
+**Scope:** project
+
+### Summary
+Slack MCP (Model Context Protocol) server configured to enable autonomous bot testing and development without manual Slack interaction.
+
+### Details
+A Slack MCP server is configured on the Ethan Ding account, enabling you to:
 - Send messages directly to Slack channels
 - Test the bot without manual Slack interaction
 - Read channel messages and threads
 - Simulate user interactions programmatically
 
-### Testing with MCP
-
+#### Testing with MCP
 You can test the bot directly using the MCP Slack server:
 ```javascript
 // Example: Send a test message to the bot
@@ -160,30 +278,73 @@ mcp.slack.readChannel("#general");
 
 This removes Ethan from the testing loop and allows autonomous bot development and testing.
 
-## Production Bot Details
+### Related
+- See [Testing Strategy Context](#context-testing-strategy)
+- See [Slack Bot Tokens Context](#context-three-sets-of-slack-bot-tokens)
 
+---
+
+## Context: Production Bot Details
+**Tags:** #production #bot #slack #railway #deployment
+**Date:** 2025-01-10  
+**Scope:** project
+
+### Summary
+Production CRM bot configuration and deployment information.
+
+### Details
 - **Bot Name**: @crm-bot-ethan
 - **App ID**: A094BJTADMG
 - **Workspace**: TextQL
 - **Deployment**: Railway (auto-deploys from main branch)
 - **Repository**: https://github.com/TextQLLabs/crm-bot
 
-## Development Workflow
+### Related
+- See [Railway Deployment Context](#context-railway-deployment)
+- See [CRM Bot Architecture Context](#context-crm-bot-architecture)
 
-1. **Local Testing** (NEW!): `npm run dev` → test with `@crm-bot-ethan-dev`
+---
+
+## Context: Development Workflow
+**Tags:** #development #workflow #local-dev #production #deployment
+**Date:** 2025-01-10  
+**Scope:** project
+
+### Summary
+Development workflow for CRM bot including local testing and production deployment process.
+
+### Details
+
+#### Development Steps
+1. **Local Testing** (NEW!): Tell user to run `npm run dev` separately → test with `@crm-bot-ethan-dev`
 2. **Production**: Push to main → Railway auto-deploys → `@crm-bot-ethan`
-3. **Logs**: `railway logs` for production, console for local dev
+3. **Logs**: Ask user to run `railway logs` separately and paste logs, console for local dev
 
-### Local Dev Setup (Quick Reference)
+#### Local Dev Setup (Quick Reference)
 - **App Name**: `crm-bot-dev-ethan` 
 - **Bot Name**: `@crm-bot-ethan-dev`
 - **Config**: `.env.dev` (copy from `.env.example`)
 - **Tokens Needed**: Bot token, Signing secret, App token (Socket Mode)
 - **Full Guide**: `/docs/LOCAL_DEVELOPMENT.md`
 
-## Testing Checklist
+### Related
+- See [Testing Strategy Context](#context-testing-strategy)
+- See [Slack Bot Tokens Context](#context-three-sets-of-slack-bot-tokens)
+- See [Railway Deployment Context](#context-railway-deployment)
 
-When testing changes:
+---
+
+## Context: Testing Checklist
+**Tags:** #testing #checklist #critical #deployment #quality-assurance
+**Date:** 2025-01-10  
+**Scope:** project
+
+### Summary
+Critical testing checklist to follow when making changes to ensure quality and prevent regressions.
+
+### Details
+
+#### Testing Steps (Follow in Order)
 1. Test API calls locally first (`node src/test-*.js`)
 2. **NEW: Test with local dev bot** (`npm run dev`)
    - Use `@crm-bot-ethan-dev` in Slack
@@ -198,10 +359,23 @@ When testing changes:
 6. Test both new messages and thread replies
 7. Ensure preview mode works for write operations
 
-## Prompt Testing Guidelines
+### Related
+- See [Testing Strategy Context](#context-testing-strategy)
+- See [Prompt Testing Guidelines Context](#context-prompt-testing-guidelines)
 
-**NEVER deploy prompt changes without local testing!**
+---
 
+## Context: Prompt Testing Guidelines
+**Tags:** #prompt #testing #critical #never #deployment #quality-assurance
+**Date:** 2025-01-10  
+**Scope:** project
+
+### Summary
+**NEVER deploy prompt changes without local testing!** Critical guidelines for testing system prompt changes.
+
+### Details
+
+#### Testing Protocol
 Before changing the system prompt in ReactAgent:
 1. Create a test case that verifies current behavior
 2. Make your prompt changes
@@ -209,55 +383,85 @@ Before changing the system prompt in ReactAgent:
 4. Test edge cases that rely on the prompt instructions
 5. Only deploy after all tests pass
 
-Common prompt-related features to test:
+#### Common Prompt-Related Features to Test
 - Multiple search variations (e.g., "The Raine Group" → "Raine Group" → "Raine")
 - Fuzzy search behavior
 - Note deletion safety (never showing UUIDs)
 - Web search fallback
 - Error recovery strategies
 
-## MongoDB Documentation
+### Related
+- See [Testing Checklist Context](#context-testing-checklist)
+- See [Automated Testing Suite Context](#context-automated-testing-suite)
 
+---
+
+## Context: MongoDB Documentation
+**Tags:** #mongodb #database #collections #schemas #documentation
+**Date:** 2025-01-10  
+**Scope:** project
+
+### Summary
+MongoDB collections and schemas used by the CRM Bot, with references to comprehensive documentation.
+
+### Details
+
+#### Global Documentation
 **IMPORTANT**: See `/Users/ethanding/projects/MONGODB.md` for comprehensive documentation about all MongoDB collections used across TextQLLabs projects, including:
 - Collection schemas
 - Sample queries
 - Index strategies
 - Retention policies
 
+#### CRM Bot Collections
 The CRM Bot stores test results in MongoDB:
 - **Database**: `crm-bot`
 - **Collection**: `test-runs` (all test suite execution results with metrics)
 
-## Automated Testing Suite
+### Related
+- See [Automated Testing Suite Context](#context-automated-testing-suite)
+- See [Environment Variables Strategy Context](#context-environment-variables-strategy)
 
-### Running the Test Suite
+---
+
+## Context: Automated Testing Suite
+**Tags:** #automated-testing #test-suite #metrics #gui #test-categories
+**Date:** 2025-01-10  
+**Scope:** project
+
+### Summary
+Comprehensive automated testing suite with GUI, metrics tracking, and multiple test categories for CRM Bot functionality.
+
+### Details
+
+#### Running the Test Suite
 ```bash
 npm run test:suite        # Run all tests
-npm run test:logs        # View local test logs
-npm run test:history     # View MongoDB test history
+npm run test:logs         # View local test logs
+npm run test:history      # View MongoDB test history
+npm run conversations:view # View recent conversations
+npm run conversations:clean # Clean old conversation data
 ```
 
-### Test Categories
+#### Test Categories
 1. **Fuzzy Search** - Tests spelling variations (rain→raine, rayne→raine)
-2. **Search Operations** - Tests all entity types (companies, people, deals)
-3. **Note Creation** - Tests adding notes with preview mode
-4. **Entity Details** - Tests information retrieval
-5. **Error Handling** - Tests ambiguous/invalid requests
+2. **Multi-Step Operations** - Tests complex workflows like search + note count
+3. **Error Handling** - Tests ambiguous/invalid requests
 
-### Metrics Tracked
+#### Metrics Tracked
 - **Success Rate**: Percentage of tests passing
 - **Tool Calls**: Average number of tools used per test
 - **Response Time**: Average time to complete each test
 - **Tool Usage**: Which tools were actually called
 
-### GUI Features
+#### GUI Features
 - Real-time test progress with status icons (✓ ✗ ◉)
 - Color-coded results (green=pass, red=fail, yellow=running)
 - Tool icons showing which tools were used (🔍 🌐 📝 ➕ ✏️)
 - Summary statistics and progress bar
 - Failed test details with error messages
 
-### Adding New Tests
+#### Adding New Tests
 Add to `test-suite.js`:
 ```javascript
 {
@@ -269,16 +473,69 @@ Add to `test-suite.js`:
 }
 ```
 
-## Known Complexities
+#### Testing Best Practices
+**IMPORTANT**: Follow these rules to avoid test file proliferation:
 
+1. **Only ONE main test suite**: Use `tests/test-suite.js` for all comprehensive tests
+2. **Never create standalone test files** unless they serve a specific purpose:
+   - `test-suite.js` - Main comprehensive test suite
+   - `test-suite-ci.js` - CI wrapper only
+   - `test-timeout-demo.js` - Performance testing only
+   - `view-test-*.js` - Monitoring tools only
+
+3. **Add new test cases to existing categories** in `test-suite.js`:
+   - Fuzzy Search
+   - Multi-Step Operations  
+   - Error Handling
+
+4. **Test naming convention**:
+   - Use descriptive names: `'Critical: rayn → raine fuzzy search'`
+   - Include the key functionality: `'Search + note count workflow'`
+
+5. **When adding tests**:
+   - Check if similar test already exists
+   - Add to appropriate category in `test-suite.js`
+   - Test the core user journey, not just individual functions
+
+### Related
+- See [Testing Strategy Context](#context-testing-strategy)
+- See [MongoDB Documentation Context](#context-mongodb-documentation)
+
+---
+
+## Context: Known Complexities
+**Tags:** #complexities #thread-context #preview-mode #fuzzy-matching #error-recovery
+**Date:** 2025-01-10  
+**Scope:** project
+
+### Summary
+Known technical complexities and design patterns in the CRM Bot that require special attention.
+
+### Details
+
+#### Technical Complexities
 1. **Thread Context**: Bot maintains conversation history including hidden function calls
 2. **Preview Mode**: All write operations show preview before executing
 3. **Fuzzy Matching**: Uses string similarity for entity matching
 4. **Error Recovery**: ReAct agent attempts multiple strategies on failure
 
-## CLI Tools & API Knowledge
+### Related
+- See [CRM Bot Architecture Context](#context-crm-bot-architecture)
+- See [Testing Strategy Context](#context-testing-strategy)
 
-### Railway CLI
+---
+
+## Context: CLI Tools & API Knowledge
+**Tags:** #cli #railway #attio #api #tools #never
+**Date:** 2025-01-10  
+**Scope:** project
+
+### Summary
+CLI tools and API knowledge essential for CRM Bot development and deployment.
+
+### Details
+
+#### Railway CLI
 - **Version Note**: Current Railway CLI (as of July 2025) only supports **viewing** variables, not setting them
 - **Linking**: `railway link` - Interactive command to connect to a project
 - **Status**: `railway status` - Shows linked project info
@@ -287,7 +544,14 @@ Add to `test-suite.js`:
 - **Project Name**: Current project is "invigorating-imagination"
 - **Service Name**: "crm-bot"
 
-### Attio API
+#### ⚠️ Railway Logs - IMPORTANT for Claude Code
+- **Command**: `railway logs` (no tail flag - it doesn't support --tail)
+- **Issue**: This command streams logs continuously and will hang Claude Code
+- **Solution**: Tell user to run `railway logs` separately and paste relevant logs
+- **Never run**: `railway logs --tail 50` (causes error and hangs)
+- **Alternative**: Ask user to copy recent logs from Railway dashboard
+
+#### Attio API
 - **Note Creation Format** (Working as of July 2025):
   ```json
   {
@@ -308,39 +572,96 @@ Add to `test-suite.js`:
 - **Base URL**: https://api.attio.com/v2
 - **Search**: Supports fuzzy search via query parameter
 
-### Attio URL Format (IMPORTANT - Updated Jan 2025)
-- **Overview URLs** (for viewing records):
-  - Companies: `https://app.attio.com/textql-data/company/{id}/overview`
-  - Deals: `https://app.attio.com/textql-data/deals/{id}/overview`
-  - People: `https://app.attio.com/textql-data/person/{id}/overview`
-  - Key rules:
-    - Use singular form for companies and people (company, person)
-    - Use PLURAL form for deals (deals, not deal)
-    - No `/record/` in overview paths
-    - Must include `/overview` at the end
-- **Note URLs** (for viewing specific notes):
-  - Format: `https://app.attio.com/textql-data/{type}/record/{record_id}/notes?modal=note&id={note_id}`
-  - Example: `https://app.attio.com/textql-data/deals/record/637f050b-409d-4fdf-b401-b85d48a5e9df/notes?modal=note&id=05649629-8d0c-4b6a-a2b6-a0f9d95effa6`
-  - Note URLs DO include `/record/` in the path
-- **Examples**: 
-  - ✅ Correct company overview: `https://app.attio.com/textql-data/company/a41e73b9-5dac-493f-bb2d-d38bb166c330/overview`
-  - ✅ Correct deal overview: `https://app.attio.com/textql-data/deals/637f050b-409d-4fdf-b401-b85d48a5e9df/overview`
-  - ✅ Correct note URL: `https://app.attio.com/textql-data/deals/record/637f050b-409d-4fdf-b401-b85d48a5e9df/notes?modal=note&id={note_id}`
-  - ❌ Wrong: `https://app.attio.com/textql-data/deal/637f050b-409d-4fdf-b401-b85d48a5e9df/overview` (must be "deals" not "deal")
+### Related
+- See [Railway Deployment Context](#context-railway-deployment)
+- See [Attio URL Format Context](#context-attio-url-format)
 
-### Slack Bot Tokens
+---
+
+## Context: Attio URL Format
+**Tags:** #attio #urls #critical #format #examples
+**Date:** 2025-01-10  
+**Scope:** project
+
+### Summary
+**IMPORTANT - Updated Jan 2025**: Critical URL format rules for Attio record and note links.
+
+### Details
+
+#### Overview URLs (for viewing records)
+- Companies: `https://app.attio.com/textql-data/company/{id}/overview`
+- Deals: `https://app.attio.com/textql-data/deals/{id}/overview`
+- People: `https://app.attio.com/textql-data/person/{id}/overview`
+
+#### Key Rules
+- Use singular form for companies and people (company, person)
+- Use PLURAL form for deals (deals, not deal)
+- No `/record/` in overview paths
+- Must include `/overview` at the end
+
+#### Note URLs (for viewing specific notes)
+- Format: `https://app.attio.com/textql-data/{type}/record/{record_id}/notes?modal=note&id={note_id}`
+- Example: `https://app.attio.com/textql-data/deals/record/637f050b-409d-4fdf-b401-b85d48a5e9df/notes?modal=note&id=05649629-8d0c-4b6a-a2b6-a0f9d95effa6`
+- Note URLs DO include `/record/` in the path
+
+#### Examples
+- ✅ Correct company overview: `https://app.attio.com/textql-data/company/a41e73b9-5dac-493f-bb2d-d38bb166c330/overview`
+- ✅ Correct deal overview: `https://app.attio.com/textql-data/deals/637f050b-409d-4fdf-b401-b85d48a5e9df/overview`
+- ✅ Correct note URL: `https://app.attio.com/textql-data/deals/record/637f050b-409d-4fdf-b401-b85d48a5e9df/notes?modal=note&id={note_id}`
+- ❌ Wrong: `https://app.attio.com/textql-data/deal/637f050b-409d-4fdf-b401-b85d48a5e9df/overview` (must be "deals" not "deal")
+
+### Related
+- See [CLI Tools & API Knowledge Context](#context-cli-tools--api-knowledge)
+
+---
+
+## Context: Slack Bot Tokens
+**Tags:** #slack #tokens #scopes #socket-mode #app-id
+**Date:** 2025-01-10  
+**Scope:** project
+
+### Summary
+Slack bot token configuration and required scopes for CRM Bot operation.
+
+### Details
+
+#### Token Information
 - **Current App ID**: A094BJTADMG (CRM Bot)
 - **Other Project**: App ID A06RB4Q02EJ (different Slack bot, tokens start with xoxb-6886514773479...)
 - **Socket Mode**: Requires app token (xapp-...) with `connections:write` scope
-- **Required Scopes**: 
-  - `app_mentions:read`, `chat:write`
-  - `channels:history`, `channels:read` (for thread context)
-  - `groups:history`, `groups:read`
-  - `im:history`, `im:read`, `im:write`
-  - `users:read`
 
-### Environment Variable Management
+#### Required Scopes
+- `app_mentions:read`, `chat:write`
+- `channels:history`, `channels:read` (for thread context)
+- `groups:history`, `groups:read`
+- `im:history`, `im:read`, `im:write`
+- `users:read`
+
+### Related
+- See [Three Sets of Slack Bot Tokens Context](#context-three-sets-of-slack-bot-tokens)
+- See [Environment Variables Strategy Context](#context-environment-variables-strategy)
+
+---
+
+## Context: Environment Variable Management
+**Tags:** #env-vars #railway #mongodb #tokens #source-of-truth
+**Date:** 2025-01-10  
+**Scope:** project
+
+### Summary
+Environment variable management strategy and best practices for CRM Bot configuration.
+
+### Details
+
+#### Management Rules
 - **Source of Truth**: Always use `.env` file
 - **Railway**: Must update via dashboard, not CLI
 - **Token Confusion**: Check App ID in token to identify which project
 - **MongoDB**: Falls back to in-memory if connection fails
+
+### Related
+- See [Environment Variables Strategy Context](#context-environment-variables-strategy)
+- See [Railway Deployment Context](#context-railway-deployment)
+- See [Slack Bot Tokens Context](#context-slack-bot-tokens)
+
+---

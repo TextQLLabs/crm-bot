@@ -1,40 +1,35 @@
 {
   "name": "crm-bot",
-  "version": "1.11.1",
+  "version": "1.12.0",
   "description": "Slack bot for GTM channel that updates Attio CRM",
-  "main": "src/index-react.js",
+  "main": "src/index-claude.js",
   "engines": {
     "node": "22.x"
   },
   "scripts": {
-    "start": "node src/index-react.js",
-    "dev": "NODE_ENV=development nodemon -r dotenv/config src/index-react.js dotenv_config_path=.env.dev",
-    "dev:watch": "nodemon src/index-react.js",
+    "start": "node src/index-claude.js",
+    "dev": "NODE_ENV=development nodemon -r dotenv/config src/index-claude.js dotenv_config_path=.env.dev",
     "local": "node local-bot.js",
-    "test:bot": "node test-bot.js",
-    "test:suite": "node test-suite.js",
-    "test:logs": "node view-test-logs.js",
-    "test:history": "node view-test-history.js",
-    "deploy": "wrangler deploy",
-    "deploy:staging": "wrangler deploy --env staging",
-    "deploy:production": "wrangler deploy --env production",
-    "logs": "wrangler tail",
-    "test": "jest"
+    "test:suite": "node tests/test-suite.js",
+    "test:ci": "node tests/test-suite-ci.js",
+    "test:timeout": "node tests/test-timeout-demo.js",
+    "test:logs": "node tests/view-test-logs.js",
+    "test:history": "node tests/view-test-history.js",
+    "conversations:clean": "node scripts/clean-old-conversations.js",
+    "conversations:view": "node view-conversations.js",
+    "docs:consolidate": "node scripts/consolidate-docs.js",
+    "docs:view": "ls -la docs/"
   },
-  "keywords": ["slack", "bot", "attio", "crm", "cloudflare-workers"],
+  "keywords": ["slack", "bot", "attio", "crm", "claude", "railway"],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@slack/bolt": "^3.17.1",
     "@anthropic-ai/sdk": "^0.20.0",
     "axios": "^1.6.7",
-    "mongodb": "^6.3.0",
-    "dotenv": "^16.4.1",
-    "@cloudflare/workers-types": "^4.20240208.0"
+    "dotenv": "^16.4.1"
   },
   "devDependencies": {
-    "nodemon": "^3.0.3",
-    "jest": "^29.7.0",
-    "wrangler": "^3.28.2"
+    "nodemon": "^3.0.3"
   }
 }

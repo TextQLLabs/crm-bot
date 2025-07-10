@@ -1,0 +1,29 @@
+{
+  "conversationId": "1752163310.442009",
+  "userId": "U04HC95ENRY",
+  "userName": "Ethan Ding",
+  "channel": "C0946T1T4CB",
+  "threadTs": "1752163310.442009",
+  "messageTs": "1752163310.442009",
+  "userMessage": "User: are youj working?",
+  "conversationHistory": [
+    {
+      "user": "U04HC95ENRY",
+      "text": "are youj working?",
+      "ts": "1752163310.442009"
+    }
+  ],
+  "botActionHistory": [],
+  "agentThoughts": [],
+  "agentActions": [],
+  "finalResponse": "Yes, I am working! I notice there's a small typo in your message (\"youj\" instead of \"you\"), but I understand what you're asking. I'm ready to help you with any CRM-related tasks like:\n\n- Searching for companies, people, or deals\n- Creating or managing notes\n- Creating or updating records\n- Getting entity details\n- Analyzing images\n- And more!\n\nWhat would you like help with?",
+  "toolsUsed": [],
+  "success": true,
+  "error": null,
+  "processingTime": 2840,
+  "attachmentCount": 0,
+  "iterationCount": 0,
+  "timestamp": "2025-07-10T16:02:00.031Z",
+  "version": "1.11.1",
+  "environment": "development"
+}

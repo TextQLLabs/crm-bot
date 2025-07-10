@@ -1,0 +1,102 @@
+{
+  "conversationId": "1752163310.442009",
+  "userId": "U04HC95ENRY",
+  "userName": "Ethan Ding",
+  "channel": "C0946T1T4CB",
+  "threadTs": "1752163310.442009",
+  "messageTs": "1752167287.589109",
+  "userMessage": "User: are youj working?\n\nAssistant: Yes, I am working! I notice there's a small typo in your message (\"youj\" instead of \"you\"), but I understand what you're asking. I'm ready to help you with any CRM-related tasks like:\n\n- Searching for companies, people, or deals\n- Creating or managing notes\n- Creating or updating records\n- Getting entity details\n- Analyzing images\n- And more!\n\nWhat would you like help with?\n\nUser: what does this transcript say",
+  "conversationHistory": [
+    {
+      "user": "U04HC95ENRY",
+      "text": "are youj working?",
+      "ts": "1752163310.442009",
+      "isBot": false,
+      "blocks": [
+        {
+          "type": "rich_text",
+          "block_id": "jfLql",
+          "elements": [
+            {
+              "type": "rich_text_section",
+              "elements": [
+                {
+                  "type": "user",
+                  "user_id": "U0953GV1A8L"
+                },
+                {
+                  "type": "text",
+                  "text": " are youj working?"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "user": "U0953GV1A8L",
+      "text": "Yes, I am working! I notice there's a small typo in your message (\"youj\" instead of \"you\"), but I understand what you're asking. I'm ready to help you with any CRM-related tasks like:\n\n- Searching for companies, people, or deals\n- Creating or managing notes\n- Creating or updating records\n- Getting entity details\n- Analyzing images\n- And more!\n\nWhat would you like help with?",
+      "ts": "1752163312.001749",
+      "isBot": true,
+      "botId": "B0953GUV2MA",
+      "blocks": [
+        {
+          "type": "rich_text",
+          "block_id": "TBVW",
+          "elements": [
+            {
+              "type": "rich_text_section",
+              "elements": [
+                {
+                  "type": "text",
+                  "text": "Yes, I am working! I notice there's a small typo in your message (\"youj\" instead of \"you\"), but I understand what you're asking. I'm ready to help you with any CRM-related tasks like:\n\n- Searching for companies, people, or deals\n- Creating or managing notes\n- Creating or updating records\n- Getting entity details\n- Analyzing images\n- And more!\n\nWhat would you like help with?"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "user": "U04HC95ENRY",
+      "text": "what does this transcript say",
+      "ts": "1752167287.589109",
+      "isBot": false,
+      "blocks": [
+        {
+          "type": "rich_text",
+          "block_id": "gSKEJ",
+          "elements": [
+            {
+              "type": "rich_text_section",
+              "elements": [
+                {
+                  "type": "user",
+                  "user_id": "U0953GV1A8L"
+                },
+                {
+                  "type": "text",
+                  "text": " what does this transcript say"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "botActionHistory": [],
+  "agentThoughts": [],
+  "agentActions": [],
+  "finalResponse": "I encountered an error processing your request. Please try again.",
+  "toolsUsed": [],
+  "success": false,
+  "error": "400 {\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"Could not process image\"}}",
+  "processingTime": 166,
+  "attachmentCount": 1,
+  "iterationCount": 0,
+  "timestamp": "2025-07-10T17:08:15.215Z",
+  "version": "1.11.1",
+  "environment": "development"
+}

@@ -1,0 +1,28 @@
+{
+  "conversationId": "1752169065.196169",
+  "userId": "U0951TSB4P2",
+  "userName": "slack-mcp-textql-ethan",
+  "channel": "C0946T1T4CB",
+  "threadTs": "1752169065.196169",
+  "messageTs": "1752169065.196169",
+  "userMessage": "User: test revised multi-step fix - add a note to The Raine Group saying \"Testing revised entity ID extraction\"",
+  "conversationHistory": [
+    {
+      "user": "U0951TSB4P2",
+      "text": "test revised multi-step fix - add a note to The Raine Group saying \"Testing revised entity ID extraction\"",
+      "ts": "1752169065.196169"
+    }
+  ],
+  "botActionHistory": [],
+  "agentThoughts": [],
+  "agentActions": [],
+  "toolsUsed": [],
+  "success": true,
+  "error": null,
+  "processingTime": 3737,
+  "attachmentCount": 0,
+  "iterationCount": 0,
+  "timestamp": "2025-07-10T17:37:55.850Z",
+  "version": "1.11.1",
+  "environment": "development"
+}

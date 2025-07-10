@@ -1,0 +1,23 @@
+{
+  "conversationId": "test-1752168186961",
+  "userId": "U123TEST",
+  "userName": "Test User",
+  "channel": "C123TEST",
+  "threadTs": "test-1752168186961",
+  "messageTs": "1752168186961",
+  "userMessage": "Hello, how are you?",
+  "conversationHistory": [],
+  "botActionHistory": [],
+  "agentThoughts": [],
+  "agentActions": [],
+  "finalResponse": "Hello! I'm doing well, thank you for asking. I'm here to help you manage your Attio CRM data. \n\nI can assist you with various CRM tasks such as:\n- Searching for companies, people, or deals\n- Creating and managing notes on records\n- Adding new entities to your CRM\n- Updating existing records\n- Getting detailed information about your contacts and deals\n\nWhat would you like to work on today? Feel free to ask me to search for a specific company, person, or deal, or let me know if you need help with any other CRM tasks!",
+  "toolsUsed": [],
+  "success": true,
+  "error": null,
+  "processingTime": 4027,
+  "attachmentCount": 0,
+  "iterationCount": 0,
+  "timestamp": "2025-07-10T17:23:10.988Z",
+  "version": "1.11.1",
+  "environment": "development"
+}

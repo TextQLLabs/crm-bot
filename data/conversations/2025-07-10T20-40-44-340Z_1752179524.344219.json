@@ -1,0 +1,278 @@
+{
+  "conversationId": "1752179524.344219",
+  "userId": "U04HC95ENRY",
+  "userName": "Ethan Ding",
+  "channel": "C04PANKUJAG",
+  "threadTs": "1752179524.344219",
+  "messageTs": "1752180034.894459",
+  "userMessage": "User: <https://docs.google.com/document/d/1o68j9LxxwzAutEB4kEIQgQsU10Vy7js42CzJXHtkPNQ/edit?tab=t.0> blackstone content\n\nUser: @dlyan\n\nAssistant: Found **3 matches**:\n1. **Blackstone** (company) - <https://app.attio.com/textql-data/company/ffc6013f-2148-4427-8c1f-fec7b3f36554/overview|view>\n2. **LivCor, a Blackstone Portfolio Company** (company) - <https://app.attio.com/textql-data/company/4f023580-7915-4e81-82a5-f68a2fd70274/overview|view>\n3. **Blackstone** (deal) - <https://app.attio.com/textql-data/deals/f2fb2437-f573-4fbd-90bc-f7eaf8e50aa7/overview|view>\n\nUser: lets stay in sync iwth htis\n\nAssistant: :zap: Processing your request...\n\nUser: arey u still replyign to everhying ?\n\nUser: ok cool\n\nUser: can you see the agneda contnet in this gdoccs i sent",
+  "conversationHistory": [
+    {
+      "user": "U04HC95ENRY",
+      "text": "<https://docs.google.com/document/d/1o68j9LxxwzAutEB4kEIQgQsU10Vy7js42CzJXHtkPNQ/edit?tab=t.0> blackstone content",
+      "ts": "1752179524.344219",
+      "isBot": false,
+      "blocks": [
+        {
+          "type": "rich_text",
+          "block_id": "07s+G",
+          "elements": [
+            {
+              "type": "rich_text_section",
+              "elements": [
+                {
+                  "type": "link",
+                  "url": "https://docs.google.com/document/d/1o68j9LxxwzAutEB4kEIQgQsU10Vy7js42CzJXHtkPNQ/edit?tab=t.0"
+                },
+                {
+                  "type": "text",
+                  "text": " blackstone content "
+                },
+                {
+                  "type": "user",
+                  "user_id": "U04H9AVH8H3"
+                },
+                {
+                  "type": "text",
+                  "text": " "
+                },
+                {
+                  "type": "user",
+                  "user_id": "U06PNCZ5ENA"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "user": "U04HC95ENRY",
+      "text": "@dlyan",
+      "ts": "1752179688.373539",
+      "isBot": false,
+      "blocks": [
+        {
+          "type": "rich_text",
+          "block_id": "j/B8J",
+          "elements": [
+            {
+              "type": "rich_text_section",
+              "elements": [
+                {
+                  "type": "text",
+                  "text": "@dlyan"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "user": "U0953GV1A8L",
+      "text": "Found **3 matches**:\n1. **Blackstone** (company) - <https://app.attio.com/textql-data/company/ffc6013f-2148-4427-8c1f-fec7b3f36554/overview|view>\n2. **LivCor, a Blackstone Portfolio Company** (company) - <https://app.attio.com/textql-data/company/4f023580-7915-4e81-82a5-f68a2fd70274/overview|view>\n3. **Blackstone** (deal) - <https://app.attio.com/textql-data/deals/f2fb2437-f573-4fbd-90bc-f7eaf8e50aa7/overview|view>",
+      "ts": "1752179690.486199",
+      "isBot": true,
+      "botId": "B0953GUV2MA",
+      "blocks": [
+        {
+          "type": "rich_text",
+          "block_id": "=6hd",
+          "elements": [
+            {
+              "type": "rich_text_section",
+              "elements": [
+                {
+                  "type": "text",
+                  "text": "Found **3 matches**:\n1. **Blackstone** (company) - "
+                },
+                {
+                  "type": "link",
+                  "url": "https://app.attio.com/textql-data/company/ffc6013f-2148-4427-8c1f-fec7b3f36554/overview",
+                  "text": "view"
+                },
+                {
+                  "type": "text",
+                  "text": "\n2. **LivCor, a Blackstone Portfolio Company** (company) - "
+                },
+                {
+                  "type": "link",
+                  "url": "https://app.attio.com/textql-data/company/4f023580-7915-4e81-82a5-f68a2fd70274/overview",
+                  "text": "view"
+                },
+                {
+                  "type": "text",
+                  "text": "\n3. **Blackstone** (deal) - "
+                },
+                {
+                  "type": "link",
+                  "url": "https://app.attio.com/textql-data/deals/f2fb2437-f573-4fbd-90bc-f7eaf8e50aa7/overview",
+                  "text": "view"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "user": "U04HC95ENRY",
+      "text": "lets stay in sync iwth htis",
+      "ts": "1752179696.942269",
+      "isBot": false,
+      "blocks": [
+        {
+          "type": "rich_text",
+          "block_id": "kYqQm",
+          "elements": [
+            {
+              "type": "rich_text_section",
+              "elements": [
+                {
+                  "type": "user",
+                  "user_id": "U08CLKF28ET"
+                },
+                {
+                  "type": "text",
+                  "text": " "
+                },
+                {
+                  "type": "user",
+                  "user_id": "U06PNCZ5ENA"
+                },
+                {
+                  "type": "text",
+                  "text": " "
+                },
+                {
+                  "type": "user",
+                  "user_id": "U04H9AVH8H3"
+                },
+                {
+                  "type": "text",
+                  "text": " lets stay in sync iwth htis"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "user": "U0953GV1A8L",
+      "text": ":zap: Processing your request...",
+      "ts": "1752179698.831109",
+      "isBot": true,
+      "botId": "B0953GUV2MA",
+      "blocks": [
+        {
+          "type": "rich_text",
+          "block_id": "M6HMh",
+          "elements": [
+            {
+              "type": "rich_text_section",
+              "elements": [
+                {
+                  "type": "emoji",
+                  "name": "zap",
+                  "unicode": "26a1"
+                },
+                {
+                  "type": "text",
+                  "text": " Processing your request..."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "user": "U04HC95ENRY",
+      "text": "arey u still replyign to everhying ?",
+      "ts": "1752179869.397489",
+      "isBot": false,
+      "blocks": [
+        {
+          "type": "rich_text",
+          "block_id": "TsGU0",
+          "elements": [
+            {
+              "type": "rich_text_section",
+              "elements": [
+                {
+                  "type": "text",
+                  "text": "arey u still replyign to everhying ?"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "user": "U04HC95ENRY",
+      "text": "ok cool",
+      "ts": "1752179874.014379",
+      "isBot": false,
+      "blocks": [
+        {
+          "type": "rich_text",
+          "block_id": "WUtQF",
+          "elements": [
+            {
+              "type": "rich_text_section",
+              "elements": [
+                {
+                  "type": "text",
+                  "text": "ok cool"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "user": "U04HC95ENRY",
+      "text": "can you see the agneda contnet in this gdoccs i sent",
+      "ts": "1752180034.894459",
+      "isBot": false,
+      "blocks": [
+        {
+          "type": "rich_text",
+          "block_id": "M04oq",
+          "elements": [
+            {
+              "type": "rich_text_section",
+              "elements": [
+                {
+                  "type": "user",
+                  "user_id": "U0944Q3F58B"
+                },
+                {
+                  "type": "text",
+                  "text": " can you see the agneda contnet in this gdoccs i sent"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "botActionHistory": [],
+  "agentThoughts": [],
+  "agentActions": [],
+  "finalResponse": "No matches found. Try searching with different terms or partial names.",
+  "toolsUsed": [],
+  "success": true,
+  "error": null,
+  "processingTime": 6698,
+  "attachmentCount": 0,
+  "iterationCount": 0,
+  "timestamp": "2025-07-10T20:40:44.333Z",
+  "version": "1.11.1",
+  "environment": "development"
+}

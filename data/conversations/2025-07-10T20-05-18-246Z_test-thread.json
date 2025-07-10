@@ -1,0 +1,34 @@
+{
+  "conversationId": "test-thread",
+  "userId": "test-user",
+  "userName": "Test Suite",
+  "channel": "test",
+  "threadTs": "test-thread",
+  "messageTs": "1752177914800",
+  "userMessage": "what companies were added recently",
+  "conversationHistory": [],
+  "botActionHistory": [],
+  "agentThoughts": [],
+  "agentActions": [],
+  "finalResponse": "No matches found. Try searching with different terms or partial names.",
+  "toolsUsed": [
+    {
+      "tool": "search_by_time_range",
+      "input": {
+        "entity_type": "company",
+        "time_field": "created_at",
+        "limit": 20
+      },
+      "success": true,
+      "timestamp": "2025-07-10T20:05:18.245Z"
+    }
+  ],
+  "success": true,
+  "error": null,
+  "processingTime": 3445,
+  "attachmentCount": 0,
+  "iterationCount": 0,
+  "timestamp": "2025-07-10T20:05:18.245Z",
+  "version": "1.11.1",
+  "environment": "development"
+}

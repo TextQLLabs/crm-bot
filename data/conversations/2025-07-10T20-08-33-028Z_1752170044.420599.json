@@ -1,0 +1,204 @@
+{
+  "conversationId": "1752170044.420599",
+  "userId": "U04HC95ENRY",
+  "userName": "Ethan Ding",
+  "channel": "C04PANKUJAG",
+  "threadTs": "1752170044.420599",
+  "messageTs": "1752178098.097439",
+  "userMessage": "User: <https://docs.google.com/document/d/1chfw6AI486QAgJenfiLaC4NGzDUnbLaQXLQQQaqdABs/edit?tab=t.0#heading=h.yt8pzvbzzc7b>\n\nUser: what is this?\n\nUser: I told Dandy to make a doc similar to this and to just paste it into org context. It actually works really well so I think we should just have every small customer that inbounds do this + let them use it for a few days, if they like it then charge them 5-10k a year\n\nUser: can you creat ea note on dandy that logs these messages, and also makes a note of teh sql analyst like test-onboarding that we're running with dandy via this?\n\nAssistant: Found **2 matches**:\n1. **Dandy** (company) - <https://app.attio.com/textql-data/company/14bc2c28-7002-4b8d-85e2-45235a7f29ea/overview|view>\n2. **Dandy** (deal) - <https://app.attio.com/textql-data/deals/148ca6b7-9095-4408-abc5-c2ea3cac1955/overview|view>\n\nUser: which one should you attach notes to?\n\nUser: @braxotn",
+  "conversationHistory": [
+    {
+      "user": "U04H9AVH8H3",
+      "text": "<https://docs.google.com/document/d/1chfw6AI486QAgJenfiLaC4NGzDUnbLaQXLQQQaqdABs/edit?tab=t.0#heading=h.yt8pzvbzzc7b>",
+      "ts": "1752170044.420599",
+      "isBot": false,
+      "blocks": [
+        {
+          "type": "rich_text",
+          "block_id": "p7JFg",
+          "elements": [
+            {
+              "type": "rich_text_section",
+              "elements": [
+                {
+                  "type": "link",
+                  "url": "https://docs.google.com/document/d/1chfw6AI486QAgJenfiLaC4NGzDUnbLaQXLQQQaqdABs/edit?tab=t.0#heading=h.yt8pzvbzzc7b"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "user": "U06V1F3MNN4",
+      "text": "what is this?",
+      "ts": "1752170082.569519",
+      "isBot": false,
+      "blocks": [
+        {
+          "type": "rich_text",
+          "block_id": "dqu+j",
+          "elements": [
+            {
+              "type": "rich_text_section",
+              "elements": [
+                {
+                  "type": "text",
+                  "text": "what is this?"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "user": "U04H9AVH8H3",
+      "text": "I told Dandy to make a doc similar to this and to just paste it into org context. It actually works really well so I think we should just have every small customer that inbounds do this + let them use it for a few days, if they like it then charge them 5-10k a year",
+      "ts": "1752170193.017289",
+      "isBot": false,
+      "blocks": [
+        {
+          "type": "rich_text",
+          "block_id": "1OErg",
+          "elements": [
+            {
+              "type": "rich_text_section",
+              "elements": [
+                {
+                  "type": "text",
+                  "text": "I told Dandy to make a doc similar to this and to just paste it into org context. It actually works really well so I think we should just have every small customer that inbounds do this + let them use it for a few days, if they like it then charge them 5-10k a year"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "user": "U04HC95ENRY",
+      "text": "can you creat ea note on dandy that logs these messages, and also makes a note of teh sql analyst like test-onboarding that we're running with dandy via this?",
+      "ts": "1752178063.589879",
+      "isBot": false,
+      "blocks": [
+        {
+          "type": "rich_text",
+          "block_id": "s2Rd1",
+          "elements": [
+            {
+              "type": "rich_text_section",
+              "elements": [
+                {
+                  "type": "user",
+                  "user_id": "U0953GV1A8L"
+                },
+                {
+                  "type": "text",
+                  "text": " can you creat ea note on dandy that logs these messages, and also makes a note of teh sql analyst like test-onboarding that we're running with dandy via this?"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "user": "U0953GV1A8L",
+      "text": "Found **2 matches**:\n1. **Dandy** (company) - <https://app.attio.com/textql-data/company/14bc2c28-7002-4b8d-85e2-45235a7f29ea/overview|view>\n2. **Dandy** (deal) - <https://app.attio.com/textql-data/deals/148ca6b7-9095-4408-abc5-c2ea3cac1955/overview|view>",
+      "ts": "1752178069.235559",
+      "isBot": true,
+      "botId": "B0953GUV2MA",
+      "blocks": [
+        {
+          "type": "rich_text",
+          "block_id": "E0kr9",
+          "elements": [
+            {
+              "type": "rich_text_section",
+              "elements": [
+                {
+                  "type": "text",
+                  "text": "Found **2 matches**:\n1. **Dandy** (company) - "
+                },
+                {
+                  "type": "link",
+                  "url": "https://app.attio.com/textql-data/company/14bc2c28-7002-4b8d-85e2-45235a7f29ea/overview",
+                  "text": "view"
+                },
+                {
+                  "type": "text",
+                  "text": "\n2. **Dandy** (deal) - "
+                },
+                {
+                  "type": "link",
+                  "url": "https://app.attio.com/textql-data/deals/148ca6b7-9095-4408-abc5-c2ea3cac1955/overview",
+                  "text": "view"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "user": "U04HC95ENRY",
+      "text": "which one should you attach notes to?",
+      "ts": "1752178098.097439",
+      "isBot": false,
+      "blocks": [
+        {
+          "type": "rich_text",
+          "block_id": "Jr+tv",
+          "elements": [
+            {
+              "type": "rich_text_section",
+              "elements": [
+                {
+                  "type": "text",
+                  "text": "which one should you attach notes to?"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "user": "U04HC95ENRY",
+      "text": "@braxotn",
+      "ts": "1752178099.109559",
+      "isBot": false,
+      "blocks": [
+        {
+          "type": "rich_text",
+          "block_id": "tX1Ff",
+          "elements": [
+            {
+              "type": "rich_text_section",
+              "elements": [
+                {
+                  "type": "text",
+                  "text": "@braxotn"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "botActionHistory": [],
+  "agentThoughts": [],
+  "agentActions": [],
+  "finalResponse": "No matches found. Try searching with different terms or partial names.",
+  "toolsUsed": [],
+  "success": true,
+  "error": null,
+  "processingTime": 7808,
+  "attachmentCount": 0,
+  "iterationCount": 0,
+  "timestamp": "2025-07-10T20:08:33.025Z",
+  "version": "1.11.1",
+  "environment": "development"
+}

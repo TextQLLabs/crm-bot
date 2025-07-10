@@ -1,0 +1,81 @@
+{
+  "conversationId": "1752167838.139649",
+  "userId": "U0944Q3F58B",
+  "userName": "crm-bot-ethan",
+  "channel": "C0946T1T4CB",
+  "threadTs": "1752167838.139649",
+  "messageTs": "1752167839.787219",
+  "userMessage": "User: test production bot - find The Raine Group\n\nAssistant: :thinking_face: Let me help you with that...",
+  "conversationHistory": [
+    {
+      "user": "U0951TSB4P2",
+      "text": "test production bot - find The Raine Group",
+      "ts": "1752167838.139649",
+      "isBot": true,
+      "botId": "B0951TSAVHN",
+      "blocks": [
+        {
+          "type": "rich_text",
+          "block_id": "YOX",
+          "elements": [
+            {
+              "type": "rich_text_section",
+              "elements": [
+                {
+                  "type": "user",
+                  "user_id": "U0944Q3F58B"
+                },
+                {
+                  "type": "text",
+                  "text": " test production bot - find The Raine Group"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "user": "U0944Q3F58B",
+      "text": ":thinking_face: Let me help you with that...",
+      "ts": "1752167839.787219",
+      "isBot": true,
+      "botId": "B0944Q3EVNF",
+      "blocks": [
+        {
+          "type": "rich_text",
+          "block_id": "SkwD",
+          "elements": [
+            {
+              "type": "rich_text_section",
+              "elements": [
+                {
+                  "type": "emoji",
+                  "name": "thinking_face",
+                  "unicode": "1f914"
+                },
+                {
+                  "type": "text",
+                  "text": " Let me help you with that..."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "botActionHistory": [],
+  "agentThoughts": [],
+  "agentActions": [],
+  "finalResponse": "I'll search for The Raine Group in your CRM.\n\nTool error: undefined",
+  "toolsUsed": [],
+  "success": true,
+  "error": null,
+  "processingTime": 2669,
+  "attachmentCount": 0,
+  "iterationCount": 0,
+  "timestamp": "2025-07-10T17:17:29.509Z",
+  "version": "1.11.1",
+  "environment": "development"
+}

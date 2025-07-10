@@ -6,8 +6,12 @@ yarn-error.log*
 
 # Environment variables
 .env
+.env.dev
 .env.local
 .env.*.local
+
+# Documentation with sensitive info
+docs/DEV_BOT_ID.md
 credentials/
 !credentials/*.example
 

@@ -1,0 +1,38 @@
+{
+  "conversationId": "test-thread",
+  "userId": "test-user",
+  "userName": "Test Suite",
+  "channel": "test",
+  "threadTs": "test-thread",
+  "messageTs": "1752177918248",
+  "userMessage": "show me all open deals",
+  "conversationHistory": [],
+  "botActionHistory": [],
+  "agentThoughts": [],
+  "agentActions": [],
+  "finalResponse": "No matches found. Try searching with different terms or partial names.",
+  "toolsUsed": [
+    {
+      "tool": "advanced_search",
+      "input": {
+        "entity_type": "deal",
+        "filters": {
+          "status": "open"
+        },
+        "sort_by": "value",
+        "sort_order": "desc",
+        "limit": 50
+      },
+      "success": false,
+      "timestamp": "2025-07-10T20:05:21.500Z"
+    }
+  ],
+  "success": true,
+  "error": null,
+  "processingTime": 3252,
+  "attachmentCount": 0,
+  "iterationCount": 0,
+  "timestamp": "2025-07-10T20:05:21.500Z",
+  "version": "1.11.1",
+  "environment": "development"
+}

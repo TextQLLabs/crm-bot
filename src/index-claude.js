@@ -153,7 +153,7 @@ app.action('cancel_action', async (args) => {
     console.log('🚂 Starting CRM Bot with Claude Agent...');
     console.log('🔍 Deployment:', process.env.RAILWAY_ENVIRONMENT ? `Railway (${process.env.RAILWAY_ENVIRONMENT})` : 'Local Development');
     console.log('💾 Database:', dbService);
-    console.log('🤖 Agent: Claude 3.7 Sonnet with Native Tool Calling');
+    console.log('🤖 Agent: Claude Sonnet 4 with Native Tool Calling (v1.12.1)');
     
     // Start Slack app
     const port = process.env.PORT || 3000;
