@@ -9,6 +9,24 @@ Apply the same context framework as defined in `/Users/ethanding/projects/CLAUDE
 
 # Current Project Contexts
 
+## Context: CRM Bot Token Management
+**Tags:** #security #tokens #slack #railway #crm-bot
+**Date:** 2025-07-10  
+**Scope:** project
+
+### Summary
+CRM Bot has three separate bot configurations with different token sets for production, development, and MCP testing.
+
+### Details
+- **Complete documentation**: See `/docs/SECURITY_TOKEN_MANAGEMENT.md`
+- **Three bots**: @crm-bot-ethan (prod), @crm-bot-ethan-dev (dev), @slack-mcp-textql-ethan (MCP)
+- **Token storage**: Railway dashboard (prod), local `.env.dev` (dev), Claude MCP config (MCP)
+
+### Related
+- See [Three Sets of Slack Bot Tokens Context](#context-three-sets-of-slack-bot-tokens)
+
+---
+
 ## Context: CRM Bot Project Overview
 **Tags:** #project #slack #attio #ai #crm
 **Date:** 2025-01-10  
