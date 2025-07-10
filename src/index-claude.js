@@ -75,8 +75,17 @@ app.event('app_mention', async ({ event, client, ack }) => {
     // Acknowledge immediately
     if (ack) await ack();
     
-    // Don't pass say to avoid automatic block formatting
-    await handleMention({ event, client });
+    // Additional safety check - make sure this is for the right bot
+    const isDev = process.env.NODE_ENV === 'development';
+    const isCorrectBot = isDev ? 
+      (event.text.includes('U0953GV1A8L') || event.text.includes('@crm-bot-ethan-dev')) :
+      (event.text.includes('U0944Q3F58B') || (event.text.includes('@crm-bot-ethan') && !event.text.includes('@crm-bot-ethan-dev')));
+    
+    if (isCorrectBot) {
+      await handleMention({ event, client });
+    } else {
+      console.log('Ignoring mention for other bot instance');
+    }
   } catch (error) {
     console.error('Error in app_mention handler:', error);
     // Don't let Bolt send its own error message
@@ -92,12 +101,18 @@ app.message(async ({ message, say, client }) => {
     }
     // Handle thread replies ONLY when bot is explicitly mentioned
     else if (message.thread_ts && message.text && message.bot_id !== message.user) {
-      // Check if the bot is mentioned in the message (multiple patterns to catch all mention formats)
+      // Check if the bot is mentioned in the message (specific to this bot instance)
+      const isDev = process.env.NODE_ENV === 'development';
       const isBotMentioned = message.text.includes('<@') && (
-        message.text.includes('@crm-bot') ||
-        message.text.includes('crm-bot') ||
-        message.text.includes('U0944Q3F58B') || // Production bot user ID
-        message.text.includes('U0953GV1A8L')    // Dev bot user ID
+        isDev ? (
+          // Dev bot only responds to dev mentions
+          message.text.includes('U0953GV1A8L') || // Dev bot user ID
+          message.text.includes('@crm-bot-ethan-dev')
+        ) : (
+          // Production bot only responds to production mentions
+          message.text.includes('U0944Q3F58B') || // Production bot user ID
+          message.text.includes('@crm-bot-ethan') && !message.text.includes('@crm-bot-ethan-dev')
+        )
       );
       
       if (isBotMentioned) {

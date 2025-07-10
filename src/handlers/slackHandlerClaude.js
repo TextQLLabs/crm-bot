@@ -68,7 +68,7 @@ async function handleMention({ event, message, say, client }) {
       // Send thinking message in thread
       thinkingMessage = await client.chat.postMessage({
         channel: msg.channel,
-        text: "⚡ Processing your request...",
+        text: ":cat-roomba-exceptionally-fast: Processing your request...",
         thread_ts: msg.thread_ts
       });
     } else {
@@ -83,7 +83,7 @@ async function handleMention({ event, message, say, client }) {
       console.log('📮 Sending initial thinking message...');
       const thinkingPayload = {
         channel: msg.channel,
-        text: "⚡ Processing your request...",
+        text: ":cat-roomba-exceptionally-fast: Processing your request...",
         thread_ts: msg.ts
       };
       console.log('Thinking payload:', JSON.stringify(thinkingPayload, null, 2));
@@ -122,13 +122,37 @@ async function handleMention({ event, message, say, client }) {
       fullContext += 'Remember: The user cannot see this hidden context. Only reference these actions if relevant to the current request.]';
     }
     
-    // Get any file attachments and download them
+    // Get any file attachments and canvas content
     const attachments = [];
+    let canvasContent = '';
+    
     if (msg.files && msg.files.length > 0) {
       console.log(`Processing ${msg.files.length} file attachments...`);
-      console.log('File details:', msg.files.map(f => ({ name: f.name, mimetype: f.mimetype, size: f.size })));
+      console.log('File details:', msg.files.map(f => ({ name: f.name, mimetype: f.mimetype, size: f.size, subtype: f.subtype })));
       
       for (const file of msg.files) {
+        // Check if this is a canvas file
+        if (file.mimetype === 'application/vnd.slack-docs' || file.subtype === 'canvas') {
+          console.log('Canvas detected in message:', file.name || 'Untitled Canvas');
+          try {
+            // Fetch canvas content using files.info API
+            const canvasInfo = await client.files.info({
+              file: file.id
+            });
+            
+            if (canvasInfo.file.document_content && canvasInfo.file.document_content.markdown) {
+              canvasContent += `\n\n[Canvas Content: ${file.name || 'Untitled Canvas'}]\n${canvasInfo.file.document_content.markdown}\n[End Canvas Content]\n`;
+              console.log(`Canvas content retrieved, length: ${canvasInfo.file.document_content.markdown.length}`);
+            } else {
+              console.log('Canvas found but no markdown content available');
+              canvasContent += `\n\n[Canvas: ${file.name || 'Untitled Canvas'} - content not accessible]\n`;
+            }
+          } catch (error) {
+            console.error('Error fetching canvas content:', error);
+            canvasContent += `\n\n[Canvas: ${file.name || 'Untitled Canvas'} - error accessing content: ${error.message}]\n`;
+          }
+        }
+        // Handle image files as before
         if (file.mimetype && file.mimetype.startsWith('image/')) {
           try {
             if (msg._testImageData) {
@@ -182,6 +206,12 @@ async function handleMention({ event, message, say, client }) {
       }
     }
 
+    // Add canvas content to full context if present
+    if (canvasContent) {
+      fullContext += canvasContent;
+      console.log('🎨 Canvas content added to context');
+    }
+    
     // Check if this is a read-only notes query (like "get notes" or "show notes")
     // Note creation requests should still use preview mode for safety
     const isReadOnlyNotesQuery = fullContext.toLowerCase().includes('get notes') || 
@@ -194,6 +224,7 @@ async function handleMention({ event, message, say, client }) {
     console.log('\n=== Starting Claude Agent ===');
     console.log('Full context:', fullContext);
     console.log('Attachments:', attachments.length);
+    console.log('Canvas content included:', !!canvasContent);
     
     const result = await agent.processMessage({
       text: fullContext,
@@ -479,7 +510,7 @@ async function handleButtonAction({ body, ack, client }) {
     await client.chat.update({
       channel: body.channel.id,
       ts: body.message.ts,
-      text: '⏳ Executing approved action...',
+      text: ':cat-roomba-exceptionally-fast: Executing approved action...',
       blocks: []
     });
     
