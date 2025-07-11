@@ -6,8 +6,7 @@ const {
   searchByTimeRange, 
   createNote, 
   getNotes, 
-  deleteNote, 
-  webSearch 
+  deleteNote
 } = require('./attioService');
 
 /**
@@ -120,7 +119,14 @@ class ClaudeAgent {
         temperature: 0.1,
         system: systemPrompt,
         messages: messages,
-        tools: this.getToolDefinitions()
+        tools: [
+          ...this.getToolDefinitions(),
+          {
+            type: "web_search_20250305",
+            name: "web_search",
+            max_uses: 5
+          }
+        ]
       });
 
       // Add Claude's response to conversation
@@ -319,6 +325,13 @@ If the user requested an action that requires approval, format it as a preview.`
           role: 'user',
           content: synthesisPrompt
         }
+      ],
+      tools: [
+        {
+          type: "web_search_20250305",
+          name: "web_search",
+          max_uses: 3
+        }
       ]
     });
 
@@ -351,7 +364,7 @@ You help users manage their CRM data through natural conversation. You can:
 - *advanced_search*: Filter by criteria like deal value, creation date, status
 - *search_related_entities*: Find related contacts, deals, or companies
 - *search_by_time_range*: Search within specific time periods
-- *web_search*: Fallback when CRM search fails (spelling corrections, etc.)
+- *Native web search*: I can search the web automatically when needed for current information, spelling corrections, and finding external data like LinkedIn profiles
 
 *📝 Notes Management*
 - *create_note*: Add notes to any entity with automatic Slack thread links and intelligent titles
@@ -378,7 +391,7 @@ For complex requests, think through:
 *🔄 Smart Search Approach*
 When searching for entities, use your intelligence to find what the user is looking for:
 - If a search returns no results, try common spelling variations and similar-sounding alternatives
-- Use web search for "did you mean" suggestions when helpful
+- Use web search automatically for "did you mean" suggestions when helpful
 - Try shortened versions (remove "The", "Inc", "Corp", etc.)
 - Consider phonetic similarities and common misspellings
 - Only suggest manual alternatives if automated attempts don't work
@@ -439,7 +452,7 @@ When creating notes, provide appropriate titles that summarize the content:
 - Be patient with typos and fuzzy searches
 
 *🛠️ Recovery Strategies*
-- If entity not found, try web search for spelling corrections
+- If entity not found, automatically use web search for spelling corrections and additional context
 - If API fails, give concise error: "Sorry, CRM search is temporarily unavailable. Please try again shortly."
 - If ambiguous results, ask for clarification with specific options
 - Keep error messages brief and actionable
@@ -734,24 +747,6 @@ Remember: You're here to make CRM management effortless. Be proactive, accurate,
           },
           required: ['note_id']
         }
-      },
-      {
-        name: 'web_search',
-        description: 'Search the web for information (fallback for spelling corrections)',
-        input_schema: {
-          type: 'object',
-          properties: {
-            query: {
-              type: 'string',
-              description: 'Search query'
-            },
-            context: {
-              type: 'string',
-              description: 'Context about what you\'re looking for'
-            }
-          },
-          required: ['query']
-        }
       }
     ];
   }
@@ -807,9 +802,6 @@ Remember: You're here to make CRM management effortless. Be proactive, accurate,
           break;
         case 'delete_note':
           result = await deleteNote(action.input.note_id);
-          break;
-        case 'web_search':
-          result = await webSearch(action.input.query, action.input.context);
           break;
         default:
           throw new Error(`Unknown tool: ${action.tool}`);
