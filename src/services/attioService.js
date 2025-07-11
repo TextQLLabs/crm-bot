@@ -952,6 +952,7 @@ module.exports = {
   deleteNote, 
   getNoteDetails, 
   getNotes,
+  createNote,
   advancedSearch,
   searchRelatedEntities,
   searchByTimeRange,
