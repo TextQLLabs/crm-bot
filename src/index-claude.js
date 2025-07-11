@@ -19,9 +19,13 @@ function isMessageAlreadyProcessed(messageKey) {
   }
   
   if (processedMessages.has(messageKey)) {
+    const lastProcessed = processedMessages.get(messageKey);
+    const timeSince = (now - lastProcessed) / 1000;
+    console.log(`🔍 Message ${messageKey} was processed ${timeSince.toFixed(1)}s ago`);
     return true;
   }
   
+  console.log(`✅ Processing new message: ${messageKey}`);
   processedMessages.set(messageKey, now);
   return false;
 }
@@ -108,14 +112,19 @@ app.event('app_mention', async ({ event, client, ack }) => {
     
     // Additional safety check - make sure this is for the right bot
     const isDev = process.env.NODE_ENV === 'development';
+    console.log(`🤖 Bot check - NODE_ENV: ${process.env.NODE_ENV}, isDev: ${isDev}`);
+    console.log(`📝 Message text: "${event.text}"`);
+    
     const isCorrectBot = isDev ? 
       (event.text.includes('U0953GV1A8L') || event.text.includes('@crm-bot-ethan-dev')) :
       (event.text.includes('U0944Q3F58B') || (event.text.includes('@crm-bot-ethan') && !event.text.includes('@crm-bot-ethan-dev')));
     
+    console.log(`🎯 Is correct bot: ${isCorrectBot}`);
+    
     if (isCorrectBot) {
       await handleMention({ event, client });
     } else {
-      console.log('Ignoring mention for other bot instance');
+      console.log('❌ Ignoring mention for other bot instance');
     }
   } catch (error) {
     console.error('Error in app_mention handler:', error);
