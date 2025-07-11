@@ -1,0 +1,25 @@
+{
+  "conversationId": "test-thread",
+  "userId": "test-user-id",
+  "userName": "test-user",
+  "channel": "test",
+  "threadTs": "test-thread",
+  "messageTs": "1752262399503",
+  "userMessage": "hey what can you do?",
+  "conversationHistory": [],
+  "botActionHistory": [],
+  "agentThoughts": [
+    "Hey! I'm your CRM Assistant for TextQL, integrated with your Attio CRM. Here's what I can help you with:\n\n*🔍 Search & Discovery*\n- Find companies, deals, and people by name (I'm pretty good with typos and fuzzy matching!)\n- Filter searches by deal value, dates, status, and other criteria\n- Find related contacts, deals, or companies for any entity\n- Search within specific time periods\n\n*📝 Notes Management*\n- Create notes on any company, person, or deal (with automatic Slack thread links)\n- Get and search through existing notes\n- Delete notes when needed\n- Smart note titles based on context\n\n*💬 Natural Conversation*\nJust tell me what you need in plain English! For example:\n- \"Find Acme Corp and add a note about our meeting\"\n- \"Show me all deals created this month\"\n- \"Get notes for John Smith\"\n- \"Find companies related to the Microsoft deal\"\n\n*⚡ Smart Features*\n- I can handle multiple tasks at once\n- I'll try different spellings if I can't find what you're looking for\n- I provide clickable links to your Attio records\n- I remember context from our conversation\n\nWhat would you like to do first? Just ask me naturally - no need for special commands or syntax!"
+  ],
+  "agentActions": [],
+  "finalResponse": "Hey! I'm your CRM Assistant for TextQL, integrated with your Attio CRM. Here's what I can help you with:\n\n*🔍 Search & Discovery*\n- Find companies, deals, and people by name (I'm pretty good with typos and fuzzy matching!)\n- Filter searches by deal value, dates, status, and other criteria\n- Find related contacts, deals, or companies for any entity\n- Search within specific time periods\n\n*📝 Notes Management*\n- Create notes on any company, person, or deal (with automatic Slack thread links)\n- Get and search through existing notes\n- Delete notes when needed\n- Smart note titles based on context\n\n*💬 Natural Conversation*\nJust tell me what you need in plain English! For example:\n- \"Find Acme Corp and add a note about our meeting\"\n- \"Show me all deals created this month\"\n- \"Get notes for John Smith\"\n- \"Find companies related to the Microsoft deal\"\n\n*⚡ Smart Features*\n- I can handle multiple tasks at once\n- I'll try different spellings if I can't find what you're looking for\n- I provide clickable links to your Attio records\n- I remember context from our conversation\n\nWhat would you like to do first? Just ask me naturally - no need for special commands or syntax!",
+  "toolsUsed": [],
+  "success": true,
+  "error": null,
+  "processingTime": 0,
+  "attachmentCount": 0,
+  "iterationCount": 0,
+  "timestamp": "2025-07-11T19:33:19.503Z",
+  "version": "1.12.0",
+  "environment": "development"
+}

@@ -1,0 +1,23 @@
+{
+  "conversationId": "test-thread",
+  "userId": "test-user-id",
+  "userName": "test-user",
+  "channel": "test",
+  "threadTs": "test-thread",
+  "messageTs": "1752186769872",
+  "userMessage": "hey what can you do?",
+  "conversationHistory": [],
+  "botActionHistory": [],
+  "agentThoughts": [],
+  "agentActions": [],
+  "finalResponse": "Hello! I'm a CRM assistant that helps you manage your Attio CRM data. Here's what I can do for you:\n\n**🔍 Search & Find**\n- Search for companies, people, and deals in your CRM\n- Find related entities (like all deals for a company, or people at a company)\n- Advanced filtering by date ranges, deal values, status, industry, location, and more\n- Handle fuzzy searches and spelling corrections\n\n**📝 Notes Management**\n- Create notes on any company, person, or deal\n- View and search through existing notes\n- Delete notes (single or bulk operations)\n- Filter notes by content, date, creator, or tags\n\n**📊 Entity Management**\n- Create new companies, people, or deals\n- Update existing entity information\n- Get detailed information about any entity\n- View relationships between entities\n\n**🌐 Research & Verification**\n- Search the web for current information about companies or people\n- Verify company names and details\n- Help with data enrichment\n\n**⚡ Smart Features**\n- Multi-step operations (like \"add note to [company]\" - I'll find the company and create the note automatically)\n- Bulk operations with safety previews\n- Time-based searches (\"companies created this month\")\n- Advanced filtering and sorting\n\nI use Claude Sonnet 4 with native tool calling to interact directly with your Attio CRM. Just tell me what you need help with - whether it's finding a specific company, adding notes, or managing your CRM data!\n\nWhat would you like to do first?",
+  "toolsUsed": [],
+  "success": true,
+  "error": null,
+  "processingTime": 14160,
+  "attachmentCount": 0,
+  "iterationCount": 0,
+  "timestamp": "2025-07-10T22:33:04.032Z",
+  "version": "1.12.0",
+  "environment": "development"
+}

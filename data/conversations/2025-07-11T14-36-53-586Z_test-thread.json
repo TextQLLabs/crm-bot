@@ -1,0 +1,169 @@
+{
+  "conversationId": "test-thread",
+  "userId": "test-user-id",
+  "userName": "test-user",
+  "channel": "test",
+  "threadTs": "test-thread",
+  "messageTs": "1752244613586",
+  "userMessage": "find raine and count their notes",
+  "conversationHistory": [],
+  "botActionHistory": [],
+  "agentThoughts": [
+    "I'll search for Raine and then count their notes for you."
+  ],
+  "agentActions": [
+    {
+      "tool": "search_crm",
+      "input": {
+        "query": "raine"
+      },
+      "result": {
+        "0": {
+          "id": "a41e73b9-5dac-493f-bb2d-d38bb166c330",
+          "name": "The Raine Group",
+          "description": "The Raine Group is an integrated merchant bank specializing in advising and investing in high-growth sectors of technology, media, and telecom. They offer a wide range of advisory services, including mergers and acquisitions, divestitures, private capi...",
+          "domains": [
+            "raine.com"
+          ],
+          "slug": "raine.com",
+          "url": "https://app.attio.com/textql-data/company/a41e73b9-5dac-493f-bb2d-d38bb166c330/overview",
+          "type": "company"
+        },
+        "1": {
+          "id": "637f050b-409d-4fdf-b401-b85d48a5e9df",
+          "name": "Raine",
+          "description": "Value: Unknown",
+          "url": "https://app.attio.com/textql-data/deals/637f050b-409d-4fdf-b401-b85d48a5e9df/overview",
+          "type": "deal"
+        },
+        "2": {
+          "id": "04fcc6e7-af95-4923-bfb8-10070fa70c12",
+          "name": "Lorraine Williams",
+          "description": "lorraine.williams@card.com",
+          "url": "https://app.attio.com/textql-data/person/04fcc6e7-af95-4923-bfb8-10070fa70c12/overview",
+          "type": "person"
+        },
+        "3": {
+          "id": "17dcf72c-5ad0-471a-8718-141f81247f8c",
+          "name": "Hashtag Trainee",
+          "description": "hashtagtrainee2021@gmail.com",
+          "url": "https://app.attio.com/textql-data/person/17dcf72c-5ad0-471a-8718-141f81247f8c/overview",
+          "type": "person"
+        },
+        "4": {
+          "id": "2918a9f9-135b-45ed-a411-d3d3ce1d2826",
+          "name": "Matt Raines",
+          "description": "matt.raines@uniteus.com",
+          "url": "https://app.attio.com/textql-data/person/2918a9f9-135b-45ed-a411-d3d3ce1d2826/overview",
+          "type": "person"
+        },
+        "5": {
+          "id": "3d155203-b8bb-438e-a963-9b6e513057a1",
+          "name": "Patrick Trainer",
+          "description": "patrick.trainer@socure.com",
+          "url": "https://app.attio.com/textql-data/person/3d155203-b8bb-438e-a963-9b6e513057a1/overview",
+          "type": "person"
+        },
+        "6": {
+          "id": "670bc9f9-3117-4c92-9f0d-6608385965d6",
+          "name": "Connor Trainer",
+          "description": "connor.trainer@truist.com",
+          "url": "https://app.attio.com/textql-data/person/670bc9f9-3117-4c92-9f0d-6608385965d6/overview",
+          "type": "person"
+        },
+        "timing": {
+          "duration": 889,
+          "startTime": 1752244606687,
+          "endTime": 1752244607576
+        }
+      },
+      "timing": {
+        "duration": 889,
+        "startTime": 1752244606687,
+        "endTime": 1752244607576
+      }
+    }
+  ],
+  "finalResponse": "I found several matches for \"Raine\" in your CRM:\n\n1. **[The Raine Group](https://app.attio.com/textql-data/company/a41e73b9-5dac-493f-bb2d-d38bb166c330/overview)** (Company) - An integrated merchant bank specializing in technology, media, and telecom\n2. **[Raine](https://app.attio.com/textql-data/deals/637f050b-409d-4fdf-b401-b85d48a5e9df/overview)** (Deal)\n3. **[Lorraine Williams](https://app.attio.com/textql-data/person/04fcc6e7-af95-4923-bfb8-10070fa70c12/overview)** (Person)\n4. **[Matt Raines](https://app.attio.com/textql-data/person/2918a9f9-135b-45ed-a411-d3d3ce1d2826/overview)** (Person)\n\nWhich \"Raine\" would you like me to count notes for? I can check any of these entities. The most likely candidates seem to be:\n- **The Raine Group** (the company)\n- **Raine** (the deal)\n\nJust let me know which one you meant, and I'll get the note count for you right away!",
+  "toolsUsed": [
+    {
+      "tool": "search_crm",
+      "input": {
+        "query": "raine"
+      },
+      "result": {
+        "0": {
+          "id": "a41e73b9-5dac-493f-bb2d-d38bb166c330",
+          "name": "The Raine Group",
+          "description": "The Raine Group is an integrated merchant bank specializing in advising and investing in high-growth sectors of technology, media, and telecom. They offer a wide range of advisory services, including mergers and acquisitions, divestitures, private capi...",
+          "domains": [
+            "raine.com"
+          ],
+          "slug": "raine.com",
+          "url": "https://app.attio.com/textql-data/company/a41e73b9-5dac-493f-bb2d-d38bb166c330/overview",
+          "type": "company"
+        },
+        "1": {
+          "id": "637f050b-409d-4fdf-b401-b85d48a5e9df",
+          "name": "Raine",
+          "description": "Value: Unknown",
+          "url": "https://app.attio.com/textql-data/deals/637f050b-409d-4fdf-b401-b85d48a5e9df/overview",
+          "type": "deal"
+        },
+        "2": {
+          "id": "04fcc6e7-af95-4923-bfb8-10070fa70c12",
+          "name": "Lorraine Williams",
+          "description": "lorraine.williams@card.com",
+          "url": "https://app.attio.com/textql-data/person/04fcc6e7-af95-4923-bfb8-10070fa70c12/overview",
+          "type": "person"
+        },
+        "3": {
+          "id": "17dcf72c-5ad0-471a-8718-141f81247f8c",
+          "name": "Hashtag Trainee",
+          "description": "hashtagtrainee2021@gmail.com",
+          "url": "https://app.attio.com/textql-data/person/17dcf72c-5ad0-471a-8718-141f81247f8c/overview",
+          "type": "person"
+        },
+        "4": {
+          "id": "2918a9f9-135b-45ed-a411-d3d3ce1d2826",
+          "name": "Matt Raines",
+          "description": "matt.raines@uniteus.com",
+          "url": "https://app.attio.com/textql-data/person/2918a9f9-135b-45ed-a411-d3d3ce1d2826/overview",
+          "type": "person"
+        },
+        "5": {
+          "id": "3d155203-b8bb-438e-a963-9b6e513057a1",
+          "name": "Patrick Trainer",
+          "description": "patrick.trainer@socure.com",
+          "url": "https://app.attio.com/textql-data/person/3d155203-b8bb-438e-a963-9b6e513057a1/overview",
+          "type": "person"
+        },
+        "6": {
+          "id": "670bc9f9-3117-4c92-9f0d-6608385965d6",
+          "name": "Connor Trainer",
+          "description": "connor.trainer@truist.com",
+          "url": "https://app.attio.com/textql-data/person/670bc9f9-3117-4c92-9f0d-6608385965d6/overview",
+          "type": "person"
+        },
+        "timing": {
+          "duration": 889,
+          "startTime": 1752244606687,
+          "endTime": 1752244607576
+        }
+      },
+      "timing": {
+        "duration": 889,
+        "startTime": 1752244606687,
+        "endTime": 1752244607576
+      }
+    }
+  ],
+  "success": true,
+  "error": null,
+  "processingTime": 0,
+  "attachmentCount": 0,
+  "iterationCount": 0,
+  "timestamp": "2025-07-11T14:36:53.586Z",
+  "version": "1.12.0",
+  "environment": "development"
+}

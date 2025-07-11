@@ -1,0 +1,531 @@
+{
+  "conversationId": "test-thread",
+  "userId": "test-user-id",
+  "userName": "test-user",
+  "channel": "test",
+  "threadTs": "test-thread",
+  "messageTs": "1752261539754",
+  "userMessage": "who did ethan text from blackstone on july 11",
+  "conversationHistory": [],
+  "botActionHistory": [],
+  "agentThoughts": [
+    "Based on my search through the CRM, I found several people named Ethan and the *<https://app.attio.com/textql-data/company/ffc6013f-2148-4427-8c1f-fec7b3f36554/overview|Blackstone>* company in your system. However, I wasn't able to find specific information about text communications on July 11th between any Ethan and Blackstone.\n\n*Found Ethans in your CRM:*\n- *<https://app.attio.com/textql-data/person/394da9b7-7d87-4e36-a346-2ba1aac767d3/overview|Ethan Ding>* (ethan@textql.net)\n- *<https://app.attio.com/textql-data/person/08eb7485-4f00-4701-9d9e-9394f600b196/overview|Ethan>* (ethan@lextegrity.com)\n- *<https://app.attio.com/textql-data/person/170327bf-95a8-4f93-a67d-657245833692/overview|Ethan Abrams>* (ethan.abrams@braze.com)\n\n*Found Blackstone entities:*\n- *<https://app.attio.com/textql-data/company/ffc6013f-2148-4427-8c1f-fec7b3f36554/overview|Blackstone>* (main company)\n- *<https://app.attio.com/textql-data/company/4f023580-7915-4e81-82a5-f68a2fd70274/overview|LivCor, a Blackstone Portfolio Company>*\n\nThe information about specific text communications on July 11th doesn't appear to be captured in the CRM notes or records I can access. This type of detailed communication log might be stored elsewhere or may need to be added as a note if it's important for your records.\n\nWould you like me to help you create a note about this communication, or do you have more specific details about which Ethan you're referring to?"
+  ],
+  "agentActions": [
+    {
+      "tool": "search_crm",
+      "input": {
+        "query": "Ethan",
+        "entity_type": "person"
+      },
+      "result": {
+        "0": {
+          "id": "08eb7485-4f00-4701-9d9e-9394f600b196",
+          "name": "Ethan",
+          "description": "ethan@lextegrity.com",
+          "url": "https://app.attio.com/textql-data/person/08eb7485-4f00-4701-9d9e-9394f600b196/overview",
+          "type": "person"
+        },
+        "1": {
+          "id": "170327bf-95a8-4f93-a67d-657245833692",
+          "name": "Ethan Abrams",
+          "description": "ethan.abrams@braze.com",
+          "url": "https://app.attio.com/textql-data/person/170327bf-95a8-4f93-a67d-657245833692/overview",
+          "type": "person"
+        },
+        "2": {
+          "id": "17ac5935-f5ff-474e-8e6a-bd100b7c84a1",
+          "name": "Ethan Bidna",
+          "description": "ebidna@morningconsult.com",
+          "url": "https://app.attio.com/textql-data/person/17ac5935-f5ff-474e-8e6a-bd100b7c84a1/overview",
+          "type": "person"
+        },
+        "3": {
+          "id": "2b621b30-3cdb-417b-b8cb-20c0786950a6",
+          "name": "Bethany Kiernan",
+          "description": "bethany.kiernan@clarivate.com",
+          "url": "https://app.attio.com/textql-data/person/2b621b30-3cdb-417b-b8cb-20c0786950a6/overview",
+          "type": "person"
+        },
+        "4": {
+          "id": "394da9b7-7d87-4e36-a346-2ba1aac767d3",
+          "name": "Ethan Ding",
+          "description": "ethan@textql.net",
+          "url": "https://app.attio.com/textql-data/person/394da9b7-7d87-4e36-a346-2ba1aac767d3/overview",
+          "type": "person"
+        },
+        "timing": {
+          "duration": 494,
+          "startTime": 1752261516278,
+          "endTime": 1752261516772
+        }
+      },
+      "timing": {
+        "duration": 494,
+        "startTime": 1752261516278,
+        "endTime": 1752261516772
+      }
+    },
+    {
+      "tool": "search_crm",
+      "input": {
+        "query": "Blackstone",
+        "entity_type": "company"
+      },
+      "result": {
+        "0": {
+          "id": "ffc6013f-2148-4427-8c1f-fec7b3f36554",
+          "name": "Blackstone",
+          "description": "Blackstone is a leading alternative asset manager that focuses on providing investment solutions and building businesses across various sectors, including healthcare and telecommunications, to deliver stable income returns and capital growth for its in...",
+          "domains": [
+            "blackstone.com"
+          ],
+          "slug": "blackstone.com",
+          "url": "https://app.attio.com/textql-data/company/ffc6013f-2148-4427-8c1f-fec7b3f36554/overview",
+          "type": "company"
+        },
+        "1": {
+          "id": "4f023580-7915-4e81-82a5-f68a2fd70274",
+          "name": "LivCor, a Blackstone Portfolio Company",
+          "description": "LivCor is a real estate company specializing in multi family housing. Currently, LivCor is responsible for a portfolio of over 400 Class A and B properties comprising more than 150,000 units in markets across the United States. Formed in 2013 and headq...",
+          "domains": [
+            "livcor.com"
+          ],
+          "slug": "livcor.com",
+          "url": "https://app.attio.com/textql-data/company/4f023580-7915-4e81-82a5-f68a2fd70274/overview",
+          "type": "company"
+        },
+        "2": {
+          "id": "f2fb2437-f573-4fbd-90bc-f7eaf8e50aa7",
+          "name": "Blackstone",
+          "description": "Value: Unknown",
+          "url": "https://app.attio.com/textql-data/deals/f2fb2437-f573-4fbd-90bc-f7eaf8e50aa7/overview",
+          "type": "deal"
+        },
+        "timing": {
+          "duration": 493,
+          "startTime": 1752261516772,
+          "endTime": 1752261517265
+        }
+      },
+      "timing": {
+        "duration": 493,
+        "startTime": 1752261516772,
+        "endTime": 1752261517265
+      }
+    },
+    {
+      "tool": "get_notes",
+      "input": {
+        "entity_type": "company",
+        "entity_id": "ffc6013f-2148-4427-8c1f-fec7b3f36554"
+      },
+      "result": {
+        "timing": {
+          "duration": 206,
+          "startTime": 1752261521363,
+          "endTime": 1752261521569
+        }
+      },
+      "timing": {
+        "duration": 206,
+        "startTime": 1752261521363,
+        "endTime": 1752261521569
+      }
+    },
+    {
+      "tool": "search_related_entities",
+      "input": {
+        "entity_type": "company",
+        "entity_id": "ffc6013f-2148-4427-8c1f-fec7b3f36554",
+        "relation_type": "contacts"
+      },
+      "result": {
+        "error": "source_entity_type, source_entity_id, and target_entity_type are required",
+        "timing": {
+          "duration": 1,
+          "startTime": 1752261521569,
+          "endTime": 1752261521570
+        }
+      },
+      "timing": {
+        "duration": 1,
+        "startTime": 1752261521569,
+        "endTime": 1752261521570
+      }
+    },
+    {
+      "tool": "get_notes",
+      "input": {
+        "entity_type": "person",
+        "entity_id": "394da9b7-7d87-4e36-a346-2ba1aac767d3"
+      },
+      "result": {
+        "timing": {
+          "duration": 164,
+          "startTime": 1752261526039,
+          "endTime": 1752261526203
+        }
+      },
+      "timing": {
+        "duration": 164,
+        "startTime": 1752261526039,
+        "endTime": 1752261526203
+      }
+    },
+    {
+      "tool": "get_notes",
+      "input": {
+        "entity_type": "person",
+        "entity_id": "08eb7485-4f00-4701-9d9e-9394f600b196"
+      },
+      "result": {
+        "timing": {
+          "duration": 195,
+          "startTime": 1752261526203,
+          "endTime": 1752261526398
+        }
+      },
+      "timing": {
+        "duration": 195,
+        "startTime": 1752261526203,
+        "endTime": 1752261526398
+      }
+    },
+    {
+      "tool": "get_notes",
+      "input": {
+        "entity_type": "person",
+        "entity_id": "170327bf-95a8-4f93-a67d-657245833692"
+      },
+      "result": {
+        "timing": {
+          "duration": 184,
+          "startTime": 1752261526398,
+          "endTime": 1752261526582
+        }
+      },
+      "timing": {
+        "duration": 184,
+        "startTime": 1752261526398,
+        "endTime": 1752261526582
+      }
+    },
+    {
+      "tool": "search_crm",
+      "input": {
+        "query": "July 11",
+        "entity_type": "all"
+      },
+      "result": {
+        "0": {
+          "id": "1946cba8-97c0-4b7b-a9cd-f131708840f3",
+          "name": "July",
+          "description": "July provides a comprehensive platform for creator agencies, offering tools for managing brand assets, analyzing performance metrics, and facilitating payment splitting to enhance collaboration between brands and creators.",
+          "domains": [
+            "withjuly.com"
+          ],
+          "slug": "withjuly.com",
+          "url": "https://app.attio.com/textql-data/company/1946cba8-97c0-4b7b-a9cd-f131708840f3/overview",
+          "type": "company"
+        },
+        "timing": {
+          "duration": 512,
+          "startTime": 1752261530090,
+          "endTime": 1752261530602
+        }
+      },
+      "timing": {
+        "duration": 512,
+        "startTime": 1752261530090,
+        "endTime": 1752261530602
+      }
+    },
+    {
+      "tool": "advanced_search",
+      "input": {
+        "entity_type": "deal",
+        "filters": {
+          "created_after": "2024-07-10",
+          "created_before": "2024-07-12"
+        }
+      },
+      "result": {
+        "error": "entity_type is required for advanced search",
+        "timing": {
+          "duration": 0,
+          "startTime": 1752261530602,
+          "endTime": 1752261530602
+        }
+      },
+      "timing": {
+        "duration": 0,
+        "startTime": 1752261530602,
+        "endTime": 1752261530602
+      }
+    }
+  ],
+  "finalResponse": "Based on my search through the CRM, I found several people named Ethan and the *<https://app.attio.com/textql-data/company/ffc6013f-2148-4427-8c1f-fec7b3f36554/overview|Blackstone>* company in your system. However, I wasn't able to find specific information about text communications on July 11th between any Ethan and Blackstone.\n\n*Found Ethans in your CRM:*\n- *<https://app.attio.com/textql-data/person/394da9b7-7d87-4e36-a346-2ba1aac767d3/overview|Ethan Ding>* (ethan@textql.net)\n- *<https://app.attio.com/textql-data/person/08eb7485-4f00-4701-9d9e-9394f600b196/overview|Ethan>* (ethan@lextegrity.com)\n- *<https://app.attio.com/textql-data/person/170327bf-95a8-4f93-a67d-657245833692/overview|Ethan Abrams>* (ethan.abrams@braze.com)\n\n*Found Blackstone entities:*\n- *<https://app.attio.com/textql-data/company/ffc6013f-2148-4427-8c1f-fec7b3f36554/overview|Blackstone>* (main company)\n- *<https://app.attio.com/textql-data/company/4f023580-7915-4e81-82a5-f68a2fd70274/overview|LivCor, a Blackstone Portfolio Company>*\n\nThe information about specific text communications on July 11th doesn't appear to be captured in the CRM notes or records I can access. This type of detailed communication log might be stored elsewhere or may need to be added as a note if it's important for your records.\n\nWould you like me to help you create a note about this communication, or do you have more specific details about which Ethan you're referring to?",
+  "toolsUsed": [
+    {
+      "tool": "search_crm",
+      "input": {
+        "query": "Ethan",
+        "entity_type": "person"
+      },
+      "result": {
+        "0": {
+          "id": "08eb7485-4f00-4701-9d9e-9394f600b196",
+          "name": "Ethan",
+          "description": "ethan@lextegrity.com",
+          "url": "https://app.attio.com/textql-data/person/08eb7485-4f00-4701-9d9e-9394f600b196/overview",
+          "type": "person"
+        },
+        "1": {
+          "id": "170327bf-95a8-4f93-a67d-657245833692",
+          "name": "Ethan Abrams",
+          "description": "ethan.abrams@braze.com",
+          "url": "https://app.attio.com/textql-data/person/170327bf-95a8-4f93-a67d-657245833692/overview",
+          "type": "person"
+        },
+        "2": {
+          "id": "17ac5935-f5ff-474e-8e6a-bd100b7c84a1",
+          "name": "Ethan Bidna",
+          "description": "ebidna@morningconsult.com",
+          "url": "https://app.attio.com/textql-data/person/17ac5935-f5ff-474e-8e6a-bd100b7c84a1/overview",
+          "type": "person"
+        },
+        "3": {
+          "id": "2b621b30-3cdb-417b-b8cb-20c0786950a6",
+          "name": "Bethany Kiernan",
+          "description": "bethany.kiernan@clarivate.com",
+          "url": "https://app.attio.com/textql-data/person/2b621b30-3cdb-417b-b8cb-20c0786950a6/overview",
+          "type": "person"
+        },
+        "4": {
+          "id": "394da9b7-7d87-4e36-a346-2ba1aac767d3",
+          "name": "Ethan Ding",
+          "description": "ethan@textql.net",
+          "url": "https://app.attio.com/textql-data/person/394da9b7-7d87-4e36-a346-2ba1aac767d3/overview",
+          "type": "person"
+        },
+        "timing": {
+          "duration": 494,
+          "startTime": 1752261516278,
+          "endTime": 1752261516772
+        }
+      },
+      "timing": {
+        "duration": 494,
+        "startTime": 1752261516278,
+        "endTime": 1752261516772
+      }
+    },
+    {
+      "tool": "search_crm",
+      "input": {
+        "query": "Blackstone",
+        "entity_type": "company"
+      },
+      "result": {
+        "0": {
+          "id": "ffc6013f-2148-4427-8c1f-fec7b3f36554",
+          "name": "Blackstone",
+          "description": "Blackstone is a leading alternative asset manager that focuses on providing investment solutions and building businesses across various sectors, including healthcare and telecommunications, to deliver stable income returns and capital growth for its in...",
+          "domains": [
+            "blackstone.com"
+          ],
+          "slug": "blackstone.com",
+          "url": "https://app.attio.com/textql-data/company/ffc6013f-2148-4427-8c1f-fec7b3f36554/overview",
+          "type": "company"
+        },
+        "1": {
+          "id": "4f023580-7915-4e81-82a5-f68a2fd70274",
+          "name": "LivCor, a Blackstone Portfolio Company",
+          "description": "LivCor is a real estate company specializing in multi family housing. Currently, LivCor is responsible for a portfolio of over 400 Class A and B properties comprising more than 150,000 units in markets across the United States. Formed in 2013 and headq...",
+          "domains": [
+            "livcor.com"
+          ],
+          "slug": "livcor.com",
+          "url": "https://app.attio.com/textql-data/company/4f023580-7915-4e81-82a5-f68a2fd70274/overview",
+          "type": "company"
+        },
+        "2": {
+          "id": "f2fb2437-f573-4fbd-90bc-f7eaf8e50aa7",
+          "name": "Blackstone",
+          "description": "Value: Unknown",
+          "url": "https://app.attio.com/textql-data/deals/f2fb2437-f573-4fbd-90bc-f7eaf8e50aa7/overview",
+          "type": "deal"
+        },
+        "timing": {
+          "duration": 493,
+          "startTime": 1752261516772,
+          "endTime": 1752261517265
+        }
+      },
+      "timing": {
+        "duration": 493,
+        "startTime": 1752261516772,
+        "endTime": 1752261517265
+      }
+    },
+    {
+      "tool": "get_notes",
+      "input": {
+        "entity_type": "company",
+        "entity_id": "ffc6013f-2148-4427-8c1f-fec7b3f36554"
+      },
+      "result": {
+        "timing": {
+          "duration": 206,
+          "startTime": 1752261521363,
+          "endTime": 1752261521569
+        }
+      },
+      "timing": {
+        "duration": 206,
+        "startTime": 1752261521363,
+        "endTime": 1752261521569
+      }
+    },
+    {
+      "tool": "search_related_entities",
+      "input": {
+        "entity_type": "company",
+        "entity_id": "ffc6013f-2148-4427-8c1f-fec7b3f36554",
+        "relation_type": "contacts"
+      },
+      "result": {
+        "error": "source_entity_type, source_entity_id, and target_entity_type are required",
+        "timing": {
+          "duration": 1,
+          "startTime": 1752261521569,
+          "endTime": 1752261521570
+        }
+      },
+      "timing": {
+        "duration": 1,
+        "startTime": 1752261521569,
+        "endTime": 1752261521570
+      }
+    },
+    {
+      "tool": "get_notes",
+      "input": {
+        "entity_type": "person",
+        "entity_id": "394da9b7-7d87-4e36-a346-2ba1aac767d3"
+      },
+      "result": {
+        "timing": {
+          "duration": 164,
+          "startTime": 1752261526039,
+          "endTime": 1752261526203
+        }
+      },
+      "timing": {
+        "duration": 164,
+        "startTime": 1752261526039,
+        "endTime": 1752261526203
+      }
+    },
+    {
+      "tool": "get_notes",
+      "input": {
+        "entity_type": "person",
+        "entity_id": "08eb7485-4f00-4701-9d9e-9394f600b196"
+      },
+      "result": {
+        "timing": {
+          "duration": 195,
+          "startTime": 1752261526203,
+          "endTime": 1752261526398
+        }
+      },
+      "timing": {
+        "duration": 195,
+        "startTime": 1752261526203,
+        "endTime": 1752261526398
+      }
+    },
+    {
+      "tool": "get_notes",
+      "input": {
+        "entity_type": "person",
+        "entity_id": "170327bf-95a8-4f93-a67d-657245833692"
+      },
+      "result": {
+        "timing": {
+          "duration": 184,
+          "startTime": 1752261526398,
+          "endTime": 1752261526582
+        }
+      },
+      "timing": {
+        "duration": 184,
+        "startTime": 1752261526398,
+        "endTime": 1752261526582
+      }
+    },
+    {
+      "tool": "search_crm",
+      "input": {
+        "query": "July 11",
+        "entity_type": "all"
+      },
+      "result": {
+        "0": {
+          "id": "1946cba8-97c0-4b7b-a9cd-f131708840f3",
+          "name": "July",
+          "description": "July provides a comprehensive platform for creator agencies, offering tools for managing brand assets, analyzing performance metrics, and facilitating payment splitting to enhance collaboration between brands and creators.",
+          "domains": [
+            "withjuly.com"
+          ],
+          "slug": "withjuly.com",
+          "url": "https://app.attio.com/textql-data/company/1946cba8-97c0-4b7b-a9cd-f131708840f3/overview",
+          "type": "company"
+        },
+        "timing": {
+          "duration": 512,
+          "startTime": 1752261530090,
+          "endTime": 1752261530602
+        }
+      },
+      "timing": {
+        "duration": 512,
+        "startTime": 1752261530090,
+        "endTime": 1752261530602
+      }
+    },
+    {
+      "tool": "advanced_search",
+      "input": {
+        "entity_type": "deal",
+        "filters": {
+          "created_after": "2024-07-10",
+          "created_before": "2024-07-12"
+        }
+      },
+      "result": {
+        "error": "entity_type is required for advanced search",
+        "timing": {
+          "duration": 0,
+          "startTime": 1752261530602,
+          "endTime": 1752261530602
+        }
+      },
+      "timing": {
+        "duration": 0,
+        "startTime": 1752261530602,
+        "endTime": 1752261530602
+      }
+    }
+  ],
+  "success": true,
+  "error": null,
+  "processingTime": 0,
+  "attachmentCount": 0,
+  "iterationCount": 0,
+  "timestamp": "2025-07-11T19:18:59.754Z",
+  "version": "1.12.0",
+  "environment": "development"
+}

@@ -1,0 +1,23 @@
+{
+  "conversationId": "test-thread",
+  "userId": "test-user-id",
+  "userName": "test-user",
+  "channel": "test",
+  "threadTs": "test-thread",
+  "messageTs": "1752186733569",
+  "userMessage": "list all tools available to you",
+  "conversationHistory": [],
+  "botActionHistory": [],
+  "agentThoughts": [],
+  "agentActions": [],
+  "finalResponse": "I have access to the following tools for managing your Attio CRM:\n\n## **Search & Discovery Tools**\n- **search_crm** - Basic search for companies, people, or deals by name\n- **advanced_search** - Advanced filtering with attributes, date ranges, deal values, industry, location, status, tags, and sorting\n- **search_related_entities** - Find relationships between entities (e.g., deals for a company, people at a company)\n- **search_by_time_range** - Search entities created or updated within specific time periods\n- **web_search** - Search the web for current information (used for verification and finding correct spellings)\n\n## **Entity Management Tools**\n- **get_entity_details** - Get full details of a specific company, person, or deal\n- **create_entity** - Create new companies, people, or deals\n- **update_entity** - Update existing entity fields\n\n## **Note Management Tools**\n- **get_notes** - Retrieve notes with filtering, search, and sorting capabilities\n- **create_note** - Add notes to companies, people, or deals\n- **delete_note** - Delete single notes, multiple notes, or bulk delete with filters\n\n## **Key Capabilities**\n\n**Search Features:**\n- Fuzzy matching and spelling correction\n- Filter by deal values, dates, status, industry, location\n- Sort by various fields (date, name, value, etc.)\n- Find related entities and relationships\n\n**Note Features:**\n- Full-text search within note content\n- Filter by creator, date ranges, tags, content length\n- Bulk operations with preview mode\n- Content truncation for summaries\n\n**Advanced Operations:**\n- Time-based queries (recent activity, date ranges)\n- Relationship mapping between entities\n- Bulk operations with safety confirmations\n- Web verification for accurate company information\n\nI use Claude Sonnet 4 with native tool calling to execute these operations efficiently. Would you like me to help you with any specific CRM tasks?",
+  "toolsUsed": [],
+  "success": true,
+  "error": null,
+  "processingTime": 11203,
+  "attachmentCount": 0,
+  "iterationCount": 0,
+  "timestamp": "2025-07-10T22:32:24.773Z",
+  "version": "1.11.1",
+  "environment": "development"
+}

@@ -1,0 +1,23 @@
+{
+  "conversationId": "test-thread",
+  "userId": "test-user-id",
+  "userName": "test-user",
+  "channel": "test",
+  "threadTs": "test-thread",
+  "messageTs": "1752184831447",
+  "userMessage": "search for rayn group",
+  "conversationHistory": [],
+  "botActionHistory": [],
+  "agentThoughts": [],
+  "agentActions": [],
+  "finalResponse": "I encountered an error processing your request. Please try again.",
+  "toolsUsed": [],
+  "success": false,
+  "error": "hasFailedSearchOnly is not defined",
+  "processingTime": 20668,
+  "attachmentCount": 0,
+  "iterationCount": 0,
+  "timestamp": "2025-07-10T22:00:52.115Z",
+  "version": "1.12.0",
+  "environment": "development"
+}

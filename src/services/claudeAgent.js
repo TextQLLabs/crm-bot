@@ -386,6 +386,7 @@ Execute complete workflows in single responses by calling multiple tools:
 - "create note for [company]: meeting scheduled" → search_crm + create_note + return URL
 - "find [company] and count their notes" → search_crm + get_notes + provide count/summary
 - *CRITICAL*: When user asks to "count notes" or "get notes", you MUST call get_notes tool after finding the entity
+- *🚨 CRITICAL UUID RULE*: For create_note, get_notes, delete_note - ALWAYS use the exact "id" field from search_crm results (e.g., "ffc6013f-2148-4427-8c1f-fec7b3f36554"). NEVER use slugs, names, or made-up IDs!
 - *For ambiguous searches*: Pick the most likely candidate (company > deal > person) and proceed
 - *If multiple strong matches*: Choose the most relevant and mention the choice
 - Never just plan - DO IT immediately with actual tool calls
@@ -619,7 +620,7 @@ Remember: You're here to make CRM management effortless. Be proactive, accurate,
             },
             entity_id: {
               type: 'string',
-              description: 'ID of the entity'
+              description: 'EXACT UUID of the entity from search results (e.g., "ffc6013f-2148-4427-8c1f-fec7b3f36554"). NEVER use slugs or names - only the "id" field from search_crm results.'
             },
             note_content: {
               type: 'string',
@@ -650,7 +651,7 @@ Remember: You're here to make CRM management effortless. Be proactive, accurate,
             },
             entity_id: {
               type: 'string',
-              description: 'ID of the entity'
+              description: 'EXACT UUID of the entity from search results (e.g., "ffc6013f-2148-4427-8c1f-fec7b3f36554"). NEVER use slugs or names - only the "id" field from search_crm results.'
             },
             search_content: {
               type: 'string',

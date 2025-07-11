@@ -1,0 +1,58 @@
+{
+  "conversationId": "test-thread",
+  "userId": "test-user",
+  "userName": "Test Suite",
+  "channel": "test",
+  "threadTs": "test-thread",
+  "messageTs": "1752185902879",
+  "userMessage": "how many notes are on the account rayn group",
+  "conversationHistory": [],
+  "botActionHistory": [],
+  "agentThoughts": [],
+  "agentActions": [],
+  "finalResponse": "I'll search for \"rayn group\" and then check how many notes are on that account.\n\n✅ **Status**: Multi-step operation completed (read-only).",
+  "toolsUsed": [
+    {
+      "tool": "search_crm",
+      "input": {
+        "query": "rayn group"
+      },
+      "success": true,
+      "timestamp": "2025-07-10T22:18:49.099Z"
+    },
+    {
+      "tool": "search_crm",
+      "input": {
+        "query": "raine group"
+      },
+      "success": true,
+      "timestamp": "2025-07-10T22:18:49.099Z"
+    },
+    {
+      "tool": "search_crm",
+      "input": {
+        "query": "rain group"
+      },
+      "success": true,
+      "timestamp": "2025-07-10T22:18:49.099Z"
+    },
+    {
+      "tool": "get_notes",
+      "input": {
+        "entity_type": "company",
+        "entity_id": "a41e73b9-5dac-493f-bb2d-d38bb166c330",
+        "include_content": false
+      },
+      "success": true,
+      "timestamp": "2025-07-10T22:18:49.099Z"
+    }
+  ],
+  "success": true,
+  "error": null,
+  "processingTime": 26220,
+  "attachmentCount": 0,
+  "iterationCount": 0,
+  "timestamp": "2025-07-10T22:18:49.099Z",
+  "version": "1.12.0",
+  "environment": "development"
+}

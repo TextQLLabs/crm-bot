@@ -1,0 +1,19 @@
+{
+  "conversationId": "1752257836.572789",
+  "userId": "U04HC95ENRY",
+  "userName": "Ethan Ding",
+  "threadTs": "1752257836.572789",
+  "conversationHistory": [],
+  "botActionHistory": [],
+  "agentThoughts": [],
+  "agentActions": [],
+  "toolsUsed": [],
+  "success": true,
+  "error": null,
+  "processingTime": 0,
+  "attachmentCount": 0,
+  "iterationCount": 0,
+  "timestamp": "2025-07-11T18:17:23.306Z",
+  "version": "1.12.0",
+  "environment": "development"
+}

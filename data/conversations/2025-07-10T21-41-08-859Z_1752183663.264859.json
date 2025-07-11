@@ -1,0 +1,38 @@
+{
+  "conversationId": "1752183663.264859",
+  "userId": "U04HC95ENRY",
+  "userName": "Ethan Ding",
+  "channel": "C0946T1T4CB",
+  "threadTs": "1752183663.264859",
+  "messageTs": "1752183663.264859",
+  "userMessage": "User: get me a list of al lteh ntoes on bmg",
+  "conversationHistory": [
+    {
+      "user": "U04HC95ENRY",
+      "text": "get me a list of al lteh ntoes on bmg",
+      "ts": "1752183663.264859"
+    }
+  ],
+  "botActionHistory": [],
+  "agentThoughts": [],
+  "agentActions": [],
+  "finalResponse": "I'll search for \"bmg\" in your CRM and then get the notes for that entity.",
+  "toolsUsed": [
+    {
+      "tool": "search_crm",
+      "input": {
+        "query": "bmg"
+      },
+      "success": true,
+      "timestamp": "2025-07-10T21:41:08.858Z"
+    }
+  ],
+  "success": true,
+  "error": null,
+  "processingTime": 3453,
+  "attachmentCount": 0,
+  "iterationCount": 0,
+  "timestamp": "2025-07-10T21:41:08.858Z",
+  "version": "1.11.1",
+  "environment": "development"
+}

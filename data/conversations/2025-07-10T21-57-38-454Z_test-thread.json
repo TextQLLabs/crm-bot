@@ -1,0 +1,50 @@
+{
+  "conversationId": "test-thread",
+  "userId": "test-user-id",
+  "userName": "test-user",
+  "channel": "test",
+  "threadTs": "test-thread",
+  "messageTs": "1752184650507",
+  "userMessage": "get me a list of all the notes on bmg",
+  "conversationHistory": [],
+  "botActionHistory": [],
+  "agentThoughts": [],
+  "agentActions": [],
+  "finalResponse": "I'll search for BMG first and then get all the notes for that entity.\n\n✅ **Status**: Multi-step operation completed (read-only).",
+  "toolsUsed": [
+    {
+      "tool": "search_crm",
+      "input": {
+        "query": "BMG"
+      },
+      "success": true,
+      "timestamp": "2025-07-10T21:57:38.454Z"
+    },
+    {
+      "tool": "get_notes",
+      "input": {
+        "entity_type": "company",
+        "entity_id": "ebf8bdfb-27d0-4593-827d-098f0d1ddbc2"
+      },
+      "success": true,
+      "timestamp": "2025-07-10T21:57:38.454Z"
+    },
+    {
+      "tool": "get_notes",
+      "input": {
+        "entity_type": "deal",
+        "entity_id": "cd30b453-3dd8-420a-b32f-84968b7c5155"
+      },
+      "success": true,
+      "timestamp": "2025-07-10T21:57:38.454Z"
+    }
+  ],
+  "success": true,
+  "error": null,
+  "processingTime": 7947,
+  "attachmentCount": 0,
+  "iterationCount": 0,
+  "timestamp": "2025-07-10T21:57:38.454Z",
+  "version": "1.12.0",
+  "environment": "development"
+}

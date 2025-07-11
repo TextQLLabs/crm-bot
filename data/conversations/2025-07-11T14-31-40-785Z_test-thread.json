@@ -1,0 +1,25 @@
+{
+  "conversationId": "test-thread",
+  "userId": "test-user-id",
+  "userName": "test-user",
+  "channel": "test",
+  "threadTs": "test-thread",
+  "messageTs": "1752244300784",
+  "userMessage": "hey what can you do?",
+  "conversationHistory": [],
+  "botActionHistory": [],
+  "agentThoughts": [
+    "Hey! I'm your CRM Assistant for TextQL, integrated with your Attio CRM. Here's what I can help you with:\n\n## 🔍 **Search & Discovery**\n- **Find companies, deals, and people** - Just ask \"find Acme Corp\" or \"search for John Smith\"\n- **Advanced filtering** - \"Show me deals over $50k created this month\"\n- **Find related entities** - \"What deals does Microsoft have?\" or \"Who are the contacts at Google?\"\n- **Time-based searches** - \"Companies created last week\"\n\n## 📝 **Notes Management**\n- **Create notes** - \"Add note to Salesforce: meeting scheduled for Friday\"\n- **Get notes** - \"Show me all notes for Apple\" or \"What notes mention pricing?\"\n- **Delete notes** - \"Remove that note about the cancelled meeting\"\n- All notes automatically get linked to this Slack thread!\n\n## 🎯 **Smart Features**\n- **Fuzzy search** - I'll find \"Salesforce\" even if you type \"salesfroce\"\n- **Multi-step workflows** - Ask complex questions and I'll handle multiple steps at once\n- **Clickable links** - All results link directly to your Attio workspace\n- **Context awareness** - I remember what we've discussed in this thread\n\n## 💬 **Just Talk Naturally**\nTry things like:\n- \"Find that company we talked to about AI\"\n- \"How many notes does Microsoft have?\"\n- \"Create a note for our biggest deal: follow up needed\"\n- \"Show me all deals from last quarter\"\n\nWhat would you like to do first? I'm here to make your CRM management effortless! 🚀"
+  ],
+  "agentActions": [],
+  "finalResponse": "Hey! I'm your CRM Assistant for TextQL, integrated with your Attio CRM. Here's what I can help you with:\n\n## 🔍 **Search & Discovery**\n- **Find companies, deals, and people** - Just ask \"find Acme Corp\" or \"search for John Smith\"\n- **Advanced filtering** - \"Show me deals over $50k created this month\"\n- **Find related entities** - \"What deals does Microsoft have?\" or \"Who are the contacts at Google?\"\n- **Time-based searches** - \"Companies created last week\"\n\n## 📝 **Notes Management**\n- **Create notes** - \"Add note to Salesforce: meeting scheduled for Friday\"\n- **Get notes** - \"Show me all notes for Apple\" or \"What notes mention pricing?\"\n- **Delete notes** - \"Remove that note about the cancelled meeting\"\n- All notes automatically get linked to this Slack thread!\n\n## 🎯 **Smart Features**\n- **Fuzzy search** - I'll find \"Salesforce\" even if you type \"salesfroce\"\n- **Multi-step workflows** - Ask complex questions and I'll handle multiple steps at once\n- **Clickable links** - All results link directly to your Attio workspace\n- **Context awareness** - I remember what we've discussed in this thread\n\n## 💬 **Just Talk Naturally**\nTry things like:\n- \"Find that company we talked to about AI\"\n- \"How many notes does Microsoft have?\"\n- \"Create a note for our biggest deal: follow up needed\"\n- \"Show me all deals from last quarter\"\n\nWhat would you like to do first? I'm here to make your CRM management effortless! 🚀",
+  "toolsUsed": [],
+  "success": true,
+  "error": null,
+  "processingTime": 0,
+  "attachmentCount": 0,
+  "iterationCount": 0,
+  "timestamp": "2025-07-11T14:31:40.785Z",
+  "version": "1.12.0",
+  "environment": "development"
+}

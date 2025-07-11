@@ -1,0 +1,23 @@
+{
+  "conversationId": "test-thread",
+  "userId": "test-user",
+  "userName": "Test Suite",
+  "channel": "test",
+  "threadTs": "test-thread",
+  "messageTs": "1752184892784",
+  "userMessage": "show me all deals over $1 million",
+  "conversationHistory": [],
+  "botActionHistory": [],
+  "agentThoughts": [],
+  "agentActions": [],
+  "finalResponse": "I encountered an error processing your request. Please try again.",
+  "toolsUsed": [],
+  "success": false,
+  "error": "hasFailedSearchOnly is not defined",
+  "processingTime": 3406,
+  "attachmentCount": 0,
+  "iterationCount": 0,
+  "timestamp": "2025-07-10T22:01:36.190Z",
+  "version": "1.12.0",
+  "environment": "development"
+}

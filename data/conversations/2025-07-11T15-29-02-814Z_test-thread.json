@@ -1,0 +1,137 @@
+{
+  "conversationId": "test-thread",
+  "userId": "test-user-id",
+  "userName": "test-user",
+  "channel": "test",
+  "threadTs": "test-thread",
+  "messageTs": "1752247742813",
+  "userMessage": "get me a list of all the notes on bmg",
+  "conversationHistory": [],
+  "botActionHistory": [],
+  "agentThoughts": [
+    "It looks like there are no notes currently on **[BMG](https://app.attio.com/textql-data/company/ebf8bdfb-27d0-4593-827d-098f0d1ddbc2/overview)** (the music company).\n\nWould you like me to check the BMG deal for notes as well, or were you specifically looking for notes on the BMG company?"
+  ],
+  "agentActions": [
+    {
+      "tool": "search_crm",
+      "input": {
+        "query": "bmg"
+      },
+      "result": {
+        "0": {
+          "id": "ebf8bdfb-27d0-4593-827d-098f0d1ddbc2",
+          "name": "BMG",
+          "description": "BMG is a leading international music company specializing in music publishing and recording rights, prioritizing the needs of artists and songwriters to help them succeed in their careers.",
+          "domains": [
+            "bmg.com"
+          ],
+          "slug": "bmg.com",
+          "url": "https://app.attio.com/textql-data/company/ebf8bdfb-27d0-4593-827d-098f0d1ddbc2/overview",
+          "type": "company"
+        },
+        "1": {
+          "id": "cd30b453-3dd8-420a-b32f-84968b7c5155",
+          "name": "BMG",
+          "description": "Value: Unknown",
+          "url": "https://app.attio.com/textql-data/deals/cd30b453-3dd8-420a-b32f-84968b7c5155/overview",
+          "type": "deal"
+        },
+        "timing": {
+          "duration": 1639,
+          "startTime": 1752247733892,
+          "endTime": 1752247735531
+        }
+      },
+      "timing": {
+        "duration": 1639,
+        "startTime": 1752247733892,
+        "endTime": 1752247735531
+      }
+    },
+    {
+      "tool": "get_notes",
+      "input": {
+        "entity_type": "company",
+        "entity_id": "ebf8bdfb-27d0-4593-827d-098f0d1ddbc2"
+      },
+      "result": {
+        "timing": {
+          "duration": 507,
+          "startTime": 1752247738885,
+          "endTime": 1752247739392
+        }
+      },
+      "timing": {
+        "duration": 507,
+        "startTime": 1752247738885,
+        "endTime": 1752247739392
+      }
+    }
+  ],
+  "finalResponse": "It looks like there are no notes currently on **[BMG](https://app.attio.com/textql-data/company/ebf8bdfb-27d0-4593-827d-098f0d1ddbc2/overview)** (the music company).\n\nWould you like me to check the BMG deal for notes as well, or were you specifically looking for notes on the BMG company?",
+  "toolsUsed": [
+    {
+      "tool": "search_crm",
+      "input": {
+        "query": "bmg"
+      },
+      "result": {
+        "0": {
+          "id": "ebf8bdfb-27d0-4593-827d-098f0d1ddbc2",
+          "name": "BMG",
+          "description": "BMG is a leading international music company specializing in music publishing and recording rights, prioritizing the needs of artists and songwriters to help them succeed in their careers.",
+          "domains": [
+            "bmg.com"
+          ],
+          "slug": "bmg.com",
+          "url": "https://app.attio.com/textql-data/company/ebf8bdfb-27d0-4593-827d-098f0d1ddbc2/overview",
+          "type": "company"
+        },
+        "1": {
+          "id": "cd30b453-3dd8-420a-b32f-84968b7c5155",
+          "name": "BMG",
+          "description": "Value: Unknown",
+          "url": "https://app.attio.com/textql-data/deals/cd30b453-3dd8-420a-b32f-84968b7c5155/overview",
+          "type": "deal"
+        },
+        "timing": {
+          "duration": 1639,
+          "startTime": 1752247733892,
+          "endTime": 1752247735531
+        }
+      },
+      "timing": {
+        "duration": 1639,
+        "startTime": 1752247733892,
+        "endTime": 1752247735531
+      }
+    },
+    {
+      "tool": "get_notes",
+      "input": {
+        "entity_type": "company",
+        "entity_id": "ebf8bdfb-27d0-4593-827d-098f0d1ddbc2"
+      },
+      "result": {
+        "timing": {
+          "duration": 507,
+          "startTime": 1752247738885,
+          "endTime": 1752247739392
+        }
+      },
+      "timing": {
+        "duration": 507,
+        "startTime": 1752247738885,
+        "endTime": 1752247739392
+      }
+    }
+  ],
+  "success": true,
+  "error": null,
+  "processingTime": 0,
+  "attachmentCount": 0,
+  "iterationCount": 0,
+  "timestamp": "2025-07-11T15:29:02.813Z",
+  "version": "1.12.0",
+  "environment": "development"
+}

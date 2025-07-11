@@ -262,7 +262,7 @@ async function searchDeals(query) {
         id: deal.id?.record_id,
         name: name,
         description: `Value: ${value}`,
-        url: `https://app.attio.com/textql-data/deals/${deal.id?.record_id}/overview`
+        url: `https://app.attio.com/textql-data/deals/record/${deal.id?.record_id}/overview`
       };
     });
   } catch (error) {
@@ -357,7 +357,11 @@ async function createRecord(aiResult) {
     name: aiResult.entityName,
     recordId: record.id.record_id,
     notes: aiResult.notes,
-    attioUrl: `https://app.attio.com/${aiResult.entityType}s/${record.id.record_id}`
+    attioUrl: aiResult.entityType === 'deal' 
+      ? `https://app.attio.com/textql-data/deals/record/${record.id.record_id}/overview`
+      : aiResult.entityType === 'person'
+      ? `https://app.attio.com/textql-data/person/${record.id.record_id}/overview`
+      : `https://app.attio.com/textql-data/company/${record.id.record_id}/overview`
   };
 }
 
@@ -392,21 +396,31 @@ async function updateRecord(aiResult) {
     recordId: aiResult.targetId,
     notes: aiResult.notes,
     updates: Object.keys(aiResult.updates).map(key => `Updated ${key}`),
-    attioUrl: `https://app.attio.com/${aiResult.entityType}s/${aiResult.targetId}`
+    attioUrl: aiResult.entityType === 'deal' 
+      ? `https://app.attio.com/textql-data/deals/record/${aiResult.targetId}/overview`
+      : aiResult.entityType === 'person'
+      ? `https://app.attio.com/textql-data/person/${aiResult.targetId}/overview`
+      : `https://app.attio.com/textql-data/company/${aiResult.targetId}/overview`
   };
 }
 
-async function createNote(recordId, recordType, content) {
+async function createNote(recordId, recordType, content, messageContext = null, noteTitle = null) {
+  // Correct pluralization for Attio API
+  const pluralType = recordType === 'person' ? 'people' : 
+                     recordType === 'company' ? 'companies' :
+                     recordType === 'deal' ? 'deals' : 
+                     `${recordType}s`; // fallback to simple pluralization
+  
   const response = await getAttioClient().post('/notes', {
-    parent_object: `${recordType}s`,
-    parent_record_id: recordId,
-    title: 'Update from Slack',
-    content: {
-      content: content,
-      format: 'plaintext'
-    },
-    created_by_actor: {
-      type: 'api-token'
+    data: {
+      parent_object: pluralType,
+      parent_record_id: recordId,
+      title: noteTitle || 'Update from Slack',
+      content: content, // Direct string, not nested object
+      format: 'plaintext',
+      created_by_actor: {
+        type: 'api-token'
+      }
     }
   });
   
@@ -857,7 +871,7 @@ function formatSearchResult(record, entityType) {
       value: value,
       status: status,
       type: 'deal',
-      url: `${baseUrl}/deals/${record.id?.record_id}/overview`
+      url: `${baseUrl}/deals/record/${record.id?.record_id}/overview`
     };
   } else if (entityType === 'person') {
     let name = 'Unnamed Person';

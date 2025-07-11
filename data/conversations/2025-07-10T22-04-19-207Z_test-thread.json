@@ -1,0 +1,23 @@
+{
+  "conversationId": "test-thread",
+  "userId": "test-user-id",
+  "userName": "test-user",
+  "channel": "test",
+  "threadTs": "test-thread",
+  "messageTs": "1752185050629",
+  "userMessage": "hey what can you do?",
+  "conversationHistory": [],
+  "botActionHistory": [],
+  "agentThoughts": [],
+  "agentActions": [],
+  "finalResponse": "Hi there! I'm a CRM assistant that helps you manage your Attio CRM data. Here's what I can do for you:\n\n**Search & Find:**\n- Search for companies, people, and deals in your CRM\n- Find related entities (like all deals for a company, or people at a company)\n- Advanced filtering by deal value, date ranges, status, industry, location\n- Time-based searches (recent activity, new additions)\n\n**Notes Management:**\n- Create notes on companies, people, or deals\n- Search through existing notes by content or title\n- Delete individual notes or bulk delete with filters\n- Get full note details and history\n\n**Entity Management:**\n- Create new companies, people, or deals\n- Update existing entity information\n- Get detailed information about any entity\n\n**Advanced Features:**\n- Fuzzy search that handles typos and variations\n- Web search to verify company names and find correct spellings\n- Bulk operations with preview capabilities\n- Smart relationship mapping between entities\n\nI use Claude Sonnet 4 with native tool calling to interact directly with your Attio CRM. Just ask me things like \"search for Microsoft,\" \"add a note to Acme Corp,\" \"show me deals over $1M,\" or \"find recent companies\" and I'll help you out!\n\nWhat would you like to do with your CRM today?",
+  "toolsUsed": [],
+  "success": true,
+  "error": null,
+  "processingTime": 8578,
+  "attachmentCount": 0,
+  "iterationCount": 0,
+  "timestamp": "2025-07-10T22:04:19.207Z",
+  "version": "1.12.0",
+  "environment": "development"
+}

@@ -50,4 +50,4 @@ temp/
 globalConfig.json
 
 # Session files with secrets
-SESSION_SECRETS.md
+SESSION_SECRETS.md.env.temp

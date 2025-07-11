@@ -1,0 +1,38 @@
+{
+  "conversationId": "1752188239.422169",
+  "userId": "U0951TSB4P2",
+  "userName": "slack-mcp-textql-ethan",
+  "channel": "C0946T1T4CB",
+  "threadTs": "1752188239.422169",
+  "messageTs": "1752188239.422169",
+  "userMessage": "User: create a blackstone note: Partnership discussion about Sigma API - potential for metadata extraction and workbook design integration. They mentioned onyx and alt data as immediate opportunities.",
+  "conversationHistory": [
+    {
+      "user": "U0951TSB4P2",
+      "text": "create a blackstone note: Partnership discussion about Sigma API - potential for metadata extraction and workbook design integration. They mentioned onyx and alt data as immediate opportunities.",
+      "ts": "1752188239.422169"
+    }
+  ],
+  "botActionHistory": [],
+  "agentThoughts": [],
+  "agentActions": [],
+  "finalResponse": "I'll search for Blackstone in your CRM and then create that note for you.",
+  "toolsUsed": [
+    {
+      "tool": "search_crm",
+      "input": {
+        "query": "Blackstone"
+      },
+      "success": true,
+      "timestamp": "2025-07-10T22:57:27.160Z"
+    }
+  ],
+  "success": true,
+  "error": null,
+  "processingTime": 5565,
+  "attachmentCount": 0,
+  "iterationCount": 0,
+  "timestamp": "2025-07-10T22:57:27.160Z",
+  "version": "1.12.0",
+  "environment": "development"
+}

@@ -1,0 +1,63 @@
+{
+  "conversationId": "test-thread",
+  "userId": "test-user-id",
+  "userName": "test-user",
+  "channel": "test",
+  "threadTs": "test-thread",
+  "messageTs": "1752243549355",
+  "userMessage": "search for rayn group",
+  "conversationHistory": [],
+  "botActionHistory": [],
+  "agentThoughts": [
+    "I'll search for \"rayn group\" in the CRM for you."
+  ],
+  "agentActions": [
+    {
+      "tool": "search_crm",
+      "input": {
+        "query": "rayn group"
+      },
+      "result": {
+        "timing": {
+          "duration": 1051,
+          "startTime": 1752243543703,
+          "endTime": 1752243544754
+        }
+      },
+      "timing": {
+        "duration": 1051,
+        "startTime": 1752243543703,
+        "endTime": 1752243544754
+      }
+    }
+  ],
+  "finalResponse": "I searched for \"rayn group\" in the CRM, but I didn't find any matching results. \n\nLet me try a few variations to help you find what you're looking for:\n\n- Could you be looking for \"Rain Group\" (with an 'i')?\n- Or perhaps \"Ryan Group\" (with an 'a')?\n- Is there a specific company name or additional context that might help narrow the search?\n\nIf you can provide a bit more detail about the company you're looking for, I can run another search with different variations to help locate the right entity in your CRM.",
+  "toolsUsed": [
+    {
+      "tool": "search_crm",
+      "input": {
+        "query": "rayn group"
+      },
+      "result": {
+        "timing": {
+          "duration": 1051,
+          "startTime": 1752243543703,
+          "endTime": 1752243544754
+        }
+      },
+      "timing": {
+        "duration": 1051,
+        "startTime": 1752243543703,
+        "endTime": 1752243544754
+      }
+    }
+  ],
+  "success": true,
+  "error": null,
+  "processingTime": 0,
+  "attachmentCount": 0,
+  "iterationCount": 0,
+  "timestamp": "2025-07-11T14:19:09.355Z",
+  "version": "1.12.0",
+  "environment": "development"
+}

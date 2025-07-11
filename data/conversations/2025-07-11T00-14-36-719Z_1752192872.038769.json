@@ -1,0 +1,38 @@
+{
+  "conversationId": "1752192872.038769",
+  "userId": "U0951TSB4P2",
+  "userName": "slack-mcp-textql-ethan",
+  "channel": "C0946T1T4CB",
+  "threadTs": "1752192872.038769",
+  "messageTs": "1752192872.038769",
+  "userMessage": "User: create a blackstone note: Fix test - should use correct Blackstone ID from search results, not hardcoded Raine ID",
+  "conversationHistory": [
+    {
+      "user": "U0951TSB4P2",
+      "text": "create a blackstone note: Fix test - should use correct Blackstone ID from search results, not hardcoded Raine ID",
+      "ts": "1752192872.038769"
+    }
+  ],
+  "botActionHistory": [],
+  "agentThoughts": [],
+  "agentActions": [],
+  "finalResponse": "I'll search for Blackstone first and then create the note with the correct ID.",
+  "toolsUsed": [
+    {
+      "tool": "search_crm",
+      "input": {
+        "query": "blackstone"
+      },
+      "success": true,
+      "timestamp": "2025-07-11T00:14:36.715Z"
+    }
+  ],
+  "success": true,
+  "error": null,
+  "processingTime": 3100,
+  "attachmentCount": 0,
+  "iterationCount": 0,
+  "timestamp": "2025-07-11T00:14:36.715Z",
+  "version": "1.12.0",
+  "environment": "development"
+}

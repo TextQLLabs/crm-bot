@@ -1,0 +1,137 @@
+{
+  "conversationId": "test-thread",
+  "userId": "test-user-id",
+  "userName": "test-user",
+  "channel": "test",
+  "threadTs": "test-thread",
+  "messageTs": "1752256205477",
+  "userMessage": "summarize all the notes in bmg",
+  "conversationHistory": [],
+  "botActionHistory": [],
+  "agentThoughts": [
+    "## Notes Summary for **[BMG](https://app.attio.com/textql-data/company/ebf8bdfb-27d0-4593-827d-098f0d1ddbc2/overview)**\n\nCurrently, there are **no notes** recorded for BMG in the CRM system.\n\nBMG is described as \"a leading international music company specializing in music publishing and recording rights, prioritizing the needs of artists and songwriters to help them succeed in their careers.\"\n\nIf you'd like to add notes about BMG or need information about their related deals or contacts, just let me know!"
+  ],
+  "agentActions": [
+    {
+      "tool": "search_crm",
+      "input": {
+        "query": "bmg"
+      },
+      "result": {
+        "0": {
+          "id": "ebf8bdfb-27d0-4593-827d-098f0d1ddbc2",
+          "name": "BMG",
+          "description": "BMG is a leading international music company specializing in music publishing and recording rights, prioritizing the needs of artists and songwriters to help them succeed in their careers.",
+          "domains": [
+            "bmg.com"
+          ],
+          "slug": "bmg.com",
+          "url": "https://app.attio.com/textql-data/company/ebf8bdfb-27d0-4593-827d-098f0d1ddbc2/overview",
+          "type": "company"
+        },
+        "1": {
+          "id": "cd30b453-3dd8-420a-b32f-84968b7c5155",
+          "name": "BMG",
+          "description": "Value: Unknown",
+          "url": "https://app.attio.com/textql-data/deals/record/cd30b453-3dd8-420a-b32f-84968b7c5155/overview",
+          "type": "deal"
+        },
+        "timing": {
+          "duration": 3608,
+          "startTime": 1752256193716,
+          "endTime": 1752256197324
+        }
+      },
+      "timing": {
+        "duration": 3608,
+        "startTime": 1752256193716,
+        "endTime": 1752256197324
+      }
+    },
+    {
+      "tool": "get_notes",
+      "input": {
+        "entity_type": "company",
+        "entity_id": "ebf8bdfb-27d0-4593-827d-098f0d1ddbc2"
+      },
+      "result": {
+        "timing": {
+          "duration": 180,
+          "startTime": 1752256201584,
+          "endTime": 1752256201764
+        }
+      },
+      "timing": {
+        "duration": 180,
+        "startTime": 1752256201584,
+        "endTime": 1752256201764
+      }
+    }
+  ],
+  "finalResponse": "## Notes Summary for **[BMG](https://app.attio.com/textql-data/company/ebf8bdfb-27d0-4593-827d-098f0d1ddbc2/overview)**\n\nCurrently, there are **no notes** recorded for BMG in the CRM system.\n\nBMG is described as \"a leading international music company specializing in music publishing and recording rights, prioritizing the needs of artists and songwriters to help them succeed in their careers.\"\n\nIf you'd like to add notes about BMG or need information about their related deals or contacts, just let me know!",
+  "toolsUsed": [
+    {
+      "tool": "search_crm",
+      "input": {
+        "query": "bmg"
+      },
+      "result": {
+        "0": {
+          "id": "ebf8bdfb-27d0-4593-827d-098f0d1ddbc2",
+          "name": "BMG",
+          "description": "BMG is a leading international music company specializing in music publishing and recording rights, prioritizing the needs of artists and songwriters to help them succeed in their careers.",
+          "domains": [
+            "bmg.com"
+          ],
+          "slug": "bmg.com",
+          "url": "https://app.attio.com/textql-data/company/ebf8bdfb-27d0-4593-827d-098f0d1ddbc2/overview",
+          "type": "company"
+        },
+        "1": {
+          "id": "cd30b453-3dd8-420a-b32f-84968b7c5155",
+          "name": "BMG",
+          "description": "Value: Unknown",
+          "url": "https://app.attio.com/textql-data/deals/record/cd30b453-3dd8-420a-b32f-84968b7c5155/overview",
+          "type": "deal"
+        },
+        "timing": {
+          "duration": 3608,
+          "startTime": 1752256193716,
+          "endTime": 1752256197324
+        }
+      },
+      "timing": {
+        "duration": 3608,
+        "startTime": 1752256193716,
+        "endTime": 1752256197324
+      }
+    },
+    {
+      "tool": "get_notes",
+      "input": {
+        "entity_type": "company",
+        "entity_id": "ebf8bdfb-27d0-4593-827d-098f0d1ddbc2"
+      },
+      "result": {
+        "timing": {
+          "duration": 180,
+          "startTime": 1752256201584,
+          "endTime": 1752256201764
+        }
+      },
+      "timing": {
+        "duration": 180,
+        "startTime": 1752256201584,
+        "endTime": 1752256201764
+      }
+    }
+  ],
+  "success": true,
+  "error": null,
+  "processingTime": 0,
+  "attachmentCount": 0,
+  "iterationCount": 0,
+  "timestamp": "2025-07-11T17:50:05.477Z",
+  "version": "1.12.0",
+  "environment": "development"
+}

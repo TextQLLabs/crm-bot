@@ -1,0 +1,23 @@
+{
+  "conversationId": "test-thread",
+  "userId": "test-user-id",
+  "userName": "test-user",
+  "channel": "test",
+  "threadTs": "test-thread",
+  "messageTs": "1752184416209",
+  "userMessage": "list all tools available to you",
+  "conversationHistory": [],
+  "botActionHistory": [],
+  "agentThoughts": [],
+  "agentActions": [],
+  "finalResponse": "Here are all the tools available to me for managing your Attio CRM:\n\n## Search & Discovery Tools\n- **search_crm** - Basic search for companies, people, or deals by name\n- **advanced_search** - Advanced filtering with attributes like deal value, industry, location, status, date ranges, and sorting\n- **search_related_entities** - Find relationships between entities (e.g., deals for a company, people at a company)\n- **search_by_time_range** - Search entities created or updated within specific time periods\n- **web_search** - Search the web for current information (useful for verifying company names/spellings)\n\n## Entity Management Tools\n- **get_entity_details** - Get full details of a specific company, person, or deal\n- **create_entity** - Create new companies, people, or deals\n- **update_entity** - Update existing entity fields\n\n## Note Management Tools\n- **get_notes** - Retrieve notes with filtering, search, and sorting capabilities\n- **create_note** - Add notes to companies, people, or deals\n- **delete_note** - Delete single notes, multiple notes, or bulk delete with filters\n\n## Key Capabilities:\n- **Fuzzy Search**: Built-in spelling correction and partial name matching\n- **Relationship Mapping**: Find connections between companies, people, and deals\n- **Advanced Filtering**: Search by value ranges, dates, status, industry, location\n- **Bulk Operations**: Handle multiple records efficiently\n- **Note Management**: Full CRUD operations with content search and filtering\n\nI can help you search your CRM, manage records, create and organize notes, find relationships between entities, and perform complex queries with multiple filters. Just ask me what you'd like to do!",
+  "toolsUsed": [],
+  "success": true,
+  "error": null,
+  "processingTime": 9491,
+  "attachmentCount": 0,
+  "iterationCount": 0,
+  "timestamp": "2025-07-10T21:53:45.700Z",
+  "version": "1.12.0",
+  "environment": "development"
+}

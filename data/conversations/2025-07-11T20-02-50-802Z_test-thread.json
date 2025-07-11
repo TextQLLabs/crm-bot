@@ -1,0 +1,289 @@
+{
+  "conversationId": "test-thread",
+  "userId": "test-user-id",
+  "userName": "test-user",
+  "channel": "test",
+  "threadTs": "test-thread",
+  "messageTs": "1752264170801",
+  "userMessage": "create a note on Silver Lake saying \"Test note for verification\"",
+  "conversationHistory": [],
+  "botActionHistory": [],
+  "agentThoughts": [
+    "✅ *Note created successfully!*\n\nI've added the test note to *<https://app.attio.com/textql-data/company/00b511a9-6964-472f-83a4-102003f552c3/overview|Silver Lake>* with the content \"Test note for verification\".\n\nYou can view the note here: *<https://app.attio.com/textql-data/notes/notes?modal=note&id=7aebf2ff-c74d-4a8c-ba0d-e6603f54cf0e|Test Note>*"
+  ],
+  "agentActions": [
+    {
+      "tool": "search_crm",
+      "input": {
+        "query": "Silver Lake"
+      },
+      "result": {
+        "0": {
+          "id": "00b511a9-6964-472f-83a4-102003f552c3",
+          "name": "Silver Lake",
+          "description": "Silver Lake is a global technology investment firm with a portfolio generating $272B in revenue annually and employing 681K people. Focused on large-scale investments in leading technology companies across various sectors.",
+          "domains": [
+            "silverlake.com"
+          ],
+          "slug": "silverlake.com",
+          "url": "https://app.attio.com/textql-data/company/00b511a9-6964-472f-83a4-102003f552c3/overview",
+          "type": "company"
+        },
+        "1": {
+          "id": "017aeb49-4ee7-4a26-8750-419f920a6363",
+          "name": "Silverline",
+          "description": "Silverline is a Salesforce Partner that provides strategic planning, implementation, and ongoing support for businesses in the Financial Services, Healthcare, Media, and custom development industries. They offer industry experts, consulting services, c...",
+          "domains": [
+            "silverlinecrm.com"
+          ],
+          "slug": "silverlinecrm.com",
+          "url": "https://app.attio.com/textql-data/company/017aeb49-4ee7-4a26-8750-419f920a6363/overview",
+          "type": "company"
+        },
+        "2": {
+          "id": "55136d32-d235-409e-96b9-db70963e42ad",
+          "name": "Silver Point Capital",
+          "description": "Silver Point Capital, L.P. is a registered investment adviser focused on credit and special situations investments. With a core focus on risk management and a culture defined by integrity, Silver Point Capital manages $25 billion of investable assets a...",
+          "domains": [
+            "silverpointcapital.com"
+          ],
+          "slug": "silverpointcapital.com",
+          "url": "https://app.attio.com/textql-data/company/55136d32-d235-409e-96b9-db70963e42ad/overview",
+          "type": "company"
+        },
+        "3": {
+          "id": "6c9f5677-ee58-4a73-9e7b-a84f68d18d81",
+          "name": "Silverhawk Aviation",
+          "description": "Silverhawk Aviation is a fixed based operation located in Lincoln Nebraska. We offer line services in Phillips 66 pre blended Jet fuel and Avgas, and have the largest charter fleet in our area consisting of four King Air 90's, a King Air 200, a Citatio...",
+          "domains": [
+            "silverhawkaviation.com"
+          ],
+          "slug": "silverhawkaviation.com",
+          "url": "https://app.attio.com/textql-data/company/6c9f5677-ee58-4a73-9e7b-a84f68d18d81/overview",
+          "type": "company"
+        },
+        "4": {
+          "id": "7fa31927-44be-44ed-8773-a91ad236a595",
+          "name": "Silvergate Capital",
+          "description": "Silvergate Bank is a community bank that provides customized banking solutions to individuals and businesses in San Diego.",
+          "domains": [
+            "silvergatebank.com"
+          ],
+          "slug": "silvergatebank.com",
+          "url": "https://app.attio.com/textql-data/company/7fa31927-44be-44ed-8773-a91ad236a595/overview",
+          "type": "company"
+        },
+        "5": {
+          "id": "8b5c561a-1d78-4f86-86e9-2daceb417373",
+          "name": "Silversmith Capital Partners",
+          "description": "Silversmith Capital Partners is a Boston-based growth equity firm specializing in supporting entrepreneurs in technology and healthcare sectors to build profitable companies through collaboration and character-driven partnerships.",
+          "domains": [
+            "silversmith.com"
+          ],
+          "slug": "silversmith.com",
+          "url": "https://app.attio.com/textql-data/company/8b5c561a-1d78-4f86-86e9-2daceb417373/overview",
+          "type": "company"
+        },
+        "6": {
+          "id": "fc5b5f5f-bcf2-4e67-b79c-d496e448c78a",
+          "name": "SilverEdge Government Solutions",
+          "description": "Savli Group provides consultation and implementation services in the design, deployment and operation of enterprise-level ITSM and EMS solutions.",
+          "domains": [
+            "savli.com"
+          ],
+          "slug": "savli.com",
+          "url": "https://app.attio.com/textql-data/company/fc5b5f5f-bcf2-4e67-b79c-d496e448c78a/overview",
+          "type": "company"
+        },
+        "timing": {
+          "duration": 1672,
+          "startTime": 1752264160907,
+          "endTime": 1752264162579
+        }
+      },
+      "timing": {
+        "duration": 1672,
+        "startTime": 1752264160907,
+        "endTime": 1752264162579
+      }
+    },
+    {
+      "tool": "create_note",
+      "input": {
+        "entity_type": "company",
+        "entity_id": "00b511a9-6964-472f-83a4-102003f552c3",
+        "note_content": "Test note for verification",
+        "note_title": "Test Note"
+      },
+      "result": {
+        "id": {
+          "workspace_id": "e7a14bb2-4839-4af2-bddc-e1a698453cc4",
+          "note_id": "7aebf2ff-c74d-4a8c-ba0d-e6603f54cf0e"
+        },
+        "parent_object": "companies",
+        "parent_record_id": "00b511a9-6964-472f-83a4-102003f552c3",
+        "title": "Test Note",
+        "content_plaintext": "Test note for verification",
+        "content_markdown": "Test note for verification",
+        "tags": [],
+        "created_by_actor": {
+          "type": "api-token",
+          "id": "fb097f89-e0e3-4088-bc13-3cfbb46660f7"
+        },
+        "created_at": "2025-07-11T20:02:46.313000000Z",
+        "timing": {
+          "duration": 674,
+          "startTime": 1752264166092,
+          "endTime": 1752264166766
+        }
+      },
+      "timing": {
+        "duration": 674,
+        "startTime": 1752264166092,
+        "endTime": 1752264166766
+      }
+    }
+  ],
+  "finalResponse": "✅ *Note created successfully!*\n\nI've added the test note to *<https://app.attio.com/textql-data/company/00b511a9-6964-472f-83a4-102003f552c3/overview|Silver Lake>* with the content \"Test note for verification\".\n\nYou can view the note here: *<https://app.attio.com/textql-data/notes/notes?modal=note&id=7aebf2ff-c74d-4a8c-ba0d-e6603f54cf0e|Test Note>*",
+  "toolsUsed": [
+    {
+      "tool": "search_crm",
+      "input": {
+        "query": "Silver Lake"
+      },
+      "result": {
+        "0": {
+          "id": "00b511a9-6964-472f-83a4-102003f552c3",
+          "name": "Silver Lake",
+          "description": "Silver Lake is a global technology investment firm with a portfolio generating $272B in revenue annually and employing 681K people. Focused on large-scale investments in leading technology companies across various sectors.",
+          "domains": [
+            "silverlake.com"
+          ],
+          "slug": "silverlake.com",
+          "url": "https://app.attio.com/textql-data/company/00b511a9-6964-472f-83a4-102003f552c3/overview",
+          "type": "company"
+        },
+        "1": {
+          "id": "017aeb49-4ee7-4a26-8750-419f920a6363",
+          "name": "Silverline",
+          "description": "Silverline is a Salesforce Partner that provides strategic planning, implementation, and ongoing support for businesses in the Financial Services, Healthcare, Media, and custom development industries. They offer industry experts, consulting services, c...",
+          "domains": [
+            "silverlinecrm.com"
+          ],
+          "slug": "silverlinecrm.com",
+          "url": "https://app.attio.com/textql-data/company/017aeb49-4ee7-4a26-8750-419f920a6363/overview",
+          "type": "company"
+        },
+        "2": {
+          "id": "55136d32-d235-409e-96b9-db70963e42ad",
+          "name": "Silver Point Capital",
+          "description": "Silver Point Capital, L.P. is a registered investment adviser focused on credit and special situations investments. With a core focus on risk management and a culture defined by integrity, Silver Point Capital manages $25 billion of investable assets a...",
+          "domains": [
+            "silverpointcapital.com"
+          ],
+          "slug": "silverpointcapital.com",
+          "url": "https://app.attio.com/textql-data/company/55136d32-d235-409e-96b9-db70963e42ad/overview",
+          "type": "company"
+        },
+        "3": {
+          "id": "6c9f5677-ee58-4a73-9e7b-a84f68d18d81",
+          "name": "Silverhawk Aviation",
+          "description": "Silverhawk Aviation is a fixed based operation located in Lincoln Nebraska. We offer line services in Phillips 66 pre blended Jet fuel and Avgas, and have the largest charter fleet in our area consisting of four King Air 90's, a King Air 200, a Citatio...",
+          "domains": [
+            "silverhawkaviation.com"
+          ],
+          "slug": "silverhawkaviation.com",
+          "url": "https://app.attio.com/textql-data/company/6c9f5677-ee58-4a73-9e7b-a84f68d18d81/overview",
+          "type": "company"
+        },
+        "4": {
+          "id": "7fa31927-44be-44ed-8773-a91ad236a595",
+          "name": "Silvergate Capital",
+          "description": "Silvergate Bank is a community bank that provides customized banking solutions to individuals and businesses in San Diego.",
+          "domains": [
+            "silvergatebank.com"
+          ],
+          "slug": "silvergatebank.com",
+          "url": "https://app.attio.com/textql-data/company/7fa31927-44be-44ed-8773-a91ad236a595/overview",
+          "type": "company"
+        },
+        "5": {
+          "id": "8b5c561a-1d78-4f86-86e9-2daceb417373",
+          "name": "Silversmith Capital Partners",
+          "description": "Silversmith Capital Partners is a Boston-based growth equity firm specializing in supporting entrepreneurs in technology and healthcare sectors to build profitable companies through collaboration and character-driven partnerships.",
+          "domains": [
+            "silversmith.com"
+          ],
+          "slug": "silversmith.com",
+          "url": "https://app.attio.com/textql-data/company/8b5c561a-1d78-4f86-86e9-2daceb417373/overview",
+          "type": "company"
+        },
+        "6": {
+          "id": "fc5b5f5f-bcf2-4e67-b79c-d496e448c78a",
+          "name": "SilverEdge Government Solutions",
+          "description": "Savli Group provides consultation and implementation services in the design, deployment and operation of enterprise-level ITSM and EMS solutions.",
+          "domains": [
+            "savli.com"
+          ],
+          "slug": "savli.com",
+          "url": "https://app.attio.com/textql-data/company/fc5b5f5f-bcf2-4e67-b79c-d496e448c78a/overview",
+          "type": "company"
+        },
+        "timing": {
+          "duration": 1672,
+          "startTime": 1752264160907,
+          "endTime": 1752264162579
+        }
+      },
+      "timing": {
+        "duration": 1672,
+        "startTime": 1752264160907,
+        "endTime": 1752264162579
+      }
+    },
+    {
+      "tool": "create_note",
+      "input": {
+        "entity_type": "company",
+        "entity_id": "00b511a9-6964-472f-83a4-102003f552c3",
+        "note_content": "Test note for verification",
+        "note_title": "Test Note"
+      },
+      "result": {
+        "id": {
+          "workspace_id": "e7a14bb2-4839-4af2-bddc-e1a698453cc4",
+          "note_id": "7aebf2ff-c74d-4a8c-ba0d-e6603f54cf0e"
+        },
+        "parent_object": "companies",
+        "parent_record_id": "00b511a9-6964-472f-83a4-102003f552c3",
+        "title": "Test Note",
+        "content_plaintext": "Test note for verification",
+        "content_markdown": "Test note for verification",
+        "tags": [],
+        "created_by_actor": {
+          "type": "api-token",
+          "id": "fb097f89-e0e3-4088-bc13-3cfbb46660f7"
+        },
+        "created_at": "2025-07-11T20:02:46.313000000Z",
+        "timing": {
+          "duration": 674,
+          "startTime": 1752264166092,
+          "endTime": 1752264166766
+        }
+      },
+      "timing": {
+        "duration": 674,
+        "startTime": 1752264166092,
+        "endTime": 1752264166766
+      }
+    }
+  ],
+  "success": true,
+  "error": null,
+  "processingTime": 0,
+  "attachmentCount": 0,
+  "iterationCount": 0,
+  "timestamp": "2025-07-11T20:02:50.801Z",
+  "version": "1.12.0",
+  "environment": "development"
+}

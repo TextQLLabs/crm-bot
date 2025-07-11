@@ -4,6 +4,28 @@ const express = require('express');
 const { handleMention, handleButtonAction } = require('./handlers/slackHandlerClaude'); // Using Claude handler
 const healthRoutes = require('./health');
 
+// Message deduplication to prevent duplicate processing
+const processedMessages = new Map();
+const MESSAGE_TTL = 5 * 60 * 1000; // 5 minutes
+
+function isMessageAlreadyProcessed(messageKey) {
+  const now = Date.now();
+  
+  // Clean up old entries
+  for (const [key, timestamp] of processedMessages.entries()) {
+    if (now - timestamp > MESSAGE_TTL) {
+      processedMessages.delete(key);
+    }
+  }
+  
+  if (processedMessages.has(messageKey)) {
+    return true;
+  }
+  
+  processedMessages.set(messageKey, now);
+  return false;
+}
+
 // Database service - will attempt MongoDB first, fallback to mock
 let connectDB;
 let dbService = 'MongoDB';
@@ -72,8 +94,17 @@ if (isSocketMode) {
 // Handle app mentions in any channel with error handling
 app.event('app_mention', async ({ event, client, ack }) => {
   try {
-    // Acknowledge immediately
-    if (ack) await ack();
+    // Acknowledge immediately if ack function is provided
+    if (typeof ack === 'function') {
+      await ack();
+    }
+    
+    // Prevent duplicate processing
+    const messageKey = `${event.channel}-${event.ts}`;
+    if (isMessageAlreadyProcessed(messageKey)) {
+      console.log(`⏭️ Skipping duplicate app_mention: ${messageKey}`);
+      return;
+    }
     
     // Additional safety check - make sure this is for the right bot
     const isDev = process.env.NODE_ENV === 'development';
@@ -95,6 +126,13 @@ app.event('app_mention', async ({ event, client, ack }) => {
 // Handle direct messages and thread replies with @mentions only
 app.message(async ({ message, say, client }) => {
   try {
+    // Prevent duplicate processing
+    const messageKey = `${message.channel}-${message.ts}`;
+    if (isMessageAlreadyProcessed(messageKey)) {
+      console.log(`⏭️ Skipping duplicate message: ${messageKey}`);
+      return;
+    }
+    
     // Handle DMs
     if (message.channel_type === 'im') {
       await handleMention({ message, client });

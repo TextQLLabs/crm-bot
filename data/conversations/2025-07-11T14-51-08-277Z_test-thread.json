@@ -1,0 +1,25 @@
+{
+  "conversationId": "test-thread",
+  "userId": "test-user-id",
+  "userName": "test-user",
+  "channel": "test",
+  "threadTs": "test-thread",
+  "messageTs": "1752245468277",
+  "userMessage": "hey what can you do?",
+  "conversationHistory": [],
+  "botActionHistory": [],
+  "agentThoughts": [
+    "Hey! I'm your CRM Assistant for TextQL, integrated with your Attio CRM. Here's what I can help you with:\n\n## 🔍 **Search & Discovery**\n- **Find anything**: \"Find Acme Corp\" or \"Show me deals with John\"\n- **Smart search**: I handle typos and fuzzy matching automatically\n- **Advanced filtering**: \"Show deals over $50k created this month\"\n- **Related entities**: \"Find all contacts at Microsoft\"\n- **Time-based search**: \"Show companies added last week\"\n\n## 📝 **Notes Management**\n- **Create notes**: \"Add note to Acme Corp: Meeting scheduled for Friday\"\n- **View notes**: \"Show me all notes for John Smith\"\n- **Search notes**: \"Find notes mentioning 'contract renewal'\"\n- **Delete notes**: \"Remove that note about the pricing discussion\"\n\n## 🎯 **Smart Features**\n- **Multi-step workflows**: I can search for a company and add a note in one go\n- **Parallel processing**: I'll run multiple searches simultaneously when helpful\n- **Intelligent matching**: If you search for \"Microsft\" I'll find \"Microsoft\"\n- **Context awareness**: I remember what we've discussed in this conversation\n\n## 💡 **Example Commands**\n- \"Find Salesforce and count their notes\"\n- \"Create a note for Google: Demo went well, follow up next week\"\n- \"Show me all deals over $100k\"\n- \"What notes do we have about the Q4 planning?\"\n\n## 🔗 **Slack Integration**\n- Notes automatically link to this Slack thread\n- Clickable links to view entities in Attio\n- Real-time confirmations for all actions\n\nJust ask me naturally - I'll figure out what you need and get it done! What would you like to help you with?"
+  ],
+  "agentActions": [],
+  "finalResponse": "Hey! I'm your CRM Assistant for TextQL, integrated with your Attio CRM. Here's what I can help you with:\n\n## 🔍 **Search & Discovery**\n- **Find anything**: \"Find Acme Corp\" or \"Show me deals with John\"\n- **Smart search**: I handle typos and fuzzy matching automatically\n- **Advanced filtering**: \"Show deals over $50k created this month\"\n- **Related entities**: \"Find all contacts at Microsoft\"\n- **Time-based search**: \"Show companies added last week\"\n\n## 📝 **Notes Management**\n- **Create notes**: \"Add note to Acme Corp: Meeting scheduled for Friday\"\n- **View notes**: \"Show me all notes for John Smith\"\n- **Search notes**: \"Find notes mentioning 'contract renewal'\"\n- **Delete notes**: \"Remove that note about the pricing discussion\"\n\n## 🎯 **Smart Features**\n- **Multi-step workflows**: I can search for a company and add a note in one go\n- **Parallel processing**: I'll run multiple searches simultaneously when helpful\n- **Intelligent matching**: If you search for \"Microsft\" I'll find \"Microsoft\"\n- **Context awareness**: I remember what we've discussed in this conversation\n\n## 💡 **Example Commands**\n- \"Find Salesforce and count their notes\"\n- \"Create a note for Google: Demo went well, follow up next week\"\n- \"Show me all deals over $100k\"\n- \"What notes do we have about the Q4 planning?\"\n\n## 🔗 **Slack Integration**\n- Notes automatically link to this Slack thread\n- Clickable links to view entities in Attio\n- Real-time confirmations for all actions\n\nJust ask me naturally - I'll figure out what you need and get it done! What would you like to help you with?",
+  "toolsUsed": [],
+  "success": true,
+  "error": null,
+  "processingTime": 0,
+  "attachmentCount": 0,
+  "iterationCount": 0,
+  "timestamp": "2025-07-11T14:51:08.277Z",
+  "version": "1.12.0",
+  "environment": "development"
+}

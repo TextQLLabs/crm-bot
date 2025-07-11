@@ -1,0 +1,40 @@
+{
+  "conversationId": "test-thread",
+  "userId": "test-user-id",
+  "userName": "test-user",
+  "channel": "test",
+  "threadTs": "test-thread",
+  "messageTs": "1752184386009",
+  "userMessage": "search for rayn group",
+  "conversationHistory": [],
+  "botActionHistory": [],
+  "agentThoughts": [],
+  "agentActions": [],
+  "finalResponse": "I'll search for \"rayn group\" in your CRM.\n\n✅ **Status**: Multi-step operation completed (read-only).",
+  "toolsUsed": [
+    {
+      "tool": "search_crm",
+      "input": {
+        "query": "rayn group"
+      },
+      "success": true,
+      "timestamp": "2025-07-10T21:53:14.110Z"
+    },
+    {
+      "tool": "search_crm",
+      "input": {
+        "query": "rayn"
+      },
+      "success": true,
+      "timestamp": "2025-07-10T21:53:14.110Z"
+    }
+  ],
+  "success": true,
+  "error": null,
+  "processingTime": 8101,
+  "attachmentCount": 0,
+  "iterationCount": 0,
+  "timestamp": "2025-07-10T21:53:14.110Z",
+  "version": "1.12.0",
+  "environment": "development"
+}

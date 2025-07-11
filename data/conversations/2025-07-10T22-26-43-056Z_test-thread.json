@@ -1,0 +1,32 @@
+{
+  "conversationId": "test-thread",
+  "userId": "test-user-id",
+  "userName": "test-user",
+  "channel": "test",
+  "threadTs": "test-thread",
+  "messageTs": "1752186399932",
+  "userMessage": "get me a list of all the notes on bmg",
+  "conversationHistory": [],
+  "botActionHistory": [],
+  "agentThoughts": [],
+  "agentActions": [],
+  "finalResponse": "I'll search for BMG in your CRM and then get all the notes for that entity.",
+  "toolsUsed": [
+    {
+      "tool": "search_crm",
+      "input": {
+        "query": "bmg"
+      },
+      "success": true,
+      "timestamp": "2025-07-10T22:26:43.056Z"
+    }
+  ],
+  "success": true,
+  "error": null,
+  "processingTime": 3124,
+  "attachmentCount": 0,
+  "iterationCount": 0,
+  "timestamp": "2025-07-10T22:26:43.056Z",
+  "version": "1.11.1",
+  "environment": "development"
+}

@@ -1,0 +1,56 @@
+{
+  "conversationId": "test-thread",
+  "userId": "test-user-id",
+  "userName": "test-user",
+  "channel": "test",
+  "threadTs": "test-thread",
+  "messageTs": "1752185493525",
+  "userMessage": "search for rayn group",
+  "conversationHistory": [],
+  "botActionHistory": [],
+  "agentThoughts": [],
+  "agentActions": [],
+  "finalResponse": "I'll search for \"rayn group\" and try some variations to find the best match.",
+  "toolsUsed": [
+    {
+      "tool": "search_crm",
+      "input": {
+        "query": "rayn group"
+      },
+      "success": true,
+      "timestamp": "2025-07-10T22:11:39.267Z"
+    },
+    {
+      "tool": "search_crm",
+      "input": {
+        "query": "raine group"
+      },
+      "success": true,
+      "timestamp": "2025-07-10T22:11:39.267Z"
+    },
+    {
+      "tool": "search_crm",
+      "input": {
+        "query": "rain group"
+      },
+      "success": true,
+      "timestamp": "2025-07-10T22:11:39.267Z"
+    },
+    {
+      "tool": "search_crm",
+      "input": {
+        "query": "rayn"
+      },
+      "success": true,
+      "timestamp": "2025-07-10T22:11:39.267Z"
+    }
+  ],
+  "success": true,
+  "error": null,
+  "processingTime": 5742,
+  "attachmentCount": 0,
+  "iterationCount": 0,
+  "timestamp": "2025-07-10T22:11:39.267Z",
+  "version": "1.11.1",
+  "environment": "development"
+}

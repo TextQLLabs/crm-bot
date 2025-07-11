@@ -1,0 +1,25 @@
+{
+  "conversationId": "test-thread",
+  "userId": "test-user-id",
+  "userName": "test-user",
+  "channel": "test",
+  "threadTs": "test-thread",
+  "messageTs": "1752244533826",
+  "userMessage": "hey what can you do?",
+  "conversationHistory": [],
+  "botActionHistory": [],
+  "agentThoughts": [
+    "Hey! I'm your CRM Assistant for TextQL, integrated with your Attio CRM. Here's what I can help you with:\n\n## 🔍 **Search & Discovery**\n- **Find companies, deals, and people** - Just ask \"find Acme Corp\" or \"search for John Smith\"\n- **Advanced filtering** - Search by deal value, creation dates, status, etc.\n- **Related entities** - Find all contacts at a company or deals for a person\n- **Time-based searches** - \"Show me deals created this month\"\n\n## 📝 **Notes Management**\n- **Create notes** - \"Add note to Acme Corp: meeting scheduled for Friday\"\n- **Get notes** - \"Show me all notes for John Smith\" or \"count notes on this deal\"\n- **Search notes** - Find notes containing specific keywords\n- **Delete notes** - Remove outdated or incorrect notes\n\n## 🎯 **Smart Features**\n- **Fuzzy matching** - I'll find \"Acme\" even if you type \"Acmee\" or \"ACME Corp\"\n- **Multi-step workflows** - I can search, create notes, and provide links all in one go\n- **Slack integration** - Notes automatically link back to our conversation\n- **Parallel processing** - I can run multiple searches simultaneously\n\n## 💬 **Just Talk Naturally**\nYou can ask things like:\n- \"Find that company we talked about yesterday\"\n- \"How many notes does Microsoft have?\"\n- \"Create a note on the Google deal about the pricing discussion\"\n- \"Show me all deals over $50k from last quarter\"\n\nI'm designed to understand context and handle typos, so just ask me what you need! What would you like to do first?"
+  ],
+  "agentActions": [],
+  "finalResponse": "Hey! I'm your CRM Assistant for TextQL, integrated with your Attio CRM. Here's what I can help you with:\n\n## 🔍 **Search & Discovery**\n- **Find companies, deals, and people** - Just ask \"find Acme Corp\" or \"search for John Smith\"\n- **Advanced filtering** - Search by deal value, creation dates, status, etc.\n- **Related entities** - Find all contacts at a company or deals for a person\n- **Time-based searches** - \"Show me deals created this month\"\n\n## 📝 **Notes Management**\n- **Create notes** - \"Add note to Acme Corp: meeting scheduled for Friday\"\n- **Get notes** - \"Show me all notes for John Smith\" or \"count notes on this deal\"\n- **Search notes** - Find notes containing specific keywords\n- **Delete notes** - Remove outdated or incorrect notes\n\n## 🎯 **Smart Features**\n- **Fuzzy matching** - I'll find \"Acme\" even if you type \"Acmee\" or \"ACME Corp\"\n- **Multi-step workflows** - I can search, create notes, and provide links all in one go\n- **Slack integration** - Notes automatically link back to our conversation\n- **Parallel processing** - I can run multiple searches simultaneously\n\n## 💬 **Just Talk Naturally**\nYou can ask things like:\n- \"Find that company we talked about yesterday\"\n- \"How many notes does Microsoft have?\"\n- \"Create a note on the Google deal about the pricing discussion\"\n- \"Show me all deals over $50k from last quarter\"\n\nI'm designed to understand context and handle typos, so just ask me what you need! What would you like to do first?",
+  "toolsUsed": [],
+  "success": true,
+  "error": null,
+  "processingTime": 0,
+  "attachmentCount": 0,
+  "iterationCount": 0,
+  "timestamp": "2025-07-11T14:35:33.826Z",
+  "version": "1.12.0",
+  "environment": "development"
+}

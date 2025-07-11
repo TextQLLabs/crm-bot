@@ -1,0 +1,29 @@
+{
+  "conversationId": "1752187215.800789",
+  "userId": "U04HC95ENRY",
+  "userName": "Ethan Ding",
+  "channel": "C0946T1T4CB",
+  "threadTs": "1752187215.800789",
+  "messageTs": "1752187215.800789",
+  "userMessage": "User: test",
+  "conversationHistory": [
+    {
+      "user": "U04HC95ENRY",
+      "text": "test",
+      "ts": "1752187215.800789"
+    }
+  ],
+  "botActionHistory": [],
+  "agentThoughts": [],
+  "agentActions": [],
+  "finalResponse": "Hello! I'm your CRM assistant for Attio. I can help you with various tasks like:\n\n- **Search** for companies, people, and deals in your CRM\n- **Create and manage notes** on records\n- **Update entity information** \n- **Find relationships** between entities\n- **Advanced filtering** by date ranges, deal values, status, etc.\n\nWhat would you like to do? You can try searching for a company, person, or deal, or ask me to help with any other CRM task!",
+  "toolsUsed": [],
+  "success": true,
+  "error": null,
+  "processingTime": 3752,
+  "attachmentCount": 0,
+  "iterationCount": 0,
+  "timestamp": "2025-07-10T22:40:21.428Z",
+  "version": "1.12.0",
+  "environment": "development"
+}

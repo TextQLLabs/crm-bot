@@ -1,0 +1,25 @@
+{
+  "conversationId": "test-thread",
+  "userId": "test-user-id",
+  "userName": "test-user",
+  "channel": "test",
+  "threadTs": "test-thread",
+  "messageTs": "1752261497931",
+  "userMessage": "list all tools available to you",
+  "conversationHistory": [],
+  "botActionHistory": [],
+  "agentThoughts": [
+    "Here are all the tools available to me as your CRM Assistant:\n\n*🔍 Search & Discovery Tools*\n\n• **search_crm** - Find companies, deals, and people by name (supports fuzzy matching)\n• **advanced_search** - Filter entities by criteria like deal value, creation date, status, stage\n• **search_related_entities** - Find related contacts, deals, or companies for a specific entity\n• **search_by_time_range** - Search for entities created or modified within specific time periods\n• **web_search** - Fallback search for spelling corrections and \"did you mean\" suggestions\n\n*📝 Notes Management Tools*\n\n• **create_note** - Add notes to any company, person, or deal with automatic Slack thread links\n• **get_notes** - Retrieve and filter notes by entity, date, or content\n• **delete_note** - Remove specific notes (with confirmation)\n\n*🎯 How I Use These Tools*\n\nI can combine these tools intelligently to handle complex requests in single responses. For example:\n- \"Find Acme Corp and add a note\" → search_crm + create_note\n- \"List all notes for TechStart\" → search_crm + get_notes  \n- \"Show me high-value deals from last month\" → advanced_search with filters\n\n*💡 Smart Features*\n\n- **Fuzzy matching**: I'll find \"Microsft\" when you mean \"Microsoft\"\n- **Parallel execution**: I can run multiple searches simultaneously\n- **Auto-corrections**: I'll try spelling variations if initial search fails\n- **Clickable links**: All results include direct links to Attio CRM\n\nWhat would you like me to help you with in your CRM today?"
+  ],
+  "agentActions": [],
+  "finalResponse": "Here are all the tools available to me as your CRM Assistant:\n\n*🔍 Search & Discovery Tools*\n\n• **search_crm** - Find companies, deals, and people by name (supports fuzzy matching)\n• **advanced_search** - Filter entities by criteria like deal value, creation date, status, stage\n• **search_related_entities** - Find related contacts, deals, or companies for a specific entity\n• **search_by_time_range** - Search for entities created or modified within specific time periods\n• **web_search** - Fallback search for spelling corrections and \"did you mean\" suggestions\n\n*📝 Notes Management Tools*\n\n• **create_note** - Add notes to any company, person, or deal with automatic Slack thread links\n• **get_notes** - Retrieve and filter notes by entity, date, or content\n• **delete_note** - Remove specific notes (with confirmation)\n\n*🎯 How I Use These Tools*\n\nI can combine these tools intelligently to handle complex requests in single responses. For example:\n- \"Find Acme Corp and add a note\" → search_crm + create_note\n- \"List all notes for TechStart\" → search_crm + get_notes  \n- \"Show me high-value deals from last month\" → advanced_search with filters\n\n*💡 Smart Features*\n\n- **Fuzzy matching**: I'll find \"Microsft\" when you mean \"Microsoft\"\n- **Parallel execution**: I can run multiple searches simultaneously\n- **Auto-corrections**: I'll try spelling variations if initial search fails\n- **Clickable links**: All results include direct links to Attio CRM\n\nWhat would you like me to help you with in your CRM today?",
+  "toolsUsed": [],
+  "success": true,
+  "error": null,
+  "processingTime": 0,
+  "attachmentCount": 0,
+  "iterationCount": 0,
+  "timestamp": "2025-07-11T19:18:17.932Z",
+  "version": "1.12.0",
+  "environment": "development"
+}

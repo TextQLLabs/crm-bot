@@ -1,0 +1,48 @@
+{
+  "conversationId": "1752192989.533309",
+  "userId": "U0951TSB4P2",
+  "userName": "slack-mcp-textql-ethan",
+  "channel": "C0946T1T4CB",
+  "threadTs": "1752192989.533309",
+  "messageTs": "1752192989.533309",
+  "userMessage": "User: create a blackstone note: URGENT TEST - execute search_crm AND create_note in single response, show me the note link",
+  "conversationHistory": [
+    {
+      "user": "U0951TSB4P2",
+      "text": "create a blackstone note: URGENT TEST - execute search_crm AND create_note in single response, show me the note link",
+      "ts": "1752192989.533309"
+    }
+  ],
+  "botActionHistory": [],
+  "agentThoughts": [],
+  "agentActions": [],
+  "finalResponse": "I'll search for Blackstone and create the note immediately.",
+  "toolsUsed": [
+    {
+      "tool": "search_crm",
+      "input": {
+        "query": "Blackstone"
+      },
+      "success": true,
+      "timestamp": "2025-07-11T00:16:37.287Z"
+    },
+    {
+      "tool": "create_note",
+      "input": {
+        "entity_type": "company",
+        "entity_id": "blackstone-group-inc",
+        "note_content": "URGENT TEST"
+      },
+      "success": false,
+      "timestamp": "2025-07-11T00:16:37.287Z"
+    }
+  ],
+  "success": true,
+  "error": null,
+  "processingTime": 5170,
+  "attachmentCount": 0,
+  "iterationCount": 0,
+  "timestamp": "2025-07-11T00:16:37.288Z",
+  "version": "1.12.0",
+  "environment": "development"
+}

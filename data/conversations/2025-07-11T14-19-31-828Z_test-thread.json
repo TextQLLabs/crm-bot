@@ -1,0 +1,25 @@
+{
+  "conversationId": "test-thread",
+  "userId": "test-user-id",
+  "userName": "test-user",
+  "channel": "test",
+  "threadTs": "test-thread",
+  "messageTs": "1752243571828",
+  "userMessage": "hey what can you do?",
+  "conversationHistory": [],
+  "botActionHistory": [],
+  "agentThoughts": [
+    "Hey! I'm your CRM Assistant for TextQL, integrated with your Attio CRM. Here's what I can help you with:\n\n## 🔍 **Search & Discovery**\n- **Find anything**: \"find acme corp\" or \"search for john smith\"\n- **Advanced filtering**: \"show deals over $50k created this month\"\n- **Related entities**: \"find all contacts at Microsoft\" or \"show deals for Sarah\"\n- **Time-based searches**: \"companies created last week\"\n\n## 📝 **Notes Management**\n- **Create notes**: \"add note to acme: meeting scheduled for Friday\"\n- **Get notes**: \"show me all notes for john smith\" or \"count notes on this deal\"\n- **Search notes**: \"find notes mentioning 'contract renewal'\"\n- **Delete notes**: \"remove that note about the pricing discussion\"\n\n## 🎯 **Smart Features**\n- **Fuzzy matching**: I'll find \"Microsft\" even if you meant \"Microsoft\"\n- **Multi-step workflows**: Ask complex questions and I'll handle multiple steps automatically\n- **Slack integration**: Notes automatically link to our conversation threads\n- **Parallel processing**: I can search multiple things at once for faster results\n\n## 💬 **Natural Conversation**\nJust talk to me naturally! Try things like:\n- \"How many notes does Raine Ventures have?\"\n- \"Create a note for our biggest deal about the contract review\"\n- \"Find all companies we added this week\"\n- \"Show me Sarah's contact details and recent notes\"\n\nI'm designed to understand context, handle typos, and complete full workflows in one go. What would you like to explore first?"
+  ],
+  "agentActions": [],
+  "finalResponse": "Hey! I'm your CRM Assistant for TextQL, integrated with your Attio CRM. Here's what I can help you with:\n\n## 🔍 **Search & Discovery**\n- **Find anything**: \"find acme corp\" or \"search for john smith\"\n- **Advanced filtering**: \"show deals over $50k created this month\"\n- **Related entities**: \"find all contacts at Microsoft\" or \"show deals for Sarah\"\n- **Time-based searches**: \"companies created last week\"\n\n## 📝 **Notes Management**\n- **Create notes**: \"add note to acme: meeting scheduled for Friday\"\n- **Get notes**: \"show me all notes for john smith\" or \"count notes on this deal\"\n- **Search notes**: \"find notes mentioning 'contract renewal'\"\n- **Delete notes**: \"remove that note about the pricing discussion\"\n\n## 🎯 **Smart Features**\n- **Fuzzy matching**: I'll find \"Microsft\" even if you meant \"Microsoft\"\n- **Multi-step workflows**: Ask complex questions and I'll handle multiple steps automatically\n- **Slack integration**: Notes automatically link to our conversation threads\n- **Parallel processing**: I can search multiple things at once for faster results\n\n## 💬 **Natural Conversation**\nJust talk to me naturally! Try things like:\n- \"How many notes does Raine Ventures have?\"\n- \"Create a note for our biggest deal about the contract review\"\n- \"Find all companies we added this week\"\n- \"Show me Sarah's contact details and recent notes\"\n\nI'm designed to understand context, handle typos, and complete full workflows in one go. What would you like to explore first?",
+  "toolsUsed": [],
+  "success": true,
+  "error": null,
+  "processingTime": 0,
+  "attachmentCount": 0,
+  "iterationCount": 0,
+  "timestamp": "2025-07-11T14:19:31.828Z",
+  "version": "1.12.0",
+  "environment": "development"
+}

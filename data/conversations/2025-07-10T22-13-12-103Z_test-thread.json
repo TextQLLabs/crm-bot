@@ -1,0 +1,32 @@
+{
+  "conversationId": "test-thread",
+  "userId": "test-user-id",
+  "userName": "test-user",
+  "channel": "test",
+  "threadTs": "test-thread",
+  "messageTs": "1752185587709",
+  "userMessage": "summarize all the notes in bmg",
+  "conversationHistory": [],
+  "botActionHistory": [],
+  "agentThoughts": [],
+  "agentActions": [],
+  "finalResponse": "I'll search for BMG first and then get all the notes to summarize them for you.",
+  "toolsUsed": [
+    {
+      "tool": "search_crm",
+      "input": {
+        "query": "bmg"
+      },
+      "success": true,
+      "timestamp": "2025-07-10T22:13:12.103Z"
+    }
+  ],
+  "success": true,
+  "error": null,
+  "processingTime": 4394,
+  "attachmentCount": 0,
+  "iterationCount": 0,
+  "timestamp": "2025-07-10T22:13:12.103Z",
+  "version": "1.12.0",
+  "environment": "development"
+}

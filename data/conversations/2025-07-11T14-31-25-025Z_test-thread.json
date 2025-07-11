@@ -1,0 +1,63 @@
+{
+  "conversationId": "test-thread",
+  "userId": "test-user-id",
+  "userName": "test-user",
+  "channel": "test",
+  "threadTs": "test-thread",
+  "messageTs": "1752244285024",
+  "userMessage": "search for rayn group",
+  "conversationHistory": [],
+  "botActionHistory": [],
+  "agentThoughts": [
+    "I'll search for \"Rayn Group\" in the CRM for you."
+  ],
+  "agentActions": [
+    {
+      "tool": "search_crm",
+      "input": {
+        "query": "Rayn Group"
+      },
+      "result": {
+        "timing": {
+          "duration": 459,
+          "startTime": 1752244279805,
+          "endTime": 1752244280264
+        }
+      },
+      "timing": {
+        "duration": 459,
+        "startTime": 1752244279805,
+        "endTime": 1752244280264
+      }
+    }
+  ],
+  "finalResponse": "I searched for \"Rayn Group\" in the CRM, but unfortunately didn't find any matching companies, deals, or people with that name.\n\nA few suggestions:\n- Could you double-check the spelling? Maybe it's \"Ryan Group\" or \"Rain Group\"?\n- If you have any additional details (like industry, location, or contact names), that might help narrow down the search\n- You can also try searching for just \"Rayn\" or \"Group\" to see if there are similar companies\n\nWould you like me to try a different variation of the name, or do you have any other details that might help locate the right entity?",
+  "toolsUsed": [
+    {
+      "tool": "search_crm",
+      "input": {
+        "query": "Rayn Group"
+      },
+      "result": {
+        "timing": {
+          "duration": 459,
+          "startTime": 1752244279805,
+          "endTime": 1752244280264
+        }
+      },
+      "timing": {
+        "duration": 459,
+        "startTime": 1752244279805,
+        "endTime": 1752244280264
+      }
+    }
+  ],
+  "success": true,
+  "error": null,
+  "processingTime": 0,
+  "attachmentCount": 0,
+  "iterationCount": 0,
+  "timestamp": "2025-07-11T14:31:25.024Z",
+  "version": "1.12.0",
+  "environment": "development"
+}

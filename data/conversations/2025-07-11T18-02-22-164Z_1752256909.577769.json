@@ -1,0 +1,19 @@
+{
+  "conversationId": "1752256909.577769",
+  "userId": "U0951TSB4P2",
+  "userName": "slack-mcp-textql-ethan",
+  "threadTs": "1752256909.577769",
+  "conversationHistory": [],
+  "botActionHistory": [],
+  "agentThoughts": [],
+  "agentActions": [],
+  "toolsUsed": [],
+  "success": true,
+  "error": null,
+  "processingTime": 0,
+  "attachmentCount": 0,
+  "iterationCount": 0,
+  "timestamp": "2025-07-11T18:02:22.162Z",
+  "version": "1.12.0",
+  "environment": "development"
+}

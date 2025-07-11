@@ -1,0 +1,38 @@
+{
+  "conversationId": "test-thread",
+  "userId": "test-user",
+  "userName": "Test Suite",
+  "channel": "test",
+  "threadTs": "test-thread",
+  "messageTs": "1752185955278",
+  "userMessage": "find deals between $500K and $2M",
+  "conversationHistory": [],
+  "botActionHistory": [],
+  "agentThoughts": [],
+  "agentActions": [],
+  "finalResponse": "I'll search for deals with values between $500,000 and $2,000,000 using our advanced search capabilities.",
+  "toolsUsed": [
+    {
+      "tool": "advanced_search",
+      "input": {
+        "entity_type": "deal",
+        "filters": {
+          "deal_value_min": 500000,
+          "deal_value_max": 2000000
+        },
+        "sort_by": "value",
+        "sort_order": "desc"
+      },
+      "success": true,
+      "timestamp": "2025-07-10T22:19:20.901Z"
+    }
+  ],
+  "success": true,
+  "error": null,
+  "processingTime": 5623,
+  "attachmentCount": 0,
+  "iterationCount": 0,
+  "timestamp": "2025-07-10T22:19:20.901Z",
+  "version": "1.12.0",
+  "environment": "development"
+}

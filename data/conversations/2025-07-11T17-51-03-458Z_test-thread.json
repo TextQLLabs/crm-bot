@@ -1,0 +1,581 @@
+{
+  "conversationId": "test-thread",
+  "userId": "test-user-id",
+  "userName": "test-user",
+  "channel": "test",
+  "threadTs": "test-thread",
+  "messageTs": "1752256263458",
+  "userMessage": "find raine and count their notes",
+  "conversationHistory": [],
+  "botActionHistory": [],
+  "agentThoughts": [
+    "Found **[The Raine Group](https://app.attio.com/textql-data/company/a41e73b9-5dac-493f-bb2d-d38bb166c330/overview)** - I believe this matches your search for 'raine'.\n\n📊 **Note Count: 17 notes**\n\nThe notes include various test entries created from Slack, ranging from July 4th to July 10th, 2025. Most are testing different features like Slack thread linking, entity ID extraction, and note creation workflows."
+  ],
+  "agentActions": [
+    {
+      "tool": "search_crm",
+      "input": {
+        "query": "raine"
+      },
+      "result": {
+        "0": {
+          "id": "a41e73b9-5dac-493f-bb2d-d38bb166c330",
+          "name": "The Raine Group",
+          "description": "The Raine Group is an integrated merchant bank specializing in advising and investing in high-growth sectors of technology, media, and telecom. They offer a wide range of advisory services, including mergers and acquisitions, divestitures, private capi...",
+          "domains": [
+            "raine.com"
+          ],
+          "slug": "raine.com",
+          "url": "https://app.attio.com/textql-data/company/a41e73b9-5dac-493f-bb2d-d38bb166c330/overview",
+          "type": "company"
+        },
+        "1": {
+          "id": "637f050b-409d-4fdf-b401-b85d48a5e9df",
+          "name": "Raine",
+          "description": "Value: Unknown",
+          "url": "https://app.attio.com/textql-data/deals/record/637f050b-409d-4fdf-b401-b85d48a5e9df/overview",
+          "type": "deal"
+        },
+        "2": {
+          "id": "04fcc6e7-af95-4923-bfb8-10070fa70c12",
+          "name": "Lorraine Williams",
+          "description": "lorraine.williams@card.com",
+          "url": "https://app.attio.com/textql-data/person/04fcc6e7-af95-4923-bfb8-10070fa70c12/overview",
+          "type": "person"
+        },
+        "3": {
+          "id": "17dcf72c-5ad0-471a-8718-141f81247f8c",
+          "name": "Hashtag Trainee",
+          "description": "hashtagtrainee2021@gmail.com",
+          "url": "https://app.attio.com/textql-data/person/17dcf72c-5ad0-471a-8718-141f81247f8c/overview",
+          "type": "person"
+        },
+        "4": {
+          "id": "2918a9f9-135b-45ed-a411-d3d3ce1d2826",
+          "name": "Matt Raines",
+          "description": "matt.raines@uniteus.com",
+          "url": "https://app.attio.com/textql-data/person/2918a9f9-135b-45ed-a411-d3d3ce1d2826/overview",
+          "type": "person"
+        },
+        "5": {
+          "id": "3d155203-b8bb-438e-a963-9b6e513057a1",
+          "name": "Patrick Trainer",
+          "description": "patrick.trainer@socure.com",
+          "url": "https://app.attio.com/textql-data/person/3d155203-b8bb-438e-a963-9b6e513057a1/overview",
+          "type": "person"
+        },
+        "6": {
+          "id": "670bc9f9-3117-4c92-9f0d-6608385965d6",
+          "name": "Connor Trainer",
+          "description": "connor.trainer@truist.com",
+          "url": "https://app.attio.com/textql-data/person/670bc9f9-3117-4c92-9f0d-6608385965d6/overview",
+          "type": "person"
+        },
+        "timing": {
+          "duration": 830,
+          "startTime": 1752256253477,
+          "endTime": 1752256254307
+        }
+      },
+      "timing": {
+        "duration": 830,
+        "startTime": 1752256253477,
+        "endTime": 1752256254307
+      }
+    },
+    {
+      "tool": "get_notes",
+      "input": {
+        "entity_type": "company",
+        "entity_id": "a41e73b9-5dac-493f-bb2d-d38bb166c330"
+      },
+      "result": {
+        "0": {
+          "id": "ce09b30f-b107-4af0-8c6f-5c57b240aa53",
+          "title": "Note from Slack",
+          "content": "Test note created on The Raine Group company at 2025-07-04T13:05:20.087Z",
+          "parentObject": "companies",
+          "parentRecordId": "a41e73b9-5dac-493f-bb2d-d38bb166c330",
+          "parentInfo": "companies/a41e73b9-5dac-493f-bb2d-d38bb166c330",
+          "createdAt": "7/4/2025, 9:05:20 AM",
+          "createdBy": "Unknown",
+          "tags": []
+        },
+        "1": {
+          "id": "88a4267d-a417-4075-a4a6-ed0fc39fdf61",
+          "title": "Note from Slack",
+          "content": "Testing revised entity ID extraction",
+          "parentObject": "companies",
+          "parentRecordId": "a41e73b9-5dac-493f-bb2d-d38bb166c330",
+          "parentInfo": "companies/a41e73b9-5dac-493f-bb2d-d38bb166c330",
+          "createdAt": "7/10/2025, 1:37:50 PM",
+          "createdBy": "Unknown",
+          "tags": []
+        },
+        "2": {
+          "id": "cc51fd58-b363-4cab-bab9-3a457ac785b2",
+          "title": "Note from Slack",
+          "content": "Testing revised entity ID extraction",
+          "parentObject": "companies",
+          "parentRecordId": "a41e73b9-5dac-493f-bb2d-d38bb166c330",
+          "parentInfo": "companies/a41e73b9-5dac-493f-bb2d-d38bb166c330",
+          "createdAt": "7/10/2025, 1:38:17 PM",
+          "createdBy": "Unknown",
+          "tags": []
+        },
+        "3": {
+          "id": "fa123aa2-3a90-4f33-90a2-1b7e53dde466",
+          "title": "Note from Slack",
+          "content": "this is note #4",
+          "parentObject": "companies",
+          "parentRecordId": "a41e73b9-5dac-493f-bb2d-d38bb166c330",
+          "parentInfo": "companies/a41e73b9-5dac-493f-bb2d-d38bb166c330",
+          "createdAt": "7/10/2025, 1:42:37 PM",
+          "createdBy": "Unknown",
+          "tags": []
+        },
+        "4": {
+          "id": "8cfea681-136d-4896-b621-0f818bf334f3",
+          "title": "Note from Slack",
+          "content": "Testing Slack thread link feature\n\n---\nCreated from Slack: https://textql.slack.com/archives/local-test/plocal-thread",
+          "parentObject": "companies",
+          "parentRecordId": "a41e73b9-5dac-493f-bb2d-d38bb166c330",
+          "parentInfo": "companies/a41e73b9-5dac-493f-bb2d-d38bb166c330",
+          "createdAt": "7/10/2025, 1:44:28 PM",
+          "createdBy": "Unknown",
+          "tags": []
+        },
+        "5": {
+          "id": "cce2c733-4ba3-4a59-b58c-52e3799b701c",
+          "title": "Note from Slack",
+          "content": "Testing fixed continuation mechanism\n\n---\nCreated from Slack: https://textql.slack.com/archives/local-test/plocal-thread",
+          "parentObject": "companies",
+          "parentRecordId": "a41e73b9-5dac-493f-bb2d-d38bb166c330",
+          "parentInfo": "companies/a41e73b9-5dac-493f-bb2d-d38bb166c330",
+          "createdAt": "7/10/2025, 1:46:57 PM",
+          "createdBy": "Unknown",
+          "tags": []
+        },
+        "6": {
+          "id": "f9b3a84a-aead-455a-8b9b-0e0f5cf68d17",
+          "title": "Note from Slack",
+          "content": "Testing enhanced debugging\n\n---\nCreated from Slack: https://textql.slack.com/archives/local-test/plocal-thread",
+          "parentObject": "companies",
+          "parentRecordId": "a41e73b9-5dac-493f-bb2d-d38bb166c330",
+          "parentInfo": "companies/a41e73b9-5dac-493f-bb2d-d38bb166c330",
+          "createdAt": "7/10/2025, 1:53:41 PM",
+          "createdBy": "Unknown",
+          "tags": []
+        },
+        "7": {
+          "id": "ded47ad8-3647-4e25-b126-a1ff9d6824a6",
+          "title": "Note from Slack",
+          "content": "Testing fixed preview inheritance issue\n\n---\nCreated from Slack: https://textql.slack.com/archives/C0946T1T4CB/p1752170113667169",
+          "parentObject": "companies",
+          "parentRecordId": "a41e73b9-5dac-493f-bb2d-d38bb166c330",
+          "parentInfo": "companies/a41e73b9-5dac-493f-bb2d-d38bb166c330",
+          "createdAt": "7/10/2025, 1:55:23 PM",
+          "createdBy": "Unknown",
+          "tags": []
+        },
+        "8": {
+          "id": "27f314f1-2c4a-411a-95c9-b8d7e1959948",
+          "title": "Note from Slack",
+          "content": "Testing correct note URL format\n\n---\nCreated from Slack: https://textql.slack.com/archives/local-test/plocal-thread",
+          "parentObject": "companies",
+          "parentRecordId": "a41e73b9-5dac-493f-bb2d-d38bb166c330",
+          "parentInfo": "companies/a41e73b9-5dac-493f-bb2d-d38bb166c330",
+          "createdAt": "7/10/2025, 1:58:39 PM",
+          "createdBy": "Unknown",
+          "tags": []
+        },
+        "9": {
+          "id": "ffd1d304-31af-48b9-8620-30deda458100",
+          "title": "Note from Slack",
+          "content": "Testing correct note URL with real Slack link\n\n---\nCreated from Slack: https://textql.slack.com/archives/C0946T1T4CB/p1752170337498189",
+          "parentObject": "companies",
+          "parentRecordId": "a41e73b9-5dac-493f-bb2d-d38bb166c330",
+          "parentInfo": "companies/a41e73b9-5dac-493f-bb2d-d38bb166c330",
+          "createdAt": "7/10/2025, 1:59:13 PM",
+          "createdBy": "Unknown",
+          "tags": []
+        },
+        "10": {
+          "id": "268211d8-a5a8-46a2-8ef0-ae3f8984085e",
+          "title": "Note from Slack",
+          "content": "Testing enhanced note verification\n\n---\nCreated from Slack: https://textql.slack.com/archives/local-test/plocal-thread",
+          "parentObject": "companies",
+          "parentRecordId": "a41e73b9-5dac-493f-bb2d-d38bb166c330",
+          "parentInfo": "companies/a41e73b9-5dac-493f-bb2d-d38bb166c330",
+          "createdAt": "7/10/2025, 1:59:29 PM",
+          "createdBy": "Unknown",
+          "tags": []
+        },
+        "11": {
+          "id": "c390f2b0-d09d-4288-be5b-d8c3902dbe7d",
+          "title": "Note from Slack",
+          "content": "Testing correct note URL with real Slack link\n\n---\nCreated from Slack: https://textql.slack.com/archives/C0946T1T4CB/p1752170434537689",
+          "parentObject": "companies",
+          "parentRecordId": "a41e73b9-5dac-493f-bb2d-d38bb166c330",
+          "parentInfo": "companies/a41e73b9-5dac-493f-bb2d-d38bb166c330",
+          "createdAt": "7/10/2025, 2:00:43 PM",
+          "createdBy": "Unknown",
+          "tags": []
+        },
+        "12": {
+          "id": "1b68504b-6deb-4097-9972-7477670b5919",
+          "title": "Note from Slack",
+          "content": "Testing clickable Slack link formatting\n\n---\n[Go back to Slack thread](https://textql.slack.com/archives/local-test/plocal-thread)",
+          "parentObject": "companies",
+          "parentRecordId": "a41e73b9-5dac-493f-bb2d-d38bb166c330",
+          "parentInfo": "companies/a41e73b9-5dac-493f-bb2d-d38bb166c330",
+          "createdAt": "7/10/2025, 2:02:00 PM",
+          "createdBy": "Unknown",
+          "tags": []
+        },
+        "13": {
+          "id": "28543ba2-d201-4e82-aecd-548188ee63da",
+          "title": "Note from Slack",
+          "content": "Testing clickable Go back to Slack thread link\n\n---\n[Go back to Slack thread](https://textql.slack.com/archives/C0946T1T4CB/p1752170536629519)",
+          "parentObject": "companies",
+          "parentRecordId": "a41e73b9-5dac-493f-bb2d-d38bb166c330",
+          "parentInfo": "companies/a41e73b9-5dac-493f-bb2d-d38bb166c330",
+          "createdAt": "7/10/2025, 2:02:28 PM",
+          "createdBy": "Unknown",
+          "tags": []
+        },
+        "14": {
+          "id": "3f077ee8-7438-41aa-88b3-49feda1f549f",
+          "title": "Note from Slack",
+          "content": "Testing clickable Go back to Slack thread link\n\n---\n[Go back to Slack thread](https://textql.slack.com/archives/C0946T1T4CB/p1752170855891319)",
+          "parentObject": "companies",
+          "parentRecordId": "a41e73b9-5dac-493f-bb2d-d38bb166c330",
+          "parentInfo": "companies/a41e73b9-5dac-493f-bb2d-d38bb166c330",
+          "createdAt": "7/10/2025, 2:07:44 PM",
+          "createdBy": "Unknown",
+          "tags": []
+        },
+        "15": {
+          "id": "c8201f56-cd86-40b6-810c-295608734cff",
+          "title": "Note from Slack",
+          "content": "Testing clickable Go back to Slack thread link\n\n---\n[Go back to Slack thread](https://textql.slack.com/archives/C0946T1T4CB/p1752171260504589)",
+          "parentObject": "companies",
+          "parentRecordId": "a41e73b9-5dac-493f-bb2d-d38bb166c330",
+          "parentInfo": "companies/a41e73b9-5dac-493f-bb2d-d38bb166c330",
+          "createdAt": "7/10/2025, 2:14:33 PM",
+          "createdBy": "Unknown",
+          "tags": []
+        },
+        "16": {
+          "id": "7245942c-80da-477e-8e83-26fc43f9b8eb",
+          "title": "Note from Slack",
+          "content": "Testing the fixed multi-step operation - should search and create note in single response\n\n---\n[Go back to Slack thread](https://textql.slack.com/archives/C0946T1T4CB/p1752192613463519)",
+          "parentObject": "companies",
+          "parentRecordId": "a41e73b9-5dac-493f-bb2d-d38bb166c330",
+          "parentInfo": "companies/a41e73b9-5dac-493f-bb2d-d38bb166c330",
+          "createdAt": "7/10/2025, 8:10:22 PM",
+          "createdBy": "Unknown",
+          "tags": []
+        },
+        "timing": {
+          "duration": 326,
+          "startTime": 1752256258126,
+          "endTime": 1752256258452
+        }
+      },
+      "timing": {
+        "duration": 326,
+        "startTime": 1752256258126,
+        "endTime": 1752256258452
+      }
+    }
+  ],
+  "finalResponse": "Found **[The Raine Group](https://app.attio.com/textql-data/company/a41e73b9-5dac-493f-bb2d-d38bb166c330/overview)** - I believe this matches your search for 'raine'.\n\n📊 **Note Count: 17 notes**\n\nThe notes include various test entries created from Slack, ranging from July 4th to July 10th, 2025. Most are testing different features like Slack thread linking, entity ID extraction, and note creation workflows.",
+  "toolsUsed": [
+    {
+      "tool": "search_crm",
+      "input": {
+        "query": "raine"
+      },
+      "result": {
+        "0": {
+          "id": "a41e73b9-5dac-493f-bb2d-d38bb166c330",
+          "name": "The Raine Group",
+          "description": "The Raine Group is an integrated merchant bank specializing in advising and investing in high-growth sectors of technology, media, and telecom. They offer a wide range of advisory services, including mergers and acquisitions, divestitures, private capi...",
+          "domains": [
+            "raine.com"
+          ],
+          "slug": "raine.com",
+          "url": "https://app.attio.com/textql-data/company/a41e73b9-5dac-493f-bb2d-d38bb166c330/overview",
+          "type": "company"
+        },
+        "1": {
+          "id": "637f050b-409d-4fdf-b401-b85d48a5e9df",
+          "name": "Raine",
+          "description": "Value: Unknown",
+          "url": "https://app.attio.com/textql-data/deals/record/637f050b-409d-4fdf-b401-b85d48a5e9df/overview",
+          "type": "deal"
+        },
+        "2": {
+          "id": "04fcc6e7-af95-4923-bfb8-10070fa70c12",
+          "name": "Lorraine Williams",
+          "description": "lorraine.williams@card.com",
+          "url": "https://app.attio.com/textql-data/person/04fcc6e7-af95-4923-bfb8-10070fa70c12/overview",
+          "type": "person"
+        },
+        "3": {
+          "id": "17dcf72c-5ad0-471a-8718-141f81247f8c",
+          "name": "Hashtag Trainee",
+          "description": "hashtagtrainee2021@gmail.com",
+          "url": "https://app.attio.com/textql-data/person/17dcf72c-5ad0-471a-8718-141f81247f8c/overview",
+          "type": "person"
+        },
+        "4": {
+          "id": "2918a9f9-135b-45ed-a411-d3d3ce1d2826",
+          "name": "Matt Raines",
+          "description": "matt.raines@uniteus.com",
+          "url": "https://app.attio.com/textql-data/person/2918a9f9-135b-45ed-a411-d3d3ce1d2826/overview",
+          "type": "person"
+        },
+        "5": {
+          "id": "3d155203-b8bb-438e-a963-9b6e513057a1",
+          "name": "Patrick Trainer",
+          "description": "patrick.trainer@socure.com",
+          "url": "https://app.attio.com/textql-data/person/3d155203-b8bb-438e-a963-9b6e513057a1/overview",
+          "type": "person"
+        },
+        "6": {
+          "id": "670bc9f9-3117-4c92-9f0d-6608385965d6",
+          "name": "Connor Trainer",
+          "description": "connor.trainer@truist.com",
+          "url": "https://app.attio.com/textql-data/person/670bc9f9-3117-4c92-9f0d-6608385965d6/overview",
+          "type": "person"
+        },
+        "timing": {
+          "duration": 830,
+          "startTime": 1752256253477,
+          "endTime": 1752256254307
+        }
+      },
+      "timing": {
+        "duration": 830,
+        "startTime": 1752256253477,
+        "endTime": 1752256254307
+      }
+    },
+    {
+      "tool": "get_notes",
+      "input": {
+        "entity_type": "company",
+        "entity_id": "a41e73b9-5dac-493f-bb2d-d38bb166c330"
+      },
+      "result": {
+        "0": {
+          "id": "ce09b30f-b107-4af0-8c6f-5c57b240aa53",
+          "title": "Note from Slack",
+          "content": "Test note created on The Raine Group company at 2025-07-04T13:05:20.087Z",
+          "parentObject": "companies",
+          "parentRecordId": "a41e73b9-5dac-493f-bb2d-d38bb166c330",
+          "parentInfo": "companies/a41e73b9-5dac-493f-bb2d-d38bb166c330",
+          "createdAt": "7/4/2025, 9:05:20 AM",
+          "createdBy": "Unknown",
+          "tags": []
+        },
+        "1": {
+          "id": "88a4267d-a417-4075-a4a6-ed0fc39fdf61",
+          "title": "Note from Slack",
+          "content": "Testing revised entity ID extraction",
+          "parentObject": "companies",
+          "parentRecordId": "a41e73b9-5dac-493f-bb2d-d38bb166c330",
+          "parentInfo": "companies/a41e73b9-5dac-493f-bb2d-d38bb166c330",
+          "createdAt": "7/10/2025, 1:37:50 PM",
+          "createdBy": "Unknown",
+          "tags": []
+        },
+        "2": {
+          "id": "cc51fd58-b363-4cab-bab9-3a457ac785b2",
+          "title": "Note from Slack",
+          "content": "Testing revised entity ID extraction",
+          "parentObject": "companies",
+          "parentRecordId": "a41e73b9-5dac-493f-bb2d-d38bb166c330",
+          "parentInfo": "companies/a41e73b9-5dac-493f-bb2d-d38bb166c330",
+          "createdAt": "7/10/2025, 1:38:17 PM",
+          "createdBy": "Unknown",
+          "tags": []
+        },
+        "3": {
+          "id": "fa123aa2-3a90-4f33-90a2-1b7e53dde466",
+          "title": "Note from Slack",
+          "content": "this is note #4",
+          "parentObject": "companies",
+          "parentRecordId": "a41e73b9-5dac-493f-bb2d-d38bb166c330",
+          "parentInfo": "companies/a41e73b9-5dac-493f-bb2d-d38bb166c330",
+          "createdAt": "7/10/2025, 1:42:37 PM",
+          "createdBy": "Unknown",
+          "tags": []
+        },
+        "4": {
+          "id": "8cfea681-136d-4896-b621-0f818bf334f3",
+          "title": "Note from Slack",
+          "content": "Testing Slack thread link feature\n\n---\nCreated from Slack: https://textql.slack.com/archives/local-test/plocal-thread",
+          "parentObject": "companies",
+          "parentRecordId": "a41e73b9-5dac-493f-bb2d-d38bb166c330",
+          "parentInfo": "companies/a41e73b9-5dac-493f-bb2d-d38bb166c330",
+          "createdAt": "7/10/2025, 1:44:28 PM",
+          "createdBy": "Unknown",
+          "tags": []
+        },
+        "5": {
+          "id": "cce2c733-4ba3-4a59-b58c-52e3799b701c",
+          "title": "Note from Slack",
+          "content": "Testing fixed continuation mechanism\n\n---\nCreated from Slack: https://textql.slack.com/archives/local-test/plocal-thread",
+          "parentObject": "companies",
+          "parentRecordId": "a41e73b9-5dac-493f-bb2d-d38bb166c330",
+          "parentInfo": "companies/a41e73b9-5dac-493f-bb2d-d38bb166c330",
+          "createdAt": "7/10/2025, 1:46:57 PM",
+          "createdBy": "Unknown",
+          "tags": []
+        },
+        "6": {
+          "id": "f9b3a84a-aead-455a-8b9b-0e0f5cf68d17",
+          "title": "Note from Slack",
+          "content": "Testing enhanced debugging\n\n---\nCreated from Slack: https://textql.slack.com/archives/local-test/plocal-thread",
+          "parentObject": "companies",
+          "parentRecordId": "a41e73b9-5dac-493f-bb2d-d38bb166c330",
+          "parentInfo": "companies/a41e73b9-5dac-493f-bb2d-d38bb166c330",
+          "createdAt": "7/10/2025, 1:53:41 PM",
+          "createdBy": "Unknown",
+          "tags": []
+        },
+        "7": {
+          "id": "ded47ad8-3647-4e25-b126-a1ff9d6824a6",
+          "title": "Note from Slack",
+          "content": "Testing fixed preview inheritance issue\n\n---\nCreated from Slack: https://textql.slack.com/archives/C0946T1T4CB/p1752170113667169",
+          "parentObject": "companies",
+          "parentRecordId": "a41e73b9-5dac-493f-bb2d-d38bb166c330",
+          "parentInfo": "companies/a41e73b9-5dac-493f-bb2d-d38bb166c330",
+          "createdAt": "7/10/2025, 1:55:23 PM",
+          "createdBy": "Unknown",
+          "tags": []
+        },
+        "8": {
+          "id": "27f314f1-2c4a-411a-95c9-b8d7e1959948",
+          "title": "Note from Slack",
+          "content": "Testing correct note URL format\n\n---\nCreated from Slack: https://textql.slack.com/archives/local-test/plocal-thread",
+          "parentObject": "companies",
+          "parentRecordId": "a41e73b9-5dac-493f-bb2d-d38bb166c330",
+          "parentInfo": "companies/a41e73b9-5dac-493f-bb2d-d38bb166c330",
+          "createdAt": "7/10/2025, 1:58:39 PM",
+          "createdBy": "Unknown",
+          "tags": []
+        },
+        "9": {
+          "id": "ffd1d304-31af-48b9-8620-30deda458100",
+          "title": "Note from Slack",
+          "content": "Testing correct note URL with real Slack link\n\n---\nCreated from Slack: https://textql.slack.com/archives/C0946T1T4CB/p1752170337498189",
+          "parentObject": "companies",
+          "parentRecordId": "a41e73b9-5dac-493f-bb2d-d38bb166c330",
+          "parentInfo": "companies/a41e73b9-5dac-493f-bb2d-d38bb166c330",
+          "createdAt": "7/10/2025, 1:59:13 PM",
+          "createdBy": "Unknown",
+          "tags": []
+        },
+        "10": {
+          "id": "268211d8-a5a8-46a2-8ef0-ae3f8984085e",
+          "title": "Note from Slack",
+          "content": "Testing enhanced note verification\n\n---\nCreated from Slack: https://textql.slack.com/archives/local-test/plocal-thread",
+          "parentObject": "companies",
+          "parentRecordId": "a41e73b9-5dac-493f-bb2d-d38bb166c330",
+          "parentInfo": "companies/a41e73b9-5dac-493f-bb2d-d38bb166c330",
+          "createdAt": "7/10/2025, 1:59:29 PM",
+          "createdBy": "Unknown",
+          "tags": []
+        },
+        "11": {
+          "id": "c390f2b0-d09d-4288-be5b-d8c3902dbe7d",
+          "title": "Note from Slack",
+          "content": "Testing correct note URL with real Slack link\n\n---\nCreated from Slack: https://textql.slack.com/archives/C0946T1T4CB/p1752170434537689",
+          "parentObject": "companies",
+          "parentRecordId": "a41e73b9-5dac-493f-bb2d-d38bb166c330",
+          "parentInfo": "companies/a41e73b9-5dac-493f-bb2d-d38bb166c330",
+          "createdAt": "7/10/2025, 2:00:43 PM",
+          "createdBy": "Unknown",
+          "tags": []
+        },
+        "12": {
+          "id": "1b68504b-6deb-4097-9972-7477670b5919",
+          "title": "Note from Slack",
+          "content": "Testing clickable Slack link formatting\n\n---\n[Go back to Slack thread](https://textql.slack.com/archives/local-test/plocal-thread)",
+          "parentObject": "companies",
+          "parentRecordId": "a41e73b9-5dac-493f-bb2d-d38bb166c330",
+          "parentInfo": "companies/a41e73b9-5dac-493f-bb2d-d38bb166c330",
+          "createdAt": "7/10/2025, 2:02:00 PM",
+          "createdBy": "Unknown",
+          "tags": []
+        },
+        "13": {
+          "id": "28543ba2-d201-4e82-aecd-548188ee63da",
+          "title": "Note from Slack",
+          "content": "Testing clickable Go back to Slack thread link\n\n---\n[Go back to Slack thread](https://textql.slack.com/archives/C0946T1T4CB/p1752170536629519)",
+          "parentObject": "companies",
+          "parentRecordId": "a41e73b9-5dac-493f-bb2d-d38bb166c330",
+          "parentInfo": "companies/a41e73b9-5dac-493f-bb2d-d38bb166c330",
+          "createdAt": "7/10/2025, 2:02:28 PM",
+          "createdBy": "Unknown",
+          "tags": []
+        },
+        "14": {
+          "id": "3f077ee8-7438-41aa-88b3-49feda1f549f",
+          "title": "Note from Slack",
+          "content": "Testing clickable Go back to Slack thread link\n\n---\n[Go back to Slack thread](https://textql.slack.com/archives/C0946T1T4CB/p1752170855891319)",
+          "parentObject": "companies",
+          "parentRecordId": "a41e73b9-5dac-493f-bb2d-d38bb166c330",
+          "parentInfo": "companies/a41e73b9-5dac-493f-bb2d-d38bb166c330",
+          "createdAt": "7/10/2025, 2:07:44 PM",
+          "createdBy": "Unknown",
+          "tags": []
+        },
+        "15": {
+          "id": "c8201f56-cd86-40b6-810c-295608734cff",
+          "title": "Note from Slack",
+          "content": "Testing clickable Go back to Slack thread link\n\n---\n[Go back to Slack thread](https://textql.slack.com/archives/C0946T1T4CB/p1752171260504589)",
+          "parentObject": "companies",
+          "parentRecordId": "a41e73b9-5dac-493f-bb2d-d38bb166c330",
+          "parentInfo": "companies/a41e73b9-5dac-493f-bb2d-d38bb166c330",
+          "createdAt": "7/10/2025, 2:14:33 PM",
+          "createdBy": "Unknown",
+          "tags": []
+        },
+        "16": {
+          "id": "7245942c-80da-477e-8e83-26fc43f9b8eb",
+          "title": "Note from Slack",
+          "content": "Testing the fixed multi-step operation - should search and create note in single response\n\n---\n[Go back to Slack thread](https://textql.slack.com/archives/C0946T1T4CB/p1752192613463519)",
+          "parentObject": "companies",
+          "parentRecordId": "a41e73b9-5dac-493f-bb2d-d38bb166c330",
+          "parentInfo": "companies/a41e73b9-5dac-493f-bb2d-d38bb166c330",
+          "createdAt": "7/10/2025, 8:10:22 PM",
+          "createdBy": "Unknown",
+          "tags": []
+        },
+        "timing": {
+          "duration": 326,
+          "startTime": 1752256258126,
+          "endTime": 1752256258452
+        }
+      },
+      "timing": {
+        "duration": 326,
+        "startTime": 1752256258126,
+        "endTime": 1752256258452
+      }
+    }
+  ],
+  "success": true,
+  "error": null,
+  "processingTime": 0,
+  "attachmentCount": 0,
+  "iterationCount": 0,
+  "timestamp": "2025-07-11T17:51:03.458Z",
+  "version": "1.12.0",
+  "environment": "development"
+}

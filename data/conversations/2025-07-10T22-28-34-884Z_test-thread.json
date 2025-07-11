@@ -1,0 +1,23 @@
+{
+  "conversationId": "test-thread",
+  "userId": "test-user-id",
+  "userName": "test-user",
+  "channel": "test",
+  "threadTs": "test-thread",
+  "messageTs": "1752186505010",
+  "userMessage": "hey what can you do?",
+  "conversationHistory": [],
+  "botActionHistory": [],
+  "agentThoughts": [],
+  "agentActions": [],
+  "finalResponse": "Hello! I'm a CRM assistant that helps you manage your Attio CRM data. Here's what I can do for you:\n\n**🔍 Search & Find**\n- Search for companies, people, and deals in your CRM\n- Find related entities (like all deals for a company, or people at a company)\n- Advanced filtering by date ranges, deal values, status, industry, location, and more\n- Handle fuzzy searches and spelling corrections\n\n**📝 Notes Management**\n- Create notes on any company, person, or deal\n- Search through existing notes by content, title, or tags\n- Delete individual notes or bulk delete with filters\n- Get detailed note information and summaries\n\n**📊 Entity Management**\n- Create new companies, people, or deals\n- Update existing entity information\n- Get full details of any entity\n- View entity relationships and connections\n\n**🌐 Research & Verification**\n- Search the web for current information about companies or people\n- Verify company names and details\n- Help with data enrichment and validation\n\n**⚡ Advanced Features**\n- Time-based searches (recent activity, entities created/updated in date ranges)\n- Bulk operations with preview and confirmation\n- Smart search suggestions when no results are found\n- Direct links to your Attio records for easy access\n\nI use Claude Sonnet 4 with native tool calling to interact with your Attio CRM efficiently. Just ask me to search for something, add a note, or help with any CRM task - I can handle both simple requests like \"find Microsoft\" and complex ones like \"show me all deals over $1M created this quarter.\"\n\nWhat would you like me to help you with in your CRM?",
+  "toolsUsed": [],
+  "success": true,
+  "error": null,
+  "processingTime": 9874,
+  "attachmentCount": 0,
+  "iterationCount": 0,
+  "timestamp": "2025-07-10T22:28:34.884Z",
+  "version": "1.11.1",
+  "environment": "development"
+}
