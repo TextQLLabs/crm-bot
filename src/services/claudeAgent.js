@@ -96,13 +96,13 @@ class ClaudeAgent {
    */
   async planAndThink(messageContext) {
     const systemPrompt = this.buildSystemPrompt();
-    const userMessage = this.buildUserMessage(messageContext);
+    const userMessageContent = this.buildUserMessageContent(messageContext);
     
     // Start conversation with user message
     let messages = [
       {
         role: 'user',
-        content: userMessage
+        content: userMessageContent
       }
     ];
 
@@ -358,6 +358,13 @@ You help users manage their CRM data through natural conversation. You can:
 - *get_notes*: Retrieve and filter notes by entity, date, or content (always search for entity first)
 - *delete_note*: Remove notes with confirmation (search entity first, then find specific notes)
 
+*🖼️ Image Analysis*
+- You can view and analyze images shared in Slack conversations
+- Extract text from screenshots, documents, and other visual content
+- Analyze business-related content in images (emails, contracts, presentations, etc.)
+- Help users by reading and interpreting visual information
+- When an image is shared, provide detailed analysis of what you see
+
 *Behavioral Principles*
 
 *🎯 Multi-Step Thinking*
@@ -482,8 +489,57 @@ Remember: You're here to make CRM management effortless. Be proactive, accurate,
   /**
    * Build user message from context
    */
+  buildUserMessageContent(messageContext) {
+    // Start with text content
+    let textMessage = `User: ${messageContext.userMessage || messageContext.text}`;
+    
+    // Add conversation history if available
+    if (messageContext.conversationHistory?.length > 0) {
+      textMessage += `\n\nConversation History:\n${messageContext.conversationHistory
+        .map(m => `${m.isBot ? 'Assistant' : 'User'}: ${m.text}`)
+        .join('\n')}`;
+    }
+    
+    // Add bot action history if available
+    if (messageContext.botActionHistory?.length > 0) {
+      textMessage += `\n\nPrevious Actions:\n${messageContext.botActionHistory
+        .map(a => `- ${a.action}: ${a.details}`)
+        .join('\n')}`;
+    }
+    
+    // Build content array for Claude API
+    const content = [{
+      type: 'text',
+      text: textMessage
+    }];
+    
+    // Add image attachments if available
+    if (messageContext.attachments?.length > 0) {
+      for (const attachment of messageContext.attachments) {
+        if (attachment.type === 'image') {
+          content.push({
+            type: 'image',
+            source: {
+              type: 'base64',
+              media_type: attachment.mime_type,
+              data: attachment.data
+            }
+          });
+        }
+      }
+    }
+    
+    // If no images, just return text string for backward compatibility
+    if (content.length === 1) {
+      return textMessage;
+    }
+    
+    return content;
+  }
+
   buildUserMessage(messageContext) {
-    let message = `User: ${messageContext.text}`;
+    // Legacy method for backward compatibility
+    let message = `User: ${messageContext.userMessage || messageContext.text}`;
     
     // Add conversation history if available
     if (messageContext.conversationHistory?.length > 0) {
