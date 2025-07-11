@@ -26,8 +26,11 @@ function isMessageAlreadyProcessed(messageKey) {
   }
   
   console.log(`✅ Processing new message: ${messageKey}`);
-  processedMessages.set(messageKey, now);
   return false;
+}
+
+function markMessageAsProcessed(messageKey) {
+  processedMessages.set(messageKey, Date.now());
 }
 
 // Database service - will attempt MongoDB first, fallback to mock
@@ -122,6 +125,8 @@ app.event('app_mention', async ({ event, client, ack }) => {
     console.log(`🎯 Is correct bot: ${isCorrectBot}`);
     
     if (isCorrectBot) {
+      // Mark as processed only after we decide to process it
+      markMessageAsProcessed(messageKey);
       await handleMention({ event, client });
     } else {
       console.log('❌ Ignoring mention for other bot instance');
@@ -144,6 +149,7 @@ app.message(async ({ message, say, client }) => {
     
     // Handle DMs
     if (message.channel_type === 'im') {
+      markMessageAsProcessed(messageKey);
       await handleMention({ message, client });
     }
     // Handle thread replies ONLY when bot is explicitly mentioned
@@ -163,6 +169,7 @@ app.message(async ({ message, say, client }) => {
       );
       
       if (isBotMentioned) {
+        markMessageAsProcessed(messageKey);
         await handleMention({ message, client });
       }
     }
