@@ -2,8 +2,7 @@ const { ClaudeAgent } = require('../services/claudeAgent');
 const axios = require('axios');
 
 // File-based logging for interactions
-const mockDb = require('../services/database-mock');
-const logInteraction = mockDb.logInteraction;
+const fileStorage = require('../services/fileStorage');
 
 async function handleMention({ event, message, say, client }) {
   console.log('🚀 handleMention START (Claude Agent)');
@@ -312,16 +311,23 @@ async function handleMention({ event, message, say, client }) {
       return;
     }
 
-    // Log interaction
-    await logInteraction({
+    // Save conversation to file
+    await fileStorage.saveConversation({
       userId: msg.user,
       userName,
-      message: fullContext,
-      action: 'claude_agent',
-      result: result,
-      timestamp: new Date(),
+      channel: msg.channel,
       threadTs: msg.thread_ts || msg.ts,
-      isThreaded: msg.thread_ts && msg.thread_ts !== msg.ts
+      messageTs: msg.ts,
+      userMessage: fullContext,
+      conversationHistory,
+      botActionHistory,
+      agentThoughts: result.thinking ? [result.thinking] : [],
+      agentActions: result.toolsUsed || [],
+      finalResponse: result.answer,
+      toolsUsed: result.toolsUsed || [],
+      success: result.success,
+      error: result.error,
+      attachmentCount: attachments ? attachments.length : 0
     });
 
     // Format and send response
@@ -548,19 +554,30 @@ async function handleButtonAction({ body, ack, client }) {
         successMsg += `\n\n${result.message}`;
       }
       
-      // Log the successful action
-      await logInteraction({
+      // Save the action execution to file
+      await fileStorage.saveConversation({
         userId: originalMessage.user,
         userName: context.userName,
-        message: `Executed action: ${pendingAction.action}`,
-        action: 'action_executed',
-        result: {
-          action: pendingAction.action,
+        channel: originalMessage.channel,
+        threadTs: context.threadTs,
+        messageTs: originalMessage.ts,
+        userMessage: `Executed action: ${pendingAction.action}`,
+        conversationHistory: [],
+        botActionHistory: [],
+        agentThoughts: [],
+        agentActions: [{
+          tool: pendingAction.action,
           input: pendingAction.input,
-          output: result
-        },
-        timestamp: new Date(),
-        threadTs: context.threadTs
+          result: result
+        }],
+        finalResponse: `Action executed: ${pendingAction.action}`,
+        toolsUsed: [{
+          tool: pendingAction.action,
+          input: pendingAction.input,
+          result: result
+        }],
+        success: true,
+        attachmentCount: 0
       });
       
       await client.chat.update({

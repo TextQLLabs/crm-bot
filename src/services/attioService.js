@@ -366,42 +366,67 @@ async function createRecord(aiResult) {
 }
 
 async function updateRecord(aiResult) {
-  const endpoint = `/objects/${aiResult.entityType}s/records/${aiResult.targetId}`;
+  const entityType = aiResult.entityType;
+  const recordId = aiResult.targetId;
+  const updates = aiResult.updates || {};
   
-  // First, get the current record
-  const currentRecord = await getAttioClient().get(endpoint);
+  // Map entity types to API endpoints with proper pluralization
+  const objectType = {
+    'company': 'companies',
+    'deal': 'deals', 
+    'person': 'people'
+  }[entityType];
   
-  // Merge updates
-  const updates = {
-    data: {
-      values: {
-        ...currentRecord.data.data.values,
-        ...aiResult.updates
-      }
-    }
-  };
-
-  // Update the record
-  await getAttioClient().patch(endpoint, updates);
-
-  // Create note if provided
-  if (aiResult.notes) {
-    await createNote(aiResult.targetId, aiResult.entityType, aiResult.notes);
+  if (!objectType) {
+    throw new Error(`Unsupported entity type: ${entityType}`);
   }
+  
+  const endpoint = `/objects/${objectType}/records/${recordId}`;
+  
+  console.log(`\n=== Updating ${entityType} record: ${recordId} ===`);
+  console.log('Updates to apply:', JSON.stringify(updates, null, 2));
+  
+  try {
+    // Build the update payload with proper Attio API format
+    const updatePayload = {
+      data: {
+        values: updates
+      }
+    };
+    
+    console.log('Update payload:', JSON.stringify(updatePayload, null, 2));
+    
+    // Update the record using PUT (which overwrites values)
+    const response = await getAttioClient().put(endpoint, updatePayload);
+    
+    console.log('Update successful');
+    
+    // Extract the updated record name for response
+    const updatedRecord = response.data.data;
+    const recordName = updatedRecord.values?.name?.[0]?.value || 'Unnamed Record';
+    
+    // Create note if provided
+    if (aiResult.notes) {
+      await createNote(recordId, entityType, aiResult.notes);
+    }
 
-  return {
-    action: 'update',
-    type: aiResult.entityType,
-    name: aiResult.entityName,
-    recordId: aiResult.targetId,
-    notes: aiResult.notes,
-    updates: Object.keys(aiResult.updates).map(key => `Updated ${key}`),
-    attioUrl: aiResult.entityType === 'deal' 
-      ? `https://app.attio.com/textql-data/deals/record/${aiResult.targetId}/overview`
-      : aiResult.entityType === 'person'
-      ? `https://app.attio.com/textql-data/person/${aiResult.targetId}/overview`
-      : `https://app.attio.com/textql-data/company/${aiResult.targetId}/overview`
-  };
+    return {
+      action: 'update',
+      type: entityType,
+      name: recordName,
+      recordId: recordId,
+      notes: aiResult.notes,
+      updates: Object.keys(updates).map(key => `Updated ${key}`),
+      attioUrl: entityType === 'deal' 
+        ? `https://app.attio.com/textql-data/deals/record/${recordId}/overview`
+        : entityType === 'person'
+        ? `https://app.attio.com/textql-data/person/${recordId}/overview`
+        : `https://app.attio.com/textql-data/company/${recordId}/overview`
+    };
+  } catch (error) {
+    console.error('Update record error:', error.response?.data || error.message);
+    throw new Error(`Failed to update ${entityType}: ${error.response?.data?.message || error.message}`);
+  }
 }
 
 async function createNote(recordId, recordType, content, messageContext = null, noteTitle = null) {
@@ -959,6 +984,240 @@ async function searchByTimeRange(options = {}) {
   }
 }
 
+// Simple update function for Claude agent to use
+async function updateEntityField(entityType, recordId, fieldName, value, noteText = null) {
+  try {
+    console.log(`\n=== Updating ${entityType} ${recordId}: ${fieldName} = ${value} ===`);
+    
+    // Map entity types to API endpoints with proper pluralization
+    const objectType = {
+      'company': 'companies',
+      'deal': 'deals', 
+      'person': 'people'
+    }[entityType];
+    
+    if (!objectType) {
+      throw new Error(`Unsupported entity type: ${entityType}. Supported: company, deal, person`);
+    }
+    
+    // Build the update payload
+    const updatePayload = {
+      data: {
+        values: {
+          [fieldName]: value
+        }
+      }
+    };
+    
+    console.log('Update payload:', JSON.stringify(updatePayload, null, 2));
+    
+    // Update the record
+    const response = await getAttioClient().put(`/objects/${objectType}/records/${recordId}`, updatePayload);
+    
+    // Extract the updated record info
+    const updatedRecord = response.data.data;
+    const recordName = updatedRecord.values?.name?.[0]?.value || 'Unnamed Record';
+    
+    console.log(`Successfully updated ${entityType} "${recordName}"`);
+    
+    // Create a note if requested
+    let noteResult = null;
+    if (noteText) {
+      noteResult = await createNote(recordId, entityType, noteText, null, `Updated ${fieldName}`);
+    }
+    
+    // Generate the appropriate URL
+    const urlPath = entityType === 'deal' ? 'deals/record' : entityType;
+    const attioUrl = `https://app.attio.com/textql-data/${urlPath}/${recordId}/overview`;
+    
+    return {
+      success: true,
+      action: 'update_field',
+      entityType: entityType,
+      recordId: recordId,
+      recordName: recordName,
+      fieldName: fieldName,
+      newValue: value,
+      noteCreated: noteResult ? true : false,
+      attioUrl: attioUrl
+    };
+    
+  } catch (error) {
+    console.error('Update entity field error:', error.response?.data || error.message);
+    return {
+      success: false,
+      error: error.response?.data?.message || error.message,
+      entityType: entityType,
+      recordId: recordId,
+      fieldName: fieldName,
+      attemptedValue: value
+    };
+  }
+}
+
+/**
+ * Create a new person record
+ */
+async function createPerson(personData) {
+  try {
+    console.log(`Creating person: ${personData.name}`);
+    
+    const payload = {
+      data: {
+        values: {
+          name: personData.name
+        }
+      }
+    };
+
+    // Add optional fields if provided
+    if (personData.email) {
+      payload.data.values.email_addresses = [personData.email];
+    }
+    if (personData.phone) {
+      payload.data.values.phone_numbers = [personData.phone];
+    }
+    if (personData.jobTitle) {
+      payload.data.values.job_title = personData.jobTitle;
+    }
+
+    const response = await getAttioClient().post('/objects/people/records', payload);
+    
+    const recordId = response.data.data.id.record_id;
+    const recordName = response.data.data.values.name[0].full_name;
+    const attioUrl = `https://app.attio.com/textql-data/person/${recordId}/overview`;
+    
+    console.log(`Successfully created person: ${recordName} (${recordId})`);
+    
+    return {
+      success: true,
+      action: 'create_person',
+      recordId: recordId,
+      recordName: recordName,
+      attioUrl: attioUrl,
+      data: response.data.data
+    };
+    
+  } catch (error) {
+    console.error('Create person error:', error.response?.data || error.message);
+    return {
+      success: false,
+      error: error.response?.data?.message || error.message,
+      attemptedName: personData.name
+    };
+  }
+}
+
+/**
+ * Create a new company record
+ */
+async function createCompany(companyData) {
+  try {
+    console.log(`Creating company: ${companyData.name}`);
+    
+    const payload = {
+      data: {
+        values: {
+          name: companyData.name
+        }
+      }
+    };
+
+    // Add optional fields if provided
+    if (companyData.description) {
+      payload.data.values.description = companyData.description;
+    }
+    if (companyData.domain) {
+      payload.data.values.domains = [companyData.domain];
+    }
+
+    const response = await getAttioClient().post('/objects/companies/records', payload);
+    
+    const recordId = response.data.data.id.record_id;
+    const recordName = response.data.data.values.name[0].value;
+    const attioUrl = `https://app.attio.com/textql-data/company/${recordId}/overview`;
+    
+    console.log(`Successfully created company: ${recordName} (${recordId})`);
+    
+    return {
+      success: true,
+      action: 'create_company',
+      recordId: recordId,
+      recordName: recordName,
+      attioUrl: attioUrl,
+      data: response.data.data
+    };
+    
+  } catch (error) {
+    console.error('Create company error:', error.response?.data || error.message);
+    return {
+      success: false,
+      error: error.response?.data?.message || error.message,
+      attemptedName: companyData.name
+    };
+  }
+}
+
+/**
+ * Create a new deal record
+ */
+async function createDeal(dealData) {
+  try {
+    console.log(`Creating deal: ${dealData.name}`);
+    
+    // Deal requires an owner - use the default workspace member we found
+    const defaultOwnerId = "2121a6f3-0a61-4148-b6d8-22216dced1fc"; // Ethan's ID from existing deals
+    
+    const payload = {
+      data: {
+        values: {
+          name: dealData.name,
+          owner: {
+            referenced_actor_type: "workspace-member",
+            referenced_actor_id: dealData.ownerId || defaultOwnerId
+          }
+        }
+      }
+    };
+
+    // Add optional fields if provided
+    if (dealData.value) {
+      payload.data.values.total_contract_value = dealData.value;
+    }
+    if (dealData.companyId) {
+      payload.data.values.associated_company = {
+        target_object: "companies",
+        target_record_id: dealData.companyId
+      };
+    }
+
+    const response = await getAttioClient().post('/objects/deals/records', payload);
+    
+    const recordId = response.data.data.id.record_id;
+    const recordName = response.data.data.values.name[0].value;
+    const attioUrl = `https://app.attio.com/textql-data/deals/record/${recordId}/overview`;
+    
+    console.log(`Successfully created deal: ${recordName} (${recordId})`);
+    
+    return {
+      success: true,
+      action: 'create_deal',
+      recordId: recordId,
+      recordName: recordName,
+      attioUrl: attioUrl,
+      data: response.data.data
+    };
+    
+  } catch (error) {
+    console.error('Create deal error:', error.response?.data || error.message);
+    return {
+      success: false,
+      error: error.response?.data?.message || error.message,
+      attemptedName: dealData.name
+    };
+  }
+}
+
 module.exports = { 
   searchAttio, 
   createOrUpdateRecord, 
@@ -970,5 +1229,9 @@ module.exports = {
   advancedSearch,
   searchRelatedEntities,
   searchByTimeRange,
-  getEntityById
+  getEntityById,
+  updateEntityField,
+  createPerson,
+  createCompany,
+  createDeal
 };

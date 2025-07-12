@@ -6,7 +6,11 @@ const {
   searchByTimeRange, 
   createNote, 
   getNotes, 
-  deleteNote
+  deleteNote,
+  updateEntityField,
+  createPerson,
+  createCompany,
+  createDeal
 } = require('./attioService');
 
 /**
@@ -371,6 +375,14 @@ You help users manage their CRM data through natural conversation. You can:
 - *get_notes*: Retrieve and filter notes by entity, date, or content (always search for entity first)
 - *delete_note*: Remove notes with confirmation (search entity first, then find specific notes)
 
+*✏️ Entity Updates*
+- *update_entity_field*: Update specific fields on companies, deals, and people (e.g., contract values, statuses, contact info)
+
+*➕ Entity Creation*
+- *create_person*: Create new person records with name, email, phone, job title
+- *create_company*: Create new company records with name, description, domain
+- *create_deal*: Create new deal records with name, value, associated company
+
 *🖼️ Image Analysis*
 - You can view and analyze images shared in Slack conversations
 - Extract text from screenshots, documents, and other visual content
@@ -405,11 +417,20 @@ When searching for entities, use your intelligence to find what the user is look
 Execute complete workflows in single responses by calling multiple tools:
 - "create note for [company]: meeting scheduled" → search_crm + create_note + return URL
 - "find [company] and count their notes" → search_crm + get_notes + provide count/summary
+- "update [deal] value to $150k" → search_crm + update_entity_field + confirm change
 - *CRITICAL*: When user asks to "count notes" or "get notes", you MUST call get_notes tool after finding the entity
-- *🚨 CRITICAL UUID RULE*: For create_note, get_notes, delete_note - ALWAYS use the exact "id" field from search_crm results (e.g., "ffc6013f-2148-4427-8c1f-fec7b3f36554"). NEVER use slugs, names, or made-up IDs!
+- *🚨 CRITICAL UUID RULE*: For create_note, get_notes, delete_note, update_entity_field - ALWAYS use the exact "id" field from search_crm results (e.g., "ffc6013f-2148-4427-8c1f-fec7b3f36554"). NEVER use slugs, names, or made-up IDs!
 - *For ambiguous searches*: Pick the most likely candidate (company > deal > person) and proceed
 - *If multiple strong matches*: Choose the most relevant and mention the choice
 - Never just plan - DO IT immediately with actual tool calls
+
+*✏️ Field Update Guidelines*
+When updating entity fields:
+- *Common deal fields*: total_contract_value, stage, status, close_date_1, pilot_investment
+- *Common company fields*: name, description, industry, location
+- *Common person fields*: name, email_addresses, phone_numbers, title
+- Always confirm the update and provide the new value in your response
+- Include clickable link to the updated entity
 
 *📝 Note Creation Guidelines*
 When creating notes, provide appropriate titles that summarize the content:
@@ -747,6 +768,111 @@ Remember: You're here to make CRM management effortless. Be proactive, accurate,
           },
           required: ['note_id']
         }
+      },
+      {
+        name: 'update_entity_field',
+        description: 'Update a specific field on a company, person, or deal',
+        input_schema: {
+          type: 'object',
+          properties: {
+            entity_type: {
+              type: 'string',
+              enum: ['company', 'person', 'deal'],
+              description: 'Type of entity to update'
+            },
+            entity_id: {
+              type: 'string',
+              description: 'EXACT UUID of the entity from search results (e.g., "ffc6013f-2148-4427-8c1f-fec7b3f36554"). NEVER use slugs or names - only the "id" field from search_crm results.'
+            },
+            field_name: {
+              type: 'string',
+              description: 'Name of the field to update (e.g., "total_contract_value", "stage", "name", "description")'
+            },
+            field_value: {
+              type: ['string', 'number', 'boolean'],
+              description: 'New value for the field. For currency fields like total_contract_value, use numeric values (e.g., 150000 for $150,000)'
+            },
+            note_text: {
+              type: 'string',
+              description: 'Optional note to add documenting this change'
+            }
+          },
+          required: ['entity_type', 'entity_id', 'field_name', 'field_value']
+        }
+      },
+      {
+        name: 'create_person',
+        description: 'Create a new person record in the CRM',
+        input_schema: {
+          type: 'object',
+          properties: {
+            name: {
+              type: 'string',
+              description: 'Full name of the person (required)'
+            },
+            email: {
+              type: 'string',
+              description: 'Email address (optional)'
+            },
+            phone: {
+              type: 'string',
+              description: 'Phone number (optional)'
+            },
+            job_title: {
+              type: 'string',
+              description: 'Job title or position (optional)'
+            }
+          },
+          required: ['name']
+        }
+      },
+      {
+        name: 'create_company',
+        description: 'Create a new company record in the CRM',
+        input_schema: {
+          type: 'object',
+          properties: {
+            name: {
+              type: 'string',
+              description: 'Company name (required)'
+            },
+            description: {
+              type: 'string',
+              description: 'Company description (optional)'
+            },
+            domain: {
+              type: 'string',
+              description: 'Company website domain (optional, e.g., "example.com")'
+            }
+          },
+          required: ['name']
+        }
+      },
+      {
+        name: 'create_deal',
+        description: 'Create a new deal record in the CRM',
+        input_schema: {
+          type: 'object',
+          properties: {
+            name: {
+              type: 'string',
+              description: 'Deal name or title (required)'
+            },
+            value: {
+              type: 'number',
+              description: 'Deal value in USD (optional, e.g., 150000 for $150,000)'
+            },
+            company_id: {
+              type: 'string',
+              description: 'ID of associated company record (optional)'
+            },
+            owner_id: {
+              type: 'string',
+              description: 'ID of deal owner (optional, will use default if not provided)'
+            }
+          },
+          required: ['name']
+        }
       }
     ];
   }
@@ -802,6 +928,38 @@ Remember: You're here to make CRM management effortless. Be proactive, accurate,
           break;
         case 'delete_note':
           result = await deleteNote(action.input.note_id);
+          break;
+        case 'update_entity_field':
+          result = await updateEntityField(
+            action.input.entity_type,
+            action.input.entity_id,
+            action.input.field_name,
+            action.input.field_value,
+            action.input.note_text
+          );
+          break;
+        case 'create_person':
+          result = await createPerson({
+            name: action.input.name,
+            email: action.input.email,
+            phone: action.input.phone,
+            jobTitle: action.input.job_title
+          });
+          break;
+        case 'create_company':
+          result = await createCompany({
+            name: action.input.name,
+            description: action.input.description,
+            domain: action.input.domain
+          });
+          break;
+        case 'create_deal':
+          result = await createDeal({
+            name: action.input.name,
+            value: action.input.value,
+            companyId: action.input.company_id,
+            ownerId: action.input.owner_id
+          });
           break;
         default:
           throw new Error(`Unknown tool: ${action.tool}`);

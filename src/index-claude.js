@@ -199,8 +199,11 @@ app.action('cancel_action', async (args) => {
 (async () => {
   try {
     // Use file-based storage
-    const mockDb = require('./services/database-mock');
-    connectDB = mockDb.connectDB;
+    const fileStorage = require('./services/fileStorage');
+    connectDB = async () => {
+      console.log('Using file-based conversation logging to data/conversations/');
+      return true;
+    };
     await connectDB();
     dbService = 'File Storage';
     
