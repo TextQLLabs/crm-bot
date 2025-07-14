@@ -1,0 +1,68 @@
+{
+  "hotAccounts": [
+    {
+      "id": "test-local-123",
+      "name": "Local Test Company",
+      "type": "company",
+      "queryCount": 2,
+      "lastQueried": "2025-07-14T18:36:45.800Z",
+      "url": "https://example.com/local"
+    },
+    {
+      "id": "company-123",
+      "name": "The Raine Group",
+      "type": "company",
+      "queryCount": 6,
+      "lastQueried": "2025-07-14T18:32:50.925Z",
+      "url": "https://app.attio.com/textql-data/company/company-123/overview"
+    }
+  ],
+  "recentDeals": [
+    {
+      "id": "deal-456",
+      "name": "Acme Corp - Enterprise",
+      "company": "Acme Corp",
+      "value": 250000,
+      "stage": "Proposal",
+      "lastAccessed": "2025-07-14T18:32:50.926Z",
+      "url": "https://app.attio.com/textql-data/deals/deal-456/overview"
+    },
+    {
+      "id": "deal-123",
+      "name": "Raine Group - Q1 2025",
+      "company": "The Raine Group",
+      "value": 150000,
+      "stage": "Negotiation",
+      "lastAccessed": "2025-07-14T18:32:50.926Z",
+      "url": "https://app.attio.com/textql-data/deals/deal-123/overview"
+    }
+  ],
+  "advisors": [
+    {
+      "id": "advisor-123",
+      "name": "John Smith",
+      "company": "Independent",
+      "email": "john.smith@example.com",
+      "expertise": "AI/ML Strategy",
+      "notes": "Former CTO at major tech company",
+      "addedOn": "2025-07-14T18:32:50.927Z",
+      "url": "https://app.attio.com/textql-data/person/advisor-123/overview"
+    }
+  ],
+  "teammates": [
+    {
+      "id": "teammate-123",
+      "name": "Alice Johnson",
+      "email": "alice@textql.com",
+      "role": "Sales Manager",
+      "department": "Sales",
+      "addedOn": "2025-07-14T18:32:50.928Z",
+      "url": "https://app.attio.com/textql-data/person/teammate-123/overview"
+    }
+  ],
+  "lastUpdated": "2025-07-14T18:36:45.804Z",
+  "metadata": {
+    "version": "1.0.0",
+    "description": "Bot persistent notes for CRM operations"
+  }
+}

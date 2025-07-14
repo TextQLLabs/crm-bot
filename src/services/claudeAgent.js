@@ -13,6 +13,8 @@ const {
   createDeal
 } = require('./attioService');
 
+const { BotNotesService } = require('./botNotesService');
+
 /**
  * Claude Agent Framework
  * 
@@ -383,6 +385,13 @@ You help users manage their CRM data through natural conversation. You can:
 - *create_company*: Create new company records with name, description, domain
 - *create_deal*: Create new deal records with name, value, associated company
 
+*🗂️ Bot Notes Management*
+- *manage_bot_notes*: Maintain persistent notes for hot accounts, recent deals, advisors, and teammates
+- Track frequently queried accounts automatically
+- Cache recent deal information for quick reference
+- Maintain lists of advisor contacts (distinct from teammates and customers)
+- Store team member information for context
+
 *🖼️ Image Analysis*
 - You can view and analyze images shared in Slack conversations
 - Extract text from screenshots, documents, and other visual content
@@ -420,6 +429,13 @@ Execute complete workflows in single responses by calling multiple tools:
 - "update [deal] value to $150k" → search_crm + update_entity_field + confirm change
 - *CRITICAL*: When user asks to "count notes" or "get notes", you MUST call get_notes tool after finding the entity
 - *🚨 CRITICAL UUID RULE*: For create_note, get_notes, delete_note, update_entity_field - ALWAYS use the exact "id" field from search_crm results (e.g., "ffc6013f-2148-4427-8c1f-fec7b3f36554"). NEVER use slugs, names, or made-up IDs!
+
+*🗂️ Bot Notes Usage*
+- *Automatic tracking*: When searching for entities, automatically track hot accounts by adding them to bot notes
+- *Deal caching*: Cache recent deal information for quick reference and context
+- *Advisor management*: When someone is identified as an advisor, add them to the advisor list
+- *Team tracking*: Maintain awareness of team members vs. customers vs. advisors
+- *Context building*: Use bot notes to build context for conversations and avoid repeated searches
 - *For ambiguous searches*: Pick the most likely candidate (company > deal > person) and proceed
 - *If multiple strong matches*: Choose the most relevant and mention the choice
 - Never just plan - DO IT immediately with actual tool calls
@@ -873,6 +889,58 @@ Remember: You're here to make CRM management effortless. Be proactive, accurate,
           },
           required: ['name']
         }
+      },
+      {
+        name: 'manage_bot_notes',
+        description: 'Manage persistent bot notes for tracking hot accounts, recent deals, advisors, and teammates',
+        input_schema: {
+          type: 'object',
+          properties: {
+            action: {
+              type: 'string',
+              enum: ['add_hot_account', 'add_recent_deal', 'add_advisor', 'add_teammate', 'remove_entry', 'get_notes', 'search_notes', 'get_summary', 'clear_all'],
+              description: 'Action to perform on bot notes'
+            },
+            data: {
+              type: 'object',
+              description: 'Data for the action (structure depends on action type)',
+              properties: {
+                id: { type: 'string', description: 'Unique identifier for the entry' },
+                name: { type: 'string', description: 'Name of the person/company/deal' },
+                type: { type: 'string', description: 'Type of entity (company, person, deal)' },
+                company: { type: 'string', description: 'Associated company name' },
+                value: { type: 'number', description: 'Deal value (for deals)' },
+                stage: { type: 'string', description: 'Deal stage (for deals)' },
+                email: { type: 'string', description: 'Email address' },
+                phone: { type: 'string', description: 'Phone number' },
+                expertise: { type: 'string', description: 'Area of expertise (for advisors)' },
+                role: { type: 'string', description: 'Job role (for teammates)' },
+                department: { type: 'string', description: 'Department (for teammates)' },
+                notes: { type: 'string', description: 'Additional notes' },
+                url: { type: 'string', description: 'Attio URL for the entity' },
+                queryCount: { type: 'number', description: 'Number of times queried (for hot accounts)' }
+              }
+            },
+            section: {
+              type: 'string',
+              enum: ['hotAccounts', 'recentDeals', 'advisors', 'teammates'],
+              description: 'Section to query (for get_notes and search_notes)'
+            },
+            query: {
+              type: 'string',
+              description: 'Search query (for search_notes)'
+            },
+            entryId: {
+              type: 'string',
+              description: 'ID of entry to remove (for remove_entry)'
+            },
+            listName: {
+              type: 'string',
+              description: 'Name of list to remove from (for remove_entry)'
+            }
+          },
+          required: ['action']
+        }
       }
     ];
   }
@@ -960,6 +1028,42 @@ Remember: You're here to make CRM management effortless. Be proactive, accurate,
             companyId: action.input.company_id,
             ownerId: action.input.owner_id
           });
+          break;
+        case 'manage_bot_notes':
+          const botNotesService = new BotNotesService();
+          const actionType = action.input.action;
+          
+          switch (actionType) {
+            case 'add_hot_account':
+              result = await botNotesService.addHotAccount(action.input.data);
+              break;
+            case 'add_recent_deal':
+              result = await botNotesService.addRecentDeal(action.input.data);
+              break;
+            case 'add_advisor':
+              result = await botNotesService.addAdvisor(action.input.data);
+              break;
+            case 'add_teammate':
+              result = await botNotesService.addTeammate(action.input.data);
+              break;
+            case 'remove_entry':
+              result = await botNotesService.removeEntry(action.input.listName, action.input.entryId);
+              break;
+            case 'get_notes':
+              result = await botNotesService.getNotes(action.input.section);
+              break;
+            case 'search_notes':
+              result = await botNotesService.searchNotes(action.input.query, action.input.section);
+              break;
+            case 'get_summary':
+              result = await botNotesService.getContextSummary();
+              break;
+            case 'clear_all':
+              result = await botNotesService.clearAllNotes();
+              break;
+            default:
+              throw new Error(`Unknown bot notes action: ${actionType}`);
+          }
           break;
         default:
           throw new Error(`Unknown tool: ${action.tool}`);
