@@ -225,8 +225,9 @@ async function handleMention({ event, message, say, client }) {
     console.log('Attachments:', attachments.length);
     console.log('Canvas content included:', !!canvasContent);
     
-    // Create progress callback for updates
-    const progressCallback = async (status, details) => {
+    // Create progress callback for updates with live tool streaming
+    let toolOutputHistory = [];
+    const progressCallback = async (status, details, toolOutput) => {
       try {
         let progressText = ':cat-roomba-exceptionally-fast:';
         
@@ -258,12 +259,40 @@ async function handleMention({ event, message, say, client }) {
           case 'timeout':
             progressText = '⏱️ Operation taking longer than expected - still processing...';
             break;
+          case 'tool_output':
+            progressText += ' 🔧 Executing tools...';
+            break;
           default:
             progressText += ' Processing your request...';
         }
         
         if (details) {
           progressText += ` ${details}`;
+        }
+        
+        // Add tool output streaming if provided
+        if (toolOutput) {
+          // Store the tool output
+          toolOutputHistory.push(toolOutput);
+          
+          // Format tool output for display
+          const formattedOutput = formatToolOutput(toolOutput);
+          if (formattedOutput) {
+            progressText += `\\n\\n📋 **Current:** ${formattedOutput}`;
+          }
+        }
+        
+        // Show recent tool outputs (last 3 to avoid message length issues)
+        if (toolOutputHistory.length > 0 && status !== 'tool_output') {
+          const recentOutputs = toolOutputHistory.slice(-3);
+          const outputSummary = recentOutputs
+            .map(output => formatToolOutput(output))
+            .filter(Boolean)
+            .join('\\n');
+          
+          if (outputSummary) {
+            progressText += `\\n\\n📋 **Recent activity:**\\n${outputSummary}`;
+          }
         }
         
         await client.chat.update({
@@ -276,6 +305,91 @@ async function handleMention({ event, message, say, client }) {
         // Continue without failing - progress updates are non-critical
       }
     };
+    
+    // Helper function to format tool output for display
+    function formatToolOutput(toolOutput) {
+      if (!toolOutput) return null;
+      
+      const { tool, input, result, status } = toolOutput;
+      let output = `${getToolIcon(tool)} **${tool}**`;
+      
+      if (status === 'executing') {
+        output += ` (${getToolDescription(tool, input)})`;
+      } else if (status === 'completed' && result) {
+        if (result.error) {
+          output += ` ❌ Error: ${result.error}`;
+        } else if (result.count !== undefined) {
+          output += ` ✅ Found ${result.count} results`;
+        } else if (result.success) {
+          output += ` ✅ ${getSuccessMessage(tool, result)}`;
+        } else {
+          output += ` ✅ Completed`;
+        }
+        
+        // Add detailed information for specific tools
+        if (tool === 'update_entity' && result.recordName && input.field_name) {
+          output += ` - ${result.recordName}: ${input.field_name} = ${input.field_value}`;
+        }
+      } else if (status === 'failed') {
+        output += ` ❌ Failed: ${result?.error || 'Unknown error'}`;
+      }
+      
+      return output;
+    }
+    
+    // Helper function to get tool icons
+    function getToolIcon(tool) {
+      const icons = {
+        'search_crm': '🔍',
+        'advanced_search': '🔎',
+        'create_note': '📝',
+        'update_entity': '✏️',
+        'create_deal': '💰',
+        'create_company': '🏢',
+        'create_person': '👤',
+        'web_search': '🌐',
+        'get_notes': '📄',
+        'delete_note': '🗑️'
+      };
+      return icons[tool] || '🔧';
+    }
+    
+    // Helper function to get tool descriptions
+    function getToolDescription(tool, input) {
+      switch (tool) {
+        case 'search_crm':
+        case 'advanced_search':
+          return `searching for "${input.query || 'entities'}"`;
+        case 'create_note':
+          return `creating note on ${input.entity_type}`;
+        case 'update_entity':
+          return `updating ${input.entity_type} ${input.field_name} = ${input.field_value}`;
+        case 'create_deal':
+          return `creating deal "${input.data?.name?.[0]?.value || 'New Deal'}"`;
+        case 'create_company':
+          return `creating company "${input.data?.name?.[0]?.value || 'New Company'}"`;
+        case 'create_person':
+          return `creating person "${input.name || 'New Person'}"`;
+        default:
+          return 'processing';
+      }
+    }
+    
+    // Helper function to get success messages
+    function getSuccessMessage(tool, result) {
+      switch (tool) {
+        case 'update_entity':
+          return `Updated ${result.entity_type || 'record'}`;
+        case 'create_note':
+          return `Note created`;
+        case 'create_deal':
+        case 'create_company':
+        case 'create_person':
+          return `Created successfully`;
+        default:
+          return 'Completed';
+      }
+    }
     
     // Set up timeout handler
     const timeoutHandler = setTimeout(async () => {

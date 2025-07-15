@@ -158,10 +158,47 @@ class ClaudeAgent {
       const toolResults = [];
       for (const toolUse of toolUses) {
         try {
+          // Progress update based on tool type
+          switch (toolUse.name) {
+            case 'search_crm':
+            case 'advanced_search':
+              await progressCallback('searching');
+              break;
+            case 'create_note':
+            case 'create_person':
+            case 'create_company':
+            case 'create_deal':
+              await progressCallback('creating');
+              break;
+            case 'update_entity':
+              await progressCallback('updating');
+              break;
+            case 'web_search':
+              await progressCallback('web_search');
+              break;
+            default:
+              await progressCallback('thinking');
+          }
+          
+          // Send tool execution start notification
+          await progressCallback('tool_output', null, {
+            tool: toolUse.name,
+            input: toolUse.input,
+            status: 'executing'
+          });
+          
           const toolResult = await this.executeToolCall({
             tool: toolUse.name,
             input: toolUse.input
           }, messageContext);
+          
+          // Send tool completion notification
+          await progressCallback('tool_output', null, {
+            tool: toolUse.name,
+            input: toolUse.input,
+            result: toolResult,
+            status: toolResult.error ? 'failed' : 'completed'
+          });
           
           toolsUsed.push({
             tool: toolUse.name,
@@ -176,6 +213,15 @@ class ClaudeAgent {
             content: JSON.stringify(toolResult, null, 2)
           });
         } catch (error) {
+          // Send tool failure notification
+          await progressCallback('tool_output', null, {
+            tool: toolUse.name,
+            input: toolUse.input,
+            result: { error: error.message },
+            status: 'failed'
+          });
+          
+          await progressCallback('error', `Tool ${toolUse.name} failed: ${error.message}`);
           toolResults.push({
             type: 'tool_result',
             tool_use_id: toolUse.id,
