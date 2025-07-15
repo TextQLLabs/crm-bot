@@ -225,18 +225,85 @@ async function handleMention({ event, message, say, client }) {
     console.log('Attachments:', attachments.length);
     console.log('Canvas content included:', !!canvasContent);
     
-    const result = await agent.processMessage({
-      text: fullContext,
-      userName,
-      userId: msg.user,
-      channel: msg.channel,
-      attachments,
-      isThreaded: msg.thread_ts && msg.thread_ts !== msg.ts,
-      threadTs: msg.thread_ts || msg.ts,
-      messageTs: msg.ts,
-      conversationHistory,
-      botActionHistory
-    }, { preview: !isReadOnlyNotesQuery });
+    // Create progress callback for updates
+    const progressCallback = async (status, details) => {
+      try {
+        let progressText = ':cat-roomba-exceptionally-fast:';
+        
+        switch (status) {
+          case 'searching':
+            progressText += ' 🔍 Searching CRM...';
+            break;
+          case 'analyzing':
+            progressText += ' 🧠 Analyzing results...';
+            break;
+          case 'creating':
+            progressText += ' 📝 Creating records...';
+            break;
+          case 'updating':
+            progressText += ' ✏️ Updating records...';
+            break;
+          case 'web_search':
+            progressText += ' 🌐 Searching web...';
+            break;
+          case 'thinking':
+            progressText += ' 💭 Thinking...';
+            break;
+          case 'finalizing':
+            progressText += ' ✨ Finalizing response...';
+            break;
+          case 'error':
+            progressText = '❌ Error occurred - attempting recovery...';
+            break;
+          case 'timeout':
+            progressText = '⏱️ Operation taking longer than expected - still processing...';
+            break;
+          default:
+            progressText += ' Processing your request...';
+        }
+        
+        if (details) {
+          progressText += ` ${details}`;
+        }
+        
+        await client.chat.update({
+          channel: msg.channel,
+          ts: thinkingMessage.ts,
+          text: progressText
+        });
+      } catch (updateError) {
+        console.error('Progress update failed:', updateError);
+        // Continue without failing - progress updates are non-critical
+      }
+    };
+    
+    // Set up timeout handler
+    const timeoutHandler = setTimeout(async () => {
+      await progressCallback('timeout');
+    }, 10000); // 10 seconds
+    
+    let result;
+    try {
+      result = await agent.processMessage({
+        text: fullContext,
+        userName,
+        userId: msg.user,
+        channel: msg.channel,
+        attachments,
+        isThreaded: msg.thread_ts && msg.thread_ts !== msg.ts,
+        threadTs: msg.thread_ts || msg.ts,
+        messageTs: msg.ts,
+        conversationHistory,
+        botActionHistory,
+        progressCallback
+      }, { preview: !isReadOnlyNotesQuery });
+      
+      clearTimeout(timeoutHandler);
+    } catch (error) {
+      clearTimeout(timeoutHandler);
+      await progressCallback('error', error.message);
+      throw error;
+    }
 
     // Check if we have a pending action to approve
     if (result.preview && result.pendingAction) {
@@ -424,21 +491,46 @@ async function handleMention({ event, message, say, client }) {
     console.error('Error stack:', error.stack);
     
     try {
+      // Clear any existing timeout handlers
+      if (timeoutHandler) {
+        clearTimeout(timeoutHandler);
+      }
+      
+      // Determine appropriate error message based on error type
+      let errorMessage = '❌ I encountered an issue processing your request. Please try again.';
+      
+      if (error.message?.includes('timeout') || error.message?.includes('timed out')) {
+        errorMessage = '⏱️ Request timed out. The operation took too long to complete. Please try a simpler request or try again later.';
+      } else if (error.message?.includes('interrupted') || error.message?.includes('stream')) {
+        errorMessage = '🔄 Connection was interrupted. Please try your request again.';
+      }
+      
       if (thinkingMessage && thinkingMessage.ts) {
         await client.chat.update({
           channel: msg.channel,
           ts: thinkingMessage.ts,
-          text: `❌ I encountered an issue processing your request. Please try again.`
+          text: errorMessage
         });
       } else {
         await client.chat.postMessage({
           channel: msg.channel,
-          text: `❌ I encountered an issue processing your request. Please try again.`,
+          text: errorMessage,
           thread_ts: msg.thread_ts || msg.ts
         });
       }
     } catch (errorMessageError) {
       console.error('Failed to send error message:', errorMessageError);
+      
+      // Last resort - try to post a simple message
+      try {
+        await client.chat.postMessage({
+          channel: msg.channel,
+          text: '❌ System error - please try again',
+          thread_ts: msg.thread_ts || msg.ts
+        });
+      } catch (finalError) {
+        console.error('Complete failure to send any error message:', finalError);
+      }
     }
   }
 }

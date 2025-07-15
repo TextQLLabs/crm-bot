@@ -112,10 +112,9 @@ class ClaudeAgent {
     ];
 
     let toolsUsed = [];
-    let maxIterations = 5;
     let iteration = 0;
 
-    while (iteration < maxIterations) {
+    while (true) {
       iteration++;
       
       // Get Claude's response
@@ -193,9 +192,9 @@ class ClaudeAgent {
       });
     }
 
-    // If we hit max iterations, return what we have
+    // This should never be reached due to the while(true) loop
     return {
-      thinking: ['Reached maximum iterations'],
+      thinking: ['Unexpected end of conversation'],
       workflow: [],
       rawResponse: null,
       toolsUsed: toolsUsed,
@@ -946,12 +945,19 @@ Remember: You're here to make CRM management effortless. Be proactive, accurate,
     try {
       let result;
       
+      // Add timeout wrapper for long-running operations
+      const timeoutPromise = new Promise((_, reject) => {
+        setTimeout(() => reject(new Error('Tool call timed out')), this.toolCallTimeout);
+      });
+      
+      const toolPromise = (async () => {
+      
       switch (action.tool) {
         case 'search_crm':
           result = await searchAttio(action.input.query, action.input.entity_type);
           break;
         case 'advanced_search':
-          result = await advancedSearch(action.input.entity_type, action.input.filters);
+          result = await advancedSearch(action.input);
           break;
         case 'search_related_entities':
           result = await searchRelatedEntities(
@@ -1060,6 +1066,12 @@ Remember: You're here to make CRM management effortless. Be proactive, accurate,
         default:
           throw new Error(`Unknown tool: ${action.tool}`);
       }
+      
+      return result;
+      })();
+      
+      // Race between tool execution and timeout
+      result = await Promise.race([toolPromise, timeoutPromise]);
       
       return {
         ...result,

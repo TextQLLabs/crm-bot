@@ -17,26 +17,43 @@ function getAttioClient() {
   return attioClient;
 }
 
-async function searchAttio(query) {
+async function searchAttio(query, entityType = 'all') {
   try {
-    console.log(`\n=== Searching Attio for: "${query}" ===`);
+    console.log(`\n=== Searching Attio for: "${query}" (type: ${entityType}) ===`);
     console.log('API Key status:', process.env.ATTIO_API_KEY ? `Present (length: ${process.env.ATTIO_API_KEY.length})` : 'MISSING');
     
-    // Search across companies, deals, and people
-    const [companies, deals, people] = await Promise.all([
-      searchCompanies(query),
-      searchDeals(query),
-      searchPeople(query)
-    ]);
+    let allResults = [];
+    
+    // Search based on entity type
+    if (entityType === 'deal') {
+      const deals = await searchDeals(query);
+      allResults = deals.map(d => ({ ...d, type: 'deal' }));
+      console.log(`Found: ${deals.length} deals`);
+    } else if (entityType === 'company') {
+      const companies = await searchCompanies(query);
+      allResults = companies.map(c => ({ ...c, type: 'company' }));
+      console.log(`Found: ${companies.length} companies`);
+    } else if (entityType === 'person') {
+      const people = await searchPeople(query);
+      allResults = people.map(p => ({ ...p, type: 'person' }));
+      console.log(`Found: ${people.length} people`);
+    } else {
+      // Default: search all entity types
+      const [companies, deals, people] = await Promise.all([
+        searchCompanies(query),
+        searchDeals(query),
+        searchPeople(query)
+      ]);
 
-    console.log(`Found: ${companies.length} companies, ${deals.length} deals, ${people.length} people`);
+      console.log(`Found: ${companies.length} companies, ${deals.length} deals, ${people.length} people`);
 
-    // Combine and rank results
-    const allResults = [
-      ...companies.map(c => ({ ...c, type: 'company' })),
-      ...deals.map(d => ({ ...d, type: 'deal' })),
-      ...people.map(p => ({ ...p, type: 'person' }))
-    ];
+      // Combine and rank results
+      allResults = [
+        ...companies.map(c => ({ ...c, type: 'company' })),
+        ...deals.map(d => ({ ...d, type: 'deal' })),
+        ...people.map(p => ({ ...p, type: 'person' }))
+      ];
+    }
 
     // Log what we found with URLs
     if (allResults.length > 0) {
@@ -48,8 +65,9 @@ async function searchAttio(query) {
       console.log('Hint: Try searching for just part of the name or without common words like "The", "Inc", etc.');
     }
 
-    // Sort by relevance (you might want to implement a better ranking algorithm)
-    return allResults.slice(0, 10);
+    // Return more results when filtering by type, fewer when searching all
+    const maxResults = entityType === 'all' ? 10 : 20;
+    return allResults.slice(0, maxResults);
   } catch (error) {
     console.error('Attio search error:', error);
     console.error('Error details:', error.response?.data || error.message);
@@ -82,7 +100,7 @@ async function searchCompanies(query) {
       filter: {
         $or: filters
       },
-      limit: 20 // Increase limit for fuzzy search
+      limit: 20
     });
     
     console.log(`Company search found ${response.data?.data?.length || 0} results`);
@@ -98,8 +116,23 @@ async function searchCompanies(query) {
       // Values are arrays with history, we need the current value
       const name = company.values?.name?.[0]?.value || 'Unnamed Company';
       const description = company.values?.description?.[0]?.value || 'No description';
-      // Domains might be stored as array of objects with 'domain' property
-      const domains = company.values?.domains?.map(d => d.domain || d.value || d) || [];
+      // Domains are stored as array with 'domain' property
+      const domains = company.values?.domains?.map(d => d.domain) || [];
+      const categories = company.values?.categories?.map(c => c.option?.title).filter(Boolean) || [];
+      const location = company.values?.primary_location?.[0] || null;
+      const employeeRange = company.values?.employee_range?.[0]?.option?.title || 'Unknown Size';
+      const fundingRaised = company.values?.funding_raised_usd?.[0] || null;
+      const createdAt = company.values?.created_at?.[0]?.value || 'Unknown Date';
+      
+      // Format location
+      const formattedLocation = location ? 
+        `${location.locality || ''}, ${location.region || ''}, ${location.country_code || ''}`.replace(/,\s*$/, '') : 
+        'Unknown Location';
+      
+      // Format funding
+      const formattedFunding = fundingRaised ? 
+        `$${(fundingRaised.currency_value / 100).toLocaleString()} ${fundingRaised.currency_code}` : 
+        'Unknown Funding';
       
       // Calculate relevance score
       const score = calculateRelevanceScore(query, name, domains);
@@ -109,16 +142,21 @@ async function searchCompanies(query) {
         name: name,
         description: description,
         domains: domains,
+        categories: categories,
+        location: formattedLocation,
+        employee_range: employeeRange,
+        funding_raised: formattedFunding,
+        created_at: createdAt,
         slug: domains[0] || '',
         score: score,
-        url: `https://app.attio.com/textql-data/company/${company.id?.record_id}/overview`
+        url: company.web_url
       };
     });
     
     // Sort by relevance score and return top results
     return results
       .sort((a, b) => b.score - a.score)
-      .slice(0, 10)
+      .slice(0, 20)
       .map(({ score, ...company }) => company); // Remove score from final results
   } catch (error) {
     console.error('Company search error:', error.response?.data || error.message);
@@ -243,10 +281,10 @@ async function searchDeals(query) {
           $contains: query
         }
       },
-      limit: 5
+      limit: 20
     });
     
-    console.log('Deal search response:', JSON.stringify(response.data, null, 2));
+    console.log(`Deal search API returned ${response.data?.data?.length || 0} results`);
     
     if (!response.data || !response.data.data) {
       console.log('No deal data in response');
@@ -254,15 +292,27 @@ async function searchDeals(query) {
     }
     
     return response.data.data.map(deal => {
-      // Values are arrays with history
+      // Values are arrays with history - get the latest value
       const name = deal.values?.name?.[0]?.value || 'Unnamed Deal';
-      const value = deal.values?.value?.[0]?.value || 'Unknown';
-                    
+      const value = deal.values?.value?.[0] || null;
+      const stage = deal.values?.stage?.[0]?.status?.title || 'Unknown Stage';
+      const useCase = deal.values?.use_case?.[0]?.option?.title || 'Unknown Use Case';
+      const createdAt = deal.values?.created_at?.[0]?.value || 'Unknown Date';
+      
+      // Format currency value
+      const formattedValue = value ? 
+        `$${(value.currency_value / 100).toLocaleString()} ${value.currency_code}` : 
+        'Unknown Value';
+      
       return {
         id: deal.id?.record_id,
         name: name,
-        description: `Value: ${value}`,
-        url: `https://app.attio.com/textql-data/deals/record/${deal.id?.record_id}/overview`
+        description: `Value: ${formattedValue}`,
+        stage: stage,
+        use_case: useCase,
+        value: formattedValue,
+        created_at: createdAt,
+        url: deal.web_url
       };
     });
   } catch (error) {
@@ -279,10 +329,10 @@ async function searchPeople(query) {
           $contains: query
         }
       },
-      limit: 5
+      limit: 20
     });
     
-    console.log('People search response:', JSON.stringify(response.data, null, 2));
+    console.log(`People search API returned ${response.data?.data?.length || 0} results`);
     
     if (!response.data || !response.data.data) {
       console.log('No people data in response');
@@ -294,22 +344,40 @@ async function searchPeople(query) {
       let name = 'Unnamed Person';
       if (person.values?.name?.[0]) {
         const nameData = person.values.name[0];
-        name = nameData.full_name || nameData.value || `${nameData.first_name || ''} ${nameData.last_name || ''}`.trim();
+        name = nameData.full_name || `${nameData.first_name || ''} ${nameData.last_name || ''}`.trim();
       }
       
       // Handle email addresses array
       let email = 'No email';
       if (person.values?.email_addresses?.[0]) {
         const emailData = person.values.email_addresses[0];
-        email = emailData.email_address || emailData.value || emailData.original_email_address || 'No email';
+        email = emailData.email_address || emailData.original_email_address || 'No email';
       }
+      
+      // Get additional attributes
+      const jobTitle = person.values?.job_title?.[0]?.value || 'Unknown Title';
+      const companyId = person.values?.company?.[0]?.target_record_id || null;
+      const phone = person.values?.phone_numbers?.[0]?.phone_number || 'No phone';
+      const location = person.values?.primary_location?.[0] || null;
+      const createdAt = person.values?.created_at?.[0]?.value || 'Unknown Date';
+      
+      // Format location
+      const formattedLocation = location ? 
+        `${location.locality || ''}, ${location.region || ''}, ${location.country_code || ''}`.replace(/,\s*$/, '') : 
+        'Unknown Location';
                     
-      const personId = person.id?.record_id || person.id || person.record_id;
+      const personId = person.id?.record_id;
       return {
         id: personId,
         name: name,
         description: email,
-        url: `https://app.attio.com/textql-data/person/${personId}/overview`
+        email: email,
+        job_title: jobTitle,
+        company_id: companyId,
+        phone: phone,
+        location: formattedLocation,
+        created_at: createdAt,
+        url: person.web_url
       };
     });
   } catch (error) {
@@ -742,6 +810,9 @@ function buildAdvancedFilter(query, filters, entityType) {
         break;
       case 'status':
         conditions.push({ status: { $eq: filterValue } });
+        break;
+      case 'stage':
+        conditions.push({ stage: { $eq: filterValue } });
         break;
       case 'created_after':
         conditions.push({ created_at: { $gte: filterValue } });
