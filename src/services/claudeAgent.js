@@ -13,7 +13,7 @@ const {
   createDeal
 } = require('./attioService');
 
-const { BotNotesService } = require('./botNotesService');
+const { MemoryService } = require('./memoryService');
 
 /**
  * Claude Agent Framework
@@ -385,12 +385,6 @@ You help users manage their CRM data through natural conversation. You can:
 - *create_company*: Create new company records with name, description, domain
 - *create_deal*: Create new deal records with name, value, associated company
 
-*🗂️ Bot Notes Management*
-- *manage_bot_notes*: Maintain persistent notes for hot accounts, recent deals, advisors, and teammates
-- Track frequently queried accounts automatically
-- Cache recent deal information for quick reference
-- Maintain lists of advisor contacts (distinct from teammates and customers)
-- Store team member information for context
 
 *🖼️ Image Analysis*
 - You can view and analyze images shared in Slack conversations
@@ -430,12 +424,10 @@ Execute complete workflows in single responses by calling multiple tools:
 - *CRITICAL*: When user asks to "count notes" or "get notes", you MUST call get_notes tool after finding the entity
 - *🚨 CRITICAL UUID RULE*: For create_note, get_notes, delete_note, update_entity_field - ALWAYS use the exact "id" field from search_crm results (e.g., "ffc6013f-2148-4427-8c1f-fec7b3f36554"). NEVER use slugs, names, or made-up IDs!
 
-*🗂️ Bot Notes Usage*
-- *Automatic tracking*: When searching for entities, automatically track hot accounts by adding them to bot notes
-- *Deal caching*: Cache recent deal information for quick reference and context
-- *Advisor management*: When someone is identified as an advisor, add them to the advisor list
-- *Team tracking*: Maintain awareness of team members vs. customers vs. advisors
-- *Context building*: Use bot notes to build context for conversations and avoid repeated searches
+*🧠 Intelligent Context*
+- Automatically learn from user interactions to become more helpful over time
+- Remember frequently accessed accounts and recent deals for better suggestions
+- Build contextual awareness of advisors, team members, and important contacts
 - *For ambiguous searches*: Pick the most likely candidate (company > deal > person) and proceed
 - *If multiple strong matches*: Choose the most relevant and mention the choice
 - Never just plan - DO IT immediately with actual tool calls
@@ -891,15 +883,15 @@ Remember: You're here to make CRM management effortless. Be proactive, accurate,
         }
       },
       {
-        name: 'manage_bot_notes',
-        description: 'Manage persistent bot notes for tracking hot accounts, recent deals, advisors, and teammates',
+        name: 'manage_memory',
+        description: 'Internal memory system for intelligent context tracking (operates silently)',
         input_schema: {
           type: 'object',
           properties: {
             action: {
               type: 'string',
-              enum: ['add_hot_account', 'add_recent_deal', 'add_advisor', 'add_teammate', 'remove_entry', 'get_notes', 'search_notes', 'get_summary', 'clear_all'],
-              description: 'Action to perform on bot notes'
+              enum: ['add_hot_account', 'add_recent_deal', 'add_advisor', 'add_teammate', 'remove_entry', 'get_memory', 'search_memory', 'get_summary', 'clear_all'],
+              description: 'Action to perform on memory system'
             },
             data: {
               type: 'object',
@@ -924,11 +916,11 @@ Remember: You're here to make CRM management effortless. Be proactive, accurate,
             section: {
               type: 'string',
               enum: ['hotAccounts', 'recentDeals', 'advisors', 'teammates'],
-              description: 'Section to query (for get_notes and search_notes)'
+              description: 'Section to query (for get_memory and search_memory)'
             },
             query: {
               type: 'string',
-              description: 'Search query (for search_notes)'
+              description: 'Search query (for search_memory)'
             },
             entryId: {
               type: 'string',
@@ -1029,40 +1021,40 @@ Remember: You're here to make CRM management effortless. Be proactive, accurate,
             ownerId: action.input.owner_id
           });
           break;
-        case 'manage_bot_notes':
-          const botNotesService = new BotNotesService();
+        case 'manage_memory':
+          const memoryService = new MemoryService();
           const actionType = action.input.action;
           
           switch (actionType) {
             case 'add_hot_account':
-              result = await botNotesService.addHotAccount(action.input.data);
+              result = await memoryService.addHotAccount(action.input.data);
               break;
             case 'add_recent_deal':
-              result = await botNotesService.addRecentDeal(action.input.data);
+              result = await memoryService.addRecentDeal(action.input.data);
               break;
             case 'add_advisor':
-              result = await botNotesService.addAdvisor(action.input.data);
+              result = await memoryService.addAdvisor(action.input.data);
               break;
             case 'add_teammate':
-              result = await botNotesService.addTeammate(action.input.data);
+              result = await memoryService.addTeammate(action.input.data);
               break;
             case 'remove_entry':
-              result = await botNotesService.removeEntry(action.input.listName, action.input.entryId);
+              result = await memoryService.removeEntry(action.input.listName, action.input.entryId);
               break;
-            case 'get_notes':
-              result = await botNotesService.getNotes(action.input.section);
+            case 'get_memory':
+              result = await memoryService.getMemory(action.input.section);
               break;
-            case 'search_notes':
-              result = await botNotesService.searchNotes(action.input.query, action.input.section);
+            case 'search_memory':
+              result = await memoryService.searchMemory(action.input.query, action.input.section);
               break;
             case 'get_summary':
-              result = await botNotesService.getContextSummary();
+              result = await memoryService.getContextSummary();
               break;
             case 'clear_all':
-              result = await botNotesService.clearAllNotes();
+              result = await memoryService.clearAllMemory();
               break;
             default:
-              throw new Error(`Unknown bot notes action: ${actionType}`);
+              throw new Error(`Unknown memory action: ${actionType}`);
           }
           break;
         default:

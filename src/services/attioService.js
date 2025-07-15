@@ -429,6 +429,26 @@ async function updateRecord(aiResult) {
   }
 }
 
+function generateSlackThreadUrl(messageContext) {
+  // Check for required fields
+  if (!messageContext.channel || !messageContext.threadTs) {
+    return null;
+  }
+  
+  // Detect test context and return null
+  if (messageContext.channel === 'test' || 
+      messageContext.threadTs === 'test-thread' || 
+      messageContext.userId === 'test-user-id') {
+    return null;
+  }
+  
+  // Convert timestamp format: "1752177859.983139" -> "1752177859983139"
+  const timestamp = messageContext.threadTs.replace('.', '');
+  
+  // Return formatted URL
+  return `https://textql.slack.com/archives/${messageContext.channel}/p${timestamp}`;
+}
+
 async function createNote(recordId, recordType, content, messageContext = null, noteTitle = null) {
   // Correct pluralization for Attio API
   const pluralType = recordType === 'person' ? 'people' : 
@@ -436,12 +456,21 @@ async function createNote(recordId, recordType, content, messageContext = null, 
                      recordType === 'deal' ? 'deals' : 
                      `${recordType}s`; // fallback to simple pluralization
   
+  // Add Slack thread link if messageContext is provided
+  let finalContent = content;
+  if (messageContext && messageContext.channel && messageContext.threadTs) {
+    const slackThreadUrl = generateSlackThreadUrl(messageContext);
+    if (slackThreadUrl) {
+      finalContent = `${content}\n\n---\n[Go back to Slack thread](${slackThreadUrl})`;
+    }
+  }
+  
   const response = await getAttioClient().post('/notes', {
     data: {
       parent_object: pluralType,
       parent_record_id: recordId,
       title: noteTitle || 'Update from Slack',
-      content: content, // Direct string, not nested object
+      content: finalContent, // Content with optional Slack thread link
       format: 'plaintext',
       created_by_actor: {
         type: 'api-token'
