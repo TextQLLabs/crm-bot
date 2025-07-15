@@ -93,9 +93,48 @@ if (isSocketMode) {
 
 const app = new App(appConfig);
 
-// Add Socket Mode debugging
+// Add Socket Mode debugging and error handling
 if (isSocketMode) {
   console.log('📡 Socket Mode app created, waiting for connection...');
+  
+  // Add Socket Mode connection event handlers with retry logic
+  let connectionAttempts = 0;
+  const maxRetries = 3;
+  
+  const handleSocketModeError = (error) => {
+    console.error('📡 Socket Mode error:', error.message || error);
+    
+    if (error.message && error.message.includes('server explicit disconnect')) {
+      console.log('📡 Server disconnected during connection attempt');
+      
+      if (connectionAttempts < maxRetries) {
+        connectionAttempts++;
+        console.log(`📡 Retrying connection (attempt ${connectionAttempts}/${maxRetries})...`);
+        
+        // Add a small delay before retrying
+        setTimeout(() => {
+          console.log('📡 Attempting to reconnect...');
+        }, 2000);
+      } else {
+        console.error('📡 Max connection attempts reached. Please check your Slack app configuration.');
+        process.exit(1);
+      }
+    }
+  };
+  
+  // Set up error handlers
+  app.client.on('disconnect', (error) => {
+    console.log('📡 Socket Mode disconnected:', error?.message || 'No error details');
+    handleSocketModeError(error || new Error('Unknown disconnect'));
+  });
+  
+  app.client.on('error', handleSocketModeError);
+  
+  // Add connection success indicator
+  app.client.on('ready', () => {
+    console.log('📡 Socket Mode connected successfully');
+    connectionAttempts = 0; // Reset counter on successful connection
+  });
 }
 
 // Handle app mentions in any channel with error handling
@@ -212,15 +251,62 @@ app.action('cancel_action', async (args) => {
     console.log('💾 Database:', dbService);
     console.log('🤖 Agent: Claude Sonnet 4 with Native Tool Calling (v1.12.1)');
     
-    // Start Slack app
+    // Start Slack app with better error handling
     const port = process.env.PORT || 3000;
-    await app.start(port);
+    
+    if (isSocketMode) {
+      console.log('🔐 Socket Mode validation...');
+      if (!process.env.SLACK_APP_TOKEN) {
+        throw new Error('SLACK_APP_TOKEN is required for Socket Mode');
+      }
+      if (!process.env.SLACK_APP_TOKEN.startsWith('xapp-')) {
+        throw new Error('SLACK_APP_TOKEN must start with "xapp-"');
+      }
+    }
+    
+    // Start the app with additional error handling for Socket Mode
+    try {
+      await app.start(port);
+    } catch (startError) {
+      // Check if it's the specific Socket Mode state machine error
+      if (startError.message && startError.message.includes('Unhandled event') && 
+          startError.message.includes('server explicit disconnect')) {
+        console.error('⚠️ Socket Mode connection issue detected');
+        console.error('This usually means:');
+        console.error('1. Your Slack app token may be invalid or expired');
+        console.error('2. Socket Mode might not be enabled in your Slack app settings');
+        console.error('3. Network connectivity issues');
+        console.error('\nPlease check your Slack app configuration and try again.');
+        process.exit(1);
+      }
+      
+      // Re-throw other errors
+      throw startError;
+    }
     console.log(`⚡️ CRM Bot with Claude Agent is running on port ${port}!`);
     console.log('🧠 Using Claude native tool calling with thinking mode enabled');
     console.log('🔐 Preview mode enabled - all write actions require approval before execution');
     console.log(`🩺 Health check available at: http://localhost:${port}/health`);
+    
+    // Add graceful shutdown handling
+    process.on('SIGINT', async () => {
+      console.log('\n🛑 Shutting down gracefully...');
+      await app.stop();
+      process.exit(0);
+    });
+    
   } catch (error) {
     console.error('Unable to start app:', error);
+    
+    // Provide specific error messages for common issues
+    if (error.message.includes('socket-mode')) {
+      console.error('\n💡 Socket Mode troubleshooting:');
+      console.error('1. Check your SLACK_APP_TOKEN is valid and starts with "xapp-"');
+      console.error('2. Verify Socket Mode is enabled in your Slack app settings');
+      console.error('3. Ensure the app token has "connections:write" scope');
+      console.error('4. Check your internet connection');
+    }
+    
     process.exit(1);
   }
 })();

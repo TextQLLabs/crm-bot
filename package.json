@@ -16,12 +16,19 @@
     "docs:consolidate": "node scripts/consolidate-docs.js",
     "docs:view": "ls -la docs/"
   },
-  "keywords": ["slack", "bot", "attio", "crm", "claude", "railway"],
+  "keywords": [
+    "slack",
+    "bot",
+    "attio",
+    "crm",
+    "claude",
+    "railway"
+  ],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@slack/bolt": "^3.17.1",
     "@anthropic-ai/sdk": "^0.20.0",
+    "@slack/bolt": "^4.0.0",
     "axios": "^1.6.7",
     "dotenv": "^16.4.1"
   },
