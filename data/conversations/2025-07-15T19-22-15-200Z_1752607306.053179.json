@@ -1,0 +1,915 @@
+{
+  "conversationId": "1752607306.053179",
+  "userId": "U04HC95ENRY",
+  "userName": "Ethan Ding",
+  "channel": "C0946T1T4CB",
+  "threadTs": "1752607306.053179",
+  "messageTs": "1752607306.053179",
+  "userMessage": "User: ca nyou list all the deals infligth rn?",
+  "conversationHistory": [
+    {
+      "user": "U04HC95ENRY",
+      "text": "ca nyou list all the deals infligth rn?",
+      "ts": "1752607306.053179"
+    }
+  ],
+  "botActionHistory": [],
+  "agentThoughts": [
+    [
+      "Reached maximum iterations"
+    ]
+  ],
+  "agentActions": [
+    {
+      "tool": "advanced_search",
+      "input": {
+        "entity_type": "deal",
+        "filters": {}
+      },
+      "result": {
+        "error": "entity_type is required for advanced search",
+        "timing": {
+          "duration": 0,
+          "startTime": 1752607311721,
+          "endTime": 1752607311721
+        }
+      },
+      "timing": {
+        "duration": 0,
+        "startTime": 1752607311721,
+        "endTime": 1752607311721
+      }
+    },
+    {
+      "tool": "search_crm",
+      "input": {
+        "query": "deals",
+        "entity_type": "deal"
+      },
+      "result": {
+        "0": {
+          "id": "76b8c5c8-be91-420b-aee6-15472e00344a",
+          "name": "Slickdeals",
+          "description": "Slickdeals is the ultimate destination for finding the best deals, discounts, and coupons, with a community of over 12 million shoppers saving billions since 1999.",
+          "domains": [
+            "slickdeals.net"
+          ],
+          "slug": "slickdeals.net",
+          "url": "https://app.attio.com/textql-data/company/76b8c5c8-be91-420b-aee6-15472e00344a/overview",
+          "type": "company"
+        },
+        "1": {
+          "id": "84e97497-90e5-4a1b-8446-c51c38427daf",
+          "name": "Unshackled - Deals",
+          "description": "deals@unshackledvc.com",
+          "url": "https://app.attio.com/textql-data/person/84e97497-90e5-4a1b-8446-c51c38427daf/overview",
+          "type": "person"
+        },
+        "timing": {
+          "duration": 580,
+          "startTime": 1752607314157,
+          "endTime": 1752607314737
+        }
+      },
+      "timing": {
+        "duration": 580,
+        "startTime": 1752607314157,
+        "endTime": 1752607314737
+      }
+    },
+    {
+      "tool": "search_crm",
+      "input": {
+        "query": "deal",
+        "entity_type": "deal"
+      },
+      "result": {
+        "0": {
+          "id": "04ac975c-4068-46f4-a69e-f93605580aa9",
+          "name": "Dealcore",
+          "description": "No description",
+          "domains": [
+            "infodealcore.com"
+          ],
+          "slug": "infodealcore.com",
+          "url": "https://app.attio.com/textql-data/company/04ac975c-4068-46f4-a69e-f93605580aa9/overview",
+          "type": "company"
+        },
+        "1": {
+          "id": "0d2e3c27-c833-4c53-a8f0-295ebb31f17f",
+          "name": "Dealpath",
+          "description": "Dealpath is the leading deal management platform for real estate investment and development teams. It provides a single platform to manage acquisitions, dispositions, development, and financing across teams, offering real-time visibility. With propriet...",
+          "domains": [
+            "dealpath.com"
+          ],
+          "slug": "dealpath.com",
+          "url": "https://app.attio.com/textql-data/company/0d2e3c27-c833-4c53-a8f0-295ebb31f17f/overview",
+          "type": "company"
+        },
+        "2": {
+          "id": "2ea857b5-cb3f-47b3-b246-efa5015504ce",
+          "name": "Tmobile Dealer",
+          "description": "No description",
+          "domains": [
+            "t-mobiledealerordering.com"
+          ],
+          "slug": "t-mobiledealerordering.com",
+          "url": "https://app.attio.com/textql-data/company/2ea857b5-cb3f-47b3-b246-efa5015504ce/overview",
+          "type": "company"
+        },
+        "3": {
+          "id": "55bdf2cb-5ff3-4efe-958b-624ae528dce9",
+          "name": "Idealease",
+          "description": "Idealease Inc is a premier truck leasing and rental company in North America. With over 430 locations in the USA, Canada, and Mexico, Idealease is one of the largest full-service transportation companies in the region. They provide solutions for privat...",
+          "domains": [
+            "idealease.com"
+          ],
+          "slug": "idealease.com",
+          "url": "https://app.attio.com/textql-data/company/55bdf2cb-5ff3-4efe-958b-624ae528dce9/overview",
+          "type": "company"
+        },
+        "4": {
+          "id": "76b8c5c8-be91-420b-aee6-15472e00344a",
+          "name": "Slickdeals",
+          "description": "Slickdeals is the ultimate destination for finding the best deals, discounts, and coupons, with a community of over 12 million shoppers saving billions since 1999.",
+          "domains": [
+            "slickdeals.net"
+          ],
+          "slug": "slickdeals.net",
+          "url": "https://app.attio.com/textql-data/company/76b8c5c8-be91-420b-aee6-15472e00344a/overview",
+          "type": "company"
+        },
+        "5": {
+          "id": "884f41d1-9218-4b14-86e7-7a6c3def71ba",
+          "name": "DealerPolicy",
+          "description": "DealerPolicy simplifies the insurance purchasing process by connecting local auto dealerships and their customers with a trusted insurance agency, enabling users to compare quotes and find the best coverage options tailored to their unique needs.",
+          "domains": [
+            "dealerpolicy.com"
+          ],
+          "slug": "dealerpolicy.com",
+          "url": "https://app.attio.com/textql-data/company/884f41d1-9218-4b14-86e7-7a6c3def71ba/overview",
+          "type": "company"
+        },
+        "6": {
+          "id": "39c6fd48-4c4f-410c-b5df-4760ed98bf4b",
+          "name": "Pepper.com - The World's Largest Deal Community",
+          "description": "Pepper.com is the world's largest shopping community, founded in 2014. It consists of eleven networks, including Dealabs, hotukdeals, and mydealz, which are used by over 25 million smart shoppers every month. Pepper.com allows users to find the hottest...",
+          "domains": [
+            "pepper.com"
+          ],
+          "slug": "pepper.com",
+          "url": "https://app.attio.com/textql-data/company/39c6fd48-4c4f-410c-b5df-4760ed98bf4b/overview",
+          "type": "company"
+        },
+        "7": {
+          "id": "ed3c12a0-c97d-4c21-a43a-459d03982a80",
+          "name": "National Association of Securities Dealers Automated Quotations",
+          "description": "Nasdaq is a leading global provider of trading, clearing, and exchange technology services, empowering businesses to navigate capital markets with confidence and transparency.",
+          "domains": [
+            "nasdaq.com"
+          ],
+          "slug": "nasdaq.com",
+          "url": "https://app.attio.com/textql-data/company/ed3c12a0-c97d-4c21-a43a-459d03982a80/overview",
+          "type": "company"
+        },
+        "8": {
+          "id": "6516b33e-f984-44ff-bc60-2f6268a5cc3d",
+          "name": "Alto",
+          "description": "Alto is a premium car service redefining ridesharing with professional drivers, luxury SUVs, and a focus on safety and personalized experiences.",
+          "domains": [
+            "ridealto.com"
+          ],
+          "slug": "ridealto.com",
+          "url": "https://app.attio.com/textql-data/company/6516b33e-f984-44ff-bc60-2f6268a5cc3d/overview",
+          "type": "company"
+        },
+        "9": {
+          "id": "024826f9-76b2-4769-8396-4870aeb60eb1",
+          "name": "The New York Times - New Deal",
+          "description": "Value: Unknown",
+          "url": "https://app.attio.com/textql-data/deals/record/024826f9-76b2-4769-8396-4870aeb60eb1/overview",
+          "type": "deal"
+        },
+        "timing": {
+          "duration": 1809,
+          "startTime": 1752607317347,
+          "endTime": 1752607319156
+        }
+      },
+      "timing": {
+        "duration": 1809,
+        "startTime": 1752607317347,
+        "endTime": 1752607319156
+      }
+    },
+    {
+      "tool": "search_crm",
+      "input": {
+        "query": "",
+        "entity_type": "deal"
+      },
+      "result": {
+        "0": {
+          "id": "00019082-d4a5-41d4-b0eb-7dc39c24e208",
+          "name": "Handshake",
+          "description": "Handshake is the #1 college career network connecting students with employers to find jobs and internships, democratizing access to opportunities and transforming the recruiting experience.",
+          "domains": [
+            "joinhandshake.com"
+          ],
+          "slug": "joinhandshake.com",
+          "url": "https://app.attio.com/textql-data/company/00019082-d4a5-41d4-b0eb-7dc39c24e208/overview",
+          "type": "company"
+        },
+        "1": {
+          "id": "00026816-98e3-4cae-bca5-f2682970beff",
+          "name": "Plate IQ",
+          "description": "Plate IQ is a company that provides automated accounts payable solutions. Their software digitizes invoices, assigns them to the correct GL codes, and syncs the information to accounting software. They also offer one-click bill pay, advanced approval w...",
+          "domains": [
+            "plateiq.com"
+          ],
+          "slug": "plateiq.com",
+          "url": "https://app.attio.com/textql-data/company/00026816-98e3-4cae-bca5-f2682970beff/overview",
+          "type": "company"
+        },
+        "2": {
+          "id": "00027e41-7827-40fc-8c37-0b1d2e646d23",
+          "name": "ExponentialX",
+          "description": "ExponentialX is a Growth and Marketing Advisory Collective that provides growth advisors, interim CMO, and fractional CMO services for B2B SaaS, AI, and marketplaces. They specialize in acquisition, retention, and monetization strategies for product le...",
+          "domains": [
+            "exponentialx.com"
+          ],
+          "slug": "exponentialx.com",
+          "url": "https://app.attio.com/textql-data/company/00027e41-7827-40fc-8c37-0b1d2e646d23/overview",
+          "type": "company"
+        },
+        "3": {
+          "id": "0004b308-2034-4eb9-8583-d248a5d3d0b7",
+          "name": "CMI Media Group",
+          "description": "CMI Media Group is a full-service media agency exclusively dedicated to strategic healthcare marketing. As a WPP company, we offer a range of services including audience strategy, data analytics, media buying, and customer experience. With a focus on h...",
+          "domains": [
+            "cmimediagroup.com"
+          ],
+          "slug": "cmimediagroup.com",
+          "url": "https://app.attio.com/textql-data/company/0004b308-2034-4eb9-8583-d248a5d3d0b7/overview",
+          "type": "company"
+        },
+        "4": {
+          "id": "0005728c-3ced-4f8c-8f42-0de09ef933aa",
+          "name": "Mercedes-Benz AG",
+          "description": "Mercedes-Benz is a leading automobile company with a strong focus on innovation, collaborations, and storytelling. Connect, interact, and stay updated on all things Mercedes-Benz through their official Facebook page.",
+          "domains": [
+            "mercedes-benz.com"
+          ],
+          "slug": "mercedes-benz.com",
+          "url": "https://app.attio.com/textql-data/company/0005728c-3ced-4f8c-8f42-0de09ef933aa/overview",
+          "type": "company"
+        },
+        "5": {
+          "id": "000ca9ed-371a-479b-ba87-4be8dfb0caac",
+          "name": "HC Brands",
+          "description": "HC Brands is a company that specializes in custom business essentials, including custom rubber stamps, signs, badges, and name tags. They have been designing and manufacturing these products for over 60 years. In addition, they offer personalized and m...",
+          "domains": [
+            "hcbrands.com"
+          ],
+          "slug": "hcbrands.com",
+          "url": "https://app.attio.com/textql-data/company/000ca9ed-371a-479b-ba87-4be8dfb0caac/overview",
+          "type": "company"
+        },
+        "6": {
+          "id": "001254e9-efe6-4bd4-8e09-81ba68d202c2",
+          "name": "edX",
+          "description": "edX is a leading nonprofit, open-source online learning platform that offers a wide range of courses and programs from top universities and institutions. Founded in 2012 by Harvard University and MIT, edX aims to democratize education and promote lifel...",
+          "domains": [
+            "edx.org"
+          ],
+          "slug": "edx.org",
+          "url": "https://app.attio.com/textql-data/company/001254e9-efe6-4bd4-8e09-81ba68d202c2/overview",
+          "type": "company"
+        },
+        "7": {
+          "id": "001fee8a-8c67-4e06-b208-d3bf0ed99b3a",
+          "name": "Coupang",
+          "description": "Coupang is a fast-growing e-commerce company that aims to revolutionize everyday lives for its customers, employees, and partners. With a focus on making shopping, eating, and living easier than ever, Coupang is disrupting the multi-billion dollar e-co...",
+          "domains": [
+            "coupang.jobs"
+          ],
+          "slug": "coupang.jobs",
+          "url": "https://app.attio.com/textql-data/company/001fee8a-8c67-4e06-b208-d3bf0ed99b3a/overview",
+          "type": "company"
+        },
+        "8": {
+          "id": "0043ac2e-9181-4c12-8589-9bf8622d2611",
+          "name": "TD",
+          "description": "TD Bank, a Canadian multinational banking institution, offers a wide range of personal and commercial banking services, including brokerage, mutual funds, asset management, insurance, and capital markets products. Known for its legendary customer exper...",
+          "domains": [
+            "td.com"
+          ],
+          "slug": "td.com",
+          "url": "https://app.attio.com/textql-data/company/0043ac2e-9181-4c12-8589-9bf8622d2611/overview",
+          "type": "company"
+        },
+        "9": {
+          "id": "00455162-95e8-49a1-8bd2-301ec81f6009",
+          "name": "Spirit Realty Capital",
+          "description": "Spirit Realty Capital (NYSE: SRC) is a net lease REIT, investing primarily in single tenant, operationally essential real estate assets. Spirit Realty Capital, Inc. (NYSE: SRC) is a premier net lease real estate investment trust (REIT) that invests in ...",
+          "domains": [
+            "spiritrealty.com"
+          ],
+          "slug": "spiritrealty.com",
+          "url": "https://app.attio.com/textql-data/company/00455162-95e8-49a1-8bd2-301ec81f6009/overview",
+          "type": "company"
+        },
+        "timing": {
+          "duration": 7959,
+          "startTime": 1752607322760,
+          "endTime": 1752607330719
+        }
+      },
+      "timing": {
+        "duration": 7959,
+        "startTime": 1752607322760,
+        "endTime": 1752607330719
+      }
+    },
+    {
+      "tool": "search_crm",
+      "input": {
+        "query": "New York Times",
+        "entity_type": "deal"
+      },
+      "result": {
+        "0": {
+          "id": "76afb770-5b5f-4c2f-a8f4-a5fd48967d7c",
+          "name": "The New York Times",
+          "description": "The New York Times creates, collects, and distributes news, information, and entertainment through a daily newspaper and a website. The company offers live news, investigations, opinion pieces, photos, videos, and analysis on a wide range of topics inc...",
+          "domains": [
+            "nytimes.com"
+          ],
+          "slug": "nytimes.com",
+          "url": "https://app.attio.com/textql-data/company/76afb770-5b5f-4c2f-a8f4-a5fd48967d7c/overview",
+          "type": "company"
+        },
+        "1": {
+          "id": "0bdc43bb-34c7-43dc-916a-59d47cb631de",
+          "name": "State of New York",
+          "description": "The official website of the State of New York. Find information about state government agencies and learn more about our programs and services.",
+          "domains": [
+            "health.ny.gov"
+          ],
+          "slug": "health.ny.gov",
+          "url": "https://app.attio.com/textql-data/company/0bdc43bb-34c7-43dc-916a-59d47cb631de/overview",
+          "type": "company"
+        },
+        "2": {
+          "id": "0ddda7c2-b1d5-4f48-bc0d-068ea3970076",
+          "name": "New York City Campaign Finance Board",
+          "description": "The New York City Campaign Finance Board (CFB) is a nonpartisan, independent city agency that serves the public interest by enhancing the role of New York City residents in the electoral process. The CFB administers the Campaign Finance Program, which ...",
+          "domains": [
+            "nyccfb.info"
+          ],
+          "slug": "nyccfb.info",
+          "url": "https://app.attio.com/textql-data/company/0ddda7c2-b1d5-4f48-bc0d-068ea3970076/overview",
+          "type": "company"
+        },
+        "3": {
+          "id": "173cba24-1420-47d8-9608-a767bb118a1f",
+          "name": "SUNY - The State University of New York",
+          "description": "SUNY - The State University of New York operates the largest comprehensive system of public colleges and universities in the United States, providing education to over 450,000 students across 64 campuses in New York State, while also supporting nearly ...",
+          "domains": [
+            "suny.edu"
+          ],
+          "slug": "suny.edu",
+          "url": "https://app.attio.com/textql-data/company/173cba24-1420-47d8-9608-a767bb118a1f/overview",
+          "type": "company"
+        },
+        "4": {
+          "id": "1e4e52c0-0c2e-4f15-9c5c-dc051af7adb2",
+          "name": "New York State Department of Health",
+          "description": "The New York State Department of Transportation coordinates transportation policy, oversees facilities and services, and ensures public safety for various modes of transportation.",
+          "domains": [
+            "ny.gov"
+          ],
+          "slug": "ny.gov",
+          "url": "https://app.attio.com/textql-data/company/1e4e52c0-0c2e-4f15-9c5c-dc051af7adb2/overview",
+          "type": "company"
+        },
+        "5": {
+          "id": "1fc3aa39-9db4-45b7-b464-4d79ac7fe5c0",
+          "name": "New York Savings",
+          "description": "No description",
+          "domains": [
+            "fundsnappathsyncboostx.info"
+          ],
+          "slug": "fundsnappathsyncboostx.info",
+          "url": "https://app.attio.com/textql-data/company/1fc3aa39-9db4-45b7-b464-4d79ac7fe5c0/overview",
+          "type": "company"
+        },
+        "6": {
+          "id": "2c5342a5-6c05-49c7-a793-3ebf6fbd1f88",
+          "name": "New York Technology Partners",
+          "description": "New York Technology Partners (NYTP) is a specialized IT boutique with over 13 years of experience in Business Consulting, IT Integration, Project Management, and Staff Augmentation. We provide integrated technology solutions and staffing services for F...",
+          "domains": [
+            "nytp.com"
+          ],
+          "slug": "nytp.com",
+          "url": "https://app.attio.com/textql-data/company/2c5342a5-6c05-49c7-a793-3ebf6fbd1f88/overview",
+          "type": "company"
+        },
+        "7": {
+          "id": "31495f31-c9ff-4be1-802c-9063c75ef24d",
+          "name": "The State University of New York",
+          "description": "The State University of New York (SUNY) is the largest comprehensive system of higher education in the United States, educating nearly 450,000 students in more than 7,000 degree and certificate programs on 64 college and university campuses in New York State, and online through Open SUNY. There are 3 million SUNY alumni worldwide.",
+          "domains": [
+            "itec.suny.edu"
+          ],
+          "slug": "itec.suny.edu",
+          "url": "https://app.attio.com/textql-data/company/31495f31-c9ff-4be1-802c-9063c75ef24d/overview",
+          "type": "company"
+        },
+        "8": {
+          "id": "4555e3e2-1503-45d0-bbc1-c35ff36d8d16",
+          "name": "Federal Home Loan Bank of New York",
+          "description": "The Federal Home Loan Bank of New York (FHLBNY) is a privately owned wholesale bank that supports community lenders in New Jersey, New York, Puerto Rico, and the U.S. Virgin Islands to promote housing and community growth. It is part of the Federal Hom...",
+          "domains": [
+            "fhlbny.com"
+          ],
+          "slug": "fhlbny.com",
+          "url": "https://app.attio.com/textql-data/company/4555e3e2-1503-45d0-bbc1-c35ff36d8d16/overview",
+          "type": "company"
+        },
+        "9": {
+          "id": "48d9a464-9209-4030-b4ae-b3139a415470",
+          "name": "Wilen New York",
+          "description": "Wilen is a full service direct marketing agency and printer specializing in targeted high volume direct mail communications. They provide strategic insight, creative development, end to end production, and detailed analytics across all media channels. ...",
+          "domains": [
+            "wilengroup.com"
+          ],
+          "slug": "wilengroup.com",
+          "url": "https://app.attio.com/textql-data/company/48d9a464-9209-4030-b4ae-b3139a415470/overview",
+          "type": "company"
+        },
+        "timing": {
+          "duration": 1516,
+          "startTime": 1752607333683,
+          "endTime": 1752607335199
+        }
+      },
+      "timing": {
+        "duration": 1516,
+        "startTime": 1752607333683,
+        "endTime": 1752607335199
+      }
+    }
+  ],
+  "finalResponse": "I notice the search is returning mostly companies rather than deal records. Let me try a different approach and search for specific deal-related terms:",
+  "toolsUsed": [
+    {
+      "tool": "advanced_search",
+      "input": {
+        "entity_type": "deal",
+        "filters": {}
+      },
+      "result": {
+        "error": "entity_type is required for advanced search",
+        "timing": {
+          "duration": 0,
+          "startTime": 1752607311721,
+          "endTime": 1752607311721
+        }
+      },
+      "timing": {
+        "duration": 0,
+        "startTime": 1752607311721,
+        "endTime": 1752607311721
+      }
+    },
+    {
+      "tool": "search_crm",
+      "input": {
+        "query": "deals",
+        "entity_type": "deal"
+      },
+      "result": {
+        "0": {
+          "id": "76b8c5c8-be91-420b-aee6-15472e00344a",
+          "name": "Slickdeals",
+          "description": "Slickdeals is the ultimate destination for finding the best deals, discounts, and coupons, with a community of over 12 million shoppers saving billions since 1999.",
+          "domains": [
+            "slickdeals.net"
+          ],
+          "slug": "slickdeals.net",
+          "url": "https://app.attio.com/textql-data/company/76b8c5c8-be91-420b-aee6-15472e00344a/overview",
+          "type": "company"
+        },
+        "1": {
+          "id": "84e97497-90e5-4a1b-8446-c51c38427daf",
+          "name": "Unshackled - Deals",
+          "description": "deals@unshackledvc.com",
+          "url": "https://app.attio.com/textql-data/person/84e97497-90e5-4a1b-8446-c51c38427daf/overview",
+          "type": "person"
+        },
+        "timing": {
+          "duration": 580,
+          "startTime": 1752607314157,
+          "endTime": 1752607314737
+        }
+      },
+      "timing": {
+        "duration": 580,
+        "startTime": 1752607314157,
+        "endTime": 1752607314737
+      }
+    },
+    {
+      "tool": "search_crm",
+      "input": {
+        "query": "deal",
+        "entity_type": "deal"
+      },
+      "result": {
+        "0": {
+          "id": "04ac975c-4068-46f4-a69e-f93605580aa9",
+          "name": "Dealcore",
+          "description": "No description",
+          "domains": [
+            "infodealcore.com"
+          ],
+          "slug": "infodealcore.com",
+          "url": "https://app.attio.com/textql-data/company/04ac975c-4068-46f4-a69e-f93605580aa9/overview",
+          "type": "company"
+        },
+        "1": {
+          "id": "0d2e3c27-c833-4c53-a8f0-295ebb31f17f",
+          "name": "Dealpath",
+          "description": "Dealpath is the leading deal management platform for real estate investment and development teams. It provides a single platform to manage acquisitions, dispositions, development, and financing across teams, offering real-time visibility. With propriet...",
+          "domains": [
+            "dealpath.com"
+          ],
+          "slug": "dealpath.com",
+          "url": "https://app.attio.com/textql-data/company/0d2e3c27-c833-4c53-a8f0-295ebb31f17f/overview",
+          "type": "company"
+        },
+        "2": {
+          "id": "2ea857b5-cb3f-47b3-b246-efa5015504ce",
+          "name": "Tmobile Dealer",
+          "description": "No description",
+          "domains": [
+            "t-mobiledealerordering.com"
+          ],
+          "slug": "t-mobiledealerordering.com",
+          "url": "https://app.attio.com/textql-data/company/2ea857b5-cb3f-47b3-b246-efa5015504ce/overview",
+          "type": "company"
+        },
+        "3": {
+          "id": "55bdf2cb-5ff3-4efe-958b-624ae528dce9",
+          "name": "Idealease",
+          "description": "Idealease Inc is a premier truck leasing and rental company in North America. With over 430 locations in the USA, Canada, and Mexico, Idealease is one of the largest full-service transportation companies in the region. They provide solutions for privat...",
+          "domains": [
+            "idealease.com"
+          ],
+          "slug": "idealease.com",
+          "url": "https://app.attio.com/textql-data/company/55bdf2cb-5ff3-4efe-958b-624ae528dce9/overview",
+          "type": "company"
+        },
+        "4": {
+          "id": "76b8c5c8-be91-420b-aee6-15472e00344a",
+          "name": "Slickdeals",
+          "description": "Slickdeals is the ultimate destination for finding the best deals, discounts, and coupons, with a community of over 12 million shoppers saving billions since 1999.",
+          "domains": [
+            "slickdeals.net"
+          ],
+          "slug": "slickdeals.net",
+          "url": "https://app.attio.com/textql-data/company/76b8c5c8-be91-420b-aee6-15472e00344a/overview",
+          "type": "company"
+        },
+        "5": {
+          "id": "884f41d1-9218-4b14-86e7-7a6c3def71ba",
+          "name": "DealerPolicy",
+          "description": "DealerPolicy simplifies the insurance purchasing process by connecting local auto dealerships and their customers with a trusted insurance agency, enabling users to compare quotes and find the best coverage options tailored to their unique needs.",
+          "domains": [
+            "dealerpolicy.com"
+          ],
+          "slug": "dealerpolicy.com",
+          "url": "https://app.attio.com/textql-data/company/884f41d1-9218-4b14-86e7-7a6c3def71ba/overview",
+          "type": "company"
+        },
+        "6": {
+          "id": "39c6fd48-4c4f-410c-b5df-4760ed98bf4b",
+          "name": "Pepper.com - The World's Largest Deal Community",
+          "description": "Pepper.com is the world's largest shopping community, founded in 2014. It consists of eleven networks, including Dealabs, hotukdeals, and mydealz, which are used by over 25 million smart shoppers every month. Pepper.com allows users to find the hottest...",
+          "domains": [
+            "pepper.com"
+          ],
+          "slug": "pepper.com",
+          "url": "https://app.attio.com/textql-data/company/39c6fd48-4c4f-410c-b5df-4760ed98bf4b/overview",
+          "type": "company"
+        },
+        "7": {
+          "id": "ed3c12a0-c97d-4c21-a43a-459d03982a80",
+          "name": "National Association of Securities Dealers Automated Quotations",
+          "description": "Nasdaq is a leading global provider of trading, clearing, and exchange technology services, empowering businesses to navigate capital markets with confidence and transparency.",
+          "domains": [
+            "nasdaq.com"
+          ],
+          "slug": "nasdaq.com",
+          "url": "https://app.attio.com/textql-data/company/ed3c12a0-c97d-4c21-a43a-459d03982a80/overview",
+          "type": "company"
+        },
+        "8": {
+          "id": "6516b33e-f984-44ff-bc60-2f6268a5cc3d",
+          "name": "Alto",
+          "description": "Alto is a premium car service redefining ridesharing with professional drivers, luxury SUVs, and a focus on safety and personalized experiences.",
+          "domains": [
+            "ridealto.com"
+          ],
+          "slug": "ridealto.com",
+          "url": "https://app.attio.com/textql-data/company/6516b33e-f984-44ff-bc60-2f6268a5cc3d/overview",
+          "type": "company"
+        },
+        "9": {
+          "id": "024826f9-76b2-4769-8396-4870aeb60eb1",
+          "name": "The New York Times - New Deal",
+          "description": "Value: Unknown",
+          "url": "https://app.attio.com/textql-data/deals/record/024826f9-76b2-4769-8396-4870aeb60eb1/overview",
+          "type": "deal"
+        },
+        "timing": {
+          "duration": 1809,
+          "startTime": 1752607317347,
+          "endTime": 1752607319156
+        }
+      },
+      "timing": {
+        "duration": 1809,
+        "startTime": 1752607317347,
+        "endTime": 1752607319156
+      }
+    },
+    {
+      "tool": "search_crm",
+      "input": {
+        "query": "",
+        "entity_type": "deal"
+      },
+      "result": {
+        "0": {
+          "id": "00019082-d4a5-41d4-b0eb-7dc39c24e208",
+          "name": "Handshake",
+          "description": "Handshake is the #1 college career network connecting students with employers to find jobs and internships, democratizing access to opportunities and transforming the recruiting experience.",
+          "domains": [
+            "joinhandshake.com"
+          ],
+          "slug": "joinhandshake.com",
+          "url": "https://app.attio.com/textql-data/company/00019082-d4a5-41d4-b0eb-7dc39c24e208/overview",
+          "type": "company"
+        },
+        "1": {
+          "id": "00026816-98e3-4cae-bca5-f2682970beff",
+          "name": "Plate IQ",
+          "description": "Plate IQ is a company that provides automated accounts payable solutions. Their software digitizes invoices, assigns them to the correct GL codes, and syncs the information to accounting software. They also offer one-click bill pay, advanced approval w...",
+          "domains": [
+            "plateiq.com"
+          ],
+          "slug": "plateiq.com",
+          "url": "https://app.attio.com/textql-data/company/00026816-98e3-4cae-bca5-f2682970beff/overview",
+          "type": "company"
+        },
+        "2": {
+          "id": "00027e41-7827-40fc-8c37-0b1d2e646d23",
+          "name": "ExponentialX",
+          "description": "ExponentialX is a Growth and Marketing Advisory Collective that provides growth advisors, interim CMO, and fractional CMO services for B2B SaaS, AI, and marketplaces. They specialize in acquisition, retention, and monetization strategies for product le...",
+          "domains": [
+            "exponentialx.com"
+          ],
+          "slug": "exponentialx.com",
+          "url": "https://app.attio.com/textql-data/company/00027e41-7827-40fc-8c37-0b1d2e646d23/overview",
+          "type": "company"
+        },
+        "3": {
+          "id": "0004b308-2034-4eb9-8583-d248a5d3d0b7",
+          "name": "CMI Media Group",
+          "description": "CMI Media Group is a full-service media agency exclusively dedicated to strategic healthcare marketing. As a WPP company, we offer a range of services including audience strategy, data analytics, media buying, and customer experience. With a focus on h...",
+          "domains": [
+            "cmimediagroup.com"
+          ],
+          "slug": "cmimediagroup.com",
+          "url": "https://app.attio.com/textql-data/company/0004b308-2034-4eb9-8583-d248a5d3d0b7/overview",
+          "type": "company"
+        },
+        "4": {
+          "id": "0005728c-3ced-4f8c-8f42-0de09ef933aa",
+          "name": "Mercedes-Benz AG",
+          "description": "Mercedes-Benz is a leading automobile company with a strong focus on innovation, collaborations, and storytelling. Connect, interact, and stay updated on all things Mercedes-Benz through their official Facebook page.",
+          "domains": [
+            "mercedes-benz.com"
+          ],
+          "slug": "mercedes-benz.com",
+          "url": "https://app.attio.com/textql-data/company/0005728c-3ced-4f8c-8f42-0de09ef933aa/overview",
+          "type": "company"
+        },
+        "5": {
+          "id": "000ca9ed-371a-479b-ba87-4be8dfb0caac",
+          "name": "HC Brands",
+          "description": "HC Brands is a company that specializes in custom business essentials, including custom rubber stamps, signs, badges, and name tags. They have been designing and manufacturing these products for over 60 years. In addition, they offer personalized and m...",
+          "domains": [
+            "hcbrands.com"
+          ],
+          "slug": "hcbrands.com",
+          "url": "https://app.attio.com/textql-data/company/000ca9ed-371a-479b-ba87-4be8dfb0caac/overview",
+          "type": "company"
+        },
+        "6": {
+          "id": "001254e9-efe6-4bd4-8e09-81ba68d202c2",
+          "name": "edX",
+          "description": "edX is a leading nonprofit, open-source online learning platform that offers a wide range of courses and programs from top universities and institutions. Founded in 2012 by Harvard University and MIT, edX aims to democratize education and promote lifel...",
+          "domains": [
+            "edx.org"
+          ],
+          "slug": "edx.org",
+          "url": "https://app.attio.com/textql-data/company/001254e9-efe6-4bd4-8e09-81ba68d202c2/overview",
+          "type": "company"
+        },
+        "7": {
+          "id": "001fee8a-8c67-4e06-b208-d3bf0ed99b3a",
+          "name": "Coupang",
+          "description": "Coupang is a fast-growing e-commerce company that aims to revolutionize everyday lives for its customers, employees, and partners. With a focus on making shopping, eating, and living easier than ever, Coupang is disrupting the multi-billion dollar e-co...",
+          "domains": [
+            "coupang.jobs"
+          ],
+          "slug": "coupang.jobs",
+          "url": "https://app.attio.com/textql-data/company/001fee8a-8c67-4e06-b208-d3bf0ed99b3a/overview",
+          "type": "company"
+        },
+        "8": {
+          "id": "0043ac2e-9181-4c12-8589-9bf8622d2611",
+          "name": "TD",
+          "description": "TD Bank, a Canadian multinational banking institution, offers a wide range of personal and commercial banking services, including brokerage, mutual funds, asset management, insurance, and capital markets products. Known for its legendary customer exper...",
+          "domains": [
+            "td.com"
+          ],
+          "slug": "td.com",
+          "url": "https://app.attio.com/textql-data/company/0043ac2e-9181-4c12-8589-9bf8622d2611/overview",
+          "type": "company"
+        },
+        "9": {
+          "id": "00455162-95e8-49a1-8bd2-301ec81f6009",
+          "name": "Spirit Realty Capital",
+          "description": "Spirit Realty Capital (NYSE: SRC) is a net lease REIT, investing primarily in single tenant, operationally essential real estate assets. Spirit Realty Capital, Inc. (NYSE: SRC) is a premier net lease real estate investment trust (REIT) that invests in ...",
+          "domains": [
+            "spiritrealty.com"
+          ],
+          "slug": "spiritrealty.com",
+          "url": "https://app.attio.com/textql-data/company/00455162-95e8-49a1-8bd2-301ec81f6009/overview",
+          "type": "company"
+        },
+        "timing": {
+          "duration": 7959,
+          "startTime": 1752607322760,
+          "endTime": 1752607330719
+        }
+      },
+      "timing": {
+        "duration": 7959,
+        "startTime": 1752607322760,
+        "endTime": 1752607330719
+      }
+    },
+    {
+      "tool": "search_crm",
+      "input": {
+        "query": "New York Times",
+        "entity_type": "deal"
+      },
+      "result": {
+        "0": {
+          "id": "76afb770-5b5f-4c2f-a8f4-a5fd48967d7c",
+          "name": "The New York Times",
+          "description": "The New York Times creates, collects, and distributes news, information, and entertainment through a daily newspaper and a website. The company offers live news, investigations, opinion pieces, photos, videos, and analysis on a wide range of topics inc...",
+          "domains": [
+            "nytimes.com"
+          ],
+          "slug": "nytimes.com",
+          "url": "https://app.attio.com/textql-data/company/76afb770-5b5f-4c2f-a8f4-a5fd48967d7c/overview",
+          "type": "company"
+        },
+        "1": {
+          "id": "0bdc43bb-34c7-43dc-916a-59d47cb631de",
+          "name": "State of New York",
+          "description": "The official website of the State of New York. Find information about state government agencies and learn more about our programs and services.",
+          "domains": [
+            "health.ny.gov"
+          ],
+          "slug": "health.ny.gov",
+          "url": "https://app.attio.com/textql-data/company/0bdc43bb-34c7-43dc-916a-59d47cb631de/overview",
+          "type": "company"
+        },
+        "2": {
+          "id": "0ddda7c2-b1d5-4f48-bc0d-068ea3970076",
+          "name": "New York City Campaign Finance Board",
+          "description": "The New York City Campaign Finance Board (CFB) is a nonpartisan, independent city agency that serves the public interest by enhancing the role of New York City residents in the electoral process. The CFB administers the Campaign Finance Program, which ...",
+          "domains": [
+            "nyccfb.info"
+          ],
+          "slug": "nyccfb.info",
+          "url": "https://app.attio.com/textql-data/company/0ddda7c2-b1d5-4f48-bc0d-068ea3970076/overview",
+          "type": "company"
+        },
+        "3": {
+          "id": "173cba24-1420-47d8-9608-a767bb118a1f",
+          "name": "SUNY - The State University of New York",
+          "description": "SUNY - The State University of New York operates the largest comprehensive system of public colleges and universities in the United States, providing education to over 450,000 students across 64 campuses in New York State, while also supporting nearly ...",
+          "domains": [
+            "suny.edu"
+          ],
+          "slug": "suny.edu",
+          "url": "https://app.attio.com/textql-data/company/173cba24-1420-47d8-9608-a767bb118a1f/overview",
+          "type": "company"
+        },
+        "4": {
+          "id": "1e4e52c0-0c2e-4f15-9c5c-dc051af7adb2",
+          "name": "New York State Department of Health",
+          "description": "The New York State Department of Transportation coordinates transportation policy, oversees facilities and services, and ensures public safety for various modes of transportation.",
+          "domains": [
+            "ny.gov"
+          ],
+          "slug": "ny.gov",
+          "url": "https://app.attio.com/textql-data/company/1e4e52c0-0c2e-4f15-9c5c-dc051af7adb2/overview",
+          "type": "company"
+        },
+        "5": {
+          "id": "1fc3aa39-9db4-45b7-b464-4d79ac7fe5c0",
+          "name": "New York Savings",
+          "description": "No description",
+          "domains": [
+            "fundsnappathsyncboostx.info"
+          ],
+          "slug": "fundsnappathsyncboostx.info",
+          "url": "https://app.attio.com/textql-data/company/1fc3aa39-9db4-45b7-b464-4d79ac7fe5c0/overview",
+          "type": "company"
+        },
+        "6": {
+          "id": "2c5342a5-6c05-49c7-a793-3ebf6fbd1f88",
+          "name": "New York Technology Partners",
+          "description": "New York Technology Partners (NYTP) is a specialized IT boutique with over 13 years of experience in Business Consulting, IT Integration, Project Management, and Staff Augmentation. We provide integrated technology solutions and staffing services for F...",
+          "domains": [
+            "nytp.com"
+          ],
+          "slug": "nytp.com",
+          "url": "https://app.attio.com/textql-data/company/2c5342a5-6c05-49c7-a793-3ebf6fbd1f88/overview",
+          "type": "company"
+        },
+        "7": {
+          "id": "31495f31-c9ff-4be1-802c-9063c75ef24d",
+          "name": "The State University of New York",
+          "description": "The State University of New York (SUNY) is the largest comprehensive system of higher education in the United States, educating nearly 450,000 students in more than 7,000 degree and certificate programs on 64 college and university campuses in New York State, and online through Open SUNY. There are 3 million SUNY alumni worldwide.",
+          "domains": [
+            "itec.suny.edu"
+          ],
+          "slug": "itec.suny.edu",
+          "url": "https://app.attio.com/textql-data/company/31495f31-c9ff-4be1-802c-9063c75ef24d/overview",
+          "type": "company"
+        },
+        "8": {
+          "id": "4555e3e2-1503-45d0-bbc1-c35ff36d8d16",
+          "name": "Federal Home Loan Bank of New York",
+          "description": "The Federal Home Loan Bank of New York (FHLBNY) is a privately owned wholesale bank that supports community lenders in New Jersey, New York, Puerto Rico, and the U.S. Virgin Islands to promote housing and community growth. It is part of the Federal Hom...",
+          "domains": [
+            "fhlbny.com"
+          ],
+          "slug": "fhlbny.com",
+          "url": "https://app.attio.com/textql-data/company/4555e3e2-1503-45d0-bbc1-c35ff36d8d16/overview",
+          "type": "company"
+        },
+        "9": {
+          "id": "48d9a464-9209-4030-b4ae-b3139a415470",
+          "name": "Wilen New York",
+          "description": "Wilen is a full service direct marketing agency and printer specializing in targeted high volume direct mail communications. They provide strategic insight, creative development, end to end production, and detailed analytics across all media channels. ...",
+          "domains": [
+            "wilengroup.com"
+          ],
+          "slug": "wilengroup.com",
+          "url": "https://app.attio.com/textql-data/company/48d9a464-9209-4030-b4ae-b3139a415470/overview",
+          "type": "company"
+        },
+        "timing": {
+          "duration": 1516,
+          "startTime": 1752607333683,
+          "endTime": 1752607335199
+        }
+      },
+      "timing": {
+        "duration": 1516,
+        "startTime": 1752607333683,
+        "endTime": 1752607335199
+      }
+    }
+  ],
+  "success": true,
+  "error": null,
+  "processingTime": 0,
+  "attachmentCount": 0,
+  "iterationCount": 0,
+  "timestamp": "2025-07-15T19:22:15.199Z",
+  "version": "1.12.0",
+  "environment": "development"
+}

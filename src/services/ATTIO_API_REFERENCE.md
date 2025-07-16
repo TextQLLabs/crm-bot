@@ -261,7 +261,34 @@ function generateSearchVariations(query) {
 }
 ```
 
-### 2. URL Generation
+### 2. URL Handling - CRITICAL UPDATE (July 2025)
+**⚠️ IMPORTANT**: Always use the `web_url` field from API responses instead of constructing URLs manually!
+
+```javascript
+// ✅ CORRECT - Use API-provided URLs
+const deal = response.data.data[0];
+const recordUrl = deal.web_url; // https://app.attio.com/textql-data/deals/record/123
+
+// ❌ INCORRECT - Don't construct URLs manually
+const recordUrl = `https://app.attio.com/textql-data/deals/record/${deal.id.record_id}/overview`;
+```
+
+**Why This Matters:**
+- **API URLs**: `https://app.attio.com/textql-data/deals/record/123` (no `/overview`)
+- **Manual URLs**: `https://app.attio.com/textql-data/deals/record/123/overview` (incorrect)
+- **Different formats**: API returns the exact URL Attio expects
+
+**Implementation:**
+```javascript
+// In search results, always use:
+return {
+  id: record.id?.record_id,
+  name: record.values?.name?.[0]?.value,
+  url: record.web_url  // ✅ Use this!
+};
+```
+
+**Legacy URL Generation (for reference only)**
 ```javascript
 function generateRecordUrl(type, recordId, workspace = 'textql-data') {
   const typeMap = {
@@ -456,6 +483,33 @@ console.log('Note URL filter:', {
 ### 5. Nested Value Access
 **Issue**: Values are arrays with version history
 **Workaround**: Always access `[0].value` for current value
+
+### 6. Search Entity Type Filtering (Fixed July 2025)
+**Issue**: `searchAttio(query, entityType)` was ignoring the `entityType` parameter
+**Root Cause**: Function signature didn't use the second parameter
+**Fix**: Implemented proper entity type filtering:
+```javascript
+// Now works correctly:
+searchAttio("deals", "deal")     // Returns only deals
+searchAttio("companies", "company") // Returns only companies  
+searchAttio("people", "person")     // Returns only people
+searchAttio("anything", "all")      // Returns all types (default)
+```
+
+### 7. Search Result Limits (Updated July 2025)  
+**Previous**: 5 results for deals/people, 20 for companies
+**Current**: 20 results for each type when filtered, 10 when searching all
+**Benefit**: Better coverage of available records
+
+### 8. API Response Structure (Documented July 2025)
+**Key Fields:**
+- **Record ID**: `record.id.record_id` 
+- **Record URL**: `record.web_url` (use this, don't construct!)
+- **Name**: `record.values.name[0].value`
+- **Currency**: `record.values.value[0].currency_value` (in cents!) + `currency_code`
+- **Status**: `record.values.stage[0].status.title` (nested in status object)
+- **Location**: `record.values.primary_location[0]` (object with locality, region, country_code)
+- **Options**: `record.values.field[0].option.title` (for select fields)
 
 ---
 

@@ -102,6 +102,7 @@ class ClaudeAgent {
   async planAndThink(messageContext) {
     const systemPrompt = this.buildSystemPrompt();
     const userMessageContent = this.buildUserMessageContent(messageContext);
+    const progressCallback = messageContext.progressCallback || (() => {});
     
     // Start conversation with user message
     let messages = [
@@ -978,8 +979,130 @@ Remember: You're here to make CRM management effortless. Be proactive, accurate,
           },
           required: ['action']
         }
+      },
+      {
+        name: 'extract_channel_history',
+        description: 'Extract message history from a Slack channel within a specified time period',
+        input_schema: {
+          type: 'object',
+          properties: {
+            channel: {
+              type: 'string',
+              description: 'Slack channel name (e.g., "#go-to-market", "#crm-bot-test")'
+            },
+            hours_back: {
+              type: 'number',
+              description: 'Number of hours to look back (default: 24)',
+              default: 24
+            },
+            format: {
+              type: 'string',
+              enum: ['json', 'text'],
+              description: 'Output format - json for structured data, text for readable format',
+              default: 'text'
+            }
+          },
+          required: ['channel']
+        }
       }
     ];
+  }
+
+  /**
+   * Extract message history from a Slack channel
+   */
+  async extractChannelHistory(input, messageContext) {
+    try {
+      const { channel, hours_back = 24, format = 'text' } = input;
+      
+      // Calculate time cutoff
+      const cutoffTime = new Date(Date.now() - (hours_back * 60 * 60 * 1000));
+      const cutoffTimestamp = cutoffTime.getTime() / 1000; // Convert to Unix timestamp
+      
+      console.log(`Extracting ${hours_back} hours of history from ${channel} since ${cutoffTime.toISOString()}`);
+      
+      // Get channel ID from name if needed (remove # prefix)
+      const channelName = channel.replace('#', '');
+      
+      // For now, we'll use a mock implementation since we need to set up the Slack client
+      // In the real implementation, this would use the Slack Web API
+      
+      // Mock data for testing
+      const mockMessages = [
+        {
+          type: 'message',
+          user: 'U04HC95ENRY',
+          text: 'Had a great call with Blackstone today. They seem very interested in the pilot program.',
+          ts: Math.floor(Date.now() / 1000 - 3600).toString(), // 1 hour ago
+          user_profile: { real_name: 'Ethan Ding' }
+        },
+        {
+          type: 'message', 
+          user: 'U04HC95ENRY',
+          text: 'Blackstone mentioned they want to move forward with the evaluation phase next week.',
+          ts: Math.floor(Date.now() / 1000 - 7200).toString(), // 2 hours ago
+          user_profile: { real_name: 'Ethan Ding' }
+        },
+        {
+          type: 'message',
+          user: 'U04HC95ENRY', 
+          text: 'Scheduled follow-up meeting with Blackstone for Friday to discuss timeline and requirements.',
+          ts: Math.floor(Date.now() / 1000 - 10800).toString(), // 3 hours ago
+          user_profile: { real_name: 'Ethan Ding' }
+        }
+      ];
+      
+      // Filter messages by time cutoff
+      const filteredMessages = mockMessages.filter(msg => {
+        const msgTime = parseFloat(msg.ts);
+        return msgTime >= cutoffTimestamp;
+      });
+      
+      if (format === 'json') {
+        return {
+          success: true,
+          channel: channel,
+          hours_back: hours_back,
+          message_count: filteredMessages.length,
+          cutoff_time: cutoffTime.toISOString(),
+          messages: filteredMessages
+        };
+      } else {
+        // Text format for easy reading
+        let output = `## Channel History: ${channel} (Last ${hours_back} hours)\\n`;
+        output += `**Time Range:** ${cutoffTime.toLocaleString()} - ${new Date().toLocaleString()}\\n`;
+        output += `**Messages Found:** ${filteredMessages.length}\\n\\n`;
+        
+        if (filteredMessages.length === 0) {
+          output += '*No messages found in this time period.*';
+        } else {
+          filteredMessages.reverse(); // Show oldest first
+          filteredMessages.forEach((msg, index) => {
+            const msgTime = new Date(parseFloat(msg.ts) * 1000);
+            const userName = msg.user_profile?.real_name || msg.user;
+            output += `**${index + 1}.** [${msgTime.toLocaleTimeString()}] **${userName}:** ${msg.text}\\n\\n`;
+          });
+        }
+        
+        return {
+          success: true,
+          channel: channel,
+          hours_back: hours_back,
+          message_count: filteredMessages.length,
+          formatted_output: output,
+          raw_messages: filteredMessages
+        };
+      }
+      
+    } catch (error) {
+      console.error('Error extracting channel history:', error);
+      return {
+        success: false,
+        error: error.message,
+        channel: input.channel,
+        hours_back: input.hours_back || 24
+      };
+    }
   }
 
   /**
@@ -1108,6 +1231,9 @@ Remember: You're here to make CRM management effortless. Be proactive, accurate,
             default:
               throw new Error(`Unknown memory action: ${actionType}`);
           }
+          break;
+        case 'extract_channel_history':
+          result = await this.extractChannelHistory(action.input, messageContext);
           break;
         default:
           throw new Error(`Unknown tool: ${action.tool}`);

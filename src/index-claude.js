@@ -3,6 +3,7 @@ const dotenv = require('dotenv');
 const express = require('express');
 const { handleMention, handleButtonAction } = require('./handlers/slackHandlerClaude'); // Using Claude handler
 const healthRoutes = require('./health');
+const { CronScheduler } = require('./jobs');
 
 // Message deduplication to prevent duplicate processing
 const processedMessages = new Map();
@@ -61,13 +62,66 @@ const receiver = new ExpressReceiver({
 // Add health check routes
 receiver.router.use(healthRoutes);
 
+// Initialize cron scheduler (will be updated with Slack client after app initialization)
+const cronScheduler = new CronScheduler();
+
+// Add cron job management routes
+receiver.router.get('/cron/status', (req, res) => {
+  res.json(cronScheduler.getStatus());
+});
+
+receiver.router.get('/cron/history', (req, res) => {
+  const limit = parseInt(req.query.limit) || 10;
+  res.json(cronScheduler.getHistory(limit));
+});
+
+receiver.router.post('/cron/trigger-daily', async (req, res) => {
+  try {
+    const result = await cronScheduler.triggerDailyAssessment();
+    res.json(result);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+receiver.router.post('/cron/trigger-test', async (req, res) => {
+  try {
+    const maxDeals = parseInt(req.query.maxDeals) || 2; // Default to 2 deals for testing
+    const result = await cronScheduler.triggerTestAssessment(maxDeals);
+    res.json(result);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+receiver.router.put('/cron/schedule', async (req, res) => {
+  try {
+    const { hour, minute } = req.body;
+    const result = cronScheduler.updateDailySchedule(hour, minute);
+    res.json(result);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+receiver.router.put('/cron/enabled', async (req, res) => {
+  try {
+    const { enabled } = req.body;
+    const result = cronScheduler.setDailyAssessmentEnabled(enabled);
+    res.json(result);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 // Add a basic root route
 receiver.router.get('/', (req, res) => {
   res.json({
     service: 'CRM Bot (Claude Agent)',
     status: 'running',
     version: require('../package.json').version,
-    agent: 'claude-native'
+    agent: 'claude-native',
+    cronScheduler: cronScheduler.getStatus().scheduler
   });
 });
 
@@ -158,7 +212,7 @@ app.event('app_mention', async ({ event, client, ack }) => {
     console.log(`📝 Message text: "${event.text}"`);
     
     const isCorrectBot = isDev ? 
-      (event.text.includes('U0953GV1A8L') || event.text.includes('@crm-bot-ethan-dev')) :
+      (event.text.includes('U0944Q3F58B') || event.text.includes('@crm-bot-ethan-dev')) :
       (event.text.includes('U0944Q3F58B') || (event.text.includes('@crm-bot-ethan') && !event.text.includes('@crm-bot-ethan-dev')));
     
     console.log(`🎯 Is correct bot: ${isCorrectBot}`);
@@ -198,7 +252,7 @@ app.message(async ({ message, say, client }) => {
       const isBotMentioned = message.text.includes('<@') && (
         isDev ? (
           // Dev bot only responds to dev mentions
-          message.text.includes('U0953GV1A8L') || // Dev bot user ID
+          message.text.includes('U0944Q3F58B') || // Dev bot user ID  
           message.text.includes('@crm-bot-ethan-dev')
         ) : (
           // Production bot only responds to production mentions
@@ -287,6 +341,15 @@ app.action('cancel_action', async (args) => {
     console.log('🧠 Using Claude native tool calling with thinking mode enabled');
     console.log('🔐 Preview mode enabled - all write actions require approval before execution');
     console.log(`🩺 Health check available at: http://localhost:${port}/health`);
+    
+    // Set up Slack client for cron scheduler
+    cronScheduler.setSlackClient(app.client);
+    
+    // Start the cron scheduler for daily assessments
+    console.log('⏰ Starting cron scheduler for daily deal assessments...');
+    cronScheduler.start();
+    console.log('⏰ Cron scheduler started successfully');
+    console.log(`📊 Cron status available at: http://localhost:${port}/cron/status`);
     
     // Add graceful shutdown handling
     process.on('SIGINT', async () => {

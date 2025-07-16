@@ -1,0 +1,31 @@
+{
+  "conversationId": "1752607016.660189",
+  "userId": "U04HC95ENRY",
+  "userName": "Ethan Ding",
+  "channel": "C0946T1T4CB",
+  "threadTs": "1752607016.660189",
+  "messageTs": "1752607016.660189",
+  "userMessage": "User: hey how's it going?g",
+  "conversationHistory": [
+    {
+      "user": "U04HC95ENRY",
+      "text": "hey how's it going?g",
+      "ts": "1752607016.660189"
+    }
+  ],
+  "botActionHistory": [],
+  "agentThoughts": [
+    "Hey there! I'm doing great, thanks for asking! 👋\n\nI'm your CRM assistant here to help you manage your Attio data right from Slack. I can help you with things like:\n\n• *Finding companies, deals, and people* - just search by name and I'll track them down\n• *Adding notes* to any entity with automatic Slack thread links\n• *Updating deal values, stages, contact info* - whatever you need to keep current\n• *Creating new records* for companies, people, or deals\n• *Analyzing images* you share - I can read screenshots, documents, etc.\n\nWhat can I help you with today? Feel free to ask me to find a specific company, add a note about a recent conversation, or anything else CRM-related!"
+  ],
+  "agentActions": [],
+  "finalResponse": "Hey there! I'm doing great, thanks for asking! 👋\n\nI'm your CRM assistant here to help you manage your Attio data right from Slack. I can help you with things like:\n\n• *Finding companies, deals, and people* - just search by name and I'll track them down\n• *Adding notes* to any entity with automatic Slack thread links\n• *Updating deal values, stages, contact info* - whatever you need to keep current\n• *Creating new records* for companies, people, or deals\n• *Analyzing images* you share - I can read screenshots, documents, etc.\n\nWhat can I help you with today? Feel free to ask me to find a specific company, add a note about a recent conversation, or anything else CRM-related!",
+  "toolsUsed": [],
+  "success": true,
+  "error": null,
+  "processingTime": 0,
+  "attachmentCount": 0,
+  "iterationCount": 0,
+  "timestamp": "2025-07-15T21:09:38.108Z",
+  "version": "1.12.0",
+  "environment": "development"
+}

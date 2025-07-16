@@ -1,0 +1,373 @@
+{
+  "conversationId": "1752608283.550739",
+  "userId": "U04HC95ENRY",
+  "userName": "Ethan Ding",
+  "channel": "C0946T1T4CB",
+  "threadTs": "1752608283.550739",
+  "messageTs": "1752608283.550739",
+  "userMessage": "User: list all in flight deals?",
+  "conversationHistory": [
+    {
+      "user": "U04HC95ENRY",
+      "text": "list all in flight deals?",
+      "ts": "1752608283.550739"
+    }
+  ],
+  "botActionHistory": [],
+  "agentThoughts": [
+    "*In-Flight Deals*\n\nBased on the search results, here are the currently active (in-flight) deals:\n\n*🟢 Active Deals:*\n\n1. *<https://app.attio.com/textql-data/deals/record/2aec864c-d2ea-4522-a4b3-3bd97fbf24c3/overview|Test Analytics Deal>*\n   - Stage: Initial Engagement\n   - Value: Unknown Value\n   - Created: July 11, 2025\n\n2. *<https://app.attio.com/textql-data/deals/record/4e34d08b-b7ab-453c-98f3-c52778b3b06f/overview|Test Deal 123>*\n   - Stage: Initial Engagement  \n   - Value: Unknown Value\n   - Created: July 11, 2025\n\n*📊 Summary:*\n- *2 active deals* currently in flight\n- Both are in \"Initial Engagement\" stage\n- All other deals (8 total) are marked as \"Closed / Lost\"\n\nThe active deals appear to be recent test deals created in July. Would you like me to get more details about either of these deals or help you update their information?"
+  ],
+  "agentActions": [
+    {
+      "tool": "advanced_search",
+      "input": {
+        "entity_type": "deal",
+        "filters": {
+          "status": "open"
+        }
+      },
+      "result": {
+        "error": "entity_type is required for advanced search",
+        "timing": {
+          "duration": 0,
+          "startTime": 1752608290837,
+          "endTime": 1752608290837
+        }
+      },
+      "timing": {
+        "duration": 0,
+        "startTime": 1752608290837,
+        "endTime": 1752608290837
+      }
+    },
+    {
+      "tool": "search_crm",
+      "input": {
+        "entity_type": "deal",
+        "query": "*"
+      },
+      "result": {
+        "timing": {
+          "duration": 708,
+          "startTime": 1752608293711,
+          "endTime": 1752608294419
+        }
+      },
+      "timing": {
+        "duration": 708,
+        "startTime": 1752608293711,
+        "endTime": 1752608294419
+      }
+    },
+    {
+      "tool": "search_crm",
+      "input": {
+        "entity_type": "deal",
+        "query": "deal"
+      },
+      "result": {
+        "0": {
+          "id": "024826f9-76b2-4769-8396-4870aeb60eb1",
+          "name": "The New York Times - New Deal",
+          "description": "Value: $1,000 USD",
+          "stage": "Closed / Lost",
+          "use_case": "Unknown Use Case",
+          "value": "$1,000 USD",
+          "created_at": "2025-02-12T15:36:23.121000000Z",
+          "url": "https://app.attio.com/textql-data/deals/record/024826f9-76b2-4769-8396-4870aeb60eb1",
+          "type": "deal"
+        },
+        "1": {
+          "id": "2aec864c-d2ea-4522-a4b3-3bd97fbf24c3",
+          "name": "Test Analytics Deal",
+          "description": "Value: Unknown Value",
+          "stage": "Initial Engagement",
+          "use_case": "Unknown Use Case",
+          "value": "Unknown Value",
+          "created_at": "2025-07-11T23:57:47.206000000Z",
+          "url": "https://app.attio.com/textql-data/deals/record/2aec864c-d2ea-4522-a4b3-3bd97fbf24c3",
+          "type": "deal"
+        },
+        "2": {
+          "id": "41919fd1-6bc3-41b8-8ac3-7e20bb27c438",
+          "name": "Credit Karma - New Deal",
+          "description": "Value: $1,000 USD",
+          "stage": "Closed / Lost",
+          "use_case": "Unknown Use Case",
+          "value": "$1,000 USD",
+          "created_at": "2025-02-12T15:36:14.453000000Z",
+          "url": "https://app.attio.com/textql-data/deals/record/41919fd1-6bc3-41b8-8ac3-7e20bb27c438",
+          "type": "deal"
+        },
+        "3": {
+          "id": "46378b39-fd6c-4013-a40c-74342a67daf2",
+          "name": "Drata - New Deal",
+          "description": "Value: $480 USD",
+          "stage": "Closed / Lost",
+          "use_case": "Unknown Use Case",
+          "value": "$480 USD",
+          "created_at": "2025-02-12T15:36:34.341000000Z",
+          "url": "https://app.attio.com/textql-data/deals/record/46378b39-fd6c-4013-a40c-74342a67daf2",
+          "type": "deal"
+        },
+        "4": {
+          "id": "4e34d08b-b7ab-453c-98f3-c52778b3b06f",
+          "name": "Test Deal 123",
+          "description": "Value: Unknown Value",
+          "stage": "Initial Engagement",
+          "use_case": "Unknown Use Case",
+          "value": "Unknown Value",
+          "created_at": "2025-07-11T23:55:33.361000000Z",
+          "url": "https://app.attio.com/textql-data/deals/record/4e34d08b-b7ab-453c-98f3-c52778b3b06f",
+          "type": "deal"
+        },
+        "5": {
+          "id": "6d9b166f-ae90-480f-bf5f-85ab16ce89cf",
+          "name": "Porsche - New Deal",
+          "description": "Value: Unknown Value",
+          "stage": "Closed / Lost",
+          "use_case": "Unknown Use Case",
+          "value": "Unknown Value",
+          "created_at": "2025-02-12T15:37:04.914000000Z",
+          "url": "https://app.attio.com/textql-data/deals/record/6d9b166f-ae90-480f-bf5f-85ab16ce89cf",
+          "type": "deal"
+        },
+        "6": {
+          "id": "9ba20265-c71d-482b-b644-7c9bf6802343",
+          "name": "Streamline - New Deal",
+          "description": "Value: $199.99 USD",
+          "stage": "Closed / Lost",
+          "use_case": "Unknown Use Case",
+          "value": "$199.99 USD",
+          "created_at": "2025-02-12T15:35:39.033000000Z",
+          "url": "https://app.attio.com/textql-data/deals/record/9ba20265-c71d-482b-b644-7c9bf6802343",
+          "type": "deal"
+        },
+        "7": {
+          "id": "9f49671e-ff2a-4edc-92bf-210def567dbd",
+          "name": "Delta Air Lines - New Deal",
+          "description": "Value: $2,500 USD",
+          "stage": "Closed / Lost",
+          "use_case": "Unknown Use Case",
+          "value": "$2,500 USD",
+          "created_at": "2025-02-12T21:24:25.604000000Z",
+          "url": "https://app.attio.com/textql-data/deals/record/9f49671e-ff2a-4edc-92bf-210def567dbd",
+          "type": "deal"
+        },
+        "8": {
+          "id": "a1344523-4239-497e-8173-15494aaafceb",
+          "name": "MacKay Shields - New Deal",
+          "description": "Value: $588 USD",
+          "stage": "Closed / Lost",
+          "use_case": "Unknown Use Case",
+          "value": "$588 USD",
+          "created_at": "2025-02-12T15:35:52.839000000Z",
+          "url": "https://app.attio.com/textql-data/deals/record/a1344523-4239-497e-8173-15494aaafceb",
+          "type": "deal"
+        },
+        "9": {
+          "id": "b88561a4-6ae8-41ad-858f-6f8b0a651553",
+          "name": "EQT Group - New Deal",
+          "description": "Value: Unknown Value",
+          "stage": "Closed / Lost",
+          "use_case": "Unknown Use Case",
+          "value": "Unknown Value",
+          "created_at": "2025-02-12T15:37:11.186000000Z",
+          "url": "https://app.attio.com/textql-data/deals/record/b88561a4-6ae8-41ad-858f-6f8b0a651553",
+          "type": "deal"
+        },
+        "timing": {
+          "duration": 356,
+          "startTime": 1752608298837,
+          "endTime": 1752608299193
+        }
+      },
+      "timing": {
+        "duration": 356,
+        "startTime": 1752608298837,
+        "endTime": 1752608299193
+      }
+    }
+  ],
+  "finalResponse": "*In-Flight Deals*\n\nBased on the search results, here are the currently active (in-flight) deals:\n\n*🟢 Active Deals:*\n\n1. *<https://app.attio.com/textql-data/deals/record/2aec864c-d2ea-4522-a4b3-3bd97fbf24c3/overview|Test Analytics Deal>*\n   - Stage: Initial Engagement\n   - Value: Unknown Value\n   - Created: July 11, 2025\n\n2. *<https://app.attio.com/textql-data/deals/record/4e34d08b-b7ab-453c-98f3-c52778b3b06f/overview|Test Deal 123>*\n   - Stage: Initial Engagement  \n   - Value: Unknown Value\n   - Created: July 11, 2025\n\n*📊 Summary:*\n- *2 active deals* currently in flight\n- Both are in \"Initial Engagement\" stage\n- All other deals (8 total) are marked as \"Closed / Lost\"\n\nThe active deals appear to be recent test deals created in July. Would you like me to get more details about either of these deals or help you update their information?",
+  "toolsUsed": [
+    {
+      "tool": "advanced_search",
+      "input": {
+        "entity_type": "deal",
+        "filters": {
+          "status": "open"
+        }
+      },
+      "result": {
+        "error": "entity_type is required for advanced search",
+        "timing": {
+          "duration": 0,
+          "startTime": 1752608290837,
+          "endTime": 1752608290837
+        }
+      },
+      "timing": {
+        "duration": 0,
+        "startTime": 1752608290837,
+        "endTime": 1752608290837
+      }
+    },
+    {
+      "tool": "search_crm",
+      "input": {
+        "entity_type": "deal",
+        "query": "*"
+      },
+      "result": {
+        "timing": {
+          "duration": 708,
+          "startTime": 1752608293711,
+          "endTime": 1752608294419
+        }
+      },
+      "timing": {
+        "duration": 708,
+        "startTime": 1752608293711,
+        "endTime": 1752608294419
+      }
+    },
+    {
+      "tool": "search_crm",
+      "input": {
+        "entity_type": "deal",
+        "query": "deal"
+      },
+      "result": {
+        "0": {
+          "id": "024826f9-76b2-4769-8396-4870aeb60eb1",
+          "name": "The New York Times - New Deal",
+          "description": "Value: $1,000 USD",
+          "stage": "Closed / Lost",
+          "use_case": "Unknown Use Case",
+          "value": "$1,000 USD",
+          "created_at": "2025-02-12T15:36:23.121000000Z",
+          "url": "https://app.attio.com/textql-data/deals/record/024826f9-76b2-4769-8396-4870aeb60eb1",
+          "type": "deal"
+        },
+        "1": {
+          "id": "2aec864c-d2ea-4522-a4b3-3bd97fbf24c3",
+          "name": "Test Analytics Deal",
+          "description": "Value: Unknown Value",
+          "stage": "Initial Engagement",
+          "use_case": "Unknown Use Case",
+          "value": "Unknown Value",
+          "created_at": "2025-07-11T23:57:47.206000000Z",
+          "url": "https://app.attio.com/textql-data/deals/record/2aec864c-d2ea-4522-a4b3-3bd97fbf24c3",
+          "type": "deal"
+        },
+        "2": {
+          "id": "41919fd1-6bc3-41b8-8ac3-7e20bb27c438",
+          "name": "Credit Karma - New Deal",
+          "description": "Value: $1,000 USD",
+          "stage": "Closed / Lost",
+          "use_case": "Unknown Use Case",
+          "value": "$1,000 USD",
+          "created_at": "2025-02-12T15:36:14.453000000Z",
+          "url": "https://app.attio.com/textql-data/deals/record/41919fd1-6bc3-41b8-8ac3-7e20bb27c438",
+          "type": "deal"
+        },
+        "3": {
+          "id": "46378b39-fd6c-4013-a40c-74342a67daf2",
+          "name": "Drata - New Deal",
+          "description": "Value: $480 USD",
+          "stage": "Closed / Lost",
+          "use_case": "Unknown Use Case",
+          "value": "$480 USD",
+          "created_at": "2025-02-12T15:36:34.341000000Z",
+          "url": "https://app.attio.com/textql-data/deals/record/46378b39-fd6c-4013-a40c-74342a67daf2",
+          "type": "deal"
+        },
+        "4": {
+          "id": "4e34d08b-b7ab-453c-98f3-c52778b3b06f",
+          "name": "Test Deal 123",
+          "description": "Value: Unknown Value",
+          "stage": "Initial Engagement",
+          "use_case": "Unknown Use Case",
+          "value": "Unknown Value",
+          "created_at": "2025-07-11T23:55:33.361000000Z",
+          "url": "https://app.attio.com/textql-data/deals/record/4e34d08b-b7ab-453c-98f3-c52778b3b06f",
+          "type": "deal"
+        },
+        "5": {
+          "id": "6d9b166f-ae90-480f-bf5f-85ab16ce89cf",
+          "name": "Porsche - New Deal",
+          "description": "Value: Unknown Value",
+          "stage": "Closed / Lost",
+          "use_case": "Unknown Use Case",
+          "value": "Unknown Value",
+          "created_at": "2025-02-12T15:37:04.914000000Z",
+          "url": "https://app.attio.com/textql-data/deals/record/6d9b166f-ae90-480f-bf5f-85ab16ce89cf",
+          "type": "deal"
+        },
+        "6": {
+          "id": "9ba20265-c71d-482b-b644-7c9bf6802343",
+          "name": "Streamline - New Deal",
+          "description": "Value: $199.99 USD",
+          "stage": "Closed / Lost",
+          "use_case": "Unknown Use Case",
+          "value": "$199.99 USD",
+          "created_at": "2025-02-12T15:35:39.033000000Z",
+          "url": "https://app.attio.com/textql-data/deals/record/9ba20265-c71d-482b-b644-7c9bf6802343",
+          "type": "deal"
+        },
+        "7": {
+          "id": "9f49671e-ff2a-4edc-92bf-210def567dbd",
+          "name": "Delta Air Lines - New Deal",
+          "description": "Value: $2,500 USD",
+          "stage": "Closed / Lost",
+          "use_case": "Unknown Use Case",
+          "value": "$2,500 USD",
+          "created_at": "2025-02-12T21:24:25.604000000Z",
+          "url": "https://app.attio.com/textql-data/deals/record/9f49671e-ff2a-4edc-92bf-210def567dbd",
+          "type": "deal"
+        },
+        "8": {
+          "id": "a1344523-4239-497e-8173-15494aaafceb",
+          "name": "MacKay Shields - New Deal",
+          "description": "Value: $588 USD",
+          "stage": "Closed / Lost",
+          "use_case": "Unknown Use Case",
+          "value": "$588 USD",
+          "created_at": "2025-02-12T15:35:52.839000000Z",
+          "url": "https://app.attio.com/textql-data/deals/record/a1344523-4239-497e-8173-15494aaafceb",
+          "type": "deal"
+        },
+        "9": {
+          "id": "b88561a4-6ae8-41ad-858f-6f8b0a651553",
+          "name": "EQT Group - New Deal",
+          "description": "Value: Unknown Value",
+          "stage": "Closed / Lost",
+          "use_case": "Unknown Use Case",
+          "value": "Unknown Value",
+          "created_at": "2025-02-12T15:37:11.186000000Z",
+          "url": "https://app.attio.com/textql-data/deals/record/b88561a4-6ae8-41ad-858f-6f8b0a651553",
+          "type": "deal"
+        },
+        "timing": {
+          "duration": 356,
+          "startTime": 1752608298837,
+          "endTime": 1752608299193
+        }
+      },
+      "timing": {
+        "duration": 356,
+        "startTime": 1752608298837,
+        "endTime": 1752608299193
+      }
+    }
+  ],
+  "success": true,
+  "error": null,
+  "processingTime": 0,
+  "attachmentCount": 0,
+  "iterationCount": 0,
+  "timestamp": "2025-07-15T19:38:25.981Z",
+  "version": "1.12.0",
+  "environment": "development"
+}

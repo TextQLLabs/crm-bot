@@ -1,0 +1,31 @@
+{
+  "conversationId": "1752607293.684779",
+  "userId": "U04HC95ENRY",
+  "userName": "Ethan Ding",
+  "channel": "C0946T1T4CB",
+  "threadTs": "1752607293.684779",
+  "messageTs": "1752607293.684779",
+  "userMessage": "User: can you seet hsi",
+  "conversationHistory": [
+    {
+      "user": "U04HC95ENRY",
+      "text": "can you seet hsi",
+      "ts": "1752607293.684779"
+    }
+  ],
+  "botActionHistory": [],
+  "agentThoughts": [
+    "I'd be happy to help you search! It looks like there might be a typo in your message. Could you clarify what you're looking for? \n\nAre you trying to:\n- Search for a specific company, person, or deal?\n- See something specific in the CRM?\n\nJust let me know what you're looking for and I'll help you find it! You can give me a company name, person's name, or deal name and I'll search our CRM for you."
+  ],
+  "agentActions": [],
+  "finalResponse": "I'd be happy to help you search! It looks like there might be a typo in your message. Could you clarify what you're looking for? \n\nAre you trying to:\n- Search for a specific company, person, or deal?\n- See something specific in the CRM?\n\nJust let me know what you're looking for and I'll help you find it! You can give me a company name, person's name, or deal name and I'll search our CRM for you.",
+  "toolsUsed": [],
+  "success": true,
+  "error": null,
+  "processingTime": 0,
+  "attachmentCount": 0,
+  "iterationCount": 0,
+  "timestamp": "2025-07-15T19:21:39.331Z",
+  "version": "1.12.0",
+  "environment": "development"
+}
