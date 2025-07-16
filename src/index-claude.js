@@ -126,7 +126,10 @@ receiver.router.get('/', (req, res) => {
 });
 
 // Configure app based on environment
-const isSocketMode = process.env.NODE_ENV === 'development' || process.env.SLACK_APP_TOKEN;
+// Force HTTP mode on Railway, Socket Mode only for local development
+const isSocketMode = process.env.NODE_ENV === 'development' && 
+                     process.env.SLACK_APP_TOKEN && 
+                     !process.env.RAILWAY_ENVIRONMENT;
 const appConfig = {
   token: process.env.SLACK_BOT_TOKEN,
   signingSecret: process.env.SLACK_SIGNING_SECRET,
@@ -307,6 +310,9 @@ app.action('cancel_action', async (args) => {
     
     // Start Slack app with better error handling
     const port = process.env.PORT || 3000;
+    
+    console.log(`🌐 Starting app in ${isSocketMode ? 'Socket Mode' : 'HTTP Mode'} on port ${port}`);
+    console.log(`📍 Environment: NODE_ENV=${process.env.NODE_ENV}, has SLACK_APP_TOKEN=${!!process.env.SLACK_APP_TOKEN}`);
     
     if (isSocketMode) {
       console.log('🔐 Socket Mode validation...');
