@@ -215,7 +215,7 @@ app.event('app_mention', async ({ event, client, ack }) => {
     console.log(`📝 Message text: "${event.text}"`);
     
     const isCorrectBot = isDev ? 
-      (event.text.includes('U0944Q3F58B') || event.text.includes('@crm-bot-ethan-dev')) :
+      (event.text.includes('U0953GV1A8L') || event.text.includes('@crm-bot-ethan-dev')) :
       (event.text.includes('U0944Q3F58B') || (event.text.includes('@crm-bot-ethan') && !event.text.includes('@crm-bot-ethan-dev')));
     
     console.log(`🎯 Is correct bot: ${isCorrectBot}`);
@@ -255,7 +255,7 @@ app.message(async ({ message, say, client }) => {
       const isBotMentioned = message.text.includes('<@') && (
         isDev ? (
           // Dev bot only responds to dev mentions
-          message.text.includes('U0944Q3F58B') || // Dev bot user ID  
+          message.text.includes('U0953GV1A8L') || // Dev bot user ID  
           message.text.includes('@crm-bot-ethan-dev')
         ) : (
           // Production bot only responds to production mentions
