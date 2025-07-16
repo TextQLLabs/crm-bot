@@ -21,7 +21,8 @@ class DailyAssessmentJob {
   constructor(slackClient = null) {
     this.claudeAgent = new ClaudeAgent();
     this.targetStage = "Goal: Get to Financing";
-    this.waitTimeBetweenDeals = 10 * 60 * 1000; // 10 minutes in milliseconds
+    this.waitTimeBetweenDeals = 2 * 60 * 1000; // 2 minutes in milliseconds (fallback only)
+    this.useCompletionChaining = true; // Use completion-based chaining instead of fixed delays
     this.isRunning = false;
     this.currentRun = null;
     this.slackClient = slackClient;
@@ -71,11 +72,16 @@ class DailyAssessmentJob {
       if (!deals || deals.length === 0) {
         console.log('No deals found in target stage');
         this.currentRun.totalDeals = 0;
+        // Post start notification even with no deals
+        await this.postStartNotification(0);
         return this.finishRun();
       }
 
       this.currentRun.totalDeals = deals.length;
       console.log(`Found ${deals.length} deals in "${this.targetStage}" stage`);
+      
+      // Post start notification to Slack
+      await this.postStartNotification(deals.length);
 
       // Step 2: Process each deal sequentially with delays
       for (let i = 0; i < deals.length; i++) {
@@ -83,11 +89,18 @@ class DailyAssessmentJob {
         console.log(`\n--- Processing Deal ${i + 1}/${deals.length}: ${deal.name} ---`);
 
         try {
+          // Capture current values before assessment
+          const beforeValues = await this.captureDealValues(deal.id);
+          
           // Generate assessment prompt for this deal
           const assessmentPrompt = this.generateAssessmentPrompt(deal);
           
           // Process with Claude agent directly
           const result = await this.processDealAssessment(deal, assessmentPrompt);
+          
+          // Capture values after assessment to calculate changes
+          const afterValues = await this.captureDealValues(deal.id);
+          const changes = this.calculateChanges(beforeValues, afterValues);
           
           this.currentRun.dealResults.push({
             dealId: deal.id,
@@ -95,7 +108,11 @@ class DailyAssessmentJob {
             success: result.success,
             timestamp: new Date().toISOString(),
             result: result.success ? result.answer : result.error,
-            toolsUsed: result.toolsUsed || []
+            toolsUsed: result.toolsUsed || [],
+            beforeValues,
+            afterValues,
+            changes,
+            noteUrl: this.extractNoteUrl(result)
           });
 
           if (result.success) {
@@ -125,15 +142,28 @@ class DailyAssessmentJob {
 
         this.currentRun.processedDeals++;
 
-        // Wait between deals (except after the last one)
-        if (i < deals.length - 1) {
-          const waitTimeSeconds = this.waitTimeBetweenDeals / 1000;
-          if (waitTimeSeconds >= 60) {
-            console.log(`Waiting ${waitTimeSeconds / 60} minutes before next deal...`);
-          } else {
-            console.log(`Waiting ${waitTimeSeconds} seconds before next deal...`);
+        // Post heartbeat update
+        await this.postHeartbeat(i + 1, deals.length, deal.name);
+
+        // Use completion-based chaining instead of fixed delays
+        if (this.useCompletionChaining) {
+          // Start next assessment immediately after completion
+          if (i < deals.length - 1) {
+            console.log(`✅ Assessment complete for ${deal.name}. Starting next deal immediately...`);
+            // Small buffer to prevent API rate limiting
+            await this.sleep(5000); // 5 seconds only
           }
-          await this.sleep(this.waitTimeBetweenDeals);
+        } else {
+          // Fallback to fixed delays if needed
+          if (i < deals.length - 1) {
+            const waitTimeSeconds = this.waitTimeBetweenDeals / 1000;
+            if (waitTimeSeconds >= 60) {
+              console.log(`Waiting ${waitTimeSeconds / 60} minutes before next deal...`);
+            } else {
+              console.log(`Waiting ${waitTimeSeconds} seconds before next deal...`);
+            }
+            await this.sleep(this.waitTimeBetweenDeals);
+          }
         }
       }
 
@@ -200,6 +230,66 @@ class DailyAssessmentJob {
       console.error('Error finding target deals:', error);
       throw new Error(`Failed to find deals in stage "${this.targetStage}": ${error.message}`);
     }
+  }
+
+  /**
+   * Capture current deal values before assessment
+   */
+  async captureDealValues(dealId) {
+    try {
+      const attioService = require('../services/attioService');
+      const deal = await attioService.getEntityById('deal', dealId);
+      
+      if (!deal?.values) return null;
+      
+      return {
+        close_probability: deal.values.close_probability?.[0]?.value || 0,
+        year_1_run_rate_ev: deal.values.year_1_run_rate_ev?.[0]?.currency_value || 0,
+        year_3_run_rate_ev_5: deal.values.year_3_run_rate_ev_5?.[0]?.currency_value || 0,
+        year_1_run_rate_target: deal.values.year_1_run_rate_target?.[0]?.currency_value || 0,
+        year_3_run_rate_target: deal.values.year_3_run_rate_target?.[0]?.currency_value || 0
+      };
+    } catch (error) {
+      console.error(`Error capturing values for deal ${dealId}:`, error);
+      return null;
+    }
+  }
+
+  /**
+   * Calculate changes between before and after values
+   */
+  calculateChanges(beforeValues, afterValues) {
+    if (!beforeValues || !afterValues) return null;
+    
+    const changes = {};
+    const fields = ['close_probability', 'year_1_run_rate_ev', 'year_3_run_rate_ev_5', 'year_1_run_rate_target', 'year_3_run_rate_target'];
+    
+    for (const field of fields) {
+      const before = beforeValues[field] || 0;
+      const after = afterValues[field] || 0;
+      const delta = after - before;
+      const percentChange = before !== 0 ? ((delta / before) * 100) : (after > 0 ? 100 : 0);
+      
+      changes[field] = {
+        before,
+        after,
+        delta,
+        percentChange: Math.round(percentChange * 10) / 10 // Round to 1 decimal
+      };
+    }
+    
+    return changes;
+  }
+
+  /**
+   * Extract note URL from Claude agent result
+   */
+  extractNoteUrl(result) {
+    if (!result.success || !result.answer) return null;
+    
+    // Look for note URLs in the response
+    const noteUrlMatch = result.answer.match(/https:\/\/app\.attio\.com\/textql-data\/[^\/]+\/record\/[^\/]+\/notes\?modal=note&id=([a-f0-9-]+)/);
+    return noteUrlMatch ? noteUrlMatch[0] : null;
   }
 
   /**
@@ -391,6 +481,138 @@ Format your response with clear sections and actionable recommendations. Focus o
   }
 
   /**
+   * Post daily assessment start notification to Slack
+   */
+  async postStartNotification(dealCount) {
+    if (!this.slackClient || !this.testChannelId) {
+      console.log('Slack client or channel ID not configured, skipping start notification');
+      return;
+    }
+
+    try {
+      console.log('Posting assessment start notification to Slack...');
+      
+      // Determine environment
+      const environment = this.getEnvironment();
+      const isTest = dealCount <= 2; // Assume test mode if 2 or fewer deals
+      
+      // Calculate expected completion time
+      const expectedDurationMinutes = this.calculateExpectedDuration(dealCount);
+      const expectedCompletionTime = new Date(Date.now() + expectedDurationMinutes * 60 * 1000);
+      
+      // Create formatted message
+      const messageText = `🧪 Testing daily assessment run - processing ${dealCount} deals
+
+🌍 Environment: ${environment}
+⏱️ Expected completion: ${expectedCompletionTime.toLocaleTimeString()} (${expectedDurationMinutes} minutes)
+📊 Deals to process: ${dealCount}
+${isTest ? '🔬 Test Mode: Accelerated timing (30s between deals)' : this.useCompletionChaining ? '⚡ Completion-Based: Each deal starts when previous completes (+5s buffer)' : '⏳ Production Mode: 2 minutes between deals'}
+
+Starting assessment process now...`;
+
+      // Post to Slack
+      await this.slackClient.chat.postMessage({
+        channel: this.testChannelId,
+        text: messageText,
+        unfurl_links: false,
+        unfurl_media: false
+      });
+      
+      console.log('✅ Assessment start notification posted to Slack successfully');
+      
+    } catch (error) {
+      console.error('❌ Failed to post assessment start notification to Slack:', error);
+      // Don't throw error - notification failure shouldn't fail the whole job
+    }
+  }
+
+  /**
+   * Get current environment (dev/prod)
+   */
+  getEnvironment() {
+    if (process.env.RAILWAY_ENVIRONMENT) {
+      return `Railway (${process.env.RAILWAY_ENVIRONMENT})`;
+    } else if (process.env.NODE_ENV === 'development') {
+      return 'Local Development';
+    } else {
+      return 'Unknown';
+    }
+  }
+
+  /**
+   * Calculate expected duration based on deal count and wait times
+   */
+  calculateExpectedDuration(dealCount) {
+    if (dealCount === 0) {
+      return 1; // Just a few minutes for cleanup
+    }
+    
+    // Estimate 3 minutes per deal processing
+    const processingTimePerDeal = 3; // minutes
+    
+    if (this.useCompletionChaining) {
+      // Completion-based: minimal wait time (5 seconds between deals)
+      const bufferTimePerDeal = 5 / 60; // 5 seconds converted to minutes
+      const totalProcessingTime = dealCount * processingTimePerDeal;
+      const totalBufferTime = Math.max(0, dealCount - 1) * bufferTimePerDeal;
+      
+      return Math.ceil(totalProcessingTime + totalBufferTime);
+    } else {
+      // Fixed delay mode
+      const waitTimeBetweenDeals = this.waitTimeBetweenDeals / (1000 * 60); // convert to minutes
+      
+      // Total time = (deal count * processing time) + ((deal count - 1) * wait time)
+      const totalProcessingTime = dealCount * processingTimePerDeal;
+      const totalWaitTime = Math.max(0, dealCount - 1) * waitTimeBetweenDeals;
+      
+      return Math.ceil(totalProcessingTime + totalWaitTime);
+    }
+  }
+
+  /**
+   * Post heartbeat update to show progress
+   */
+  async postHeartbeat(completed, total, currentDeal) {
+    if (!this.slackClient || !this.testChannelId) return;
+
+    try {
+      const percentage = Math.round((completed / total) * 100);
+      const progressBar = this.generateProgressBar(completed, total);
+      
+      const heartbeatMessage = `⚡ Assessment Progress: ${completed}/${total} (${percentage}%)
+${progressBar}
+🔄 Just completed: ${currentDeal}
+${completed < total ? `⏭️ Next: Starting assessment ${completed + 1}` : '🏁 All assessments complete'}`;
+
+      // Use thread or update message to avoid spam
+      await this.slackClient.chat.postMessage({
+        channel: this.testChannelId,
+        text: heartbeatMessage,
+        unfurl_links: false,
+        unfurl_media: false
+      });
+      
+    } catch (error) {
+      console.error('Failed to post heartbeat:', error);
+      // Don't throw - heartbeat failures shouldn't stop the job
+    }
+  }
+
+  /**
+   * Generate ASCII progress bar
+   */
+  generateProgressBar(current, total, length = 20) {
+    const percentage = current / total;
+    const filledLength = Math.round(length * percentage);
+    const emptyLength = length - filledLength;
+    
+    const filled = '█'.repeat(filledLength);
+    const empty = '░'.repeat(emptyLength);
+    
+    return `[${filled}${empty}] ${Math.round(percentage * 100)}%`;
+  }
+
+  /**
    * Post assessment summary to Slack
    */
   async postAssessmentSummary(result) {
@@ -403,30 +625,42 @@ Format your response with clear sections and actionable recommendations. Focus o
       console.log('Posting assessment summary to Slack...');
       
       const summary = result.runSummary;
-      const isTestMode = summary.totalDeals <= 2; // Assume test mode if 2 or fewer deals
+      const isTestMode = summary.totalDeals <= 2;
+      const today = new Date().toLocaleDateString('en-US', { 
+        weekday: 'long', 
+        year: 'numeric', 
+        month: 'long', 
+        day: 'numeric' 
+      });
       
-      // Generate deal results with Attio links
-      let dealResultsText = '';
-      if (summary.dealResults && summary.dealResults.length > 0) {
-        dealResultsText = summary.dealResults.map(deal => {
-          const status = deal.success ? '✅' : '❌';
-          const attioLink = `https://app.attio.com/objects/deal/${deal.dealId}`;
-          return `• ${deal.dealName} - ${deal.success ? 'Assessment updated' : 'Failed'} → <${attioLink}|View in Attio>`;
+      // Calculate top 3 biggest changes and pipeline impact
+      const { topChanges, pipelineImpact, dealsUpdated } = this.analyzeAssessmentImpact(summary.dealResults);
+      
+      // Format biggest changes section
+      let biggestChangesText = '';
+      if (topChanges.length > 0) {
+        biggestChangesText = topChanges.map(change => {
+          const noteLink = change.noteUrl ? `<${change.noteUrl}|Assessment Note>` : 'Assessment Note';
+          return `• ${change.dealName}: ${change.description} → ${noteLink}`;
         }).join('\n');
       } else {
-        dealResultsText = '• No deals processed';
+        biggestChangesText = '• No significant changes detected';
       }
       
+      // Format pipeline impact
+      const pipelineText = pipelineImpact.totalDelta !== 0 
+        ? `${pipelineImpact.totalDelta > 0 ? '+' : ''}$${Math.abs(pipelineImpact.totalDelta).toLocaleString()}K total (${pipelineImpact.y1Delta > 0 ? '+' : ''}$${Math.abs(pipelineImpact.y1Delta).toLocaleString()}K Y1 EV, ${pipelineImpact.y3Delta > 0 ? '+' : ''}$${Math.abs(pipelineImpact.y3Delta).toLocaleString()}K Y3 EV)`
+        : 'No net pipeline value change';
+      
       // Create formatted message
-      const messageText = `📊 ${isTestMode ? 'TEST - ' : ''}DAILY DEAL ASSESSMENT COMPLETE
+      const messageText = `🏁 ${isTestMode ? 'TEST - ' : ''}Assessment Complete for ${today}
 
-${result.success ? '✅' : '❌'} ${summary.successfulAssessments}/${summary.totalDeals} deals processed successfully
-⏱️ Total time: ${summary.durationMinutes} minutes
+🚀 Biggest Changes:
+${biggestChangesText}
 
-📋 Deals Updated:
-${dealResultsText}
+💰 Pipeline Impact: ${pipelineText}
 
-🎯 Next assessment: ${isTestMode ? 'On demand (test mode)' : 'Tomorrow 8:00 AM'}`;
+📋 Deals Updated: ${dealsUpdated}`;
       
       // Post to Slack
       await this.slackClient.chat.postMessage({
@@ -442,6 +676,88 @@ ${dealResultsText}
       console.error('❌ Failed to post assessment summary to Slack:', error);
       // Don't throw error - summary posting failure shouldn't fail the whole job
     }
+  }
+
+  /**
+   * Analyze assessment impact to find biggest changes and pipeline value changes
+   */
+  analyzeAssessmentImpact(dealResults) {
+    const allChanges = [];
+    let totalY1Delta = 0;
+    let totalY3Delta = 0;
+    const updatedDeals = [];
+    
+    // Process each deal's changes
+    for (const deal of dealResults) {
+      if (!deal.success || !deal.changes) continue;
+      
+      updatedDeals.push(deal.dealName);
+      
+      // Track pipeline value changes
+      totalY1Delta += (deal.changes.year_1_run_rate_ev?.delta || 0);
+      totalY3Delta += (deal.changes.year_3_run_rate_ev_5?.delta || 0);
+      
+      // Find the most significant change for this deal
+      const dealChanges = [];
+      
+      // Probability changes
+      if (Math.abs(deal.changes.close_probability?.percentChange || 0) >= 5) {
+        const change = deal.changes.close_probability;
+        dealChanges.push({
+          dealName: deal.dealName,
+          type: 'probability',
+          magnitude: Math.abs(change.percentChange),
+          description: `${change.percentChange > 0 ? '+' : ''}${change.percentChange}% probability (${change.before}% → ${change.after}%)`,
+          noteUrl: deal.noteUrl
+        });
+      }
+      
+      // EV changes (convert from cents to thousands)
+      if (Math.abs(deal.changes.year_1_run_rate_ev?.delta || 0) >= 100000) { // $1K+ change
+        const change = deal.changes.year_1_run_rate_ev;
+        const deltaK = Math.round(change.delta / 100000); // Convert cents to $K
+        dealChanges.push({
+          dealName: deal.dealName,
+          type: 'y1_ev',
+          magnitude: Math.abs(deltaK),
+          description: `${deltaK > 0 ? '+' : ''}$${Math.abs(deltaK)}K Year 1 EV`,
+          noteUrl: deal.noteUrl
+        });
+      }
+      
+      if (Math.abs(deal.changes.year_3_run_rate_ev_5?.delta || 0) >= 100000) { // $1K+ change
+        const change = deal.changes.year_3_run_rate_ev_5;
+        const deltaK = Math.round(change.delta / 100000); // Convert cents to $K
+        dealChanges.push({
+          dealName: deal.dealName,
+          type: 'y3_ev',
+          magnitude: Math.abs(deltaK),
+          description: `${deltaK > 0 ? '+' : ''}$${Math.abs(deltaK)}K Year 3 EV`,
+          noteUrl: deal.noteUrl
+        });
+      }
+      
+      // Add the biggest change for this deal
+      if (dealChanges.length > 0) {
+        const biggestChange = dealChanges.sort((a, b) => b.magnitude - a.magnitude)[0];
+        allChanges.push(biggestChange);
+      }
+    }
+    
+    // Get top 3 changes overall
+    const topChanges = allChanges
+      .sort((a, b) => b.magnitude - a.magnitude)
+      .slice(0, 3);
+    
+    return {
+      topChanges,
+      pipelineImpact: {
+        totalDelta: Math.round((totalY1Delta + totalY3Delta) / 100000), // Convert to $K
+        y1Delta: Math.round(totalY1Delta / 100000),
+        y3Delta: Math.round(totalY3Delta / 100000)
+      },
+      dealsUpdated: updatedDeals.length > 0 ? updatedDeals.join(', ') : 'None'
+    };
   }
 
   /**

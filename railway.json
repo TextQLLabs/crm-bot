@@ -11,7 +11,7 @@
   "cron": [
     {
       "name": "daily-deal-assessment",
-      "schedule": "0 8 * * *",
+      "schedule": "0 13 * * *",
       "command": "node scripts/run-daily-assessment.js"
     }
   ]
