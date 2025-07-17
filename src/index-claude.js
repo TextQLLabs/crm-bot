@@ -65,7 +65,7 @@ const receiver = new ExpressReceiver({
 // Add health check routes
 receiver.router.use(healthRoutes);
 
-// Add debugging for all routes
+// Add basic request logging (without consuming body stream)
 receiver.router.use((req, res, next) => {
   console.log(`📍 Incoming request: ${req.method} ${req.url}`);
   next();
@@ -133,6 +133,8 @@ receiver.router.get('/', (req, res) => {
     cronScheduler: cronScheduler.getStatus().scheduler
   });
 });
+
+// Let ExpressReceiver handle /slack/events automatically (including challenge verification)
 
 // Configure app based on environment
 // Force HTTP mode on Railway, Socket Mode only for local development

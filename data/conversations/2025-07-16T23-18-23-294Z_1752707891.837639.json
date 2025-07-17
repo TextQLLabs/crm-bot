@@ -1,0 +1,115 @@
+{
+  "conversationId": "1752707891.837639",
+  "userId": "U0951TSB4P2",
+  "userName": "slack-mcp-textql-ethan",
+  "channel": "C0946T1T4CB",
+  "threadTs": "1752707891.837639",
+  "messageTs": "1752707891.837639",
+  "userMessage": "User: FIXED Test 1 - should process immediately",
+  "conversationHistory": [
+    {
+      "user": "U0951TSB4P2",
+      "text": "FIXED Test 1 - should process immediately",
+      "ts": "1752707891.837639"
+    }
+  ],
+  "botActionHistory": [],
+  "agentThoughts": [
+    "Found *<https://app.attio.com/textql-data/company/f3c48337-9674-4234-9b3c-a807f3b63a5e|PGIM Fixed Income>* - I believe this matches your search for 'FIXED Test 1'.\n\nThis is a financial services company (PGIM Fixed Income) based in Newark, New Jersey, with 1K-5K employees in the asset management business.\n\nWhat would you like me to do with this company record? I can:\n- Create a note\n- Update specific fields\n- Get existing notes\n- Find related deals or contacts\n- Or any other CRM action you need\n\nPlease let me know how you'd like me to process this immediately!"
+  ],
+  "agentActions": [
+    {
+      "tool": "search_crm",
+      "input": {
+        "query": "FIXED Test 1"
+      },
+      "result": {
+        "0": {
+          "id": "f3c48337-9674-4234-9b3c-a807f3b63a5e",
+          "name": "PGIM Fixed Income",
+          "description": "PGIM is the global asset management business of Prudential Financial, Inc., offering industry-leading strategies and solutions across various asset classes and geographies. With a focus on delivering long-term outperformance, PGIM provides a wide range...",
+          "domains": [
+            "pgim.com"
+          ],
+          "categories": [
+            "Finance",
+            "Financial Services",
+            "Consulting & Professional Services",
+            "B2B",
+            "B2C",
+            "Enterprise"
+          ],
+          "location": "Newark, New Jersey, US",
+          "employee_range": "1K-5K",
+          "funding_raised": "Unknown Funding",
+          "created_at": "2025-02-11T19:05:26.074000000Z",
+          "slug": "pgim.com",
+          "url": "https://app.attio.com/textql-data/company/f3c48337-9674-4234-9b3c-a807f3b63a5e",
+          "type": "company"
+        },
+        "timing": {
+          "duration": 1960,
+          "startTime": 1752707896866,
+          "endTime": 1752707898827
+        }
+      },
+      "timing": {
+        "duration": 1960,
+        "startTime": 1752707896866,
+        "endTime": 1752707898827
+      }
+    }
+  ],
+  "finalResponse": "Found *<https://app.attio.com/textql-data/company/f3c48337-9674-4234-9b3c-a807f3b63a5e|PGIM Fixed Income>* - I believe this matches your search for 'FIXED Test 1'.\n\nThis is a financial services company (PGIM Fixed Income) based in Newark, New Jersey, with 1K-5K employees in the asset management business.\n\nWhat would you like me to do with this company record? I can:\n- Create a note\n- Update specific fields\n- Get existing notes\n- Find related deals or contacts\n- Or any other CRM action you need\n\nPlease let me know how you'd like me to process this immediately!",
+  "toolsUsed": [
+    {
+      "tool": "search_crm",
+      "input": {
+        "query": "FIXED Test 1"
+      },
+      "result": {
+        "0": {
+          "id": "f3c48337-9674-4234-9b3c-a807f3b63a5e",
+          "name": "PGIM Fixed Income",
+          "description": "PGIM is the global asset management business of Prudential Financial, Inc., offering industry-leading strategies and solutions across various asset classes and geographies. With a focus on delivering long-term outperformance, PGIM provides a wide range...",
+          "domains": [
+            "pgim.com"
+          ],
+          "categories": [
+            "Finance",
+            "Financial Services",
+            "Consulting & Professional Services",
+            "B2B",
+            "B2C",
+            "Enterprise"
+          ],
+          "location": "Newark, New Jersey, US",
+          "employee_range": "1K-5K",
+          "funding_raised": "Unknown Funding",
+          "created_at": "2025-02-11T19:05:26.074000000Z",
+          "slug": "pgim.com",
+          "url": "https://app.attio.com/textql-data/company/f3c48337-9674-4234-9b3c-a807f3b63a5e",
+          "type": "company"
+        },
+        "timing": {
+          "duration": 1960,
+          "startTime": 1752707896866,
+          "endTime": 1752707898827
+        }
+      },
+      "timing": {
+        "duration": 1960,
+        "startTime": 1752707896866,
+        "endTime": 1752707898827
+      }
+    }
+  ],
+  "success": true,
+  "error": null,
+  "processingTime": 0,
+  "attachmentCount": 0,
+  "iterationCount": 0,
+  "timestamp": "2025-07-16T23:18:23.294Z",
+  "version": "1.12.0",
+  "environment": "development"
+}

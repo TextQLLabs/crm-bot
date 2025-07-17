@@ -1,0 +1,31 @@
+{
+  "conversationId": "1752706045.278619",
+  "userId": "U0951TSB4P2",
+  "userName": "slack-mcp-textql-ethan",
+  "channel": "C0946T1T4CB",
+  "threadTs": "1752706045.278619",
+  "messageTs": "1752706045.278619",
+  "userMessage": "User: test after bot ID fix - should process this message now!",
+  "conversationHistory": [
+    {
+      "user": "U0951TSB4P2",
+      "text": "test after bot ID fix - should process this message now!",
+      "ts": "1752706045.278619"
+    }
+  ],
+  "botActionHistory": [],
+  "agentThoughts": [
+    "Hello! 👋 I'm your CRM Assistant, and I'm working perfectly now! \n\nI can help you with all your Attio CRM needs:\n\n*🔍 Search & Find*\n- Companies, deals, and people (with smart fuzzy matching)\n- Advanced filtering by value, dates, status\n- Related entities and time-based searches\n\n*📝 Notes & Updates*\n- Create, read, and manage notes on any entity\n- Update deal values, stages, contact info\n- Full CRUD operations with confirmations\n\n*➕ Create New Records*\n- Companies, people, and deals\n- Automatic linking and relationship building\n\n*🧠 Smart Features*\n- Multi-step workflows in single responses\n- Automatic spelling corrections and suggestions\n- Parallel processing for complex requests\n- Web search integration for external data\n\nTry me out! You can say things like:\n- \"Find Acme Corp and add a note about our meeting\"\n- \"Show me all deals over $100k created this month\"\n- \"Update the TechStart deal value to $150,000\"\n- \"Create a new company called Innovation Labs\"\n\nWhat would you like to do with your CRM today?"
+  ],
+  "agentActions": [],
+  "finalResponse": "Hello! 👋 I'm your CRM Assistant, and I'm working perfectly now! \n\nI can help you with all your Attio CRM needs:\n\n*🔍 Search & Find*\n- Companies, deals, and people (with smart fuzzy matching)\n- Advanced filtering by value, dates, status\n- Related entities and time-based searches\n\n*📝 Notes & Updates*\n- Create, read, and manage notes on any entity\n- Update deal values, stages, contact info\n- Full CRUD operations with confirmations\n\n*➕ Create New Records*\n- Companies, people, and deals\n- Automatic linking and relationship building\n\n*🧠 Smart Features*\n- Multi-step workflows in single responses\n- Automatic spelling corrections and suggestions\n- Parallel processing for complex requests\n- Web search integration for external data\n\nTry me out! You can say things like:\n- \"Find Acme Corp and add a note about our meeting\"\n- \"Show me all deals over $100k created this month\"\n- \"Update the TechStart deal value to $150,000\"\n- \"Create a new company called Innovation Labs\"\n\nWhat would you like to do with your CRM today?",
+  "toolsUsed": [],
+  "success": true,
+  "error": null,
+  "processingTime": 0,
+  "attachmentCount": 0,
+  "iterationCount": 0,
+  "timestamp": "2025-07-16T22:47:35.464Z",
+  "version": "1.12.0",
+  "environment": "development"
+}

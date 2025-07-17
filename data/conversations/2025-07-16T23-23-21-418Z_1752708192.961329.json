@@ -1,0 +1,31 @@
+{
+  "conversationId": "1752708192.961329",
+  "userId": "U0951TSB4P2",
+  "userName": "slack-mcp-textql-ethan",
+  "channel": "C0946T1T4CB",
+  "threadTs": "1752708192.961329",
+  "messageTs": "1752708192.961329",
+  "userMessage": "User: REAL TEST A",
+  "conversationHistory": [
+    {
+      "user": "U0951TSB4P2",
+      "text": "REAL TEST A",
+      "ts": "1752708192.961329"
+    }
+  ],
+  "botActionHistory": [],
+  "agentThoughts": [
+    "Hello! I'm your CRM Assistant for TextQL. I'm here to help you manage your Attio CRM data through natural conversation.\n\nI can help you with:\n\n*🔍 Search & Discovery*\n- Find companies, deals, and people\n- Search by various criteria like deal value, dates, status\n- Discover related entities and connections\n\n*📝 Notes Management*\n- Create, retrieve, and manage notes on any entity\n- Automatic Slack thread linking\n\n*✏️ Updates & Creation*\n- Update entity fields (contract values, statuses, contact info)\n- Create new companies, deals, and people\n\n*🖼️ Image Analysis*\n- Analyze screenshots, documents, and visual content\n- Extract text and business information from images\n\nWhat would you like to do? You can ask me to search for a company, create a note, update a deal, or anything else CRM-related!"
+  ],
+  "agentActions": [],
+  "finalResponse": "Hello! I'm your CRM Assistant for TextQL. I'm here to help you manage your Attio CRM data through natural conversation.\n\nI can help you with:\n\n*🔍 Search & Discovery*\n- Find companies, deals, and people\n- Search by various criteria like deal value, dates, status\n- Discover related entities and connections\n\n*📝 Notes Management*\n- Create, retrieve, and manage notes on any entity\n- Automatic Slack thread linking\n\n*✏️ Updates & Creation*\n- Update entity fields (contract values, statuses, contact info)\n- Create new companies, deals, and people\n\n*🖼️ Image Analysis*\n- Analyze screenshots, documents, and visual content\n- Extract text and business information from images\n\nWhat would you like to do? You can ask me to search for a company, create a note, update a deal, or anything else CRM-related!",
+  "toolsUsed": [],
+  "success": true,
+  "error": null,
+  "processingTime": 0,
+  "attachmentCount": 0,
+  "iterationCount": 0,
+  "timestamp": "2025-07-16T23:23:21.418Z",
+  "version": "1.12.0",
+  "environment": "development"
+}

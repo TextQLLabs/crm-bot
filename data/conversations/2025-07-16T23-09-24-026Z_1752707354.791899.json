@@ -1,0 +1,31 @@
+{
+  "conversationId": "1752707354.791899",
+  "userId": "U0951TSB4P2",
+  "userName": "slack-mcp-textql-ethan",
+  "channel": "C0946T1T4CB",
+  "threadTs": "1752707354.791899",
+  "messageTs": "1752707354.791899",
+  "userMessage": "User: test 1 - should process immediately",
+  "conversationHistory": [
+    {
+      "user": "U0951TSB4P2",
+      "text": "test 1 - should process immediately",
+      "ts": "1752707354.791899"
+    }
+  ],
+  "botActionHistory": [],
+  "agentThoughts": [
+    "I understand you want to test that I process requests immediately rather than just planning. However, \"test 1\" doesn't specify what CRM action you'd like me to perform. \n\nI can help you with:\n- *Search* for companies, deals, or people\n- *Create notes* on entities\n- *Update* entity fields (like deal values, stages, contact info)\n- *Get notes* from entities\n- *Create* new companies, people, or deals\n\nWhat specific CRM action would you like me to test? For example:\n- \"Search for Acme Corp\"\n- \"Create a note on Microsoft saying 'test note'\"\n- \"Find all deals created this week\"\n\nJust let me know what you'd like to test and I'll execute it immediately! 🚀"
+  ],
+  "agentActions": [],
+  "finalResponse": "I understand you want to test that I process requests immediately rather than just planning. However, \"test 1\" doesn't specify what CRM action you'd like me to perform. \n\nI can help you with:\n- *Search* for companies, deals, or people\n- *Create notes* on entities\n- *Update* entity fields (like deal values, stages, contact info)\n- *Get notes* from entities\n- *Create* new companies, people, or deals\n\nWhat specific CRM action would you like me to test? For example:\n- \"Search for Acme Corp\"\n- \"Create a note on Microsoft saying 'test note'\"\n- \"Find all deals created this week\"\n\nJust let me know what you'd like to test and I'll execute it immediately! 🚀",
+  "toolsUsed": [],
+  "success": true,
+  "error": null,
+  "processingTime": 0,
+  "attachmentCount": 0,
+  "iterationCount": 0,
+  "timestamp": "2025-07-16T23:09:24.026Z",
+  "version": "1.12.0",
+  "environment": "development"
+}

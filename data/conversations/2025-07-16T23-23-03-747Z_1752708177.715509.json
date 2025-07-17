@@ -1,0 +1,31 @@
+{
+  "conversationId": "1752708177.715509",
+  "userId": "U0951TSB4P2",
+  "userName": "slack-mcp-textql-ethan",
+  "channel": "C0946T1T4CB",
+  "threadTs": "1752708177.715509",
+  "messageTs": "1752708177.715509",
+  "userMessage": "User: FIXED TEST 3 - should be queue position #2",
+  "conversationHistory": [
+    {
+      "user": "U0951TSB4P2",
+      "text": "FIXED TEST 3 - should be queue position #2",
+      "ts": "1752708177.715509"
+    }
+  ],
+  "botActionHistory": [],
+  "agentThoughts": [
+    "I understand you're running a test and this should be queue position #2. However, I don't see a specific CRM-related request in your message. \n\nCould you let me know what you'd like me to help you with in the CRM? For example:\n- Search for a company, person, or deal\n- Create or update a note\n- Update entity information\n- Create new records\n\nI'm ready to assist with any CRM operations you need!"
+  ],
+  "agentActions": [],
+  "finalResponse": "I understand you're running a test and this should be queue position #2. However, I don't see a specific CRM-related request in your message. \n\nCould you let me know what you'd like me to help you with in the CRM? For example:\n- Search for a company, person, or deal\n- Create or update a note\n- Update entity information\n- Create new records\n\nI'm ready to assist with any CRM operations you need!",
+  "toolsUsed": [],
+  "success": true,
+  "error": null,
+  "processingTime": 0,
+  "attachmentCount": 0,
+  "iterationCount": 0,
+  "timestamp": "2025-07-16T23:23:03.747Z",
+  "version": "1.12.0",
+  "environment": "development"
+}

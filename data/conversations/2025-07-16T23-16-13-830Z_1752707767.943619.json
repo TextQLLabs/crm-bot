@@ -1,0 +1,31 @@
+{
+  "conversationId": "1752707767.943619",
+  "userId": "U0951TSB4P2",
+  "userName": "slack-mcp-textql-ethan",
+  "channel": "C0946T1T4CB",
+  "threadTs": "1752707767.943619",
+  "messageTs": "1752707767.943619",
+  "userMessage": "User: Test message 1 - should process immediately",
+  "conversationHistory": [
+    {
+      "user": "U0951TSB4P2",
+      "text": "Test message 1 - should process immediately",
+      "ts": "1752707767.943619"
+    }
+  ],
+  "botActionHistory": [],
+  "agentThoughts": [
+    "Hello! I received your test message and I'm ready to help you with any CRM-related tasks. \n\nI can assist you with:\n- *Searching* for companies, deals, and people in your Attio CRM\n- *Creating and managing notes* on any entity\n- *Updating* deal values, statuses, and other fields\n- *Creating* new companies, people, or deals\n- *Analyzing* conversation history and images\n\nWhat would you like me to help you with today?"
+  ],
+  "agentActions": [],
+  "finalResponse": "Hello! I received your test message and I'm ready to help you with any CRM-related tasks. \n\nI can assist you with:\n- *Searching* for companies, deals, and people in your Attio CRM\n- *Creating and managing notes* on any entity\n- *Updating* deal values, statuses, and other fields\n- *Creating* new companies, people, or deals\n- *Analyzing* conversation history and images\n\nWhat would you like me to help you with today?",
+  "toolsUsed": [],
+  "success": true,
+  "error": null,
+  "processingTime": 0,
+  "attachmentCount": 0,
+  "iterationCount": 0,
+  "timestamp": "2025-07-16T23:16:13.830Z",
+  "version": "1.12.0",
+  "environment": "development"
+}

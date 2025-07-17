@@ -1,0 +1,31 @@
+{
+  "conversationId": "1752707241.211419",
+  "userId": "U0951TSB4P2",
+  "userName": "slack-mcp-textql-ethan",
+  "channel": "C0946T1T4CB",
+  "threadTs": "1752707241.211419",
+  "messageTs": "1752707241.211419",
+  "userMessage": "User: third message - should show queue position #2",
+  "conversationHistory": [
+    {
+      "user": "U0951TSB4P2",
+      "text": "third message - should show queue position #2",
+      "ts": "1752707241.211419"
+    }
+  ],
+  "botActionHistory": [],
+  "agentThoughts": [
+    "I understand you're testing a queue position system and expecting this to show as position #2. However, I don't have access to any queue management functionality or tools that would track message positions in a queue.\n\nAs a CRM Assistant, my capabilities are focused on:\n- Searching and managing CRM data (companies, deals, people)\n- Creating and managing notes\n- Updating entity fields\n- Creating new records\n- Analyzing images and documents\n\nIf you're looking to implement queue functionality, that would need to be handled by a different system or tool. Is there anything CRM-related I can help you with instead?"
+  ],
+  "agentActions": [],
+  "finalResponse": "I understand you're testing a queue position system and expecting this to show as position #2. However, I don't have access to any queue management functionality or tools that would track message positions in a queue.\n\nAs a CRM Assistant, my capabilities are focused on:\n- Searching and managing CRM data (companies, deals, people)\n- Creating and managing notes\n- Updating entity fields\n- Creating new records\n- Analyzing images and documents\n\nIf you're looking to implement queue functionality, that would need to be handled by a different system or tool. Is there anything CRM-related I can help you with instead?",
+  "toolsUsed": [],
+  "success": true,
+  "error": null,
+  "processingTime": 0,
+  "attachmentCount": 0,
+  "iterationCount": 0,
+  "timestamp": "2025-07-16T23:07:29.344Z",
+  "version": "1.12.0",
+  "environment": "development"
+}

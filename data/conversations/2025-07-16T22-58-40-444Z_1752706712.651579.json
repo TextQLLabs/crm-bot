@@ -1,0 +1,31 @@
+{
+  "conversationId": "1752706712.651579",
+  "userId": "U0951TSB4P2",
+  "userName": "slack-mcp-textql-ethan",
+  "channel": "C0946T1T4CB",
+  "threadTs": "1752706712.651579",
+  "messageTs": "1752706712.651579",
+  "userMessage": "User: first test message for duplicate handling",
+  "conversationHistory": [
+    {
+      "user": "U0951TSB4P2",
+      "text": "first test message for duplicate handling",
+      "ts": "1752706712.651579"
+    }
+  ],
+  "botActionHistory": [],
+  "agentThoughts": [
+    "Hello! I received your test message for duplicate handling. I'm your CRM Assistant, ready to help you manage your Attio CRM data through natural conversation.\n\nI can help you with:\n\n*🔍 Search & Discovery*\n- Find companies, deals, and people\n- Filter by criteria like deal value, dates, status\n- Search within specific time periods\n\n*📝 Notes Management*\n- Create, retrieve, and manage notes on any entity\n- Automatic Slack thread linking\n\n*✏️ Updates & Creation*\n- Update entity fields (contract values, statuses, contact info)\n- Create new companies, deals, and people\n\n*🖼️ Image Analysis*\n- Analyze screenshots, documents, and visual content\n\nWhat would you like to do with your CRM today?"
+  ],
+  "agentActions": [],
+  "finalResponse": "Hello! I received your test message for duplicate handling. I'm your CRM Assistant, ready to help you manage your Attio CRM data through natural conversation.\n\nI can help you with:\n\n*🔍 Search & Discovery*\n- Find companies, deals, and people\n- Filter by criteria like deal value, dates, status\n- Search within specific time periods\n\n*📝 Notes Management*\n- Create, retrieve, and manage notes on any entity\n- Automatic Slack thread linking\n\n*✏️ Updates & Creation*\n- Update entity fields (contract values, statuses, contact info)\n- Create new companies, deals, and people\n\n*🖼️ Image Analysis*\n- Analyze screenshots, documents, and visual content\n\nWhat would you like to do with your CRM today?",
+  "toolsUsed": [],
+  "success": true,
+  "error": null,
+  "processingTime": 0,
+  "attachmentCount": 0,
+  "iterationCount": 0,
+  "timestamp": "2025-07-16T22:58:40.444Z",
+  "version": "1.12.0",
+  "environment": "development"
+}

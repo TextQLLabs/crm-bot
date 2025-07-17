@@ -1,0 +1,31 @@
+{
+  "conversationId": "1752710316.023499",
+  "userId": "U0951TSB4P2",
+  "userName": "slack-mcp-textql-ethan",
+  "channel": "C0946T1T4CB",
+  "threadTs": "1752710316.023499",
+  "messageTs": "1752710316.023499",
+  "userMessage": "User: test development bot - should respond if environment detection works",
+  "conversationHistory": [
+    {
+      "user": "U0951TSB4P2",
+      "text": "test development bot - should respond if environment detection works",
+      "ts": "1752710316.023499"
+    }
+  ],
+  "botActionHistory": [],
+  "agentThoughts": [
+    "Hello! 👋 I'm your CRM Assistant for TextQL, integrated with Attio CRM and deployed in the TextQL Slack workspace.\n\n*Environment Detection Status: ✅ Working*\n\nI'm ready to help you with:\n\n*🔍 CRM Operations*\n- Search companies, deals, and people\n- Create and manage notes\n- Update entity fields\n- Create new records\n\n*🧠 Smart Features*\n- Fuzzy search with intelligent matching\n- Web search for spelling corrections and context\n- Multi-step workflows in single responses\n- Image analysis and text extraction\n\n*📊 Daily Deal Assessments*\n- Comprehensive deal evaluations with Bayesian updates\n- Probability and EV tracking\n- Formatted assessment notes with ticker-style changes\n\nTry me with commands like:\n- \"Find Acme Corp\"\n- \"Create a note on [company]: meeting scheduled\"\n- \"Update [deal] value to $150k\"\n- \"Count notes for [company]\"\n\nWhat would you like to do with the CRM today?"
+  ],
+  "agentActions": [],
+  "finalResponse": "Hello! 👋 I'm your CRM Assistant for TextQL, integrated with Attio CRM and deployed in the TextQL Slack workspace.\n\n*Environment Detection Status: ✅ Working*\n\nI'm ready to help you with:\n\n*🔍 CRM Operations*\n- Search companies, deals, and people\n- Create and manage notes\n- Update entity fields\n- Create new records\n\n*🧠 Smart Features*\n- Fuzzy search with intelligent matching\n- Web search for spelling corrections and context\n- Multi-step workflows in single responses\n- Image analysis and text extraction\n\n*📊 Daily Deal Assessments*\n- Comprehensive deal evaluations with Bayesian updates\n- Probability and EV tracking\n- Formatted assessment notes with ticker-style changes\n\nTry me with commands like:\n- \"Find Acme Corp\"\n- \"Create a note on [company]: meeting scheduled\"\n- \"Update [deal] value to $150k\"\n- \"Count notes for [company]\"\n\nWhat would you like to do with the CRM today?",
+  "toolsUsed": [],
+  "success": true,
+  "error": null,
+  "processingTime": 0,
+  "attachmentCount": 0,
+  "iterationCount": 0,
+  "timestamp": "2025-07-16T23:58:47.991Z",
+  "version": "1.12.0",
+  "environment": "development"
+}

@@ -1,0 +1,31 @@
+{
+  "conversationId": "1752707776.145219",
+  "userId": "U0951TSB4P2",
+  "userName": "slack-mcp-textql-ethan",
+  "channel": "C0946T1T4CB",
+  "threadTs": "1752707776.145219",
+  "messageTs": "1752707776.145219",
+  "userMessage": "User: Test message 3 - should get queued as #2",
+  "conversationHistory": [
+    {
+      "user": "U0951TSB4P2",
+      "text": "Test message 3 - should get queued as #2",
+      "ts": "1752707776.145219"
+    }
+  ],
+  "botActionHistory": [],
+  "agentThoughts": [
+    "I see this is a test message! It looks like you're testing some kind of queuing system where this message should be processed as #2 in the queue.\n\nSince this appears to be a test of the CRM bot functionality rather than an actual CRM request, I don't need to use any CRM tools. I'm ready and available to help with any actual CRM tasks like:\n\n- Searching for companies, deals, or people\n- Creating or managing notes\n- Updating entity fields\n- Creating new records\n- Analyzing deal assessments\n\nJust let me know what you'd like to do with the CRM system!"
+  ],
+  "agentActions": [],
+  "finalResponse": "I see this is a test message! It looks like you're testing some kind of queuing system where this message should be processed as #2 in the queue.\n\nSince this appears to be a test of the CRM bot functionality rather than an actual CRM request, I don't need to use any CRM tools. I'm ready and available to help with any actual CRM tasks like:\n\n- Searching for companies, deals, or people\n- Creating or managing notes\n- Updating entity fields\n- Creating new records\n- Analyzing deal assessments\n\nJust let me know what you'd like to do with the CRM system!",
+  "toolsUsed": [],
+  "success": true,
+  "error": null,
+  "processingTime": 0,
+  "attachmentCount": 0,
+  "iterationCount": 0,
+  "timestamp": "2025-07-16T23:16:23.184Z",
+  "version": "1.12.0",
+  "environment": "development"
+}

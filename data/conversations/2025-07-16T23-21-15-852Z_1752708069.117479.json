@@ -1,0 +1,31 @@
+{
+  "conversationId": "1752708069.117479",
+  "userId": "U0951TSB4P2",
+  "userName": "slack-mcp-textql-ethan",
+  "channel": "C0946T1T4CB",
+  "threadTs": "1752708069.117479",
+  "messageTs": "1752708069.117479",
+  "userMessage": "User: TIMEOUT Test 1 - should process with new timeout logic",
+  "conversationHistory": [
+    {
+      "user": "U0951TSB4P2",
+      "text": "TIMEOUT Test 1 - should process with new timeout logic",
+      "ts": "1752708069.117479"
+    }
+  ],
+  "botActionHistory": [],
+  "agentThoughts": [
+    "I understand you're testing timeout logic, but I don't see a specific CRM-related request in your message. \n\nCould you clarify what you'd like me to help you with? For example:\n- Search for a company, person, or deal\n- Create or retrieve notes\n- Update entity information\n- Run a specific CRM operation\n\nI'm ready to assist with any CRM tasks using the available tools!"
+  ],
+  "agentActions": [],
+  "finalResponse": "I understand you're testing timeout logic, but I don't see a specific CRM-related request in your message. \n\nCould you clarify what you'd like me to help you with? For example:\n- Search for a company, person, or deal\n- Create or retrieve notes\n- Update entity information\n- Run a specific CRM operation\n\nI'm ready to assist with any CRM tasks using the available tools!",
+  "toolsUsed": [],
+  "success": true,
+  "error": null,
+  "processingTime": 0,
+  "attachmentCount": 0,
+  "iterationCount": 0,
+  "timestamp": "2025-07-16T23:21:15.852Z",
+  "version": "1.12.0",
+  "environment": "development"
+}

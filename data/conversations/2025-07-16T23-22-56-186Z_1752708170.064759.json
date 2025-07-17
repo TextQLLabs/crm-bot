@@ -1,0 +1,31 @@
+{
+  "conversationId": "1752708170.064759",
+  "userId": "U0951TSB4P2",
+  "userName": "slack-mcp-textql-ethan",
+  "channel": "C0946T1T4CB",
+  "threadTs": "1752708170.064759",
+  "messageTs": "1752708170.064759",
+  "userMessage": "User: FIXED TEST 1 - should process immediately",
+  "conversationHistory": [
+    {
+      "user": "U0951TSB4P2",
+      "text": "FIXED TEST 1 - should process immediately",
+      "ts": "1752708170.064759"
+    }
+  ],
+  "botActionHistory": [],
+  "agentThoughts": [
+    "I understand you want me to process something immediately, but I need more information about what specific action you'd like me to take. \n\nCould you please clarify what you need me to do? For example:\n- Search for a specific company, person, or deal?\n- Create a note on an entity?\n- Update a field value?\n- Get notes from an entity?\n- Create a new record?\n\nJust let me know what you need and I'll process it right away! 🚀"
+  ],
+  "agentActions": [],
+  "finalResponse": "I understand you want me to process something immediately, but I need more information about what specific action you'd like me to take. \n\nCould you please clarify what you need me to do? For example:\n- Search for a specific company, person, or deal?\n- Create a note on an entity?\n- Update a field value?\n- Get notes from an entity?\n- Create a new record?\n\nJust let me know what you need and I'll process it right away! 🚀",
+  "toolsUsed": [],
+  "success": true,
+  "error": null,
+  "processingTime": 0,
+  "attachmentCount": 0,
+  "iterationCount": 0,
+  "timestamp": "2025-07-16T23:22:56.186Z",
+  "version": "1.12.0",
+  "environment": "development"
+}

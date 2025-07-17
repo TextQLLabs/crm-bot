@@ -1,0 +1,617 @@
+{
+  "conversationId": "1752708439.452109",
+  "userId": "U0951TSB4P2",
+  "userName": "slack-mcp-textql-ethan",
+  "channel": "C0946T1T4CB",
+  "threadTs": "1752708439.452109",
+  "messageTs": "1752708439.452109",
+  "userMessage": "User: queue test alpha",
+  "conversationHistory": [
+    {
+      "user": "U0951TSB4P2",
+      "text": "queue test alpha",
+      "ts": "1752708439.452109"
+    }
+  ],
+  "botActionHistory": [],
+  "agentThoughts": [
+    "I found several companies with \"Alpha\" in their names, but no exact match for \"queue test alpha\". Here are the Alpha-related companies in your CRM:\n\n*Companies with \"Alpha\" in the name:*\n\n• *<https://app.attio.com/textql-data/company/01115392-a235-4a6b-9fd2-61490bc66da8|A-Alpha Bio>* - Biotechnology company specializing in protein-protein interactions\n• *<https://app.attio.com/textql-data/company/0c7123d5-a47c-4910-b8a3-9c23ce48f9f0|AlphaSense>* - Market intelligence and search platform\n• *<https://app.attio.com/textql-data/company/2b861808-a0bb-48ff-a160-271d4d39c66a|AlphaGraphics>* - Printing services and marketing solutions\n• *<https://app.attio.com/textql-data/company/2ef92ce2-dc99-4e5b-8460-1fcb87d34e51|AlphaStaff>* - HR outsourcing company\n• *<https://app.attio.com/textql-data/company/3ed55d7b-e453-48f3-bceb-a8a9fe133aab|Alpha-Beta Investment Strategies>* - Investment strategies company\n• *<https://app.attio.com/textql-data/company/4cbd66dc-c693-418f-8ffd-ae2ebe00b557|Seeking Alpha>* - Investment research platform\n• *<https://app.attio.com/textql-data/company/4fbffff8-2ba3-4786-ac75-82d1b384154d|Hello Alpha>* - Women's health platform\n• *<https://app.attio.com/textql-data/company/6b284523-e0a6-4a70-b75a-ddfbab12d932|Alpha-Diver>* - Market research with psychology/neuroscience\n• *<https://app.attio.com/textql-data/company/ba66bd6b-7eb6-43b5-b050-5556a8307cc0|Alpha Recon>* - Security intelligence company\n• *<https://app.attio.com/textql-data/company/d8b79804-21a1-4899-a7f4-badbc87b884f|Eagle Alpha>* - Financial information and data provider\n\nCould you clarify what you're looking for? Are you:\n- Looking for a specific company that might be named differently?\n- Trying to create a new entity called \"queue test alpha\"?\n- Testing the search functionality?\n\nLet me know and I can help you find what you need!"
+  ],
+  "agentActions": [
+    {
+      "tool": "search_crm",
+      "input": {
+        "query": "queue test alpha"
+      },
+      "result": {
+        "timing": {
+          "duration": 3482,
+          "startTime": 1752708445496,
+          "endTime": 1752708448978
+        }
+      },
+      "timing": {
+        "duration": 3482,
+        "startTime": 1752708445496,
+        "endTime": 1752708448978
+      }
+    },
+    {
+      "tool": "search_crm",
+      "input": {
+        "query": "queue test"
+      },
+      "result": {
+        "timing": {
+          "duration": 3444,
+          "startTime": 1752708453210,
+          "endTime": 1752708456654
+        }
+      },
+      "timing": {
+        "duration": 3444,
+        "startTime": 1752708453210,
+        "endTime": 1752708456654
+      }
+    },
+    {
+      "tool": "search_crm",
+      "input": {
+        "query": "alpha"
+      },
+      "result": {
+        "0": {
+          "id": "01115392-a235-4a6b-9fd2-61490bc66da8",
+          "name": "A-Alpha Bio",
+          "description": "A-Alpha Bio is a biotechnology company that specializes in measuring protein-protein interactions. They use synthetic biology and machine learning to rapidly and quantitatively measure the affinities of millions of protein-protein interactions. Their g...",
+          "domains": [
+            "aalphabio.com"
+          ],
+          "categories": [
+            "Medicine",
+            "B2B",
+            "Information Technology & Services",
+            "Technology",
+            "Pharmaceuticals",
+            "Biotechnology",
+            "SAAS",
+            "Enterprise",
+            "Health Care"
+          ],
+          "location": "Seattle, Washington, US",
+          "employee_range": "11-50",
+          "funding_raised": "$495,000 USD",
+          "created_at": "2025-02-11T17:53:25.240000000Z",
+          "slug": "aalphabio.com",
+          "url": "https://app.attio.com/textql-data/company/01115392-a235-4a6b-9fd2-61490bc66da8",
+          "type": "company"
+        },
+        "1": {
+          "id": "0c7123d5-a47c-4910-b8a3-9c23ce48f9f0",
+          "name": "AlphaSense",
+          "description": "AlphaSense is a market intelligence and search platform that provides sophisticated semantic analytics to give professionals an unprecedented information edge. The company's AI-based technology helps users make smarter business decisions by delivering ...",
+          "domains": [
+            "alpha-sense.com"
+          ],
+          "categories": [
+            "Broadcasting",
+            "Technology",
+            "B2C",
+            "Information Technology & Services",
+            "Market Research",
+            "Internet",
+            "SAAS",
+            "Publishing",
+            "Enterprise",
+            "B2B"
+          ],
+          "location": "New York, New York, US",
+          "employee_range": "251-1K",
+          "funding_raised": "$7,700,000 USD",
+          "created_at": "2025-02-11T18:07:19.978000000Z",
+          "slug": "alpha-sense.com",
+          "url": "https://app.attio.com/textql-data/company/0c7123d5-a47c-4910-b8a3-9c23ce48f9f0",
+          "type": "company"
+        },
+        "2": {
+          "id": "2b861808-a0bb-48ff-a160-271d4d39c66a",
+          "name": "AlphaGraphics",
+          "description": "AlphaGraphics specializes in providing comprehensive printing services, marketing solutions, and graphic design, along with the production of custom business signs and banners, to help businesses enhance their visual communications and marketing strate...",
+          "domains": [
+            "alphagraphics.com"
+          ],
+          "categories": [
+            "Marketing & Advertising",
+            "B2C",
+            "B2B",
+            "Business Supplies",
+            "Printing",
+            "E-commerce"
+          ],
+          "location": "Salt Lake City, Utah, US",
+          "employee_range": "1K-5K",
+          "funding_raised": "Unknown Funding",
+          "created_at": "2025-05-28T22:57:59.563000000Z",
+          "slug": "alphagraphics.com",
+          "url": "https://app.attio.com/textql-data/company/2b861808-a0bb-48ff-a160-271d4d39c66a",
+          "type": "company"
+        },
+        "3": {
+          "id": "2ef92ce2-dc99-4e5b-8460-1fcb87d34e51",
+          "name": "AlphaStaff",
+          "description": "AlphaStaff is a leading HR outsourcing company that delivers a suite of human resource, employee benefit and administration, payroll, risk, and technology solutions designed to support organizations through evolving business cycles. With these solution...",
+          "domains": [
+            "alphastaff.com"
+          ],
+          "categories": [
+            "Enterprise",
+            "Outsourcing",
+            "SAAS",
+            "Human Resources",
+            "B2B",
+            "Consulting & Professional Services"
+          ],
+          "location": "Sunrise, Florida, US",
+          "employee_range": "51-250",
+          "funding_raised": "Unknown Funding",
+          "created_at": "2025-02-11T19:22:17.734000000Z",
+          "slug": "alphastaff.com",
+          "url": "https://app.attio.com/textql-data/company/2ef92ce2-dc99-4e5b-8460-1fcb87d34e51",
+          "type": "company"
+        },
+        "4": {
+          "id": "3ed55d7b-e453-48f3-bceb-a8a9fe133aab",
+          "name": "Alpha-Beta Investment Strategies",
+          "description": "Alpha-Beta Investment Strategies is a company that develops unique indices and implements investment strategies that generate returns above traditional benchmarks. On their website, users can access each index portfolio and view the composition of stoc...",
+          "domains": [
+            "alpha-beta.co.il"
+          ],
+          "categories": [
+            "B2C",
+            "Finance",
+            "Consulting & Professional Services",
+            "Market Research",
+            "Insurance",
+            "Financial Services",
+            "Investment",
+            "Investment Management",
+            "B2B"
+          ],
+          "location": ", , IL",
+          "employee_range": "1-10",
+          "funding_raised": "Unknown Funding",
+          "created_at": "2025-02-11T19:13:29.372000000Z",
+          "slug": "alpha-beta.co.il",
+          "url": "https://app.attio.com/textql-data/company/3ed55d7b-e453-48f3-bceb-a8a9fe133aab",
+          "type": "company"
+        },
+        "5": {
+          "id": "4cbd66dc-c693-418f-8ffd-ae2ebe00b557",
+          "name": "Seeking Alpha",
+          "description": "Seeking Alpha is the world's largest investing community, offering a platform for investment research with comprehensive coverage of stocks, asset classes, ETFs, and investment strategies. It provides stock market news, analysis, investing ideas, earni...",
+          "domains": [
+            "seekingalpha.com"
+          ],
+          "categories": [
+            "Publishing",
+            "Information Technology & Services",
+            "B2B",
+            "B2C",
+            "Finance",
+            "Marketplace"
+          ],
+          "location": "New York, New York, US",
+          "employee_range": "51-250",
+          "funding_raised": "$70,000 USD",
+          "created_at": "2025-02-11T18:58:45.086000000Z",
+          "slug": "seekingalpha.com",
+          "url": "https://app.attio.com/textql-data/company/4cbd66dc-c693-418f-8ffd-ae2ebe00b557",
+          "type": "company"
+        },
+        "6": {
+          "id": "4fbffff8-2ba3-4786-ac75-82d1b384154d",
+          "name": "Hello Alpha",
+          "description": "Hello Alpha is a virtual, on-demand women's health platform that offers inclusive, whole-person care for over 100 medical conditions related to primary and urgent care, women's reproductive health, mental health, chronic condition management, and more....",
+          "domains": [
+            "helloalpha.com"
+          ],
+          "categories": [
+            "B2C",
+            "Health Care"
+          ],
+          "location": "Palo Alto, California, US",
+          "employee_range": "51-250",
+          "funding_raised": "$350,000 USD",
+          "created_at": "2025-02-11T17:52:06.024000000Z",
+          "slug": "helloalpha.com",
+          "url": "https://app.attio.com/textql-data/company/4fbffff8-2ba3-4786-ac75-82d1b384154d",
+          "type": "company"
+        },
+        "7": {
+          "id": "6b284523-e0a6-4a70-b75a-ddfbab12d932",
+          "name": "Alpha-Diver",
+          "description": "Alpha-Diver combines market research with psychology and neuroscience to reveal consumer insights like never before.",
+          "domains": [
+            "alpha-diver.com"
+          ],
+          "categories": [
+            "Market Research",
+            "Consulting & Professional Services",
+            "B2B",
+            "Marketplace"
+          ],
+          "location": "Cincinnati, Ohio, US",
+          "employee_range": "1-10",
+          "funding_raised": "Unknown Funding",
+          "created_at": "2025-02-11T18:18:25.730000000Z",
+          "slug": "alpha-diver.com",
+          "url": "https://app.attio.com/textql-data/company/6b284523-e0a6-4a70-b75a-ddfbab12d932",
+          "type": "company"
+        },
+        "8": {
+          "id": "ba66bd6b-7eb6-43b5-b050-5556a8307cc0",
+          "name": "Alpha Recon",
+          "description": "Alpha Recon is a security intelligence company that provides a holistic platform for security professionals to protect their organizations. They offer end-to-end risk intelligence and decision-making tools for school security, as well as protective int...",
+          "domains": [
+            "alpharecon.com"
+          ],
+          "categories": [
+            "B2C",
+            "SAAS",
+            "Technology",
+            "Security",
+            "Enterprise",
+            "B2B",
+            "E-commerce",
+            "Information Technology & Services"
+          ],
+          "location": "Colorado Springs, Colorado, US",
+          "employee_range": "11-50",
+          "funding_raised": "Unknown Funding",
+          "created_at": "2025-02-11T18:57:28.736000000Z",
+          "slug": "alpharecon.com",
+          "url": "https://app.attio.com/textql-data/company/ba66bd6b-7eb6-43b5-b050-5556a8307cc0",
+          "type": "company"
+        },
+        "9": {
+          "id": "d8b79804-21a1-4899-a7f4-badbc87b884f",
+          "name": "Eagle Alpha",
+          "description": "Eagle Alpha is a financial information and data provider. Established in 2012, they are the pioneer connecting the universe of alternative data. They provide solutions to both data vendors and data buyers, offering a leading alternative data aggregatio...",
+          "domains": [
+            "eaglealpha.com"
+          ],
+          "categories": [
+            "Information Technology & Services",
+            "Enterprise",
+            "Financial Services",
+            "SAAS",
+            "Investment Management",
+            "Government",
+            "Technology",
+            "B2B"
+          ],
+          "location": "Dublin, County Dublin, IE",
+          "employee_range": "11-50",
+          "funding_raised": "$80,000 USD",
+          "created_at": "2025-02-12T16:03:53.512000000Z",
+          "slug": "eaglealpha.com",
+          "url": "https://app.attio.com/textql-data/company/d8b79804-21a1-4899-a7f4-badbc87b884f",
+          "type": "company"
+        },
+        "timing": {
+          "duration": 1290,
+          "startTime": 1752708456960,
+          "endTime": 1752708458250
+        }
+      },
+      "timing": {
+        "duration": 1290,
+        "startTime": 1752708456960,
+        "endTime": 1752708458250
+      }
+    }
+  ],
+  "finalResponse": "I found several companies with \"Alpha\" in their names, but no exact match for \"queue test alpha\". Here are the Alpha-related companies in your CRM:\n\n*Companies with \"Alpha\" in the name:*\n\n• *<https://app.attio.com/textql-data/company/01115392-a235-4a6b-9fd2-61490bc66da8|A-Alpha Bio>* - Biotechnology company specializing in protein-protein interactions\n• *<https://app.attio.com/textql-data/company/0c7123d5-a47c-4910-b8a3-9c23ce48f9f0|AlphaSense>* - Market intelligence and search platform\n• *<https://app.attio.com/textql-data/company/2b861808-a0bb-48ff-a160-271d4d39c66a|AlphaGraphics>* - Printing services and marketing solutions\n• *<https://app.attio.com/textql-data/company/2ef92ce2-dc99-4e5b-8460-1fcb87d34e51|AlphaStaff>* - HR outsourcing company\n• *<https://app.attio.com/textql-data/company/3ed55d7b-e453-48f3-bceb-a8a9fe133aab|Alpha-Beta Investment Strategies>* - Investment strategies company\n• *<https://app.attio.com/textql-data/company/4cbd66dc-c693-418f-8ffd-ae2ebe00b557|Seeking Alpha>* - Investment research platform\n• *<https://app.attio.com/textql-data/company/4fbffff8-2ba3-4786-ac75-82d1b384154d|Hello Alpha>* - Women's health platform\n• *<https://app.attio.com/textql-data/company/6b284523-e0a6-4a70-b75a-ddfbab12d932|Alpha-Diver>* - Market research with psychology/neuroscience\n• *<https://app.attio.com/textql-data/company/ba66bd6b-7eb6-43b5-b050-5556a8307cc0|Alpha Recon>* - Security intelligence company\n• *<https://app.attio.com/textql-data/company/d8b79804-21a1-4899-a7f4-badbc87b884f|Eagle Alpha>* - Financial information and data provider\n\nCould you clarify what you're looking for? Are you:\n- Looking for a specific company that might be named differently?\n- Trying to create a new entity called \"queue test alpha\"?\n- Testing the search functionality?\n\nLet me know and I can help you find what you need!",
+  "toolsUsed": [
+    {
+      "tool": "search_crm",
+      "input": {
+        "query": "queue test alpha"
+      },
+      "result": {
+        "timing": {
+          "duration": 3482,
+          "startTime": 1752708445496,
+          "endTime": 1752708448978
+        }
+      },
+      "timing": {
+        "duration": 3482,
+        "startTime": 1752708445496,
+        "endTime": 1752708448978
+      }
+    },
+    {
+      "tool": "search_crm",
+      "input": {
+        "query": "queue test"
+      },
+      "result": {
+        "timing": {
+          "duration": 3444,
+          "startTime": 1752708453210,
+          "endTime": 1752708456654
+        }
+      },
+      "timing": {
+        "duration": 3444,
+        "startTime": 1752708453210,
+        "endTime": 1752708456654
+      }
+    },
+    {
+      "tool": "search_crm",
+      "input": {
+        "query": "alpha"
+      },
+      "result": {
+        "0": {
+          "id": "01115392-a235-4a6b-9fd2-61490bc66da8",
+          "name": "A-Alpha Bio",
+          "description": "A-Alpha Bio is a biotechnology company that specializes in measuring protein-protein interactions. They use synthetic biology and machine learning to rapidly and quantitatively measure the affinities of millions of protein-protein interactions. Their g...",
+          "domains": [
+            "aalphabio.com"
+          ],
+          "categories": [
+            "Medicine",
+            "B2B",
+            "Information Technology & Services",
+            "Technology",
+            "Pharmaceuticals",
+            "Biotechnology",
+            "SAAS",
+            "Enterprise",
+            "Health Care"
+          ],
+          "location": "Seattle, Washington, US",
+          "employee_range": "11-50",
+          "funding_raised": "$495,000 USD",
+          "created_at": "2025-02-11T17:53:25.240000000Z",
+          "slug": "aalphabio.com",
+          "url": "https://app.attio.com/textql-data/company/01115392-a235-4a6b-9fd2-61490bc66da8",
+          "type": "company"
+        },
+        "1": {
+          "id": "0c7123d5-a47c-4910-b8a3-9c23ce48f9f0",
+          "name": "AlphaSense",
+          "description": "AlphaSense is a market intelligence and search platform that provides sophisticated semantic analytics to give professionals an unprecedented information edge. The company's AI-based technology helps users make smarter business decisions by delivering ...",
+          "domains": [
+            "alpha-sense.com"
+          ],
+          "categories": [
+            "Broadcasting",
+            "Technology",
+            "B2C",
+            "Information Technology & Services",
+            "Market Research",
+            "Internet",
+            "SAAS",
+            "Publishing",
+            "Enterprise",
+            "B2B"
+          ],
+          "location": "New York, New York, US",
+          "employee_range": "251-1K",
+          "funding_raised": "$7,700,000 USD",
+          "created_at": "2025-02-11T18:07:19.978000000Z",
+          "slug": "alpha-sense.com",
+          "url": "https://app.attio.com/textql-data/company/0c7123d5-a47c-4910-b8a3-9c23ce48f9f0",
+          "type": "company"
+        },
+        "2": {
+          "id": "2b861808-a0bb-48ff-a160-271d4d39c66a",
+          "name": "AlphaGraphics",
+          "description": "AlphaGraphics specializes in providing comprehensive printing services, marketing solutions, and graphic design, along with the production of custom business signs and banners, to help businesses enhance their visual communications and marketing strate...",
+          "domains": [
+            "alphagraphics.com"
+          ],
+          "categories": [
+            "Marketing & Advertising",
+            "B2C",
+            "B2B",
+            "Business Supplies",
+            "Printing",
+            "E-commerce"
+          ],
+          "location": "Salt Lake City, Utah, US",
+          "employee_range": "1K-5K",
+          "funding_raised": "Unknown Funding",
+          "created_at": "2025-05-28T22:57:59.563000000Z",
+          "slug": "alphagraphics.com",
+          "url": "https://app.attio.com/textql-data/company/2b861808-a0bb-48ff-a160-271d4d39c66a",
+          "type": "company"
+        },
+        "3": {
+          "id": "2ef92ce2-dc99-4e5b-8460-1fcb87d34e51",
+          "name": "AlphaStaff",
+          "description": "AlphaStaff is a leading HR outsourcing company that delivers a suite of human resource, employee benefit and administration, payroll, risk, and technology solutions designed to support organizations through evolving business cycles. With these solution...",
+          "domains": [
+            "alphastaff.com"
+          ],
+          "categories": [
+            "Enterprise",
+            "Outsourcing",
+            "SAAS",
+            "Human Resources",
+            "B2B",
+            "Consulting & Professional Services"
+          ],
+          "location": "Sunrise, Florida, US",
+          "employee_range": "51-250",
+          "funding_raised": "Unknown Funding",
+          "created_at": "2025-02-11T19:22:17.734000000Z",
+          "slug": "alphastaff.com",
+          "url": "https://app.attio.com/textql-data/company/2ef92ce2-dc99-4e5b-8460-1fcb87d34e51",
+          "type": "company"
+        },
+        "4": {
+          "id": "3ed55d7b-e453-48f3-bceb-a8a9fe133aab",
+          "name": "Alpha-Beta Investment Strategies",
+          "description": "Alpha-Beta Investment Strategies is a company that develops unique indices and implements investment strategies that generate returns above traditional benchmarks. On their website, users can access each index portfolio and view the composition of stoc...",
+          "domains": [
+            "alpha-beta.co.il"
+          ],
+          "categories": [
+            "B2C",
+            "Finance",
+            "Consulting & Professional Services",
+            "Market Research",
+            "Insurance",
+            "Financial Services",
+            "Investment",
+            "Investment Management",
+            "B2B"
+          ],
+          "location": ", , IL",
+          "employee_range": "1-10",
+          "funding_raised": "Unknown Funding",
+          "created_at": "2025-02-11T19:13:29.372000000Z",
+          "slug": "alpha-beta.co.il",
+          "url": "https://app.attio.com/textql-data/company/3ed55d7b-e453-48f3-bceb-a8a9fe133aab",
+          "type": "company"
+        },
+        "5": {
+          "id": "4cbd66dc-c693-418f-8ffd-ae2ebe00b557",
+          "name": "Seeking Alpha",
+          "description": "Seeking Alpha is the world's largest investing community, offering a platform for investment research with comprehensive coverage of stocks, asset classes, ETFs, and investment strategies. It provides stock market news, analysis, investing ideas, earni...",
+          "domains": [
+            "seekingalpha.com"
+          ],
+          "categories": [
+            "Publishing",
+            "Information Technology & Services",
+            "B2B",
+            "B2C",
+            "Finance",
+            "Marketplace"
+          ],
+          "location": "New York, New York, US",
+          "employee_range": "51-250",
+          "funding_raised": "$70,000 USD",
+          "created_at": "2025-02-11T18:58:45.086000000Z",
+          "slug": "seekingalpha.com",
+          "url": "https://app.attio.com/textql-data/company/4cbd66dc-c693-418f-8ffd-ae2ebe00b557",
+          "type": "company"
+        },
+        "6": {
+          "id": "4fbffff8-2ba3-4786-ac75-82d1b384154d",
+          "name": "Hello Alpha",
+          "description": "Hello Alpha is a virtual, on-demand women's health platform that offers inclusive, whole-person care for over 100 medical conditions related to primary and urgent care, women's reproductive health, mental health, chronic condition management, and more....",
+          "domains": [
+            "helloalpha.com"
+          ],
+          "categories": [
+            "B2C",
+            "Health Care"
+          ],
+          "location": "Palo Alto, California, US",
+          "employee_range": "51-250",
+          "funding_raised": "$350,000 USD",
+          "created_at": "2025-02-11T17:52:06.024000000Z",
+          "slug": "helloalpha.com",
+          "url": "https://app.attio.com/textql-data/company/4fbffff8-2ba3-4786-ac75-82d1b384154d",
+          "type": "company"
+        },
+        "7": {
+          "id": "6b284523-e0a6-4a70-b75a-ddfbab12d932",
+          "name": "Alpha-Diver",
+          "description": "Alpha-Diver combines market research with psychology and neuroscience to reveal consumer insights like never before.",
+          "domains": [
+            "alpha-diver.com"
+          ],
+          "categories": [
+            "Market Research",
+            "Consulting & Professional Services",
+            "B2B",
+            "Marketplace"
+          ],
+          "location": "Cincinnati, Ohio, US",
+          "employee_range": "1-10",
+          "funding_raised": "Unknown Funding",
+          "created_at": "2025-02-11T18:18:25.730000000Z",
+          "slug": "alpha-diver.com",
+          "url": "https://app.attio.com/textql-data/company/6b284523-e0a6-4a70-b75a-ddfbab12d932",
+          "type": "company"
+        },
+        "8": {
+          "id": "ba66bd6b-7eb6-43b5-b050-5556a8307cc0",
+          "name": "Alpha Recon",
+          "description": "Alpha Recon is a security intelligence company that provides a holistic platform for security professionals to protect their organizations. They offer end-to-end risk intelligence and decision-making tools for school security, as well as protective int...",
+          "domains": [
+            "alpharecon.com"
+          ],
+          "categories": [
+            "B2C",
+            "SAAS",
+            "Technology",
+            "Security",
+            "Enterprise",
+            "B2B",
+            "E-commerce",
+            "Information Technology & Services"
+          ],
+          "location": "Colorado Springs, Colorado, US",
+          "employee_range": "11-50",
+          "funding_raised": "Unknown Funding",
+          "created_at": "2025-02-11T18:57:28.736000000Z",
+          "slug": "alpharecon.com",
+          "url": "https://app.attio.com/textql-data/company/ba66bd6b-7eb6-43b5-b050-5556a8307cc0",
+          "type": "company"
+        },
+        "9": {
+          "id": "d8b79804-21a1-4899-a7f4-badbc87b884f",
+          "name": "Eagle Alpha",
+          "description": "Eagle Alpha is a financial information and data provider. Established in 2012, they are the pioneer connecting the universe of alternative data. They provide solutions to both data vendors and data buyers, offering a leading alternative data aggregatio...",
+          "domains": [
+            "eaglealpha.com"
+          ],
+          "categories": [
+            "Information Technology & Services",
+            "Enterprise",
+            "Financial Services",
+            "SAAS",
+            "Investment Management",
+            "Government",
+            "Technology",
+            "B2B"
+          ],
+          "location": "Dublin, County Dublin, IE",
+          "employee_range": "11-50",
+          "funding_raised": "$80,000 USD",
+          "created_at": "2025-02-12T16:03:53.512000000Z",
+          "slug": "eaglealpha.com",
+          "url": "https://app.attio.com/textql-data/company/d8b79804-21a1-4899-a7f4-badbc87b884f",
+          "type": "company"
+        },
+        "timing": {
+          "duration": 1290,
+          "startTime": 1752708456960,
+          "endTime": 1752708458250
+        }
+      },
+      "timing": {
+        "duration": 1290,
+        "startTime": 1752708456960,
+        "endTime": 1752708458250
+      }
+    }
+  ],
+  "success": true,
+  "error": null,
+  "processingTime": 0,
+  "attachmentCount": 0,
+  "iterationCount": 0,
+  "timestamp": "2025-07-16T23:27:48.258Z",
+  "version": "1.12.0",
+  "environment": "development"
+}

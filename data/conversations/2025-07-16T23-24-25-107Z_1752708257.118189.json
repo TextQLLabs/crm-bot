@@ -1,0 +1,31 @@
+{
+  "conversationId": "1752708257.118189",
+  "userId": "U0951TSB4P2",
+  "userName": "slack-mcp-textql-ethan",
+  "channel": "C0946T1T4CB",
+  "threadTs": "1752708257.118189",
+  "messageTs": "1752708257.118189",
+  "userMessage": "User: test queue message 1",
+  "conversationHistory": [
+    {
+      "user": "U0951TSB4P2",
+      "text": "test queue message 1",
+      "ts": "1752708257.118189"
+    }
+  ],
+  "botActionHistory": [],
+  "agentThoughts": [
+    "Hello! I see you've sent a test message. I'm your CRM Assistant, ready to help you with any Attio CRM tasks. \n\nHere's what I can help you with:\n\n*🔍 Search & Find*\n- Find companies, deals, and people\n- Search by various criteria (value, dates, status)\n- Get related entities and connections\n\n*📝 Notes & Updates*\n- Create, read, and manage notes\n- Update entity fields and values\n- Track changes and activities\n\n*➕ Create New Records*\n- Add new companies, people, and deals\n- Set up relationships between entities\n\n*🖼️ Analyze Content*\n- Read and interpret images you share\n- Extract information from screenshots or documents\n\nJust let me know what you'd like to do! For example:\n- \"Find Acme Corp\"\n- \"Create a note for [company] about our meeting\"\n- \"Update [deal] value to $150k\"\n- \"Show me notes for [person]\"\n\nWhat can I help you with today?"
+  ],
+  "agentActions": [],
+  "finalResponse": "Hello! I see you've sent a test message. I'm your CRM Assistant, ready to help you with any Attio CRM tasks. \n\nHere's what I can help you with:\n\n*🔍 Search & Find*\n- Find companies, deals, and people\n- Search by various criteria (value, dates, status)\n- Get related entities and connections\n\n*📝 Notes & Updates*\n- Create, read, and manage notes\n- Update entity fields and values\n- Track changes and activities\n\n*➕ Create New Records*\n- Add new companies, people, and deals\n- Set up relationships between entities\n\n*🖼️ Analyze Content*\n- Read and interpret images you share\n- Extract information from screenshots or documents\n\nJust let me know what you'd like to do! For example:\n- \"Find Acme Corp\"\n- \"Create a note for [company] about our meeting\"\n- \"Update [deal] value to $150k\"\n- \"Show me notes for [person]\"\n\nWhat can I help you with today?",
+  "toolsUsed": [],
+  "success": true,
+  "error": null,
+  "processingTime": 0,
+  "attachmentCount": 0,
+  "iterationCount": 0,
+  "timestamp": "2025-07-16T23:24:25.107Z",
+  "version": "1.12.0",
+  "environment": "development"
+}
