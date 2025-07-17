@@ -53,7 +53,9 @@ console.log('Environment check:', {
 // Create Express receiver to support HTTP endpoints
 const receiver = new ExpressReceiver({
   signingSecret: process.env.SLACK_SIGNING_SECRET,
-  endpoints: '/slack/events',
+  endpoints: {
+    events: '/slack/events'
+  },
   dispatchErrorHandler: async ({ error, logger, client, data }) => {
     logger.error('Slack dispatch error:', error);
     // Do NOT send any response - just log
