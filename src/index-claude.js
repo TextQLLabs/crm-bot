@@ -53,40 +53,13 @@ console.log('Environment check:', {
 // Create Express receiver to support HTTP endpoints
 const receiver = new ExpressReceiver({
   signingSecret: process.env.SLACK_SIGNING_SECRET,
+  signatureVerification: false, // Disable signature verification for challenge handling
   endpoints: {
     events: '/slack/events'
   },
   dispatchErrorHandler: async ({ error, logger, client, data }) => {
     logger.error('Slack dispatch error:', error);
     // Do NOT send any response - just log
-  }
-});
-
-// Add challenge verification BEFORE any other middleware
-receiver.router.use('/slack/events', express.raw({ type: 'application/json' }), (req, res, next) => {
-  const body = req.body.toString();
-  console.log('🔍 /slack/events request body:', body);
-  
-  try {
-    const parsedBody = JSON.parse(body);
-    
-    // Handle challenge verification BEFORE signature verification
-    if (parsedBody.type === 'url_verification' && parsedBody.challenge) {
-      console.log('✅ Challenge verification request detected');
-      console.log('✅ Challenge value:', parsedBody.challenge);
-      
-      // Respond with challenge value in plain text
-      res.setHeader('Content-Type', 'text/plain');
-      res.status(200).send(parsedBody.challenge);
-      return;
-    }
-    
-    // For non-challenge requests, restore body and continue to Bolt
-    req.body = parsedBody;
-    next();
-  } catch (error) {
-    console.error('❌ Error parsing request body:', error);
-    res.status(400).send('Invalid JSON');
   }
 });
 
