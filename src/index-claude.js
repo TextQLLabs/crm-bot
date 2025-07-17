@@ -134,7 +134,33 @@ receiver.router.get('/', (req, res) => {
   });
 });
 
-// Let ExpressReceiver handle /slack/events automatically (including challenge verification)
+// Add challenge verification before signature verification
+receiver.router.use('/slack/events', express.raw({ type: 'application/json' }), (req, res, next) => {
+  const body = req.body.toString();
+  console.log('🔍 /slack/events request body:', body);
+  
+  try {
+    const parsedBody = JSON.parse(body);
+    
+    // Handle challenge verification BEFORE signature verification
+    if (parsedBody.type === 'url_verification' && parsedBody.challenge) {
+      console.log('✅ Challenge verification request detected');
+      console.log('✅ Challenge value:', parsedBody.challenge);
+      
+      // Respond with challenge value in plain text
+      res.setHeader('Content-Type', 'text/plain');
+      res.status(200).send(parsedBody.challenge);
+      return;
+    }
+    
+    // For non-challenge requests, restore body and continue to Bolt
+    req.body = parsedBody;
+    next();
+  } catch (error) {
+    console.error('❌ Error parsing request body:', error);
+    res.status(400).send('Invalid JSON');
+  }
+});
 
 // Configure app based on environment
 // Force HTTP mode on Railway, Socket Mode only for local development
