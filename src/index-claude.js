@@ -53,7 +53,7 @@ console.log('Environment check:', {
 // Create Express receiver to support HTTP endpoints
 const receiver = new ExpressReceiver({
   signingSecret: process.env.SLACK_SIGNING_SECRET,
-  endpoints: '/slack/events', // Specify the exact endpoint path
+  endpoints: '/slack/events',
   dispatchErrorHandler: async ({ error, logger, client, data }) => {
     logger.error('Slack dispatch error:', error);
     // Do NOT send any response - just log
@@ -62,6 +62,12 @@ const receiver = new ExpressReceiver({
 
 // Add health check routes
 receiver.router.use(healthRoutes);
+
+// Add debugging for all routes
+receiver.router.use((req, res, next) => {
+  console.log(`📍 Incoming request: ${req.method} ${req.url}`);
+  next();
+});
 
 // Initialize cron scheduler (will be updated with Slack client after app initialization)
 const cronScheduler = new CronScheduler();
