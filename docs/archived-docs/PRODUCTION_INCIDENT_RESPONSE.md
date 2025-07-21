@@ -126,7 +126,7 @@ railway logs | grep -E "took \d{5,}ms"
 
 **Common Causes**:
 - External API slowness (Attio, Anthropic)
-- Database connection issues
+- File system I/O issues
 - Large context processing
 - Network connectivity problems
 
@@ -134,7 +134,7 @@ railway logs | grep -E "took \d{5,}ms"
 1. Reduce timeout threshold
 2. Implement graceful degradation
 3. Add retry logic with exponential backoff
-4. Cache frequently accessed data
+4. Cache frequently accessed data in local files
 
 ### Pattern 2: Authentication Failures
 **Symptoms**:
@@ -401,7 +401,7 @@ app.get('/health', (req, res) => {
       slack: 'connected',
       attio: 'connected',
       anthropic: 'connected',
-      mongodb: 'connected'
+      fileStorage: 'connected'
     }
   };
   

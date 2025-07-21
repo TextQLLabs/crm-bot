@@ -26,7 +26,7 @@ crm-bot/
 │       ├── claudeAgent.js          # Claude Sonnet 4 native tool calling
 │       ├── attioService.js         # Attio CRM API integration
 │       ├── database-mock.js        # In-memory DB fallback
-│       └── database.js             # MongoDB integration
+│       └── fileStorage.js          # File-based storage
 ├── legacy/                         # Legacy ReAct framework files (moved)
 │   ├── index-react.js              # Old ReAct entry point
 │   ├── reactAgent.js               # Old ReAct implementation
@@ -40,7 +40,7 @@ crm-bot/
 │   ├── credentials/                # API credentials info
 │   ├── SETUP_INSTRUCTIONS.md       # Setup guide
 │   ├── RAILWAY_DEPLOYMENT.md       # Deployment guide
-│   ├── MONGODB_SETUP.md            # Database setup
+│   ├── STORAGE_SETUP.md            # Storage setup
 │   ├── DEVELOPMENT_WORKFLOW.md     # Development guide
 │   └── LOCAL_TESTING.md            # Local testing setup
 ├── scripts/                        # Utility and deployment scripts
@@ -84,7 +84,7 @@ crm-bot/
 - **Framework**: Slack Bolt.js (Socket Mode)
 - **AI**: Anthropic Claude API
 - **CRM**: Attio API
-- **Database**: MongoDB Atlas (with in-memory fallback)
+- **Storage**: File-based conversation logging
 - **Hosting**: Railway (production deployment)
 - **Language**: Node.js 18+
 
@@ -95,7 +95,7 @@ crm-bot/
 - Slack workspace admin access
 - Attio CRM account
 - Anthropic API key
-- MongoDB Atlas account (optional)
+- File system access for conversation storage
 
 ### Environment Variables
 Create a `.env` file with:
@@ -109,8 +109,8 @@ SLACK_APP_TOKEN=xapp-...
 ANTHROPIC_API_KEY=sk-ant-api03-...
 ATTIO_API_KEY=...
 
-# MongoDB (optional)
-MONGODB_URI=mongodb+srv://...
+# File Storage (automatic)
+# Conversations stored in data/conversations/
 ```
 
 ### Slack App Configuration
@@ -314,7 +314,7 @@ An MCP (Model Context Protocol) server is configured for the Slack integration, 
 - Always use `.env` file as source of truth for credentials
 - Socket Mode means no public URLs needed
 - Railway handles automatic restarts on crashes
-- MongoDB is optional - falls back to in-memory storage
+- File-based storage automatically creates data directories
 - Preview mode ensures safety for all write operations
 
 ## 🔗 Important Links

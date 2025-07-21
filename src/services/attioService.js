@@ -529,7 +529,7 @@ async function createNote(recordId, recordType, content, messageContext = null, 
   if (messageContext && messageContext.channel && messageContext.threadTs) {
     const slackThreadUrl = generateSlackThreadUrl(messageContext);
     if (slackThreadUrl) {
-      finalContent = `${content}\n\n---\n[Go back to Slack thread](${slackThreadUrl})`;
+      finalContent = `${content}\n\n---\nGo back to Slack thread: ${slackThreadUrl}`;
     }
   }
   

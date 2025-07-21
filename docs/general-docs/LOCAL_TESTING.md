@@ -18,7 +18,7 @@
    # Same API keys as production
    ANTHROPIC_API_KEY=your-anthropic-key
    ATTIO_API_KEY=your-attio-key
-   MONGODB_URI=your-mongodb-uri
+   DATA_STORAGE_PATH=/Users/ethanding/projects/crm-bot/data-dev
    ```
 
 3. **Update your local testing workflow**:
@@ -159,9 +159,11 @@ Run with: `node test-local.js`
 ```bash
 # .env (production - used by Railway)
 SLACK_BOT_TOKEN=xoxb-production-token
+DATA_STORAGE_PATH=/app/data
 
 # .env.local (local dev - not committed)
 SLACK_BOT_TOKEN=xoxb-dev-token
+DATA_STORAGE_PATH=/Users/ethanding/projects/crm-bot/data-dev
 
 # Switch between them
 cp .env.local .env  # for local testing

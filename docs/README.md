@@ -32,7 +32,6 @@
 **Historical and legacy documentation**
 - `ANTI_PATTERNS.md` - Code anti-patterns to avoid
 - `MIGRATION.md` - Previous migration notes
-- `MONGODB_SETUP.md` - MongoDB configuration (legacy)
 - `NEXT_STEPS.md` - Historical next steps
 - `PERFORMANCE_OPTIMIZATION.md` - Performance notes
 - `PRODUCTION_INCIDENT_RESPONSE.md` - Incident response procedures

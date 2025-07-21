@@ -25,9 +25,9 @@
 - `ANTHROPIC_API_KEY`: See .env file (starts with sk-ant-api03-)
 - `ATTIO_API_KEY`: See .env file
 
-### MongoDB
-- `MONGODB_URI`: See .env file (MongoDB Atlas cluster)
-- Connection name: "ethan-test"
+### File-based Storage
+- `DATA_STORAGE_PATH`: See .env file (local file storage path)
+- Directory: "data"
 
 ### Cloudflare
 - Account ID: f6413eebf7a74012c2411824d33838bd
@@ -42,8 +42,8 @@
 
 ## MCP Servers Configured
 
-1. **MongoDB MCP** (/Users/ethanding/projects/node_modules/mongodb-mcp-server/dist/index.js)
-   - Connection: MongoDB Atlas cluster "ethan-test"
+1. **File Storage MCP** (/Users/ethanding/projects/node_modules/file-storage-mcp-server/dist/index.js)
+   - Connection: Local file system "data"
    - Status: ✅ Working
 
 2. **Context7 MCP** (/Users/ethanding/projects/node_modules/@upstash/context7-mcp/dist/index.js)
@@ -121,7 +121,7 @@
 ### Railway (Recommended Next Step)
 - Full Node.js support
 - Original code works without modifications
-- Supports MongoDB native driver
+- Supports file-based storage
 - WebSocket support for Slack Socket Mode
 - Cost: ~$5-10/month
 
@@ -148,7 +148,7 @@
 ## Known Issues
 
 1. **Cloudflare Workers**: Many Node.js dependencies don't work
-2. **MongoDB on Workers**: Can't use native driver, need HTTP API
+2. **File Storage on Workers**: Can't use native file system, need KV storage
 3. **Slack Bolt on Workers**: Requires significant refactoring
 
 ## File Structure

@@ -73,18 +73,17 @@
    ATTIO_API_KEY=paste-your-attio-key-here
    ```
 
-### 6. MongoDB Setup (5 minutes)
+### 6. File-based Storage Setup (1 minute)
 
-**Easiest Option - MongoDB Atlas Free:**
+**Set up local file storage:**
 
-1. **Go to**: https://www.mongodb.com/cloud/atlas/register
-2. **Create** free M0 cluster
-3. **Database Access**: Create user `crmbot` with auto-generated password
-4. **Network Access**: Add "0.0.0.0/0" (allow from anywhere)
-5. **Connect** → "Connect your application" → Copy connection string
-6. **Replace** in `.env` file (update password):
+1. **Create** data directory:
+   ```bash
+   mkdir -p /Users/ethanding/projects/crm-bot/data
    ```
-   MONGODB_URI=mongodb+srv://crmbot:YOUR-PASSWORD@cluster.mongodb.net/crm-bot?retryWrites=true&w=majority
+2. **Add** to `.env` file:
+   ```
+   DATA_STORAGE_PATH=/Users/ethanding/projects/crm-bot/data
    ```
 
 ## 🚀 Test Your Bot Locally
@@ -119,4 +118,4 @@ Once local testing works, follow `CLOUDFLARE_SETUP.md` to deploy.
 **Still stuck?**
 - All your app URLs start with: https://api.slack.com/apps/A094BJTADMG/
 - Check `.env` has no typos or extra spaces
-- MongoDB connection string must have your actual password
+- Data storage path must have write permissions

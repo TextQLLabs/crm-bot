@@ -4,9 +4,9 @@ Railway is a modern platform that makes it super easy to deploy your bot. Unlike
 
 ## Why Railway is Great for This Bot
 
-- **Full Node.js support**: All your dependencies work (Slack Bolt, MongoDB driver, etc.)
+- **Full Node.js support**: All your dependencies work (Slack Bolt, file system, etc.)
 - **Zero config**: Just connect GitHub and deploy
-- **Built-in MongoDB**: Can add MongoDB with one click
+- **Built-in file storage**: Direct file system access
 - **Environment variables**: Easy secret management
 - **Automatic HTTPS**: Gets a URL like `crm-bot.up.railway.app`
 
@@ -33,9 +33,9 @@ railway variables set ANTHROPIC_API_KEY=sk-ant-your-key
 railway variables set ATTIO_API_KEY=your-attio-key
 ```
 
-### 4. Add MongoDB (Optional)
+### 4. Set up File Storage
 ```bash
-railway add mongodb
+railway variables set DATA_STORAGE_PATH=/app/data
 ```
 
 ### 5. Deploy
@@ -64,7 +64,7 @@ railway open
 
 ### What Works Better on Railway:
 - ✅ Full `@slack/bolt` package (Socket Mode works!)
-- ✅ MongoDB native driver
+- ✅ File-based storage with native file system
 - ✅ Any NPM package
 - ✅ File system access
 - ✅ Longer execution times
@@ -125,6 +125,6 @@ railway restart
 
 - **Starter**: $5/month (500 hours)
 - **Your bot**: ~$5-10/month
-- **MongoDB**: +$5/month (or use free tier elsewhere)
+- **File storage**: Included (no additional cost)
 
 Much simpler than managing Cloudflare Workers limitations!

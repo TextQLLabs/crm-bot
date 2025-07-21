@@ -91,7 +91,7 @@ The new tests cover enterprise-level CRM queries like:
 ```bash
 npm run test:suite        # Run all advanced search tests
 npm run test:logs         # View test execution logs  
-npm run test:history      # View MongoDB test results
+npm run test:history      # View file-based test results
 ```
 
 The updated test suite provides comprehensive validation of the CRM bot's advanced search capabilities while focusing on real-world enterprise scenarios.

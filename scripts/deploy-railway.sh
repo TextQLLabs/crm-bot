@@ -14,7 +14,7 @@ railway variables set SLACK_SIGNING_SECRET="$SLACK_SIGNING_SECRET"
 railway variables set SLACK_APP_TOKEN="$SLACK_APP_TOKEN"
 railway variables set ANTHROPIC_API_KEY="$ANTHROPIC_API_KEY"
 railway variables set ATTIO_API_KEY="$ATTIO_API_KEY"
-railway variables set MONGODB_URI="$MONGODB_URI"
+# File storage - no database URI needed
 
 # Deploy
 echo "🚀 Deploying..."

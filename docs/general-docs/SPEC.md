@@ -112,10 +112,10 @@ The bot understands:
    - Attachments: Notes with files
    - Search: Full-text search
 
-3. **MongoDB**
-   - Collections: messages, cache, errors
+3. **File-based Storage**
+   - Files: messages.json, cache.json, errors.json
    - Indexes: timestamp, company_id, user_id
-   - TTL: 90 days for messages
+   - Rotation: 90 days for messages
 
 ### Security & Compliance
 - All secrets in environment variables
@@ -154,7 +154,7 @@ The bot understands:
 ### Alerts
 - Error rate > 5%
 - Response time > 5 seconds
-- MongoDB connection failure
+- File system access failure
 - API quota warnings
 
 ## 7. Future Enhancements

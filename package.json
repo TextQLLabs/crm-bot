@@ -9,6 +9,8 @@
   "scripts": {
     "start": "node src/index-claude.js",
     "dev": "NODE_ENV=development nodemon -r dotenv/config src/index-claude.js dotenv_config_path=.env.dev",
+    "dev:ngrok": "concurrently \"NODE_ENV=development nodemon -r dotenv/config src/index-claude.js dotenv_config_path=.env.dev\" \"npx ngrok http 3000\"",
+    "dev:socket": "NODE_ENV=development nodemon -r dotenv/config src/index-claude.js dotenv_config_path=.env.dev",
     "local": "node local-bot.js",
     "test": "node tests/test.js",
     "test:daily-assessment": "node test_daily_assessment.js",
@@ -36,6 +38,8 @@
     "dotenv": "^16.4.1"
   },
   "devDependencies": {
+    "concurrently": "^9.2.0",
+    "ngrok": "^5.0.0-beta.2",
     "nodemon": "^3.0.3"
   }
 }

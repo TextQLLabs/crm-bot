@@ -86,7 +86,7 @@ Bot: [Claude's native thinking]
 - All Slack bot tokens remain the same
 - All Attio API configurations unchanged  
 - All environment variables compatible
-- Database connections unchanged
+- File storage connections unchanged
 
 ### 🧪 Testing
 
@@ -148,7 +148,7 @@ If issues arise, legacy ReAct framework can be restored:
 
 ### v1.11.1 - July 9, 2025
 - ReAct framework improvements
-- MongoDB fallback handling
+- File-based storage fallback handling
 - Test suite enhancements
 
 ### v1.11.0 - June 2025  

@@ -25,7 +25,7 @@ All test files moved from root to `/tests/`:
 All documentation moved from root to `/docs/`:
 - `CLOUDFLARE_DEPLOYMENT.md`, `CLOUDFLARE_SETUP.md`
 - `DEVELOPMENT_WORKFLOW.md`, `LOCAL_TESTING.md`
-- `MONGODB_SETUP.md`, `NEXT_STEPS.md`
+- `NEXT_STEPS.md`
 - `RAILWAY_DEPLOYMENT.md`, `SESSION_CONTEXT.md`
 - `SETUP_INSTRUCTIONS.md`, `SPEC.md`
 - `slack-mcp-crm-bot-context.md`

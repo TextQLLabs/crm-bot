@@ -5,7 +5,7 @@
 After cleaning up from **69 files** to **11 files** (84% reduction!), here's our streamlined test organization:
 
 ### **Core Test Suite**
-1. **`test-suite.js`** - Comprehensive automated test suite with MongoDB integration
+1. **`test-suite.js`** - Comprehensive automated test suite with file-based storage
    - Fuzzy search tests (rain → raine, etc.)
    - Note operations with preview mode
    - Error handling and edge cases
@@ -51,7 +51,7 @@ After cleaning up from **69 files** to **11 files** (84% reduction!), here's our
    - **Usage**: CI systems only
 
 ### **Development Utilities**
-9. **`view-test-history.js`** - MongoDB test analytics
+9. **`view-test-history.js`** - File-based test analytics
    - Test result trends and analysis
    - **Usage**: `node tests/view-test-history.js`
 
@@ -65,9 +65,9 @@ After cleaning up from **69 files** to **11 files** (84% reduction!), here's our
 
 ## 🚨 Deleted Files (52 files removed)
 
-### MongoDB Tests (6 files → 0)
-- Consolidated into main test suite's database handling
-- All connection testing now handled by core tests
+### Storage Tests (6 files → 0)
+- Consolidated into main test suite's file storage handling
+- All storage connection testing now handled by core tests
 
 ### Notes Tests (10 files → 1) 
 - Multiple redundant note creation/reading tests

@@ -82,39 +82,27 @@ Follow these steps to get all the necessary credentials for the CRM Bot.
    ATTIO_API_KEY=your-attio-key-here
    ```
 
-## 4. MongoDB Setup
+## 4. File-based Storage Setup
 
-### Option A: MongoDB Atlas (Recommended - Free)
-1. Go to: https://www.mongodb.com/cloud/atlas/register
-2. Sign up for free account
-3. Create a free M0 cluster:
-   - Provider: AWS
-   - Region: Choose closest to you
-   - Cluster Name: `crm-bot`
-4. Set up database access:
-   - Click "Database Access" in left sidebar
-   - Add New Database User
-   - Username: `crmbot`
-   - Password: Click "Autogenerate Secure Password"
-   - **COPY THE PASSWORD**
-5. Set up network access:
-   - Click "Network Access" in left sidebar
-   - Add IP Address → "Allow Access from Anywhere" (for Cloudflare)
-6. Get connection string:
-   - Click "Database" in left sidebar
-   - Click "Connect" on your cluster
-   - Choose "Connect your application"
-   - **COPY** the connection string
-7. **PASTE IT** in your `.env` file (replace password):
-   ```
-   MONGODB_URI=mongodb+srv://crmbot:YOUR-PASSWORD@cluster0.xxxxx.mongodb.net/crm-bot?retryWrites=true&w=majority
+### Data Storage Location
+The bot will store data in local files instead of a database:
+
+1. **Create storage directory**:
+   ```bash
+   mkdir -p /Users/ethanding/projects/crm-bot/data
    ```
 
-### Option B: Local MongoDB
-If you have MongoDB installed locally:
-```
-MONGODB_URI=mongodb://localhost:27017/crm-bot
-```
+2. **Set storage path** in your `.env` file:
+   ```
+   DATA_STORAGE_PATH=/Users/ethanding/projects/crm-bot/data
+   ```
+
+### Storage Structure
+The bot will create the following directories:
+- `data/cache/` - Cached CRM data
+- `data/logs/` - Bot operation logs
+- `data/state/` - Bot state information
+- `data/tests/` - Test run results
 
 ## 5. Test Your Setup
 
@@ -125,7 +113,7 @@ MONGODB_URI=mongodb://localhost:27017/crm-bot
    SLACK_APP_TOKEN=xapp-...
    ANTHROPIC_API_KEY=sk-ant-...
    ATTIO_API_KEY=...
-   MONGODB_URI=mongodb+srv://...
+   DATA_STORAGE_PATH=/Users/ethanding/projects/crm-bot/data
    ```
 
 2. Install dependencies:
@@ -149,7 +137,7 @@ MONGODB_URI=mongodb://localhost:27017/crm-bot
 ## Troubleshooting
 
 - **Bot not responding**: Make sure you invited the bot to #gtm channel
-- **MongoDB error**: Check your IP is whitelisted in Atlas
+- **File storage error**: Check the data directory exists and has write permissions
 - **Slack error**: Verify all scopes are added and app is reinstalled
 - **Attio error**: Check API key has read/write permissions
 

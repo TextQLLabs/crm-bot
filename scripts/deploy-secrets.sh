@@ -33,7 +33,7 @@ set_secret "SLACK_SIGNING_SECRET" "$SLACK_SIGNING_SECRET"
 set_secret "SLACK_APP_TOKEN" "$SLACK_APP_TOKEN"
 set_secret "ANTHROPIC_API_KEY" "$ANTHROPIC_API_KEY"
 set_secret "ATTIO_API_KEY" "$ATTIO_API_KEY"
-set_secret "MONGODB_URI" "$MONGODB_URI"
+# File storage - no secrets needed for local file system
 
 echo "✅ Secrets deployment complete!"
 echo ""

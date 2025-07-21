@@ -34,9 +34,9 @@ function markMessageAsProcessed(messageKey) {
   processedMessages.set(messageKey, Date.now());
 }
 
-// Database service - will attempt MongoDB first, fallback to mock
+// Database service - using file-based storage
 let connectDB;
-let dbService = 'MongoDB';
+let dbService = 'File Storage';
 
 // Load environment variables
 dotenv.config();
@@ -65,6 +65,8 @@ const receiver = new ExpressReceiver({
 
 // Add health check routes
 receiver.router.use(healthRoutes);
+
+// Admin routes removed - functionality moved to main dashboard
 
 // Add basic request logging (without consuming body stream)
 receiver.router.use((req, res, next) => {
@@ -176,434 +178,13 @@ receiver.router.get('/api/system-prompt', (req, res) => {
   }
 });
 
-// Add a basic root route with HTML UI
-receiver.router.get('/', (req, res) => {
-  res.send(`
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CRM Bot Dashboard</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: #f5f5f5;
-            color: #333;
-            line-height: 1.6;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        
-        .header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 30px 0;
-            text-align: center;
-            margin-bottom: 30px;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-        
-        .header h1 {
-            font-size: 2.5em;
-            margin-bottom: 10px;
-        }
-        
-        .header p {
-            font-size: 1.2em;
-            opacity: 0.9;
-        }
-        
-        .status {
-            display: inline-block;
-            padding: 5px 10px;
-            background: #4CAF50;
-            color: white;
-            border-radius: 20px;
-            font-size: 0.9em;
-            margin-top: 10px;
-        }
-        
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-        
-        .card {
-            background: white;
-            border-radius: 8px;
-            padding: 20px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            border: 1px solid #e0e0e0;
-        }
-        
-        .card h3 {
-            color: #667eea;
-            margin-bottom: 15px;
-            font-size: 1.3em;
-        }
-        
-        .btn {
-            display: inline-block;
-            padding: 12px 24px;
-            background: #667eea;
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-            transition: background 0.3s;
-            cursor: pointer;
-            border: none;
-            font-size: 1em;
-            margin: 5px;
-        }
-        
-        .btn:hover {
-            background: #5a67d8;
-        }
-        
-        .btn-success {
-            background: #4CAF50;
-        }
-        
-        .btn-success:hover {
-            background: #45a049;
-        }
-        
-        .btn-warning {
-            background: #ff9800;
-        }
-        
-        .btn-warning:hover {
-            background: #f57c00;
-        }
-        
-        .btn-danger {
-            background: #f44336;
-        }
-        
-        .btn-danger:hover {
-            background: #da190b;
-        }
-        
-        .info-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 10px;
-            margin-bottom: 15px;
-        }
-        
-        .info-item {
-            background: #f8f9fa;
-            padding: 10px;
-            border-radius: 5px;
-            border-left: 4px solid #667eea;
-        }
-        
-        .info-item strong {
-            color: #667eea;
-            display: block;
-            margin-bottom: 5px;
-        }
-        
-        .prompt-viewer {
-            background: #f8f9fa;
-            border: 1px solid #e0e0e0;
-            border-radius: 5px;
-            padding: 15px;
-            margin-top: 15px;
-            font-family: 'Monaco', 'Menlo', monospace;
-            font-size: 0.9em;
-            white-space: pre-wrap;
-            max-height: 400px;
-            overflow-y: auto;
-        }
-        
-        .hidden {
-            display: none;
-        }
-        
-        .loading {
-            text-align: center;
-            padding: 20px;
-            color: #666;
-        }
-        
-        .error {
-            color: #f44336;
-            background: #ffebee;
-            padding: 10px;
-            border-radius: 5px;
-            margin: 10px 0;
-        }
-        
-        .success {
-            color: #4CAF50;
-            background: #e8f5e8;
-            padding: 10px;
-            border-radius: 5px;
-            margin: 10px 0;
-        }
-        
-        .footer {
-            text-align: center;
-            margin-top: 40px;
-            padding: 20px;
-            color: #666;
-            border-top: 1px solid #e0e0e0;
-        }
-        
-        .version {
-            font-size: 0.9em;
-            color: #888;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <div class="header">
-            <h1>🤖 CRM Bot Dashboard</h1>
-            <p>Claude Agent for TextQL CRM Management</p>
-            <div class="status">✅ Running</div>
-        </div>
+// Import dashboard
+const { createDashboardRouter } = require('./dashboard');
 
-        <div class="grid">
-            <div class="card">
-                <h3>📊 Daily Assessment</h3>
-                <div class="info-grid">
-                    <div class="info-item">
-                        <strong>Status</strong>
-                        <span id="assessment-status">Loading...</span>
-                    </div>
-                    <div class="info-item">
-                        <strong>Next Run</strong>
-                        <span id="next-run">Loading...</span>
-                    </div>
-                    <div class="info-item">
-                        <strong>Last Run</strong>
-                        <span id="last-run">Loading...</span>
-                    </div>
-                </div>
-                <button class="btn btn-success" onclick="triggerAssessment()">🚀 Run Assessment</button>
-                <button class="btn btn-warning" onclick="triggerTestAssessment()">🧪 Test Run (2 deals)</button>
-                <button class="btn" onclick="showAssessmentPrompt()">📝 View Assessment Prompt</button>
-                <div id="assessment-prompt" class="prompt-viewer hidden"></div>
-            </div>
+// Mount dashboard router
+receiver.router.use('/', createDashboardRouter());
 
-            <div class="card">
-                <h3>🧠 System Prompt</h3>
-                <p>View and understand the system prompt used by the Claude agent for all interactions.</p>
-                <button class="btn" onclick="showSystemPrompt()">📖 View System Prompt</button>
-                <div id="system-prompt" class="prompt-viewer hidden"></div>
-            </div>
-
-            <div class="card">
-                <h3>⚙️ Cron Management</h3>
-                <div class="info-grid">
-                    <div class="info-item">
-                        <strong>Timezone</strong>
-                        <span id="timezone">Loading...</span>
-                    </div>
-                    <div class="info-item">
-                        <strong>Schedule</strong>
-                        <span id="schedule">Loading...</span>
-                    </div>
-                </div>
-                <button class="btn" onclick="toggleCron()">🔄 Toggle Cron</button>
-                <button class="btn" onclick="showCronHistory()">📈 View History</button>
-            </div>
-
-            <div class="card">
-                <h3>📱 Quick Actions</h3>
-                <a href="/health" class="btn">🩺 Health Check</a>
-                <a href="/cron/status" class="btn">📊 Cron Status</a>
-                <a href="/cron/history" class="btn">📋 Cron History</a>
-            </div>
-        </div>
-
-        <div class="card">
-            <h3>📋 System Information</h3>
-            <div class="info-grid">
-                <div class="info-item">
-                    <strong>Version</strong>
-                    <span class="version">${require('../package.json').version}</span>
-                </div>
-                <div class="info-item">
-                    <strong>Agent</strong>
-                    <span>Claude Sonnet 4 (Native Tool Calling)</span>
-                </div>
-                <div class="info-item">
-                    <strong>Environment</strong>
-                    <span>${process.env.NODE_ENV === 'production' ? 'Production' : 'Development'}</span>
-                </div>
-                <div class="info-item">
-                    <strong>Platform</strong>
-                    <span>${process.env.RAILWAY_ENVIRONMENT ? 'Railway' : 'Local'}</span>
-                </div>
-            </div>
-        </div>
-
-        <div class="footer">
-            <p>CRM Bot Dashboard - Powered by Claude Sonnet 4</p>
-            <p class="version">Last updated: ${new Date().toLocaleString()}</p>
-        </div>
-    </div>
-
-    <script>
-        // Load initial status
-        loadAssessmentStatus();
-
-        async function loadAssessmentStatus() {
-            try {
-                const response = await fetch('/cron/status');
-                const data = await response.json();
-                
-                // Update assessment status
-                document.getElementById('assessment-status').textContent = 
-                    data.currentJob.isRunning ? 'Running' : 'Idle';
-                
-                if (data.jobs && data.jobs.length > 0) {
-                    const job = data.jobs[0];
-                    document.getElementById('next-run').textContent = 
-                        new Date(job.nextRun).toLocaleString();
-                    document.getElementById('last-run').textContent = 
-                        job.lastRun !== 'Never' ? new Date(job.lastRun).toLocaleString() : 'Never';
-                    document.getElementById('schedule').textContent = job.schedule;
-                }
-                
-                document.getElementById('timezone').textContent = data.scheduler.timezone;
-                
-            } catch (error) {
-                console.error('Error loading status:', error);
-            }
-        }
-
-        async function triggerAssessment() {
-            if (confirm('Are you sure you want to trigger the daily assessment?')) {
-                try {
-                    const response = await fetch('/cron/trigger-daily', { method: 'POST' });
-                    const data = await response.json();
-                    
-                    if (data.success) {
-                        showMessage('Assessment triggered successfully!', 'success');
-                        loadAssessmentStatus();
-                    } else {
-                        showMessage('Error: ' + data.error, 'error');
-                    }
-                } catch (error) {
-                    showMessage('Error triggering assessment: ' + error.message, 'error');
-                }
-            }
-        }
-
-        async function triggerTestAssessment() {
-            if (confirm('Are you sure you want to trigger a test assessment (2 deals)?')) {
-                try {
-                    const response = await fetch('/cron/trigger-test', { method: 'POST' });
-                    const data = await response.json();
-                    
-                    if (data.success) {
-                        showMessage('Test assessment triggered successfully!', 'success');
-                        loadAssessmentStatus();
-                    } else {
-                        showMessage('Error: ' + data.error, 'error');
-                    }
-                } catch (error) {
-                    showMessage('Error triggering test assessment: ' + error.message, 'error');
-                }
-            }
-        }
-
-        async function showAssessmentPrompt() {
-            const promptDiv = document.getElementById('assessment-prompt');
-            
-            if (!promptDiv.classList.contains('hidden')) {
-                promptDiv.classList.add('hidden');
-                return;
-            }
-            
-            promptDiv.innerHTML = '<div class="loading">Loading assessment prompt...</div>';
-            promptDiv.classList.remove('hidden');
-            
-            try {
-                const response = await fetch('/api/assessment-prompt');
-                const data = await response.json();
-                
-                if (data.success) {
-                    promptDiv.textContent = data.prompt;
-                } else {
-                    promptDiv.innerHTML = '<div class="error">Error: ' + data.error + '</div>';
-                }
-            } catch (error) {
-                promptDiv.innerHTML = '<div class="error">Error loading prompt: ' + error.message + '</div>';
-            }
-        }
-
-        async function showSystemPrompt() {
-            const promptDiv = document.getElementById('system-prompt');
-            
-            if (!promptDiv.classList.contains('hidden')) {
-                promptDiv.classList.add('hidden');
-                return;
-            }
-            
-            promptDiv.innerHTML = '<div class="loading">Loading system prompt...</div>';
-            promptDiv.classList.remove('hidden');
-            
-            try {
-                const response = await fetch('/api/system-prompt');
-                const data = await response.json();
-                
-                if (data.success) {
-                    promptDiv.textContent = data.prompt;
-                } else {
-                    promptDiv.innerHTML = '<div class="error">Error: ' + data.error + '</div>';
-                }
-            } catch (error) {
-                promptDiv.innerHTML = '<div class="error">Error loading prompt: ' + error.message + '</div>';
-            }
-        }
-
-        async function toggleCron() {
-            // This would implement cron enable/disable functionality
-            showMessage('Cron toggle functionality coming soon!', 'info');
-        }
-
-        async function showCronHistory() {
-            window.open('/cron/history', '_blank');
-        }
-
-        function showMessage(message, type) {
-            const messageDiv = document.createElement('div');
-            messageDiv.className = type;
-            messageDiv.textContent = message;
-            
-            document.body.appendChild(messageDiv);
-            
-            setTimeout(() => {
-                messageDiv.remove();
-            }, 5000);
-        }
-
-        // Auto-refresh status every 30 seconds
-        setInterval(loadAssessmentStatus, 30000);
-    </script>
-</body>
-</html>
-  `);
-});
+// Dashboard functionality moved to root route
 
 // Challenge verification is now handled above, before other middleware
 
@@ -808,7 +389,32 @@ app.action('cancel_action', async (args) => {
     
     // Start the app with additional error handling for Socket Mode
     try {
-      await app.start(port);
+      if (isSocketMode) {
+        // For Socket Mode, start the Socket Mode connection
+        await app.start(port);
+        
+        // In Socket Mode, receiver.server is undefined, so we need to start our own HTTP server
+        if (receiver.server) {
+          await new Promise((resolve, reject) => {
+            const server = receiver.server.listen(port + 1, (err) => {
+              if (err) {
+                reject(err);
+              } else {
+                console.log(`🌐 Express server listening on port ${port + 1} (Socket Mode + HTTP)`);
+                resolve();
+              }
+            });
+          });
+        } else {
+          console.log(`🔌 Socket Mode only - no HTTP server started`);
+          console.log(`📝 Note: Admin UI not available in Socket Mode`);
+        }
+      } else {
+        // For HTTP Mode with ExpressReceiver, just start the app
+        // app.start() will automatically start the HTTP server
+        await app.start(port);
+        console.log(`🌐 Express server listening on port ${port} (HTTP Mode)`);
+      }
     } catch (startError) {
       // Check if it's the specific Socket Mode state machine error
       if (startError.message && startError.message.includes('Unhandled event') && 

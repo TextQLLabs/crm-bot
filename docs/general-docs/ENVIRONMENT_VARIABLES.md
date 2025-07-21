@@ -1,10 +1,10 @@
 ## Context: Environment Variables Organization
-**Tags:** #env-vars #environment #variables #shared #production #development #mongodb #railway #slack #attio #security #scope #crm-bot #mcp
+**Tags:** #env-vars #environment #variables #shared #production #development #file-storage #railway #slack #attio #security #scope #crm-bot #mcp
 **Date:** 2025-01-10
 **Scope:** project
 
 ### Summary
-Comprehensive guide to environment variable organization for the CRM bot project, distinguishing between shared variables across all projects and project-specific variables for development, testing, and production environments.
+Comprehensive guide to environment variable organization for the CRM bot project, distinguishing between shared variables across all projects and project-specific variables for development, testing, and production environments. Updated to use file-based storage instead of database connections.
 
 ### Details
 
@@ -13,12 +13,12 @@ Comprehensive guide to environment variable organization for the CRM bot project
 ##### 1. 🌍 Shared Across All Projects
 **Location**: `/Users/ethanding/projects/CLAUDE.md` and MCP configurations
 
-**MongoDB MCP Server**
-- **Variable**: `MDB_MCP_CONNECTION_STRING`
-- **Scope**: All projects using MongoDB via MCP
+**File Storage MCP Server**
+- **Variable**: `DATA_STORAGE_PATH`
+- **Scope**: All projects using file-based storage
 - **Used by**: Claude Code MCP server, all projects
-- **Example**: `mongodb+srv://ethan:password@ethan-test.mongodb.net/`
-- **Note**: This is the SAME connection used by all projects
+- **Example**: `/Users/ethanding/projects/shared-data/`
+- **Note**: This is the SAME storage path used by all projects
 
 **Railway CLI**
 - **Variable**: `RAILWAY_TOKEN` (if using Railway CLI globally)
@@ -36,9 +36,9 @@ Comprehensive guide to environment variable organization for the CRM bot project
 - **ATTIO_API_KEY**: TextQL's Attio workspace key
 - **ANTHROPIC_API_KEY**: `sk-ant-...` (could be shared, but kept separate for usage tracking)
 
-**Database**
-- **MONGODB_URI**: Same as `MDB_MCP_CONNECTION_STRING` but specifically for production
-  - Can point to a different database name: `.../crm-bot-prod`
+**File Storage**
+- **DATA_STORAGE_PATH**: Same as shared storage path but specifically for production
+  - Can point to a different directory: `.../crm-bot-prod/data`
 
 **Railway Specific**
 - **Project**: invigorating-imagination
@@ -60,8 +60,8 @@ SLACK_APP_TOKEN=xapp-...
 ATTIO_API_KEY=...
 ANTHROPIC_API_KEY=sk-ant-...
 
-# MongoDB - can use same cluster, different database
-MONGODB_URI=mongodb+srv://ethan:password@ethan-test.mongodb.net/crm-bot-dev
+# File Storage - can use same base path, different directory
+DATA_STORAGE_PATH=/Users/ethanding/projects/crm-bot/data-dev
 ```
 
 ##### 4. 🔄 Environment Variable Flow
@@ -71,7 +71,7 @@ MONGODB_URI=mongodb+srv://ethan:password@ethan-test.mongodb.net/crm-bot-dev
 │   Global/Shared Variables           │
 │   (/Users/ethanding/projects/)      │
 │                                     │
-│   • MDB_MCP_CONNECTION_STRING       │
+│   • DATA_STORAGE_PATH               │
 │   • RAILWAY_TOKEN (CLI)             │
 └────────────────┬────────────────────┘
                  │
@@ -80,7 +80,7 @@ MONGODB_URI=mongodb+srv://ethan:password@ethan-test.mongodb.net/crm-bot-dev
 │   CRM Bot Project                   │
 │   (/crm-bot/.env)                   │
 │                                     │
-│   • Inherits MDB connection         │
+│   • Inherits storage path           │
 │   • Project-specific Slack tokens   │
 │   • Project-specific API keys       │
 └────────────────┬────────────────────┘
@@ -91,30 +91,30 @@ MONGODB_URI=mongodb+srv://ethan:password@ethan-test.mongodb.net/crm-bot-dev
 │   (Railway Dashboard)               │
 │                                     │
 │   • Mirrors .env for production     │
-│   • May have different DB name      │
+│   • May have different data dir     │
 │   • NODE_ENV=production             │
 └─────────────────────────────────────┘
 ```
 
 #### Implementation in Code
 
-**Database Connection Priority**
+**File Storage Path Priority**
 ```javascript
-// In database.js and test files:
-const MONGODB_URI = process.env.MONGODB_URI || process.env.MDB_MCP_CONNECTION_STRING;
+// In storage.js and test files:
+const DATA_STORAGE_PATH = process.env.DATA_STORAGE_PATH || process.env.SHARED_DATA_PATH;
 ```
 This allows:
-1. Project-specific URI to override
-2. Falls back to shared MCP connection
-3. Can use different database names
+1. Project-specific storage path to override
+2. Falls back to shared MCP storage path
+3. Can use different data directories
 
 **Removed/Deprecated Variables**
 - `SLACK_BOT_ID` - No longer needed (bot detection handled automatically)
 - Cloudflare environment variables - Project uses Railway exclusively
 
 **Fallback Variables**
-- `MDB_MCP_CONNECTION_STRING` - Shared MongoDB connection from MCP server
-  - Used as fallback when `MONGODB_URI` is not set
+- `SHARED_DATA_PATH` - Shared file storage path from MCP server
+  - Used as fallback when `DATA_STORAGE_PATH` is not set
   - Configured at the MCP server level, not in project
 
 #### Best Practices
@@ -122,7 +122,7 @@ This allows:
 **1. Shared Variables**
 - Store in `/Users/ethanding/projects/CLAUDE.md` for documentation
 - Configure once in MCP servers or shell profile
-- Use for: MongoDB connections, global tools
+- Use for: File storage paths, global tools
 
 **2. Project Variables**
 - Store in `.env` for development
@@ -135,8 +135,8 @@ This allows:
 - Any credentials with limited scope
 
 **4. Testing vs Production**
-- Use different database names: `crm-bot-dev` vs `crm-bot-prod`
-- Keep same cluster for simplicity
+- Use different data directories: `crm-bot-dev` vs `crm-bot-prod`
+- Keep same base storage path for simplicity
 - Use `NODE_ENV` to switch behavior
 
 #### Setup Instructions
@@ -144,25 +144,25 @@ This allows:
 **For New Developer**
 1. Copy `.env.example` to `.env`
 2. Fill in CRM bot specific values
-3. Ensure MCP MongoDB server is configured with shared connection
+3. Ensure MCP file storage is configured with shared data path
 4. Run `railway link` and select "invigorating-imagination" project
 
 **For Production Deployment**
 1. All variables in `.env` should be mirrored in Railway dashboard
 2. Set `NODE_ENV=production`
-3. Use production database name in `MONGODB_URI`
+3. Use production data directory in `DATA_STORAGE_PATH`
 
 **For Testing**
 1. Can use same `.env` file
-2. Tests will use `MDB_MCP_CONNECTION_STRING` as fallback
-3. Test data goes to same database (consider separate test DB)
+2. Tests will use `SHARED_DATA_PATH` as fallback
+3. Test data goes to same directory (consider separate test directory)
 
 #### Variable Reference
 
 | Variable | Shared? | Required? | Location | Notes |
 |----------|---------|-----------|----------|-------|
-| MDB_MCP_CONNECTION_STRING | ✅ Yes | For MCP | Global MCP config | All projects use this |
-| MONGODB_URI | ❌ No | Yes | .env, Railway | Can override MCP connection |
+| SHARED_DATA_PATH | ✅ Yes | For MCP | Global MCP config | All projects use this |
+| DATA_STORAGE_PATH | ❌ No | Yes | .env, Railway | Can override MCP storage path |
 | SLACK_BOT_TOKEN | ❌ No | Yes | .env, Railway | CRM bot specific |
 | SLACK_SIGNING_SECRET | ❌ No | Yes | .env, Railway | CRM bot specific |
 | SLACK_APP_TOKEN | ❌ No | Yes | .env, Railway | CRM bot specific |
@@ -176,4 +176,4 @@ This allows:
 - `/Users/ethanding/projects/CLAUDE.md` - Global project settings and shared variables
 - `/Users/ethanding/projects/crm-bot/.env` - Development environment variables
 - Railway Dashboard - Production environment variables
-- MCP MongoDB server configuration
+- MCP file storage server configuration

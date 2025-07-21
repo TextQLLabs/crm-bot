@@ -27,6 +27,52 @@ CRM Bot has three separate bot configurations with different token sets for prod
 
 ---
 
+## Context: Admin UI Dashboard
+**Tags:** #admin #ui #dashboard #prompts #tools #monitoring
+**Date:** 2025-07-18  
+**Scope:** project
+
+### Summary
+Embedded admin UI dashboard providing comprehensive visibility into all CRM Bot prompts, context, and tool definitions. Built as part of the main server to avoid port conflicts.
+
+### Details
+- **URL**: `http://localhost:3000/admin` (local) or `https://railway-url/admin` (production)
+- **Architecture**: Embedded Express routes within main CRM bot server
+- **Security**: Rate limiting, environment-based authentication, CORS support
+- **Features**: 
+  - System prompt viewer with markdown/code toggle
+  - Daily assessment prompt template viewer
+  - Tool definitions in accordion-style display
+  - Context inspector for hidden bot actions
+  - Context simulator for testing message processing
+  - All prompts comprehensive view
+
+### Components
+```
+src/admin/
+├── routes.js           # Main admin routes
+├── middleware.js       # Security & rate limiting
+├── api/
+│   ├── prompts.js     # System, assessment, tool prompts
+│   ├── context.js     # Conversation context APIs
+│   └── index.js       # API router
+└── static/
+    └── index.html     # Complete admin dashboard UI
+```
+
+### Key Features
+1. **Prompt Visualization**: Toggle between markdown-rendered and raw code views
+2. **Tool Definitions**: Accordion-style display of all bot tools with schemas
+3. **Context Inspection**: View hidden bot actions and conversation history
+4. **Real-time Data**: Live access to current system state
+5. **Security**: Rate limiting and authentication for production use
+
+### Related
+- See [Development Workflow Context](#context-development-workflow)
+- See [Testing Strategy Context](#context-testing-strategy)
+
+---
+
 ## Context: CRM Bot Project Overview
 **Tags:** #project #slack #attio #ai #crm
 **Date:** 2025-01-10  
@@ -39,7 +85,7 @@ A Slack bot that monitors the #gtm channel for updates and automatically creates
 - **Framework**: Bolt.js for Slack integration
 - **AI**: Claude Sonnet 4 with native tool calling (upgraded from ReAct framework)
 - **CRM**: Attio API for data management
-- **Database**: MongoDB for caching and state
+- **Storage**: File-based conversation logging
 - **Hosting**: Railway (Node.js compatible)
 - **Language**: JavaScript (ES Modules)
 
@@ -106,7 +152,7 @@ CRM Bot architecture with key components and recent v1.12.0 upgrades to Claude S
 - **Framework**: Bolt.js for Slack integration
 - **AI**: Claude Sonnet 4 with native tool calling (upgraded from ReAct framework)
 - **CRM**: Attio API for data management
-- **Database**: MongoDB for caching and state
+- **Storage**: File-based conversation logging
 - **Hosting**: Railway (Node.js compatible)
 - **Language**: JavaScript (ES Modules)
 
@@ -147,7 +193,7 @@ CRM Bot environment variable guidelines and management strategy
 
 1. **Check Shared Variables First**
    - See `/Users/ethanding/projects/CLAUDE.md` for shared variables
-   - This project uses `MDB_MCP_CONNECTION_STRING` as fallback for MongoDB
+   - This project uses file-based storage for conversation logging
 
 2. **Project-Specific Variables** (Never share these!)
    ```
@@ -165,11 +211,11 @@ CRM Bot environment variable guidelines and management strategy
 4. **Database Connection Pattern**
    ```javascript
    // This pattern is used throughout the project:
-   const MONGODB_URI = process.env.MONGODB_URI || process.env.MDB_MCP_CONNECTION_STRING;
+   const fileStorage = require('./services/fileStorage');
    ```
-   - Allows project-specific override
-   - Falls back to shared MCP connection
-   - Can use different database names for dev/test/prod
+   - Uses file-based storage for conversation logging
+   - Stores conversations in data/conversations/ directory
+   - No external database dependencies required
 
 #### Railway Deployment Context
 - Project: invigorating-imagination
@@ -195,7 +241,7 @@ Railway deployment configuration and process for CRM Bot production hosting.
 ### Details
 - **Local development**: `npm run dev`
 - **Production**: Auto-deploys via Railway from main branch
-- **Database**: MongoDB Atlas for database (shared cluster)
+- **Storage**: File-based conversation logging
 - **Configuration**: Slack app configuration in TextQL workspace
 - **Project**: invigorating-imagination
 - **Service**: crm-bot
@@ -207,29 +253,42 @@ Railway deployment configuration and process for CRM Bot production hosting.
 ---
 
 ## Context: Testing Strategy
-**Tags:** #testing #development #local-dev #automation
-**Date:** 2025-01-10  
+**Tags:** #testing #development #local-dev #automation #admin-ui
+**Date:** 2025-07-18  
 **Scope:** project
 
 ### Summary
-Comprehensive testing strategy including local development, automated test suite, and production testing.
+Comprehensive testing strategy including local development with admin UI, automated test suite, and production testing.
 
 ### Details
 
-#### Local Development Testing (NEW!)
-**Quick Start**: Test locally with `@crm-bot-ethan-dev` before deploying!
+#### Local Development Testing (UPDATED!)
+**Quick Start**: Test locally with `@crm-bot-ethan-dev` and admin UI!
 
 1. **Setup** (one-time):
    - Create dev Slack app: https://api.slack.com/apps
-   - Enable Socket Mode + add bot scopes
-   - Copy tokens to `.env.dev`
+   - Set up ngrok authentication: `ngrok config add-authtoken YOUR_TOKEN`
+   - Comment out SLACK_APP_TOKEN in `.env.dev` for HTTP mode
    - Full guide: `/docs/LOCAL_DEVELOPMENT.md`
 
-2. **Run**: `npm run dev`
-3. **Test**: `@crm-bot-ethan-dev search for raine`
-4. **Benefits**: Instant testing, hot reload, separate DB
+2. **Run**: `npm run dev:ngrok` (HTTP mode with admin UI)
+3. **Test Bot**: `@crm-bot-ethan-dev search for raine`
+4. **Test Admin UI**: Visit `http://localhost:3000/admin`
+5. **Benefits**: 
+   - Instant testing with production-like HTTP mode
+   - Admin UI for debugging prompts and context
+   - Real-time tool and prompt inspection
+   - Hot reload for development
+
+#### Admin UI Testing Features (NEW!)
+- **System Prompt Inspection**: View and debug the main Claude prompt
+- **Tool Definitions**: Accordion view of all available bot tools
+- **Context Simulation**: Test how messages are processed
+- **Hidden Context Viewer**: See bot action history
+- **Real-time Monitoring**: Live access to current bot state
 
 #### Other Testing Methods
+- **Socket Mode**: `npm run dev:socket` (simpler but no admin UI)
 - **Local CLI**: `npm run local` (no Slack, direct agent testing)
 - **Unit tests**: For individual services
 - **Integration tests**: For Slack events
@@ -254,7 +313,7 @@ Security measures and error handling strategies for robust bot operation.
 
 #### Error Handling
 - Retry failed API calls
-- Log errors to MongoDB
+- Log errors to file system
 - Notify channel on critical failures
 
 #### Security Measures
@@ -324,25 +383,55 @@ Production CRM bot configuration and deployment information.
 ---
 
 ## Context: Development Workflow
-**Tags:** #development #workflow #local-dev #production #deployment
-**Date:** 2025-01-10  
+**Tags:** #development #workflow #local-dev #production #deployment #http-mode #ngrok
+**Date:** 2025-07-18  
 **Scope:** project
 
 ### Summary
-Development workflow for CRM bot including local testing and production deployment process.
+Development workflow for CRM bot including local testing with HTTP mode, ngrok integration, and production deployment process.
 
 ### Details
 
+#### Development Modes
+1. **Socket Mode** (Simple): `npm run dev:socket`
+   - Uses WebSocket connection to Slack
+   - No public URL required
+   - Admin UI not available
+   - Good for basic bot testing
+
+2. **HTTP Mode** (Recommended): `npm run dev:ngrok`
+   - Uses HTTP webhooks from Slack
+   - Requires ngrok for public URL
+   - **Admin UI available** at `http://localhost:3000/admin`
+   - Real production-like environment
+
+#### HTTP Mode Setup (NEW!)
+```bash
+# 1. Install dependencies (one-time)
+npm install
+
+# 2. Set up ngrok authentication (one-time)
+ngrok config add-authtoken YOUR_TOKEN_HERE
+
+# 3. Start development with HTTP mode + ngrok
+npm run dev:ngrok
+
+# 4. Update Slack app settings with ngrok URL
+# Use: https://[ngrok-url]/slack/events
+```
+
 #### Development Steps
-1. **Local Testing** (NEW!): Tell user to run `npm run dev` separately → test with `@crm-bot-ethan-dev`
-2. **Production**: Push to main → Railway auto-deploys → `@crm-bot-ethan`
-3. **Logs**: Ask user to run `railway logs` separately and paste logs, console for local dev
+1. **Local Testing**: `npm run dev:ngrok` → test with `@crm-bot-ethan-dev`
+2. **Admin UI**: Access at `http://localhost:3000/admin`
+3. **Production**: Push to main → Railway auto-deploys → `@crm-bot-ethan`
+4. **Logs**: Ask user to run `railway logs` separately and paste logs
 
 #### Local Dev Setup (Quick Reference)
 - **App Name**: `crm-bot-dev-ethan` 
 - **Bot Name**: `@crm-bot-ethan-dev`
-- **Config**: `.env.dev` (copy from `.env.example`)
-- **Tokens Needed**: Bot token, Signing secret, App token (Socket Mode)
+- **Config**: `.env.dev` (SLACK_APP_TOKEN commented out for HTTP mode)
+- **Tokens Needed**: Bot token, Signing secret (no App token for HTTP mode)
+- **Admin UI**: `http://localhost:3000/admin`
 - **Full Guide**: `/docs/LOCAL_DEVELOPMENT.md`
 
 ### Related
@@ -414,27 +503,25 @@ Before changing the system prompt in ReactAgent:
 
 ---
 
-## Context: MongoDB Documentation
-**Tags:** #mongodb #database #collections #schemas #documentation
+## Context: File Storage Documentation
+**Tags:** #storage #files #conversations #logging
 **Date:** 2025-01-10  
 **Scope:** project
 
 ### Summary
-MongoDB collections and schemas used by the CRM Bot, with references to comprehensive documentation.
+File-based storage system used by the CRM Bot for conversation logging and test results.
 
 ### Details
 
-#### Global Documentation
-**IMPORTANT**: See `/Users/ethanding/projects/MONGODB.md` for comprehensive documentation about all MongoDB collections used across TextQLLabs projects, including:
-- Collection schemas
-- Sample queries
-- Index strategies
-- Retention policies
+#### Storage Structure
+- **Conversations**: Stored in `data/conversations/` directory
+- **Format**: JSON files with timestamp-based naming
+- **Retention**: Manual cleanup via scripts
 
-#### CRM Bot Collections
-The CRM Bot stores test results in MongoDB:
-- **Database**: `crm-bot`
-- **Collection**: `test-runs` (all test suite execution results with metrics)
+#### Test Results Storage
+The CRM Bot stores test results in local files:
+- **Directory**: `data/test-results/`
+- **Format**: JSON files with test suite execution results and metrics
 
 ### Related
 - See [Automated Testing Suite Context](#context-automated-testing-suite)
@@ -456,7 +543,7 @@ Comprehensive automated testing suite with GUI, metrics tracking, and multiple t
 ```bash
 npm run test:suite        # Run all tests
 npm run test:logs         # View local test logs
-npm run test:history      # View MongoDB test history
+npm run test:history      # View local test history
 npm run conversations:view # View recent conversations
 npm run conversations:clean # Clean old conversation data
 ```
@@ -517,7 +604,7 @@ Add to `test-suite.js`:
 
 ### Related
 - See [Testing Strategy Context](#context-testing-strategy)
-- See [MongoDB Documentation Context](#context-mongodb-documentation)
+- See [File Storage Documentation Context](#context-file-storage-documentation)
 
 ---
 
@@ -662,7 +749,7 @@ Slack bot token configuration and required scopes for CRM Bot operation.
 ---
 
 ## Context: Environment Variable Management
-**Tags:** #env-vars #railway #mongodb #tokens #source-of-truth
+**Tags:** #env-vars #railway #storage #tokens #source-of-truth
 **Date:** 2025-01-10  
 **Scope:** project
 
@@ -675,7 +762,7 @@ Environment variable management strategy and best practices for CRM Bot configur
 - **Source of Truth**: Always use `.env` file
 - **Railway**: Must update via dashboard, not CLI
 - **Token Confusion**: Check App ID in token to identify which project
-- **MongoDB**: Falls back to in-memory if connection fails
+- **Storage**: Uses file-based system for conversation logging
 
 ### Related
 - See [Environment Variables Strategy Context](#context-environment-variables-strategy)
