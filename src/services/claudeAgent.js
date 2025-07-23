@@ -10,7 +10,11 @@ const {
   updateEntityField,
   createPerson,
   createCompany,
-  createDeal
+  createDeal,
+  getTasks,
+  createTask,
+  updateTask,
+  searchTasksByContent
 } = require('./attioService');
 
 const { MemoryService } = require('./memoryService');
@@ -173,6 +177,9 @@ class ClaudeAgent {
               break;
             case 'update_entity':
               await progressCallback('updating');
+              break;
+            case 'manage_tasks':
+              await progressCallback('managing_tasks');
               break;
             case 'web_search':
               await progressCallback('web_search');
@@ -431,6 +438,18 @@ You help users manage their CRM data through natural conversation. You can:
 - *create_company*: Create new company records with name, description, domain
 - *create_deal*: Create new deal records with name, value, associated company
 
+*✅ Task Management*
+- *manage_tasks*: Create, list, update, complete, and search tasks for any entity
+  - Supports natural language deadlines: "next Friday", "tomorrow", "in 2 weeks"
+  - Create tasks: "create a task for Blackstone to send contract by next Friday"
+  - List tasks: "show all tasks for Blackstone" or "list incomplete tasks for deals"
+  - Complete tasks: "mark task [id] as complete"
+  - Search tasks: "find tasks mentioning 'contract' for Blackstone"
+  - Update tasks: "update task deadline to next Monday"
+  - *ASSIGNMENT SUPPORT*: Full task assignment capabilities
+    - "assign to me": Uses current user's Slack -> Attio mapping from persistent memory
+    - "assign to [name]": Resolves user by name from stored user mappings
+    - "create task for Company X and assign to me": Natural language assignment
 
 *🖼️ Image Analysis*
 - You can view and analyze images shared in Slack conversations
@@ -440,6 +459,15 @@ You help users manage their CRM data through natural conversation. You can:
 - When an image is shared, provide detailed analysis of what you see
 
 *Behavioral Principles*
+
+*🧠 Use Common Sense First*
+- Interpret requests as a human would, not as a rigid parser
+- When something could mean multiple things, consider which interpretation makes more sense
+- If genuinely ambiguous, ask for clarification rather than making assumptions
+- Examples:
+  - "Create a task for Obama" → If Obama isn't in CRM but is a known team member, they probably mean assign to Obama
+  - "Create a task for Apple" → If Apple is a company in CRM, they probably mean a task about Apple
+  - When unclear: "I can create a task about Obama or assign a task to Obama. Which did you mean?"
 
 *🎯 Multi-Step Thinking*
 For complex requests, think through:
@@ -463,12 +491,16 @@ When searching for entities, use your intelligence to find what the user is look
 - Combine results intelligently
 
 *🎪 Multi-Step Workflows*
-Execute complete workflows in single responses by calling multiple tools:
-- "create note for [company]: meeting scheduled" → search_crm + create_note + return URL
-- "find [company] and count their notes" → search_crm + get_notes + provide count/summary
-- "update [deal] value to $150k" → search_crm + update_entity_field + confirm change
+Execute complete workflows in single responses by calling multiple tools. Use common sense to interpret requests:
+- Note operations require finding the entity first
+- Task creation needs context about what the task is for
+- Updates need the specific entity or task to update
+- When creating tasks, consider:
+  - Is this task ABOUT an entity or FOR a person to do?
+  - Does the context suggest assignment? (e.g., "for John to..." suggests John is assignee)
+  - Would a human understand this as an assignment or a subject?
 - *CRITICAL*: When user asks to "count notes" or "get notes", you MUST call get_notes tool after finding the entity
-- *🚨 CRITICAL UUID RULE*: For create_note, get_notes, delete_note, update_entity_field - ALWAYS use the exact "id" field from search_crm results (e.g., "ffc6013f-2148-4427-8c1f-fec7b3f36554"). NEVER use slugs, names, or made-up IDs!
+- *🚨 CRITICAL UUID RULE*: For create_note, get_notes, delete_note, update_entity_field, manage_tasks - ALWAYS use the exact "id" field from search_crm results (e.g., "ffc6013f-2148-4427-8c1f-fec7b3f36554"). NEVER use slugs, names, or made-up IDs!
 
 *🧠 Intelligent Context*
 - Automatically learn from user interactions to become more helpful over time
@@ -494,6 +526,27 @@ When creating notes, provide appropriate titles that summarize the content:
 - *Action items*: "Action Items: [Brief Description]"
 - *Default*: "Update from Slack" (if no specific context)
 
+*✅ Task Management Guidelines*
+When managing tasks:
+- *Natural language deadlines*: Parse "next Friday", "tomorrow at 3pm", "in 2 weeks" intelligently
+- *Task URLs*: Always use format \`https://app.attio.com/textql-data/{entity_type}/{entity_id}/tasks\`
+- *Entity resolution*: Always search for entity by name if ID not provided
+- *Default deadline*: If no deadline specified, default to 1 week from now
+- *Task content*: Be descriptive but concise in task descriptions
+- *Completion*: Use "complete" action or update with is_completed: true
+- *Search functionality*: Search within task content for specific keywords
+- *ASSIGNMENT HANDLING*: Process assignment requests intelligently
+  - "assign to me" or "attach to me" → set assign_to: "me"
+  - "assign to [person name]" → set assign_to: "[person name]"
+  - "assign to ethan" → set assign_to: "Ethan Ding"
+  - Natural language like "create task for Company X and give it to John" → parse assignment intent
+  - If no user mapping exists for assignee, provide helpful error with suggestion to set up mapping
+- *REASSIGNMENT LIMITATION*: Due to Attio API limitations, tasks CANNOT be reassigned after creation
+  - The Attio API only supports updating deadline and completion status
+  - Assignees must be set when the task is created and cannot be changed
+  - When users ask to reassign: "I'm unable to reassign tasks after creation due to an Attio API limitation. Tasks can only have their assignee set during creation. Would you like me to create a new task assigned to [person] instead?"
+  - DO NOT say "I had difficulty" or imply technical issues - clearly state it's an API limitation
+
 *Response Format*
 
 *Slack Formatting Rules*
@@ -508,6 +561,7 @@ When creating notes, provide appropriate titles that summarize the content:
 - *Person URLs*: \`<https://app.attio.com/textql-data/person/{id}/overview\|Person Name>\`
 - *Deal URLs*: \`<https://app.attio.com/textql-data/deals/record/{id}/overview\|Deal Name>\`
 - *Note URLs*: \`<https://app.attio.com/textql-data/notes/notes?modal=note&id={note_id}\|Note>\`
+- *Task URLs*: \`<https://app.attio.com/textql-data/{entity_type}/{entity_id}/tasks\|View Tasks>\`
 
 *Action Confirmations*
 - Clear confirmations: "✅ Created note on *<https://app.attio.com/textql-data/company/{id}/overview\|Entity Name>*"
@@ -552,7 +606,26 @@ When creating notes, provide appropriate titles that summarize the content:
 - *Note operations*: ALWAYS search for entity first, then get/create/delete notes
 - *"get notes" or "list notes"*: Search entity → get_notes → format results clearly
 - *"summarize notes"*: Search entity → get_notes → provide concise summary
+- *Task operations*: Use manage_tasks with appropriate action (create, list, update, complete, search)
 - *Complex queries*: Use advanced_search with proper filters
+
+*🤔 Handling Ambiguous Requests*
+When a request could be interpreted multiple ways, use common sense and context:
+- *"Create a task for [name]"* - Could mean:
+  1. Create a task ABOUT that entity (if it's a company/deal in CRM)
+  2. Create a task and ASSIGN it to that person (if it's a team member name)
+  - First check if the name matches a known team member in user mappings
+  - If unclear, ask: "Did you mean create a task about [name] or assign a task to [name]?"
+- *"Create a task for [name] to [action]"* - This pattern almost always means:
+  - ASSIGN the task to [name]
+  - The task content is to do [action]
+  - Example: "task for Braxton to reach out to David" → Assign to Braxton, task is "reach out to David"
+- *Common patterns*:
+  - "for [person] to [action]" → Assignment pattern
+  - "about [entity]" → Task linked to that entity
+  - "regarding [entity]" → Task linked to that entity
+- *Always clarify ambiguity* - When unsure, briefly ask for clarification rather than guessing
+- *Use context clues* - If they mention "reach out to [client]", the task is likely FOR the assignee ABOUT the client
 
 *📊 Status Notifications*
 - Automatically send CRUD status notifications
@@ -962,13 +1035,13 @@ Remember: You're here to make CRM management effortless. Be proactive, accurate,
       },
       {
         name: 'manage_memory',
-        description: 'Internal memory system for intelligent context tracking (operates silently)',
+        description: 'Internal memory system for intelligent context tracking (internal use - operates silently)',
         input_schema: {
           type: 'object',
           properties: {
             action: {
               type: 'string',
-              enum: ['add_hot_account', 'add_recent_deal', 'add_advisor', 'add_teammate', 'remove_entry', 'get_memory', 'search_memory', 'get_summary', 'clear_all'],
+              enum: ['add_hot_account', 'add_recent_deal', 'add_advisor', 'add_teammate', 'add_user_mapping', 'get_user_mapping', 'get_all_user_mappings', 'remove_user_mapping', 'remove_entry', 'get_memory', 'search_memory', 'get_summary', 'clear_all'],
               description: 'Action to perform on memory system'
             },
             data: {
@@ -988,12 +1061,18 @@ Remember: You're here to make CRM management effortless. Be proactive, accurate,
                 department: { type: 'string', description: 'Department (for teammates)' },
                 notes: { type: 'string', description: 'Additional notes' },
                 url: { type: 'string', description: 'Attio URL for the entity' },
-                queryCount: { type: 'number', description: 'Number of times queried (for hot accounts)' }
+                queryCount: { type: 'number', description: 'Number of times queried (for hot accounts)' },
+                slackUserId: { type: 'string', description: 'Slack User ID (for user mappings)' },
+                slackUserName: { type: 'string', description: 'Slack username (for user mappings)' },
+                slackDisplayName: { type: 'string', description: 'Slack display name (for user mappings)' },
+                attioWorkspaceMemberId: { type: 'string', description: 'Attio Workspace Member ID (for user mappings)' },
+                attioUserName: { type: 'string', description: 'Attio user name (for user mappings)' },
+                discoveryMethod: { type: 'string', description: 'How the user mapping was discovered (manual, auto, etc.)' }
               }
             },
             section: {
               type: 'string',
-              enum: ['hotAccounts', 'recentDeals', 'advisors', 'teammates'],
+              enum: ['hotAccounts', 'recentDeals', 'advisors', 'teammates', 'userMappings'],
               description: 'Section to query (for get_memory and search_memory)'
             },
             query: {
@@ -1007,6 +1086,14 @@ Remember: You're here to make CRM management effortless. Be proactive, accurate,
             listName: {
               type: 'string',
               description: 'Name of list to remove from (for remove_entry)'
+            },
+            slackUserId: {
+              type: 'string',
+              description: 'Slack User ID (for user mapping operations)'
+            },
+            attioWorkspaceMemberId: {
+              type: 'string',
+              description: 'Attio Workspace Member ID (for user mapping operations)'
             }
           },
           required: ['action']
@@ -1035,6 +1122,114 @@ Remember: You're here to make CRM management effortless. Be proactive, accurate,
             }
           },
           required: ['channel']
+        }
+      },
+      {
+        name: 'manage_tasks',
+        description: 'Manage tasks for companies, people, or deals. Create, list, update, complete, and search tasks. NOTE: Due to Attio API limitations, tasks CANNOT be reassigned after creation - assignees must be set when creating the task. Only deadline and completion status can be updated.',
+        input_schema: {
+          type: 'object',
+          properties: {
+            action: {
+              type: 'string',
+              enum: ['create', 'list', 'update', 'complete', 'search'],
+              description: 'Action to perform on tasks (NOTE: reassign is not supported by Attio API)'
+            },
+            entity_name: {
+              type: 'string',
+              description: 'Name of the company, person, or deal (for create/list/search actions). Not needed if entity_id is provided.'
+            },
+            entity_id: {
+              type: 'string',
+              description: 'ID of the company, person, or deal (if known). Will be auto-resolved from entity_name if not provided.'
+            },
+            entity_type: {
+              type: 'string',
+              enum: ['company', 'person', 'deal'],
+              description: 'Type of entity the task is for'
+            },
+            task_content: {
+              type: 'string',
+              description: 'Content/description of the task (for create action)'
+            },
+            deadline: {
+              type: 'string',
+              description: 'Natural language deadline like "next Friday", "tomorrow at 3pm", "in 2 weeks" (for create/update)'
+            },
+            task_id: {
+              type: 'string',
+              description: 'ID of the task to update or complete'
+            },
+            search_term: {
+              type: 'string',
+              description: 'Term to search for in task content (for search action)'
+            },
+            is_completed: {
+              type: 'boolean',
+              description: 'Filter by completion status (for list action) or mark as complete (for update action)'
+            },
+            assign_to: {
+              type: 'string',
+              description: 'Who to assign the task to during creation. Can be: "me" (current user), a person\'s name (e.g., "John Smith"), or an Attio member ID. NOTE: Assignees cannot be changed after task creation due to Attio API limitations.'
+            },
+            assign_to_me: {
+              type: 'boolean',
+              description: '[DEPRECATED - use assign_to: "me" instead] Assign to current user'
+            },
+            assignee_id: {
+              type: 'string',
+              description: '[DEPRECATED - use assign_to with ID instead] Specific Attio Workspace Member ID'
+            },
+            assignee_name: {
+              type: 'string',
+              description: '[DEPRECATED - use assign_to with name instead] Name of person to assign to'
+            },
+            limit: {
+              type: 'number',
+              description: 'Maximum number of tasks to return (for list action)',
+              default: 10
+            }
+          },
+          required: ['action']
+        }
+      },
+      {
+        name: 'manage_user_mappings',
+        description: 'Manage user mappings between Slack and Attio for task assignments',
+        input_schema: {
+          type: 'object',
+          properties: {
+            action: {
+              type: 'string',
+              enum: ['list', 'add', 'remove', 'get'],
+              description: 'Action to perform on user mappings'
+            },
+            slack_user_id: {
+              type: 'string',
+              description: 'Slack User ID (for add/remove/get actions)'
+            },
+            slack_user_name: {
+              type: 'string',
+              description: 'Slack username (for add action)'
+            },
+            slack_display_name: {
+              type: 'string',
+              description: 'Slack display name (for add action)'
+            },
+            attio_workspace_member_id: {
+              type: 'string',
+              description: 'Attio Workspace Member ID (for add action)'
+            },
+            attio_user_name: {
+              type: 'string',
+              description: 'Attio user name (for add action)'
+            },
+            email: {
+              type: 'string',
+              description: 'Email address (for add action)'
+            }
+          },
+          required: ['action']
         }
       }
     ];
@@ -1133,6 +1328,560 @@ Remember: You're here to make CRM management effortless. Be proactive, accurate,
         error: error.message,
         channel: input.channel,
         hours_back: input.hours_back || 24
+      };
+    }
+  }
+
+  /**
+   * Manage user mappings for task assignments
+   */
+  async manageUserMappings(input, messageContext) {
+    try {
+      const { action, slack_user_id, slack_user_name, slack_display_name, attio_workspace_member_id, attio_user_name, email } = input;
+      
+      console.log(`Managing user mappings - Action: ${action}`, input);
+      
+      const { MemoryService } = require('./memoryService');
+      const memoryService = new MemoryService();
+      
+      let result;
+      
+      switch (action) {
+        case 'list': {
+          const allMappings = await memoryService.getAllUserMappings();
+          
+          if (allMappings.success && allMappings.mappings.length > 0) {
+            result = {
+              success: true,
+              mappings: allMappings.mappings,
+              count: allMappings.count,
+              message: `Found ${allMappings.count} user mapping${allMappings.count !== 1 ? 's' : ''}`
+            };
+          } else {
+            result = {
+              success: true,
+              mappings: [],
+              count: 0,
+              message: 'No user mappings found. Users can be added automatically when they interact with the bot, or manually by an admin.'
+            };
+          }
+          break;
+        }
+        
+        case 'get': {
+          if (!slack_user_id) {
+            throw new Error('slack_user_id is required for get action');
+          }
+          
+          const mapping = await memoryService.getUserMappingBySlackId(slack_user_id);
+          result = {
+            success: mapping.success,
+            mapping: mapping.mapping || null,
+            message: mapping.success 
+              ? `Found user mapping for ${slack_user_id}`
+              : `No user mapping found for ${slack_user_id}`
+          };
+          break;
+        }
+        
+        case 'add': {
+          if (!slack_user_id || !attio_workspace_member_id) {
+            throw new Error('slack_user_id and attio_workspace_member_id are required for add action');
+          }
+          
+          const mappingData = {
+            slackUserId: slack_user_id,
+            slackUserName: slack_user_name,
+            slackDisplayName: slack_display_name,
+            attioWorkspaceMemberId: attio_workspace_member_id,
+            attioUserName: attio_user_name,
+            email: email,
+            discoveryMethod: 'manual'
+          };
+          
+          const addResult = await memoryService.addUserMapping(mappingData);
+          result = {
+            success: addResult.success,
+            count: addResult.count,
+            message: addResult.success 
+              ? `Successfully added/updated user mapping: ${slack_user_id} -> ${attio_workspace_member_id}`
+              : 'Failed to add user mapping'
+          };
+          break;
+        }
+        
+        case 'remove': {
+          if (!slack_user_id) {
+            throw new Error('slack_user_id is required for remove action');
+          }
+          
+          const removeResult = await memoryService.removeUserMapping(slack_user_id);
+          result = {
+            success: removeResult.success,
+            message: removeResult.success 
+              ? `Successfully removed user mapping for ${slack_user_id}`
+              : `No user mapping found to remove for ${slack_user_id}`
+          };
+          break;
+        }
+        
+        default:
+          throw new Error(`Unknown user mapping action: ${action}. Valid actions are: list, get, add, remove`);
+      }
+      
+      return result;
+      
+    } catch (error) {
+      console.error('Error managing user mappings:', error);
+      return {
+        success: false,
+        error: error.message,
+        action: input.action
+      };
+    }
+  }
+
+  /**
+   * Manage tasks for entities (create, list, update, complete, search)
+   */
+  async manageTasks(input, messageContext) {
+    try {
+      const { action, entity_name, entity_id, entity_type, task_content, deadline, task_id, search_term, is_completed, assign_to, assign_to_me, assignee_id, assignee_name, limit = 10 } = input;
+      
+      console.log(`Managing tasks - Action: ${action}`, input);
+      
+      // Helper function to parse natural language dates
+      const parseNaturalDate = (dateStr) => {
+        if (!dateStr) return null;
+        
+        const now = new Date();
+        const lowerStr = dateStr.toLowerCase();
+        
+        // Handle relative dates
+        if (lowerStr.includes('tomorrow')) {
+          const tomorrow = new Date(now);
+          tomorrow.setDate(tomorrow.getDate() + 1);
+          tomorrow.setHours(17, 0, 0, 0); // Default to 5 PM
+          return tomorrow.toISOString();
+        }
+        
+        if (lowerStr.includes('today')) {
+          const today = new Date(now);
+          today.setHours(17, 0, 0, 0); // Default to 5 PM
+          return today.toISOString();
+        }
+        
+        if (lowerStr.includes('next')) {
+          const daysOfWeek = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+          const dayMatch = daysOfWeek.find(day => lowerStr.includes(day));
+          
+          if (dayMatch) {
+            const targetDay = daysOfWeek.indexOf(dayMatch);
+            const currentDay = now.getDay();
+            let daysToAdd = targetDay - currentDay;
+            
+            if (daysToAdd <= 0) {
+              daysToAdd += 7; // Next week
+            }
+            
+            const nextDate = new Date(now);
+            nextDate.setDate(nextDate.getDate() + daysToAdd);
+            nextDate.setHours(17, 0, 0, 0); // Default to 5 PM
+            return nextDate.toISOString();
+          }
+          
+          // Handle "next week", "next month"
+          if (lowerStr.includes('week')) {
+            const nextWeek = new Date(now);
+            nextWeek.setDate(nextWeek.getDate() + 7);
+            nextWeek.setHours(17, 0, 0, 0);
+            return nextWeek.toISOString();
+          }
+          
+          if (lowerStr.includes('month')) {
+            const nextMonth = new Date(now);
+            nextMonth.setMonth(nextMonth.getMonth() + 1);
+            nextMonth.setHours(17, 0, 0, 0);
+            return nextMonth.toISOString();
+          }
+        }
+        
+        // Handle "in X days/weeks"
+        const inMatch = lowerStr.match(/in\s+(\d+)\s+(day|week|month)s?/);
+        if (inMatch) {
+          const amount = parseInt(inMatch[1]);
+          const unit = inMatch[2];
+          const futureDate = new Date(now);
+          
+          switch (unit) {
+            case 'day':
+              futureDate.setDate(futureDate.getDate() + amount);
+              break;
+            case 'week':
+              futureDate.setDate(futureDate.getDate() + (amount * 7));
+              break;
+            case 'month':
+              futureDate.setMonth(futureDate.getMonth() + amount);
+              break;
+          }
+          
+          futureDate.setHours(17, 0, 0, 0);
+          return futureDate.toISOString();
+        }
+        
+        // Try to parse as a regular date
+        try {
+          const parsedDate = new Date(dateStr);
+          if (!isNaN(parsedDate.getTime())) {
+            return parsedDate.toISOString();
+          }
+        } catch (e) {
+          // Fall through to default
+        }
+        
+        // Default to 1 week from now
+        const defaultDate = new Date(now);
+        defaultDate.setDate(defaultDate.getDate() + 7);
+        defaultDate.setHours(17, 0, 0, 0);
+        return defaultDate.toISOString();
+      };
+      
+      // Helper function to resolve entity
+      const resolveEntity = async (name, type, id) => {
+        if (id) {
+          return { id, type };
+        }
+        
+        if (!name) {
+          throw new Error('Either entity_name or entity_id must be provided');
+        }
+        
+        // Search for the entity
+        const searchResult = await searchAttio(name, type);
+        
+        // Check if searchResult is an array (from searchAttio) or has results property
+        const results = Array.isArray(searchResult) ? searchResult : (searchResult.results || []);
+        
+        if (results.length === 0) {
+          throw new Error(`No ${type} found matching "${name}"`);
+        }
+        
+        // Use the first result
+        const entity = results[0];
+        return {
+          id: entity.id,
+          type: type,
+          name: entity.name || entity.title
+        };
+      };
+      
+      // Helper function to format entity type for Attio API
+      const formatEntityType = (type) => {
+        switch (type) {
+          case 'company':
+            return 'companies';
+          case 'person':
+            return 'people';
+          case 'deal':
+            return 'deals';
+          default:
+            return type;
+        }
+      };
+      
+      // Helper function to resolve assignees
+      const resolveAssignees = async () => {
+        const assignees = [];
+        
+        // Handle new assign_to parameter first
+        if (assign_to) {
+          const { MemoryService } = require('./memoryService');
+          const memoryService = new MemoryService();
+          
+          if (assign_to.toLowerCase() === 'me' && messageContext.userId) {
+            // Assign to current user
+            const userMappingResult = await memoryService.getUserMappingBySlackId(messageContext.userId);
+            
+            if (userMappingResult.success) {
+              assignees.push({
+                workspace_member_id: userMappingResult.mapping.attioWorkspaceMemberId
+              });
+              console.log(`Assigning to current user: ${messageContext.userId} -> ${userMappingResult.mapping.attioWorkspaceMemberId}`);
+            } else {
+              throw new Error(`Cannot assign to you - no user mapping found for your Slack account. Please contact an admin to set up your user mapping.`);
+            }
+          } else if (assign_to.match(/^[a-f0-9-]{36}$/i)) {
+            // Looks like a UUID - treat as direct Attio member ID
+            assignees.push({
+              workspace_member_id: assign_to
+            });
+            console.log(`Direct assignee ID: ${assign_to}`);
+          } else {
+            // Try to resolve as a person name
+            const allMappingsResult = await memoryService.getAllUserMappings();
+            
+            if (allMappingsResult.success) {
+              const nameMatch = allMappingsResult.mappings.find(mapping => 
+                mapping.slackUserName?.toLowerCase().includes(assign_to.toLowerCase()) ||
+                mapping.slackDisplayName?.toLowerCase().includes(assign_to.toLowerCase()) ||
+                mapping.attioUserName?.toLowerCase().includes(assign_to.toLowerCase())
+              );
+              
+              if (nameMatch) {
+                assignees.push({
+                  workspace_member_id: nameMatch.attioWorkspaceMemberId
+                });
+                console.log(`Resolved assignee name "${assign_to}" to: ${nameMatch.attioWorkspaceMemberId}`);
+              } else {
+                const availableNames = allMappingsResult.mappings.map(m => m.attioUserName || m.slackDisplayName).join(', ');
+                throw new Error(`Could not find user "${assign_to}". Available users: ${availableNames}`);
+              }
+            }
+          }
+        }
+        // Handle deprecated parameters for backwards compatibility
+        else if (assign_to_me && messageContext.userId) {
+          // Look up current user mapping
+          const { MemoryService } = require('./memoryService');
+          const memoryService = new MemoryService();
+          const userMappingResult = await memoryService.getUserMappingBySlackId(messageContext.userId);
+          
+          if (userMappingResult.success) {
+            assignees.push({
+              workspace_member_id: userMappingResult.mapping.attioWorkspaceMemberId
+            });
+            console.log(`Assigning to current user: ${messageContext.userId} -> ${userMappingResult.mapping.attioWorkspaceMemberId}`);
+          } else {
+            console.warn(`Could not find user mapping for current user: ${messageContext.userId}`);
+            throw new Error(`Cannot assign to you - no user mapping found for your Slack account. Please contact an admin to set up your user mapping.`);
+          }
+        }
+        
+        if (assignee_id) {
+          // Direct Attio Workspace Member ID provided
+          assignees.push({
+            workspace_member_id: assignee_id
+          });
+          console.log(`Direct assignee ID: ${assignee_id}`);
+        }
+        
+        if (assignee_name) {
+          // Try to resolve assignee name from user mappings
+          const { MemoryService } = require('./memoryService');
+          const memoryService = new MemoryService();
+          const allMappingsResult = await memoryService.getAllUserMappings();
+          
+          if (allMappingsResult.success) {
+            const nameMatch = allMappingsResult.mappings.find(mapping => 
+              mapping.slackUserName?.toLowerCase().includes(assignee_name.toLowerCase()) ||
+              mapping.slackDisplayName?.toLowerCase().includes(assignee_name.toLowerCase()) ||
+              mapping.attioUserName?.toLowerCase().includes(assignee_name.toLowerCase())
+            );
+            
+            if (nameMatch) {
+              assignees.push({
+                workspace_member_id: nameMatch.attioWorkspaceMemberId
+              });
+              console.log(`Resolved assignee name "${assignee_name}" to: ${nameMatch.attioWorkspaceMemberId}`);
+            } else {
+              console.warn(`Could not resolve assignee name: ${assignee_name}`);
+              
+              // Get available user names for helpful error message
+              const availableNames = allMappingsResult.mappings
+                .map(m => m.slackDisplayName || m.slackUserName || m.attioUserName)
+                .filter(Boolean)
+                .join(', ');
+              
+              const errorMessage = availableNames.length > 0 
+                ? `Cannot find user mapping for "${assignee_name}". Available users: ${availableNames}`
+                : `Cannot find user mapping for "${assignee_name}". No user mappings are currently configured. Please contact an admin to set up user mappings.`;
+              
+              throw new Error(errorMessage);
+            }
+          }
+        }
+        
+        return assignees;
+      };
+      
+      let result;
+      
+      switch (action) {
+        case 'create': {
+          if (!task_content) {
+            throw new Error('task_content is required for creating a task');
+          }
+          
+          if (!entity_type) {
+            throw new Error('entity_type is required for creating a task');
+          }
+          
+          // Resolve entity
+          const entity = await resolveEntity(entity_name, entity_type, entity_id);
+          
+          // Parse deadline
+          const deadlineISO = parseNaturalDate(deadline || 'in 1 week');
+          
+          // Resolve assignees
+          const assignees = await resolveAssignees();
+          
+          // Create the task
+          const taskData = {
+            content: task_content,
+            deadline_at: deadlineISO,
+            linked_records: [{
+              target_object: formatEntityType(entity_type),
+              target_record_id: entity.id
+            }],
+            assignees: assignees
+          };
+          
+          result = await createTask(taskData);
+          
+          if (result.success) {
+            let assignmentInfo = '';
+            if (assignees.length > 0) {
+              assignmentInfo = ` - Assigned to ${assignees.length} user${assignees.length > 1 ? 's' : ''}`;
+            }
+            result.message = `✅ Created task for *${entity.name || entity_type}*: "${task_content}" - Due ${new Date(deadlineISO).toLocaleDateString()}${assignmentInfo}`;
+          }
+          break;
+        }
+        
+        case 'list': {
+          if (!entity_type) {
+            throw new Error('entity_type is required for listing tasks');
+          }
+          
+          // Resolve entity if name provided
+          let entityInfo = null;
+          if (entity_name || entity_id) {
+            entityInfo = await resolveEntity(entity_name, entity_type, entity_id);
+          }
+          
+          // Get tasks
+          const options = {
+            limit: limit
+          };
+          
+          if (entityInfo) {
+            options.linkedRecordId = entityInfo.id;
+            options.linkedRecordType = formatEntityType(entity_type);
+          }
+          
+          if (typeof is_completed === 'boolean') {
+            options.isCompleted = is_completed;
+          }
+          
+          const tasks = await getTasks(options);
+          
+          result = {
+            success: true,
+            tasks: tasks,
+            count: tasks.length,
+            entity: entityInfo,
+            message: entityInfo 
+              ? `Found ${tasks.length} task${tasks.length !== 1 ? 's' : ''} for *${entityInfo.name || entity_type}*`
+              : `Found ${tasks.length} ${entity_type} task${tasks.length !== 1 ? 's' : ''}`
+          };
+          break;
+        }
+        
+        case 'update': {
+          if (!task_id) {
+            throw new Error('task_id is required for updating a task');
+          }
+          
+          const updates = {};
+          
+          if (deadline) {
+            updates.deadline_at = parseNaturalDate(deadline);
+          }
+          
+          if (typeof is_completed === 'boolean') {
+            updates.is_completed = is_completed;
+          }
+          
+          if (Object.keys(updates).length === 0) {
+            throw new Error('No updates provided. Specify deadline or is_completed');
+          }
+          
+          result = await updateTask(task_id, updates);
+          
+          if (result.success) {
+            const updateDescriptions = [];
+            if (updates.deadline_at) {
+              updateDescriptions.push(`deadline to ${new Date(updates.deadline_at).toLocaleDateString()}`);
+            }
+            if (typeof updates.is_completed === 'boolean') {
+              updateDescriptions.push(updates.is_completed ? 'marked as complete' : 'marked as incomplete');
+            }
+            
+            result.message = `✅ Updated task: ${updateDescriptions.join(', ')}`;
+          }
+          break;
+        }
+        
+        case 'complete': {
+          if (!task_id) {
+            throw new Error('task_id is required for completing a task');
+          }
+          
+          result = await updateTask(task_id, { is_completed: true });
+          
+          if (result.success) {
+            result.message = `✅ Marked task as complete`;
+          }
+          break;
+        }
+        
+        case 'search': {
+          if (!entity_type) {
+            throw new Error('entity_type is required for searching tasks');
+          }
+          
+          if (!search_term) {
+            throw new Error('search_term is required for searching tasks');
+          }
+          
+          // Resolve entity
+          const entity = await resolveEntity(entity_name, entity_type, entity_id);
+          
+          const linkedRecord = {
+            target_object: formatEntityType(entity_type),
+            target_record_id: entity.id
+          };
+          
+          const matchingTasks = await searchTasksByContent(linkedRecord, search_term);
+          
+          result = {
+            success: true,
+            tasks: matchingTasks,
+            count: matchingTasks.length,
+            entity: entity,
+            search_term: search_term,
+            message: `Found ${matchingTasks.length} task${matchingTasks.length !== 1 ? 's' : ''} matching "${search_term}" for *${entity.name || entity_type}*`
+          };
+          break;
+        }
+        
+        case 'reassign': {
+          // Reassignment is not supported by the Attio API
+          throw new Error('Task reassignment is not supported by the Attio API. Tasks can only have their assignee set during creation and cannot be changed afterwards. Only the deadline and completion status can be updated after a task is created. Would you like me to create a new task with the correct assignee instead?');
+        }
+        
+        default:
+          throw new Error(`Unknown task action: ${action}. Valid actions are: create, list, update, complete, search`);
+      }
+      
+      return result;
+      
+    } catch (error) {
+      console.error('Error managing tasks:', error);
+      return {
+        success: false,
+        error: error.message,
+        action: input.action
       };
     }
   }
@@ -1245,6 +1994,28 @@ Remember: You're here to make CRM management effortless. Be proactive, accurate,
             case 'add_teammate':
               result = await memoryService.addTeammate(action.input.data);
               break;
+            case 'add_user_mapping':
+              result = await memoryService.addUserMapping(action.input.data);
+              break;
+            case 'get_user_mapping':
+              if (action.input.slackUserId) {
+                result = await memoryService.getUserMappingBySlackId(action.input.slackUserId);
+              } else if (action.input.attioWorkspaceMemberId) {
+                result = await memoryService.getUserMappingByAttioId(action.input.attioWorkspaceMemberId);
+              } else {
+                throw new Error('Either slackUserId or attioWorkspaceMemberId must be provided for get_user_mapping');
+              }
+              break;
+            case 'get_all_user_mappings':
+              result = await memoryService.getAllUserMappings();
+              break;
+            case 'remove_user_mapping':
+              if (action.input.slackUserId) {
+                result = await memoryService.removeUserMapping(action.input.slackUserId);
+              } else {
+                throw new Error('slackUserId must be provided for remove_user_mapping');
+              }
+              break;
             case 'remove_entry':
               result = await memoryService.removeEntry(action.input.listName, action.input.entryId);
               break;
@@ -1263,6 +2034,12 @@ Remember: You're here to make CRM management effortless. Be proactive, accurate,
             default:
               throw new Error(`Unknown memory action: ${actionType}`);
           }
+          break;
+        case 'manage_tasks':
+          result = await this.manageTasks(action.input, messageContext);
+          break;
+        case 'manage_user_mappings':
+          result = await this.manageUserMappings(action.input, messageContext);
           break;
         case 'extract_channel_history':
           result = await this.extractChannelHistory(action.input, messageContext);

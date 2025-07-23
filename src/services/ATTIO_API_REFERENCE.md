@@ -568,6 +568,72 @@ async function createNoteWithRetry(entityType, entityId, content) {
 }
 ```
 
+### 4. Task Management
+
+#### List Tasks
+```javascript
+GET /tasks?filter={filter}&limit={limit}
+```
+
+**Filter Examples:**
+```javascript
+// Tasks for a specific entity
+{
+  "linked_records.target_object": "companies",
+  "linked_records.target_record_id": "uuid-here"
+}
+
+// Incomplete tasks only
+{
+  "$and": [
+    { "linked_records.target_object": "companies" },
+    { "linked_records.target_record_id": "uuid-here" },
+    { "is_completed": false }
+  ]
+}
+```
+
+#### Create Task
+```javascript
+POST /tasks
+{
+  "data": {
+    "content": "Task description",
+    "format": "plaintext",
+    "deadline_at": "2025-07-30T17:00:00Z",
+    "is_completed": false,
+    "linked_records": [{
+      "target_object": "companies",
+      "target_record_id": "uuid-here"
+    }],
+    "assignees": [{
+      "referenced_actor_type": "workspace-member",
+      "referenced_actor_id": "member-uuid-here"
+    }]
+  }
+}
+```
+
+#### Update Task (LIMITED)
+```javascript
+PATCH /tasks/{task_id}
+{
+  "data": {
+    "deadline_at": "2025-08-01T17:00:00Z",  // ✅ Supported
+    "is_completed": true                      // ✅ Supported
+    // assignees: [...]                       // ❌ NOT SUPPORTED - Cannot change after creation
+    // content: "..."                         // ❌ NOT SUPPORTED
+    // linked_records: [...]                  // ❌ NOT SUPPORTED
+  }
+}
+```
+
+**⚠️ IMPORTANT API LIMITATION:**
+- **Assignees CANNOT be changed after task creation**
+- Only `deadline_at` and `is_completed` can be updated
+- To "reassign" a task, you must delete and recreate it with the new assignee
+- This is a limitation of the Attio API, not the CRM bot implementation
+
 ---
 
 ## 📞 Support & Resources

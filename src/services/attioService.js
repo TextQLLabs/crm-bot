@@ -1318,6 +1318,381 @@ async function createDeal(dealData) {
   }
 }
 
+/**
+ * Get tasks with optional filters
+ * @param {Object} options - Filter options
+ * @param {string} options.linkedRecordId - Filter by linked record ID
+ * @param {string} options.linkedRecordType - Filter by linked record type (companies, people, deals)
+ * @param {boolean} options.isCompleted - Filter by completion status
+ * @param {number} options.limit - Maximum number of tasks to return
+ * @param {string} options.sort - Sort field (e.g., '-deadline_at' for newest first)
+ * @returns {Promise<Array>} Array of task objects
+ */
+async function getTasks(options = {}) {
+  try {
+    console.log(`\n=== Getting tasks with options: ===`, options);
+    
+    const params = new URLSearchParams();
+    const filters = [];
+    
+    // Build combined filter object
+    if (options.linkedRecordId && options.linkedRecordType) {
+      // Build filter for linked records
+      filters.push({
+        linked_records: {
+          $includes: {
+            target_object: options.linkedRecordType,
+            target_record_id: options.linkedRecordId
+          }
+        }
+      });
+    }
+    
+    if (typeof options.isCompleted === 'boolean') {
+      filters.push({ is_completed: options.isCompleted });
+    }
+    
+    // Combine filters with $and if multiple
+    if (filters.length > 0) {
+      const combinedFilter = filters.length === 1 ? filters[0] : { $and: filters };
+      params.append('filter', JSON.stringify(combinedFilter));
+    }
+    
+    if (options.limit) {
+      params.append('limit', options.limit);
+    }
+    
+    if (options.sort) {
+      params.append('sort', options.sort);
+    } else {
+      // Default sort by deadline
+      params.append('sort', '-deadline_at');
+    }
+    
+    const url = `/tasks${params.toString() ? `?${params.toString()}` : ''}`;
+    console.log('Getting tasks with URL:', url);
+    
+    const response = await getAttioClient().get(url);
+    
+    if (!response.data || !response.data.data) {
+      console.log('No tasks data in response');
+      return [];
+    }
+    
+    console.log(`Found ${response.data.data.length} tasks`);
+    
+    // Format tasks for display
+    return response.data.data.map(task => {
+      const linkedRecords = task.linked_records || [];
+      const assignees = task.assignees || [];
+      
+      // Generate task URL based on first linked record
+      let taskUrl = null;
+      if (linkedRecords.length > 0) {
+        const firstLinked = linkedRecords[0];
+        const entityType = firstLinked.target_object.replace(/s$/, ''); // Remove plural 's'
+        taskUrl = `https://app.attio.com/textql-data/${entityType}/${firstLinked.target_record_id}/tasks`;
+      }
+      
+      return {
+        id: task.id?.task_id || task.id,
+        content: task.content || '',
+        format: task.format || 'plaintext',
+        deadline_at: task.deadline_at,
+        is_completed: task.is_completed || false,
+        completed_at: task.completed_at,
+        created_at: task.created_at,
+        linked_records: linkedRecords,
+        assignees: assignees,
+        url: taskUrl
+      };
+    });
+    
+  } catch (error) {
+    console.error('Get tasks error:', error.response?.data || error.message);
+    throw error;
+  }
+}
+
+/**
+ * Format assignees for the Attio API
+ * @param {Array} assignees - Array of assignee objects or null
+ * @returns {Array} Formatted assignees array
+ */
+function formatAssignees(assignees) {
+  if (!assignees || !Array.isArray(assignees) || assignees.length === 0) {
+    return [];
+  }
+  
+  // Handle different input formats
+  return assignees.map(assignee => {
+    // If it's already in the correct format
+    if (assignee.referenced_actor_type && assignee.referenced_actor_id) {
+      return assignee;
+    }
+    
+    // If it's an object with workspace_member_id
+    if (assignee.workspace_member_id) {
+      return {
+        referenced_actor_type: 'workspace-member',
+        referenced_actor_id: assignee.workspace_member_id
+      };
+    }
+    
+    // If it's just a string ID
+    if (typeof assignee === 'string') {
+      return {
+        referenced_actor_type: 'workspace-member',
+        referenced_actor_id: assignee
+      };
+    }
+    
+    // Unknown format - skip
+    console.warn('Unknown assignee format:', assignee);
+    return null;
+  }).filter(Boolean); // Remove any null values
+}
+
+/**
+ * Create a new task
+ * @param {Object} taskData - Task data
+ * @param {string} taskData.content - Task content (required)
+ * @param {string} taskData.format - Content format (default: 'plaintext')
+ * @param {string} taskData.deadline_at - Deadline in ISO format (required)
+ * @param {Array} taskData.linked_records - Array of linked record objects (required)
+ * @param {Array} taskData.assignees - Array of assignee objects with workspace_member_id, or array of string IDs (optional)
+ * @returns {Promise<Object>} Created task object
+ */
+async function createTask(taskData) {
+  try {
+    console.log(`\n=== Creating task ===`);
+    console.log('Task data:', JSON.stringify(taskData, null, 2));
+    
+    // Validate required fields
+    if (!taskData.content) {
+      throw new Error('Task content is required');
+    }
+    if (!taskData.deadline_at) {
+      throw new Error('Task deadline_at is required');
+    }
+    if (!taskData.linked_records || !Array.isArray(taskData.linked_records) || taskData.linked_records.length === 0) {
+      throw new Error('Task must have at least one linked record');
+    }
+    
+    // Build task payload
+    const payload = {
+      data: {
+        content: taskData.content,
+        format: taskData.format || 'plaintext',
+        deadline_at: taskData.deadline_at,
+        is_completed: false,  // Required boolean field - new tasks start as incomplete
+        linked_records: taskData.linked_records,
+        assignees: formatAssignees(taskData.assignees)
+      }
+    };
+    
+    console.log('Create task payload:', JSON.stringify(payload, null, 2));
+    
+    const response = await getAttioClient().post('/tasks', payload);
+    
+    const createdTask = response.data.data;
+    console.log('Task created successfully:', createdTask.id);
+    
+    // Generate task URL based on first linked record
+    let taskUrl = null;
+    if (createdTask.linked_records && createdTask.linked_records.length > 0) {
+      const firstLinked = createdTask.linked_records[0];
+      if (firstLinked && firstLinked.target_object && firstLinked.target_record_id) {
+        const entityType = firstLinked.target_object.replace(/s$/, ''); // Remove plural 's'
+        taskUrl = `https://app.attio.com/textql-data/${entityType}/${firstLinked.target_record_id}/tasks`;
+      }
+    }
+    
+    return {
+      success: true,
+      action: 'create_task',
+      taskId: createdTask.id?.task_id || createdTask.id,
+      content: createdTask.content,
+      deadline_at: createdTask.deadline_at,
+      linked_records: createdTask.linked_records,
+      url: taskUrl
+    };
+    
+  } catch (error) {
+    console.error('Create task error:', error.response?.data || error.message);
+    return {
+      success: false,
+      error: error.response?.data?.message || error.message,
+      attemptedData: taskData
+    };
+  }
+}
+
+/**
+ * Update an existing task
+ * @param {string} taskId - Task ID to update
+ * @param {Object} updates - Updates to apply (ONLY deadline_at and is_completed are supported by Attio API)
+ * @param {string} updates.deadline_at - New deadline in ISO format
+ * @param {boolean} updates.is_completed - Completion status
+ * @param {Array} updates.assignees - [NOT SUPPORTED BY API] Assignees cannot be changed after task creation
+ * @returns {Promise<Object>} Updated task object
+ */
+async function updateTask(taskId, updates) {
+  try {
+    console.log(`\n=== Updating task ${taskId} ===`);
+    console.log('Updates:', JSON.stringify(updates, null, 2));
+    
+    // Validate that only supported fields are being updated
+    const supportedFields = ['deadline_at', 'is_completed'];
+    const updateFields = Object.keys(updates);
+    const unsupportedFields = updateFields.filter(field => !supportedFields.includes(field));
+    
+    if (updateFields.includes('assignees')) {
+      console.error('ERROR: Attempting to update assignees, which is NOT supported by the Attio API after task creation');
+      throw new Error('Cannot update task assignees after creation. This is an Attio API limitation. Tasks must be deleted and recreated to change assignees.');
+    }
+    
+    if (unsupportedFields.length > 0) {
+      console.warn(`Warning: Unsupported fields will be ignored: ${unsupportedFields.join(', ')}`);
+    }
+    
+    // Build update payload with only supported fields
+    const updatePayload = {
+      data: {}
+    };
+    
+    if ('deadline_at' in updates) {
+      updatePayload.data.deadline_at = updates.deadline_at;
+    }
+    if ('is_completed' in updates) {
+      updatePayload.data.is_completed = updates.is_completed;
+    }
+    
+    if (Object.keys(updatePayload.data).length === 0) {
+      throw new Error('No valid fields to update. The Attio API only supports updating deadline_at and is_completed. Assignees cannot be changed after task creation.');
+    }
+    
+    console.log('Update payload:', JSON.stringify(updatePayload, null, 2));
+    
+    const response = await getAttioClient().patch(`/tasks/${taskId}`, updatePayload);
+    
+    const updatedTask = response.data.data;
+    console.log('Task updated successfully');
+    
+    // Generate task URL based on first linked record
+    let taskUrl = null;
+    if (updatedTask.linked_records && updatedTask.linked_records.length > 0) {
+      const firstLinked = updatedTask.linked_records[0];
+      if (firstLinked && firstLinked.target_object && firstLinked.target_record_id) {
+        const entityType = firstLinked.target_object.replace(/s$/, ''); // Remove plural 's'
+        taskUrl = `https://app.attio.com/textql-data/${entityType}/${firstLinked.target_record_id}/tasks`;
+      }
+    }
+    
+    return {
+      success: true,
+      action: 'update_task',
+      taskId: taskId,
+      updates: updatePayload.data,
+      content: updatedTask.content,
+      deadline_at: updatedTask.deadline_at,
+      is_completed: updatedTask.is_completed,
+      url: taskUrl
+    };
+    
+  } catch (error) {
+    console.error('Update task error:', error.response?.data || error.message);
+    return {
+      success: false,
+      error: error.response?.data?.message || error.message,
+      taskId: taskId,
+      attemptedUpdates: updates
+    };
+  }
+}
+
+/**
+ * Search tasks by content for a specific linked record
+ * @param {Object} linkedRecord - Linked record to search tasks for
+ * @param {string} linkedRecord.target_object - Object type (e.g., 'companies', 'people', 'deals')
+ * @param {string} linkedRecord.target_record_id - Record ID
+ * @param {string} searchTerm - Term to search for in task content
+ * @returns {Promise<Array>} Array of matching tasks
+ */
+async function searchTasksByContent(linkedRecord, searchTerm) {
+  try {
+    console.log(`\n=== Searching tasks by content ===`);
+    console.log('Linked record:', linkedRecord);
+    console.log('Search term:', searchTerm);
+    
+    if (!linkedRecord || !linkedRecord.target_object || !linkedRecord.target_record_id) {
+      throw new Error('Valid linked record with target_object and target_record_id is required');
+    }
+    
+    if (!searchTerm) {
+      throw new Error('Search term is required');
+    }
+    
+    // First, get all tasks for the linked record
+    const tasks = await getTasks({
+      linkedRecordId: linkedRecord.target_record_id,
+      linkedRecordType: linkedRecord.target_object,
+      limit: 100 // Get more tasks for searching
+    });
+    
+    console.log(`Found ${tasks.length} total tasks for record`);
+    
+    // Filter tasks by content
+    const searchTermLower = searchTerm.toLowerCase();
+    const matchingTasks = tasks.filter(task => {
+      const content = (task.content || '').toLowerCase();
+      return content.includes(searchTermLower);
+    });
+    
+    console.log(`Found ${matchingTasks.length} tasks matching "${searchTerm}"`);
+    
+    return matchingTasks;
+    
+  } catch (error) {
+    console.error('Search tasks by content error:', error.response?.data || error.message);
+    throw error;
+  }
+}
+
+/**
+ * Get all workspace members from Attio
+ * @returns {Promise<Object>} List of workspace members
+ */
+async function getWorkspaceMembers() {
+  try {
+    console.log('\n=== Getting all workspace members ===');
+    
+    const response = await getAttioClient().get('/workspace_members');
+    
+    const members = response.data.data || [];
+    console.log(`Found ${members.length} workspace members`);
+    
+    return members.map(member => {
+      const fullName = `${member.first_name || ''} ${member.last_name || ''}`.trim() || 'Unknown';
+      
+      return {
+        id: member.id?.workspace_member_id || member.id,
+        name: fullName,
+        firstName: member.first_name,
+        lastName: member.last_name,
+        email: member.email_address || 'No email',
+        avatar: member.avatar_url,
+        accessLevel: member.access_level,
+        created_at: member.created_at
+      };
+    });
+    
+  } catch (error) {
+    console.error('Get workspace members error:', error.response?.data || error.message);
+    throw error;
+  }
+}
+
 module.exports = { 
   searchAttio, 
   createOrUpdateRecord, 
@@ -1333,5 +1708,10 @@ module.exports = {
   updateEntityField,
   createPerson,
   createCompany,
-  createDeal
+  createDeal,
+  getTasks,
+  createTask,
+  updateTask,
+  searchTasksByContent,
+  getWorkspaceMembers
 };
